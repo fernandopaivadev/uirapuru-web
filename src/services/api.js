@@ -1,10 +1,8 @@
 import { create } from 'axios'
 import { isAuthenticated, getToken } from './auth'
-import { config } from 'dotenv'
 
-config()
-
-const baseURL = process.env.API_URL
+const baseURL = 'https://api-uirapuru.herokuapp.com/'
+//const baseURL = 'https://api.techamazon.tech'
 
 const api = create({
     baseURL
