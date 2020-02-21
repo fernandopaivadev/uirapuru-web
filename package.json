@@ -2,7 +2,7 @@
     "name": "uirapuru-tech-amazon",
     "version": "1.2.2",
     "private": true,
-    "homepage": "https://uirapuru.techamazon.tech",
+    "homepage": "https://fernandopaivaec.github.io/uirapuru-web/",
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.27",
         "@fortawesome/free-solid-svg-icons": "^5.12.1",
@@ -25,7 +25,8 @@
         "build": "rm -rf docs && react-scripts build && mv build docs",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "publish": "git push -u origin master"
+        "publish": "git push -u origin master",
+        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
         "extends": "react-app"
