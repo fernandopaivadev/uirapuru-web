@@ -17,7 +17,7 @@ import { faTint, faBolt } from '@fortawesome/free-solid-svg-icons'
 
 import Layout from '../layouts/Layout'
 import Graphic from '../panels/Graphic'
-import { isAuthenticated } from '../../services/auth'
+import { isAuthenticated, getToken } from '../../services/auth'
 import { baseURL } from '../../services/api'
 import { getConsumerUnit } from '../../services/storage'
 import io from 'socket.io-client'
@@ -102,8 +102,16 @@ const Dashboard = () => {
 
             const socket = io(baseURL)
 
-            socket.emit('listen', {
-                devicesList
+            socket.emit('auth', {
+                token: getToken()
+            })
+
+            socket.on('auth', ({ ok }) => {
+                if (ok) {
+                    socket.emit('listen', {
+                        devicesList
+                    })
+                }
             })
 
             socket.on('data', ({ topic, payload }) => {

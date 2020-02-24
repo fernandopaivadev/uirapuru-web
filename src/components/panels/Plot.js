@@ -96,7 +96,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, viewByTime }) => {
         <Plotly
             data={[...traces]}
             layout={{
-                dragmode: 'pan',
+                //dragmode: 'pan',
                 modebar: {
                     color: themes.default.green
                 },
