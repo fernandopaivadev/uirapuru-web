@@ -4,15 +4,12 @@ import themes from '../../themes'
 
 const Plotly = lazy(() => import('react-plotly.js'))
 
-const Plot = ({ values, timestamps, setDisplay, doubleScreen, viewByTime }) => {
+const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
     let time = []
     let timeString = []
 
     timestamps.forEach(timestamp => {
-        time.push(viewByTime ?
-            new Date(String(timestamp))
-            :
-            new Date(String(timestamp)).toLocaleString())
+        time.push(new Date(String(timestamp)))
         timeString.push(new Date(String(timestamp)).toLocaleString())
     })
 
@@ -168,7 +165,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, viewByTime }) => {
                 ]]
             }}
             style={{
-                height: '90vh',
+                height: '100vh',
                 width: (window.innerWidth > 2500) ?
                     doubleScreen ? '46vw' : '92vw'
                     :
@@ -178,11 +175,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, viewByTime }) => {
                         doubleScreen ? '42.5vw' : '85vw'
             }}
             onClick={event => {
-                const selectedTime = viewByTime ?
-                    new Date(event?.points[0]?.x).toLocaleString()
-                    :
-                    event?.points[0]?.x
-
+                const selectedTime = new Date(event?.points[0]?.x).toLocaleString()
                 const index = timeString.indexOf(selectedTime)
 
                 setDisplay({

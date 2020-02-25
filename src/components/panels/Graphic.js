@@ -18,9 +18,7 @@ import {
 import {
     Close as CloseIcon,
     AddToQueue as AddScreenIcon,
-    RemoveFromQueue as RemoveScreenIcon,
-    Timeline as LinearViewIcon,
-    QueryBuilder as ViewByTimeIcon
+    RemoveFromQueue as RemoveScreenIcon
 } from '@material-ui/icons'
 
 import themes from '../../themes'
@@ -172,8 +170,7 @@ const Graphic = ({ device, setDevicePopup }) => {
         values,
         timestamps,
         setDisplay,
-        doubleScreen,
-        viewByTime
+        doubleScreen
     }
 
     return <div style={styles.main}>
@@ -224,26 +221,6 @@ const Graphic = ({ device, setDevicePopup }) => {
                         <RemoveScreenIcon />
                         :
                         <AddScreenIcon />
-                    }
-                </IconButton>
-            </Tooltip>
-
-            <Tooltip title={viewByTime ?
-                'Visualização contínua'
-                :
-                'Visualização por tempo'
-            }>
-                <IconButton
-                    component='span'
-                    onClick={() => {
-                        setViewByTime(!viewByTime)
-                    }}
-                    style={styles.controlBtn}
-                >
-                    {viewByTime ?
-                        <LinearViewIcon />
-                        :
-                        <ViewByTimeIcon />
                     }
                 </IconButton>
             </Tooltip>
