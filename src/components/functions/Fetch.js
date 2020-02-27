@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { storeUser, storeUsersList } from '../../services/storage'
-import { isAuthenticated, isAdmin } from '../../services/auth'
+import { isAuthenticated, isAdmin, logout } from '../../services/auth'
 import { api } from '../../services/api'
 
 const Loading = ({ history }) => {
@@ -31,6 +31,7 @@ const Loading = ({ history }) => {
             } catch (err) {
                 console.log(err.message)
             } finally {
+                logout()
                 history.push('/login')
             }
         }

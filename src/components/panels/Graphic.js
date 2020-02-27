@@ -95,7 +95,6 @@ const Graphic = ({ device, setDevicePopup }) => {
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
     const [period, setPeriod] = useState(null)
-    const [viewByTime, setViewByTime] = useState(true)
 
     const getMessages = async () => {
         try {

@@ -131,7 +131,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
                         spikesnap: 'cursor',
                         //spikesnap: 'data',
                         spikedash: 'solid',
-                        spikecolor: themes.default.green,
+                        spikecolor: themes.default.lightGray,
                         spikethickness: 2
                     },
                     yaxis: {
