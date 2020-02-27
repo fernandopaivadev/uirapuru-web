@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
     textField: {
         width: '250px',
         '& label.Mui-focused': {
-            color: themes.default.lightGreen,
+            color: themes.default.lightGreen
         },
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
@@ -55,7 +55,7 @@ const useStyles = makeStyles(() => ({
             },
             '&.Mui-focused fieldset': {
                 borderColor: themes.default.lightGreen
-            },
+            }
         }
     },
     progress: {
@@ -74,7 +74,7 @@ const useStyles = makeStyles(() => ({
         fontSize: '35px',
         color: themes.default.black,
         alignItems: 'center',
-        marginBottom: '20px',
+        marginBottom: '20px'
     },
     forgotPassword: {
         fontSize: '16px',
@@ -137,7 +137,7 @@ const Login = ({ history }) => {
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async event => {
         try {
             event.preventDefault()
             setLoading(true)
@@ -153,8 +153,7 @@ const Login = ({ history }) => {
                 adminLogin(response.data.token)
                 history.push('/loading')
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.response.data.message)
 
             if (err.response.status === 404) {
@@ -179,8 +178,7 @@ const Login = ({ history }) => {
             if (isAuthenticated()) {
                 history.push('/admin/users-list')
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.message)
         }
         // eslint-disable-next-line
@@ -197,12 +195,10 @@ const Login = ({ history }) => {
     return (
         <Paper className={classes.paper}>
             <form onSubmit={handleSubmit}>
-                <Typography
-                    style={styles.logoContainer}
-                >
+                <Typography style={styles.logoContainer}>
                     <img
                         src={logo}
-                        alt='Tech Amazon Logo'
+                        alt="Tech Amazon Logo"
                         style={styles.logoImg}
                     />
                     Uirapuru
@@ -210,35 +206,34 @@ const Login = ({ history }) => {
 
                 <TextField
                     {...textFieldProps}
-                    label='Nível de acesso'
+                    label="Nível de acesso"
                     onChange={event => {
                         setLevel(event.target.value)
                     }}
                 />
                 <TextField
                     {...textFieldProps}
-                    label='Senha'
-                    type='password'
+                    label="Senha"
+                    type="password"
                     onChange={event => {
                         setPassword(event.target.value)
                     }}
                 />
 
-                {loading ?
+                {loading ? (
                     <div className={classes.progress}>
                         <CircularProgress className={classes.progressLine} />
                     </div>
-                    :
+                ) : (
                     <Button
-                        type='submit'
-                        variant='contained'
-                        color='primary'
-                        className={classes.button}>
-                        <Typography>
-                            ENTRAR
-                        </Typography>
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                    >
+                        <Typography>ENTRAR</Typography>
                     </Button>
-                }
+                )}
 
                 <Snackbar
                     open={error}
@@ -246,10 +241,12 @@ const Login = ({ history }) => {
                         setError(false)
                     }}
                     ContentProps={{
-                        'aria-describedby': 'message-id',
+                        'aria-describedby': 'message-id'
                     }}
                     message={
-                        <span id='message-id'>{errorMessage}, por favor tente novamente</span>
+                        <span id="message-id">
+                            {errorMessage}, por favor tente novamente
+                        </span>
                     }
                 />
             </form>

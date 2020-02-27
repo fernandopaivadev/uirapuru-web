@@ -11,7 +11,7 @@ import {
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import { isAuthenticated } from '../../services/auth';
+import { isAuthenticated } from '../../services/auth'
 import { api } from '../../services/api'
 import logo from '../../assets/logo.svg'
 
@@ -116,14 +116,13 @@ const Login = ({ history, match }) => {
             if (isAuthenticated()) {
                 history.push('/consumer-units')
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.message)
         }
         // eslint-disable-next-line
     }, [])
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async event => {
         try {
             event.preventDefault()
             setLoading(true)
@@ -141,8 +140,7 @@ const Login = ({ history, match }) => {
                 setLoading(false)
                 setPasswordChanged(true)
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.response.data.message)
 
             if (err.response.status === 404) {
@@ -179,7 +177,7 @@ const Login = ({ history, match }) => {
                 >
                     <img
                         src={logo}
-                        alt='Tech Amazon Logo'
+                        alt="Tech Amazon Logo"
                         style={{
                             width: '40px',
                             margin: '0px 15px 0px 0px'
@@ -188,63 +186,60 @@ const Login = ({ history, match }) => {
                     Uirapuru
                 </Typography>
 
-                {passwordChanged ?
+                {passwordChanged ? (
                     <Typography style={styles.message}>
                         Senha alterada com sucesso
                     </Typography>
-                    :
+                ) : (
                     <TextField
-                        id='outlined-password-input'
-                        label='Digite a nova senha'
-                        type='password'
+                        id="outlined-password-input"
+                        label="Digite a nova senha"
+                        type="password"
                         required={true}
-                        autoComplete='current-password'
-                        margin='normal'
-                        variant='outlined'
+                        autoComplete="current-password"
+                        margin="normal"
+                        variant="outlined"
                         className={classes.textField}
                         onChange={event => {
                             setPassword(event.target.value)
                         }}
                     />
-                }
+                )}
 
-                {loading ?
+                {loading ? (
                     <div style={styles.loadingContainer}>
                         <CircularProgress style={styles.loading} />
                     </div>
-                    :
-                    passwordChanged ?
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            onClick={goToLogin}
-                            className={classes.button}
-                        >
-                            FAZER LOGIN
-                        </Button>
-                        :
-                        <Button
-                            type='submit'
-                            variant='contained'
-                            color='primary'
-                            className={classes.button}
-                        >
-                            REDEFINIR SENHA
-                        </Button>
-                }
+                ) : passwordChanged ? (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={goToLogin}
+                        className={classes.button}
+                    >
+                        FAZER LOGIN
+                    </Button>
+                ) : (
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                    >
+                        REDEFINIR SENHA
+                    </Button>
+                )}
 
                 <Snackbar
                     open={error}
-                    onClose={
-                        () => {
-                            setError(false)
-                        }
-                    }
+                    onClose={() => {
+                        setError(false)
+                    }}
                     ContentProps={{
-                        'aria-describedby': 'message-id',
+                        'aria-describedby': 'message-id'
                     }}
                     message={
-                        <span id='message-id'>
+                        <span id="message-id">
                             {errorMessage}, por favor tente novamente
                         </span>
                     }

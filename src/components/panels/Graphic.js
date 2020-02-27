@@ -1,8 +1,4 @@
-import React, {
-    useEffect,
-    useState,
-    memo
-} from 'react'
+import React, { useEffect, useState, memo } from 'react'
 
 import { api } from '../../services/api'
 
@@ -56,7 +52,7 @@ const styles = {
         right: '0',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'space-around'
     },
     display: {
         color: themes.default.black,
@@ -125,12 +121,8 @@ const Graphic = ({ device, setDevicePopup }) => {
 
             const response = await api.get(
                 `/device/messages?device=${
-                device.id
-                }&from=${
-                before.toISOString()
-                }&to=${
-                now.toISOString()
-                }`
+                    device.id
+                }&from=${before.toISOString()}&to=${now.toISOString()}`
             )
 
             const { status } = response
@@ -150,12 +142,10 @@ const Graphic = ({ device, setDevicePopup }) => {
                 setTimestamps(_timestamps)
                 setLoading(false)
             }
-        }
-        catch (err) {
+        } catch (err) {
             try {
                 console.log(err.response.data.message)
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err.message)
             }
         }
@@ -173,130 +163,122 @@ const Graphic = ({ device, setDevicePopup }) => {
         doubleScreen
     }
 
-    return <div style={styles.main}>
-        {loading ?
-            <div style={styles.loadingContainer}>
-                <div style={styles.loading}>
-                    <CircularProgress style={styles.loadingIcon} />
+    return (
+        <div style={styles.main}>
+            {loading ? (
+                <div style={styles.loadingContainer}>
+                    <div style={styles.loading}>
+                        <CircularProgress style={styles.loadingIcon} />
+                    </div>
                 </div>
-            </div>
-            :
-            doubleScreen ?
+            ) : doubleScreen ? (
                 <>
-                    <Plot
-                        {...plotProps}
-                    />
-                    <Plot
-                        {...plotProps}
-                    />
+                    <Plot {...plotProps} />
+                    <Plot {...plotProps} />
                 </>
-                :
-                <Plot
-                    {...plotProps}
-                />
-        }
+            ) : (
+                <Plot {...plotProps} />
+            )}
 
-        <div style={styles.controls}>
-            <Tooltip title='Fechar'>
-                <IconButton
-                    component='span'
-                    onClick={() => {
-                        setDevicePopup(false)
+            <div style={styles.controls}>
+                <Tooltip title="Fechar">
+                    <IconButton
+                        component="span"
+                        onClick={() => {
+                            setDevicePopup(false)
+                        }}
+                        style={styles.controlBtn}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Dividir tela">
+                    <IconButton
+                        component="span"
+                        onClick={() => {
+                            setDoubleScreen(!doubleScreen)
+                        }}
+                        style={styles.controlBtn}
+                    >
+                        {doubleScreen ? (
+                            <RemoveScreenIcon />
+                        ) : (
+                            <AddScreenIcon />
+                        )}
+                    </IconButton>
+                </Tooltip>
+
+                <select
+                    style={styles.select}
+                    onChange={event => {
+                        setPeriod(event.target.options.selectedIndex)
                     }}
-                    style={styles.controlBtn}
                 >
-                    <CloseIcon />
-                </IconButton>
-            </Tooltip>
-
-            <Tooltip title='Dividir tela'>
-                <IconButton
-                    component='span'
-                    onClick={() => {
-                        setDoubleScreen(!doubleScreen)
-                    }}
-                    style={styles.controlBtn}
-                >
-                    {doubleScreen ?
-                        <RemoveScreenIcon />
-                        :
-                        <AddScreenIcon />
-                    }
-                </IconButton>
-            </Tooltip>
-
-            <select
-                style={styles.select}
-                onChange={event => {
-                    setPeriod(event.target.options.selectedIndex)
-                }}
-            >
-                <option style={styles.option}>
-                    10 Dias
-                </option>
-                <option style={styles.option}>
-                    30 Dias
-                </option>
-                <option style={styles.option}>
-                    60 Dias
-                </option>
-            </select>
-            <ul>
-                {display.temperature ?
-                    <li>
-                        <Typography style={{
-                            ...styles.display,
-                            borderColor: themes.default.traceColors[0]
-                        }}>
-                            {display.temperature} °C
-                        </Typography>
-                    </li>
-                    : null
-                }
-                {display.humidity ?
-                    <li>
-                        <Typography style={{
-                            ...styles.display,
-                            borderColor: themes.default.traceColors[1]
-                        }}>
-                            {display.humidity} % U.R.
-                        </Typography>
-                    </li>
-                    : null
-                }
-                {display.voltage ?
-                    <li>
-                        <Typography style={{
-                            ...styles.display,
-                            borderColor: themes.default.traceColors[2]
-                        }}>
-                            {display.voltage} V
-                        </Typography>
-                    </li>
-                    : null
-                }
-                {display.voltageLevel ?
-                    <li>
-                        <Typography style={{
-                            ...styles.display,
-                            borderColor: themes.default.traceColors[3]
-                        }}>
-                            {display.voltageLevel} % V Max
-                        </Typography>
-                    </li>
-                    : null
-                }
-                {display.time ?
-                    <li>
-                        <Typography style={styles.time}>
-                            {display.time}
-                        </Typography>
-                    </li>
-                    : null
-                }
-            </ul>
+                    <option style={styles.option}>10 Dias</option>
+                    <option style={styles.option}>30 Dias</option>
+                    <option style={styles.option}>60 Dias</option>
+                </select>
+                <ul>
+                    {display.temperature ? (
+                        <li>
+                            <Typography
+                                style={{
+                                    ...styles.display,
+                                    borderColor: themes.default.traceColors[0]
+                                }}
+                            >
+                                {display.temperature} °C
+                            </Typography>
+                        </li>
+                    ) : null}
+                    {display.humidity ? (
+                        <li>
+                            <Typography
+                                style={{
+                                    ...styles.display,
+                                    borderColor: themes.default.traceColors[1]
+                                }}
+                            >
+                                {display.humidity} % U.R.
+                            </Typography>
+                        </li>
+                    ) : null}
+                    {display.voltage ? (
+                        <li>
+                            <Typography
+                                style={{
+                                    ...styles.display,
+                                    borderColor: themes.default.traceColors[2]
+                                }}
+                            >
+                                {display.voltage} V
+                            </Typography>
+                        </li>
+                    ) : null}
+                    {display.voltageLevel ? (
+                        <li>
+                            <Typography
+                                style={{
+                                    ...styles.display,
+                                    borderColor: themes.default.traceColors[3]
+                                }}
+                            >
+                                {display.voltageLevel} % V Max
+                            </Typography>
+                        </li>
+                    ) : null}
+                    {display.time ? (
+                        <li>
+                            <Typography style={styles.time}>
+                                {display.time}
+                            </Typography>
+                        </li>
+                    ) : null}
+                </ul>
+            </div>
         </div>
-    </div >
+    )
 }
 
 export default memo(Graphic)

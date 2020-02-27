@@ -15,7 +15,4 @@ api.interceptors.request.use(async config => {
     return config
 })
 
-export {
-    api,
-    baseURL
-}
+export { api, baseURL }

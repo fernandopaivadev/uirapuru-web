@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
             },
             '&.Mui-focused fieldset': {
                 borderColor: themes.default.lightGreen
-            },
+            }
         }
     },
     link: {
@@ -120,7 +120,7 @@ const Login = ({ history }) => {
         // eslint-disable-next-line
     }, [])
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async event => {
         try {
             event.preventDefault()
             setLoading(true)
@@ -136,8 +136,7 @@ const Login = ({ history }) => {
                 login(response.data.token)
                 history.push('/loading')
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.response.data.message)
 
             if (err.response.status === 404) {
@@ -168,12 +167,10 @@ const Login = ({ history }) => {
     return (
         <Paper style={styles.paper}>
             <form onSubmit={handleSubmit}>
-                <Typography
-                    style={styles.logoContainer}
-                >
+                <Typography style={styles.logoContainer}>
                     <img
                         src={logo}
-                        alt='Tech Amazon Logo'
+                        alt="Tech Amazon Logo"
                         style={styles.logoImg}
                     />
                     Uirapuru
@@ -181,46 +178,46 @@ const Login = ({ history }) => {
 
                 <TextField
                     {...textFieldProps}
-                    label='E-mail ou nome de usuário'
+                    label="E-mail ou nome de usuário"
                     onChange={event => {
                         setUsername(event.target.value)
                     }}
                 />
                 <TextField
                     {...textFieldProps}
-                    label='Senha'
-                    type='password'
+                    label="Senha"
+                    type="password"
                     onChange={event => {
                         setPassword(event.target.value)
                     }}
                 />
 
-                {loading ?
+                {loading ? (
                     <div style={styles.loadingContainer}>
                         <CircularProgress style={styles.loading} />
                     </div>
-                    :
+                ) : (
                     <Button
-                        type='submit'
-                        variant='contained'
-                        className={classes.button}>
+                        type="submit"
+                        variant="contained"
+                        className={classes.button}
+                    >
                         <Typography style={styles.buttonText}>
                             ENTRAR
                         </Typography>
                     </Button>
-                }
+                )}
 
-                {loading ?
-                    null
-                    :
+                {loading ? null : (
                     <Typography style={styles.linksContainer}>
                         <Link
                             className={classes.link}
                             onClick={() => {
                                 history.push('/forgot-password')
-                            }}>
+                            }}
+                        >
                             Esqueci minha senha
-                            </Link>
+                        </Link>
                         <Link
                             className={classes.link}
                             onClick={() => {
@@ -230,7 +227,7 @@ const Login = ({ history }) => {
                             Sou administrador
                         </Link>
                     </Typography>
-                }
+                )}
 
                 <Snackbar
                     open={error}
@@ -238,16 +235,16 @@ const Login = ({ history }) => {
                         setError(false)
                     }}
                     ContentProps={{
-                        'aria-describedby': 'message-id',
+                        'aria-describedby': 'message-id'
                     }}
                     message={
-                        <span id='message-id'>
+                        <span id="message-id">
                             {errorMessage}, por favor tente novamente
                         </span>
                     }
                 />
             </form>
-        </Paper >
+        </Paper>
     )
 }
 

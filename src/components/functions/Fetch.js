@@ -13,8 +13,7 @@ const Loading = ({ history }) => {
                     if (status === 200) {
                         storeUsersList(data.users)
                     }
-                }
-                else {
+                } else {
                     const { status, data } = await api.get('/user/data')
 
                     if (status === 200) {
@@ -23,17 +22,16 @@ const Loading = ({ history }) => {
                 }
 
                 history.push('/dashboard')
-            }
-            else {
+            } else {
                 history.push('/login')
             }
-        }
-        catch (err) {
+        } catch (err) {
             try {
                 console.log(err.response.data.message)
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err.message)
+            } finally {
+                history.push('/login')
             }
         }
     }

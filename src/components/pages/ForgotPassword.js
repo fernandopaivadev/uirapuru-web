@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { isAuthenticated } from '../../services/auth';
+import { isAuthenticated } from '../../services/auth'
 import { api } from '../../services/api'
 import logo from '../../assets/logo.svg'
 
@@ -43,7 +43,7 @@ const useStyles = makeStyles(() => ({
             },
             '&.Mui-focused fieldset': {
                 borderColor: themes.default.lightGreen
-            },
+            }
         }
     }
 }))
@@ -115,19 +115,20 @@ const Login = ({ history }) => {
             if (isAuthenticated()) {
                 history.push('/consumer-units')
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.message)
         }
         // eslint-disable-next-line
     }, [])
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async event => {
         try {
             event.preventDefault()
             setLoading(true)
 
-            const response = await api.get(`/user/forgot-password?username=${username}`)
+            const response = await api.get(
+                `/user/forgot-password?username=${username}`
+            )
 
             const { status } = response
 
@@ -135,8 +136,7 @@ const Login = ({ history }) => {
                 setLoading(false)
                 setEmailSent(true)
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.response.data.message)
 
             if (err.response.status === 404) {
@@ -167,55 +167,52 @@ const Login = ({ history }) => {
     return (
         <Paper style={styles.paper}>
             <form onSubmit={handleSubmit}>
-                <Typography
-                    style={styles.logoContainer}
-                >
+                <Typography style={styles.logoContainer}>
                     <img
                         src={logo}
-                        alt='Tech Amazon Logo'
+                        alt="Tech Amazon Logo"
                         style={styles.logoImg}
                     />
                     Uirapuru
                 </Typography>
 
-                {emailSent ?
+                {emailSent ? (
                     <Typography style={styles.message}>
                         Enviamos um link para o seu email
                     </Typography>
-                    :
+                ) : (
                     <TextField
                         {...textFieldProps}
-                        label='Email ou Nome de usuário'
+                        label="Email ou Nome de usuário"
                         onChange={event => {
                             setUsername(event.target.value)
                         }}
                     />
-                }
+                )}
 
-                {loading ?
+                {loading ? (
                     <div style={styles.loadingContainer}>
                         <CircularProgress style={styles.loading} />
                     </div>
-                    :
-                    emailSent ?
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            onClick={goToLogin}
-                            className={classes.button}
-                        >
-                            FAZER LOGIN
-                        </Button>
-                        :
-                        <Button
-                            type='submit'
-                            variant='contained'
-                            color='primary'
-                            className={classes.button}
-                        >
-                            ENVIAR LINK
-                        </Button>
-                }
+                ) : emailSent ? (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={goToLogin}
+                        className={classes.button}
+                    >
+                        FAZER LOGIN
+                    </Button>
+                ) : (
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                    >
+                        ENVIAR LINK
+                    </Button>
+                )}
 
                 <Snackbar
                     open={error}
@@ -226,7 +223,7 @@ const Login = ({ history }) => {
                         'aria-describedby': 'message-id'
                     }}
                     message={
-                        <span id='message-id'>
+                        <span id="message-id">
                             {errorMessage}, por favor tente novamente
                         </span>
                     }

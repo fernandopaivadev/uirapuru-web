@@ -7,12 +7,7 @@ const themes = {
         gray: '#555',
         lightGray: '#ddd',
         white: '#fff',
-        traceColors: [
-            '#ffbd45',
-            '#1e88e5',
-            '#df78ef',
-            '#ff5722'
-        ]
+        traceColors: ['#ffbd45', '#1e88e5', '#df78ef', '#ff5722']
     },
     uirapuru: {
         yellow: '#ffcd04',
