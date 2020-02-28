@@ -74,6 +74,10 @@ const styles = {
         fontSize: '24px',
         color: themes.default.gray,
         margin: '5px'
+    },
+    dialogTitle: {
+        textAlign: 'center',
+        alignItems: 'top'
     }
 }
 
@@ -268,10 +272,7 @@ const Dashboard = () => {
                 fullScreen
             >
                 <DialogTitle
-                    style={{
-                        textAlign: 'center',
-                        alignItems: 'top'
-                    }} >
+                    style={styles.dialogTitle}>
                     <Typography style={styles.title}>
                         {currentDevice.name}
                     </Typography>

@@ -220,27 +220,27 @@ const Settings = () => {
                         </Typography>
                     </div>
                 ) : (
-                    <div>
-                        <Typography style={styles.tittle}>
-                            Nome Fantasia:
+                        <div>
+                            <Typography style={styles.tittle}>
+                                Nome Fantasia:
                         </Typography>
-                        <Typography style={styles.content}>
-                            {user?.company?.name ?? '--'}
-                        </Typography>
+                            <Typography style={styles.content}>
+                                {user?.company?.name ?? '--'}
+                            </Typography>
 
-                        <Typography style={styles.tittle}>
-                            Razão Social:
+                            <Typography style={styles.tittle}>
+                                Razão Social:
                         </Typography>
-                        <Typography style={styles.content}>
-                            {user?.company?.tradeName ?? '--'}
-                        </Typography>
+                            <Typography style={styles.content}>
+                                {user?.company?.tradeName ?? '--'}
+                            </Typography>
 
-                        <Typography style={styles.tittle}>CNPJ:</Typography>
-                        <Typography style={styles.content}>
-                            {formatCNPJ(user?.company?.cnpj) ?? '--'}
-                        </Typography>
-                    </div>
-                )}
+                            <Typography style={styles.tittle}>CNPJ:</Typography>
+                            <Typography style={styles.content}>
+                                {formatCNPJ(user?.company?.cnpj) ?? '--'}
+                            </Typography>
+                        </div>
+                    )}
                 {isAdmin() ? (
                     <Avatar
                         style={styles.button}

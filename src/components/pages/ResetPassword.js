@@ -191,20 +191,20 @@ const Login = ({ history, match }) => {
                         Senha alterada com sucesso
                     </Typography>
                 ) : (
-                    <TextField
-                        id="outlined-password-input"
-                        label="Digite a nova senha"
-                        type="password"
-                        required={true}
-                        autoComplete="current-password"
-                        margin="normal"
-                        variant="outlined"
-                        className={classes.textField}
-                        onChange={event => {
-                            setPassword(event.target.value)
-                        }}
-                    />
-                )}
+                        <TextField
+                            id="outlined-password-input"
+                            label="Digite a nova senha"
+                            type="password"
+                            required={true}
+                            autoComplete="current-password"
+                            margin="normal"
+                            variant="outlined"
+                            className={classes.textField}
+                            onChange={event => {
+                                setPassword(event.target.value)
+                            }}
+                        />
+                    )}
 
                 {loading ? (
                     <div style={styles.loadingContainer}>
@@ -220,15 +220,15 @@ const Login = ({ history, match }) => {
                         FAZER LOGIN
                     </Button>
                 ) : (
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                    >
-                        REDEFINIR SENHA
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                            >
+                                REDEFINIR SENHA
                     </Button>
-                )}
+                        )}
 
                 <Snackbar
                     open={error}

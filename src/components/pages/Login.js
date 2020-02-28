@@ -197,16 +197,16 @@ const Login = ({ history }) => {
                         <CircularProgress style={styles.loading} />
                     </div>
                 ) : (
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        className={classes.button}
-                    >
-                        <Typography style={styles.buttonText}>
-                            ENTRAR
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            className={classes.button}
+                        >
+                            <Typography style={styles.buttonText}>
+                                ENTRAR
                         </Typography>
-                    </Button>
-                )}
+                        </Button>
+                    )}
 
                 {loading ? null : (
                     <Typography style={styles.linksContainer}>

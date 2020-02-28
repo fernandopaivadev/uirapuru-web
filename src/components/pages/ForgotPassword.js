@@ -181,14 +181,14 @@ const Login = ({ history }) => {
                         Enviamos um link para o seu email
                     </Typography>
                 ) : (
-                    <TextField
-                        {...textFieldProps}
-                        label="Email ou Nome de usuário"
-                        onChange={event => {
-                            setUsername(event.target.value)
-                        }}
-                    />
-                )}
+                        <TextField
+                            {...textFieldProps}
+                            label="Email ou Nome de usuário"
+                            onChange={event => {
+                                setUsername(event.target.value)
+                            }}
+                        />
+                    )}
 
                 {loading ? (
                     <div style={styles.loadingContainer}>
@@ -204,15 +204,15 @@ const Login = ({ history }) => {
                         FAZER LOGIN
                     </Button>
                 ) : (
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                    >
-                        ENVIAR LINK
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                            >
+                                ENVIAR LINK
                     </Button>
-                )}
+                        )}
 
                 <Snackbar
                     open={error}

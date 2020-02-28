@@ -225,15 +225,15 @@ const Login = ({ history }) => {
                         <CircularProgress className={classes.progressLine} />
                     </div>
                 ) : (
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                    >
-                        <Typography>ENTRAR</Typography>
-                    </Button>
-                )}
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                        >
+                            <Typography>ENTRAR</Typography>
+                        </Button>
+                    )}
 
                 <Snackbar
                     open={error}

@@ -1,0 +1,16 @@
+{
+    "editor.fontFamily": "Fira Code",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "files.autoSave": "onFocusChange",
+    "explorer.sortOrder": "type",
+    "eslint.alwaysShowStatus": true,
+    "eslint.codeActionsOnSave.mode": "all",
+    "javascript.validate.enable": false,
+
+    "editor.cursorStyle": "block",
+    "editor.cursorBlinking": "smooth",
+    "spellright.language": ["en"],
+    "spellright.documentTypes": ["markdown", "latex", "plaintext"]
+}

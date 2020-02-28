@@ -36,7 +36,6 @@ const styles = {
     },
     main: {
         display: 'flex',
-        borderTop: `1px ${themes.default.lightGray} solid`,
         position: 'relative'
     },
     controlBtn: {
@@ -111,6 +110,9 @@ const Graphic = ({ device, setDevicePopup }) => {
                 case 2:
                     before.setDate(before.getDate() - 60)
                     break
+                case 3:
+                    before.setDate(before.getDate() - 90)
+                    break
                 default:
                     before.setDate(before.getDate() - 10)
                     break
@@ -120,7 +122,7 @@ const Graphic = ({ device, setDevicePopup }) => {
 
             const response = await api.get(
                 `/device/messages?device=${
-                    device.id
+                device.id
                 }&from=${before.toISOString()}&to=${now.toISOString()}`
             )
 
@@ -176,8 +178,8 @@ const Graphic = ({ device, setDevicePopup }) => {
                     <Plot {...plotProps} />
                 </>
             ) : (
-                <Plot {...plotProps} />
-            )}
+                        <Plot {...plotProps} />
+                    )}
 
             <div style={styles.controls}>
                 <Tooltip title="Fechar">
@@ -203,8 +205,8 @@ const Graphic = ({ device, setDevicePopup }) => {
                         {doubleScreen ? (
                             <RemoveScreenIcon />
                         ) : (
-                            <AddScreenIcon />
-                        )}
+                                <AddScreenIcon />
+                            )}
                     </IconButton>
                 </Tooltip>
 
@@ -217,6 +219,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                     <option style={styles.option}>10 Dias</option>
                     <option style={styles.option}>30 Dias</option>
                     <option style={styles.option}>60 Dias</option>
+                    <option style={styles.option}>90 Dias</option>
                 </select>
                 <ul>
                     {display.temperature ? (
