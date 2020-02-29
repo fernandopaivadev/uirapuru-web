@@ -93,7 +93,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
     ]
 
     return (
-        <Suspense fallback="">
+        <Suspense fallback=''>
             <Plotly
                 data={[...traces]}
                 layout={{

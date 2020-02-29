@@ -1,19 +1,13 @@
-import React, {
-    useEffect,
-    useState,
-    memo
-} from 'react'
+import React, { useEffect, useState, memo } from 'react'
 
-import {
-    Paper,
-    Typography,
-    Dialog,
-    DialogTitle
-} from '@material-ui/core/'
+import { Paper, Typography, Dialog, DialogTitle } from '@material-ui/core/'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThermometerThreeQuarters } from '@fortawesome/free-solid-svg-icons'
-import { faTint, faBolt } from '@fortawesome/free-solid-svg-icons'
+import {
+    faThermometerThreeQuarters,
+    faTint,
+    faBolt
+} from '@fortawesome/free-solid-svg-icons'
 
 import Layout from '../layouts/Layout'
 import Graphic from '../panels/Graphic'
@@ -29,7 +23,8 @@ const styles = {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        transform: 'translateX(-50%) translateY(-50%)'
+        transform: 'translateX(-50%) translateY(-50%)',
+        display: 'flex'
     },
     empty: {
         position: 'absolute',
@@ -125,13 +120,11 @@ const Dashboard = () => {
                         topic,
                         payload
                     })
-                }
-                catch (err) {
+                } catch (err) {
                     console.log(err.message)
                 }
             })
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.message)
         }
     }
@@ -143,8 +136,7 @@ const Dashboard = () => {
                 webSocketConfig()
                 setInitialized(true)
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err.message)
         }
         // eslint-disable-next-line
@@ -181,10 +173,8 @@ const Dashboard = () => {
 
         return (
             <Paper style={styles.paper}>
-                <Typography style={styles.title}>
-                    {name}
-                </Typography>
-                {temperature ?
+                <Typography style={styles.title}>{name}</Typography>
+                {temperature ? (
                     <div style={styles.value}>
                         <FontAwesomeIcon
                             style={styles.valueIcon}
@@ -195,9 +185,8 @@ const Dashboard = () => {
                         </Typography>
                         {temperature} °C
                     </div>
-                    : null
-                }
-                {humidity ?
+                ) : null}
+                {humidity ? (
                     <div style={styles.value}>
                         <FontAwesomeIcon
                             style={styles.valueIcon}
@@ -208,86 +197,76 @@ const Dashboard = () => {
                         </Typography>
                         {humidity} %
                     </div>
-                    : null
-                }
-                {voltage ?
+                ) : null}
+                {voltage ? (
                     <div style={styles.value}>
                         <FontAwesomeIcon
                             style={styles.valueIcon}
                             icon={faBolt}
                         />
-                        <Typography style={styles.cardText}>
-                            Tensão:
-                        </Typography>
+                        <Typography style={styles.cardText}>Tensão:</Typography>
                         {voltage} V
                     </div>
-                    : null
-                }
-                {!value ?
+                ) : null}
+                {!value ? (
                     <Typography style={styles.cardText}>
                         Desconectado
                     </Typography>
-                    : null
-                }
+                ) : null}
             </Paper>
         )
     }
 
-    return <div>
-        <Layout />
-        {(consumerUnit?.devices?.length > 0) ?
-            <ul style={styles.devices}>
-                {consumerUnit.devices.map((device, index) => {
-                    const value = JSON.parse(buffer[index] ?? null)
+    return (
+        <div>
+            <Layout />
+            {consumerUnit?.devices?.length > 0 ? (
+                <ul style={styles.devices}>
+                    {consumerUnit.devices.map((device, index) => {
+                        const value = JSON.parse(buffer[index] ?? null)
 
-                    return (
-                        <li
-                            key={index}
-                            onClick={() => {
-                                setDevicePopup(true)
-                                setCurrentDevice(device)
-                            }}
-                        >
-                            <Card
-                                name={device.name}
-                                value={value}
-                            />
-                        </li>
-                    )
-                })}
-            </ul>
-            :
-            <Paper style={styles.empty}>
-                Dispositivos não encontrados
-            </Paper>
-        }
-        {devicePopup ?
-            <Dialog
-                open={devicePopup}
-                onClose={() => {
-                    setDevicePopup(false)
-                    setCurrentDevice(null)
-                }}
-                scroll='paper'
-                fullScreen
-            >
-                <DialogTitle
-                    style={styles.dialogTitle}>
-                    <Typography style={styles.title}>
-                        {currentDevice.name}
-                    </Typography>
-                </DialogTitle>
-                <div
-                    style={{
-                        padding: '0px 30px 30px 30px'
+                        return (
+                            <li
+                                key={index}
+                                onClick={() => {
+                                    setDevicePopup(true)
+                                    setCurrentDevice(device)
+                                }}>
+                                <Card name={device.name} value={value} />
+                            </li>
+                        )
+                    })}
+                </ul>
+            ) : (
+                <Paper style={styles.empty}>Dispositivos não encontrados</Paper>
+            )}
+            {devicePopup ? (
+                <Dialog
+                    open={devicePopup}
+                    onClose={() => {
+                        setDevicePopup(false)
+                        setCurrentDevice(null)
                     }}
-                >
-                    <Graphic device={currentDevice} setDevicePopup={setDevicePopup} />
-                </div>
-            </Dialog>
-            : null
-        }
-    </div>
+                    scroll='paper'
+                    fullScreen>
+                    <DialogTitle style={styles.dialogTitle}>
+                        <Typography style={styles.title}>
+                            {currentDevice.name}
+                        </Typography>
+                    </DialogTitle>
+                    <div
+                        style={{
+                            padding: '0px 30px 30px 30px'
+                        }}>
+                        <Graphic
+                            device={currentDevice}
+                            setDevicePopup={setDevicePopup}
+                        />
+                    </div>
+                </Dialog>
+            ) : null}
+        </div>
+    )
 }
 
 export default memo(Dashboard)

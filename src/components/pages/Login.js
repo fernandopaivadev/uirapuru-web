@@ -170,7 +170,7 @@ const Login = ({ history }) => {
                 <Typography style={styles.logoContainer}>
                     <img
                         src={logo}
-                        alt="Tech Amazon Logo"
+                        alt='Tech Amazon Logo'
                         style={styles.logoImg}
                     />
                     Uirapuru
@@ -178,15 +178,15 @@ const Login = ({ history }) => {
 
                 <TextField
                     {...textFieldProps}
-                    label="E-mail ou nome de usuário"
+                    label='E-mail ou nome de usuário'
                     onChange={event => {
                         setUsername(event.target.value)
                     }}
                 />
                 <TextField
                     {...textFieldProps}
-                    label="Senha"
-                    type="password"
+                    label='Senha'
+                    type='password'
                     onChange={event => {
                         setPassword(event.target.value)
                     }}
@@ -197,16 +197,15 @@ const Login = ({ history }) => {
                         <CircularProgress style={styles.loading} />
                     </div>
                 ) : (
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            className={classes.button}
-                        >
-                            <Typography style={styles.buttonText}>
-                                ENTRAR
+                    <Button
+                        type='submit'
+                        variant='contained'
+                        className={classes.button}>
+                        <Typography style={styles.buttonText}>
+                            ENTRAR
                         </Typography>
-                        </Button>
-                    )}
+                    </Button>
+                )}
 
                 {loading ? null : (
                     <Typography style={styles.linksContainer}>
@@ -214,16 +213,14 @@ const Login = ({ history }) => {
                             className={classes.link}
                             onClick={() => {
                                 history.push('/forgot-password')
-                            }}
-                        >
+                            }}>
                             Esqueci minha senha
                         </Link>
                         <Link
                             className={classes.link}
                             onClick={() => {
                                 history.push('/admin/login')
-                            }}
-                        >
+                            }}>
                             Sou administrador
                         </Link>
                     </Typography>
@@ -238,7 +235,7 @@ const Login = ({ history }) => {
                         'aria-describedby': 'message-id'
                     }}
                     message={
-                        <span id="message-id">
+                        <span id='message-id'>
                             {errorMessage}, por favor tente novamente
                         </span>
                     }

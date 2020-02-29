@@ -5,9 +5,15 @@
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
         "hooks": {
+            "pre-commit": "lint-staged",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
             "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
         }
+    },
+    "lint-staged": {
+        "src/**/*.js": [
+            "eslint --fix"
+        ]
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.27",
@@ -31,10 +37,8 @@
         "build": "rm -rf build && react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "update": "ncu -u && npm install"
-    },
-    "eslintConfig": {
-        "extends": "react-app"
+        "update": "ncu -u && npm install",
+        "lint": "eslint --fix src/"
     },
     "browserslist": {
         "production": [
@@ -53,7 +57,13 @@
         "@commitlint/config-conventional": "^8.3.4",
         "commitizen": "^4.0.3",
         "cz-conventional-changelog": "^3.1.0",
-        "husky": "^4.2.3"
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.10.0",
+        "eslint-plugin-import": "^2.20.1",
+        "eslint-plugin-prettier": "^3.1.2",
+        "husky": "^4.2.3",
+        "lint-staged": "^10.0.8",
+        "prettier": "^1.19.1"
     },
     "config": {
         "commitizen": {

@@ -12,5 +12,18 @@
     "editor.cursorStyle": "block",
     "editor.cursorBlinking": "smooth",
     "spellright.language": ["en"],
-    "spellright.documentTypes": ["markdown", "latex", "plaintext"]
+    "spellright.documentTypes": ["markdown", "latex", "plaintext"],
+
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

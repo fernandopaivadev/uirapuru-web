@@ -198,7 +198,7 @@ const Login = ({ history }) => {
                 <Typography style={styles.logoContainer}>
                     <img
                         src={logo}
-                        alt="Tech Amazon Logo"
+                        alt='Tech Amazon Logo'
                         style={styles.logoImg}
                     />
                     Uirapuru
@@ -206,15 +206,15 @@ const Login = ({ history }) => {
 
                 <TextField
                     {...textFieldProps}
-                    label="Nível de acesso"
+                    label='Nível de acesso'
                     onChange={event => {
                         setLevel(event.target.value)
                     }}
                 />
                 <TextField
                     {...textFieldProps}
-                    label="Senha"
-                    type="password"
+                    label='Senha'
+                    type='password'
                     onChange={event => {
                         setPassword(event.target.value)
                     }}
@@ -225,15 +225,14 @@ const Login = ({ history }) => {
                         <CircularProgress className={classes.progressLine} />
                     </div>
                 ) : (
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className={classes.button}
-                        >
-                            <Typography>ENTRAR</Typography>
-                        </Button>
-                    )}
+                    <Button
+                        type='submit'
+                        variant='contained'
+                        color='primary'
+                        className={classes.button}>
+                        <Typography>ENTRAR</Typography>
+                    </Button>
+                )}
 
                 <Snackbar
                     open={error}
@@ -244,7 +243,7 @@ const Login = ({ history }) => {
                         'aria-describedby': 'message-id'
                     }}
                     message={
-                        <span id="message-id">
+                        <span id='message-id'>
                             {errorMessage}, por favor tente novamente
                         </span>
                     }

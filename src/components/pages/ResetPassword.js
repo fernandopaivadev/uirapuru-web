@@ -173,11 +173,10 @@ const Login = ({ history, match }) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         margin: 'auto'
-                    }}
-                >
+                    }}>
                     <img
                         src={logo}
-                        alt="Tech Amazon Logo"
+                        alt='Tech Amazon Logo'
                         style={{
                             width: '40px',
                             margin: '0px 15px 0px 0px'
@@ -191,20 +190,20 @@ const Login = ({ history, match }) => {
                         Senha alterada com sucesso
                     </Typography>
                 ) : (
-                        <TextField
-                            id="outlined-password-input"
-                            label="Digite a nova senha"
-                            type="password"
-                            required={true}
-                            autoComplete="current-password"
-                            margin="normal"
-                            variant="outlined"
-                            className={classes.textField}
-                            onChange={event => {
-                                setPassword(event.target.value)
-                            }}
-                        />
-                    )}
+                    <TextField
+                        id='outlined-password-input'
+                        label='Digite a nova senha'
+                        type='password'
+                        required={true}
+                        autoComplete='current-password'
+                        margin='normal'
+                        variant='outlined'
+                        className={classes.textField}
+                        onChange={event => {
+                            setPassword(event.target.value)
+                        }}
+                    />
+                )}
 
                 {loading ? (
                     <div style={styles.loadingContainer}>
@@ -212,23 +211,21 @@ const Login = ({ history, match }) => {
                     </div>
                 ) : passwordChanged ? (
                     <Button
-                        variant="contained"
-                        color="primary"
+                        variant='contained'
+                        color='primary'
                         onClick={goToLogin}
-                        className={classes.button}
-                    >
+                        className={classes.button}>
                         FAZER LOGIN
                     </Button>
                 ) : (
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                            >
-                                REDEFINIR SENHA
+                    <Button
+                        type='submit'
+                        variant='contained'
+                        color='primary'
+                        className={classes.button}>
+                        REDEFINIR SENHA
                     </Button>
-                        )}
+                )}
 
                 <Snackbar
                     open={error}
@@ -239,7 +236,7 @@ const Login = ({ history, match }) => {
                         'aria-describedby': 'message-id'
                     }}
                     message={
-                        <span id="message-id">
+                        <span id='message-id'>
                             {errorMessage}, por favor tente novamente
                         </span>
                     }

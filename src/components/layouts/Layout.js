@@ -138,7 +138,7 @@ const Layout = ({ history }) => {
         <div>
             <nav>
                 <ul style={styles.navbar}>
-                    <li style={styles.logo} key="logo">
+                    <li style={styles.logo} key='logo'>
                         <Avatar src={logo} style={styles.logoAvatar} />
 
                         <Typography style={styles.title}>
@@ -148,75 +148,68 @@ const Layout = ({ history }) => {
                     </li>
                     <li
                         style={styles.consumerUnit}
-                        key="consumer-unit"
+                        key='consumer-unit'
                         onClick={() => {
                             setConsumerUnitsPopup(true)
-                        }}
-                    >
+                        }}>
                         {getConsumerUnit() ? (
                             <Typography style={styles.consumerUnitTitle}>
                                 {getConsumerUnit()?.name}
                             </Typography>
                         ) : null}
                     </li>
-                    <li style={styles.profile} key="profile">
+                    <li style={styles.profile} key='profile'>
                         {isAdmin() ? (
-                            <Tooltip title="Usuários">
+                            <Tooltip title='Usuários'>
                                 <IconButton
                                     onClick={() => {
                                         setUsersPopup(true)
                                     }}
-                                    color="inherit"
-                                >
+                                    color='inherit'>
                                     <FaceIcon />
                                 </IconButton>
                             </Tooltip>
                         ) : null}
-                        <Tooltip title="Unidades Consumidoras">
+                        <Tooltip title='Unidades Consumidoras'>
                             <IconButton
                                 onClick={() => {
                                     setConsumerUnitsPopup(true)
                                 }}
-                                color="inherit"
-                            >
+                                color='inherit'>
                                 <RoomIcon />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Dashboard">
+                        <Tooltip title='Dashboard'>
                             <IconButton
                                 onClick={() => {
                                     history.push('/dashboard')
                                 }}
-                                color="inherit"
-                            >
+                                color='inherit'>
                                 <DashboardIcon />
                             </IconButton>
                         </Tooltip>
                         {isAdmin() && !getUser() ? (
-                            <Tooltip title="Sair">
+                            <Tooltip title='Sair'>
                                 <IconButton
                                     onClick={() => {
                                         logout()
                                         history.push('/login')
                                     }}
-                                    color="inherit"
-                                >
+                                    color='inherit'>
                                     <CloseIcon />
                                 </IconButton>
                             </Tooltip>
                         ) : (
-                            <Tooltip title="Perfil">
+                            <Tooltip title='Perfil'>
                                 <IconButton
                                     onClick={event => {
                                         setProfilePopup(event.currentTarget)
                                     }}
-                                    color="inherit"
-                                >
+                                    color='inherit'>
                                     <Avatar
                                         style={{
                                             background: themes.default.green
-                                        }}
-                                    >
+                                        }}>
                                         {getUser()?.person
                                             ? getUser()?.person?.name.split(
                                                   ''
@@ -235,21 +228,18 @@ const Layout = ({ history }) => {
                                 open={Boolean(profilePopup)}
                                 onClose={() => {
                                     setProfilePopup(null)
-                                }}
-                            >
+                                }}>
                                 <div
                                     style={{
                                         display: 'flex',
                                         alignItems: 'center'
-                                    }}
-                                >
+                                    }}>
                                     <Avatar
                                         style={{
                                             background: themes.default.green,
                                             color: themes.default.white,
                                             margin: '0px 0px 0px 20px'
-                                        }}
-                                    >
+                                        }}>
                                         {getUser().person
                                             ? getUser()?.person?.name.split(
                                                   ''
@@ -263,8 +253,7 @@ const Layout = ({ history }) => {
                                             color: themes.default.green,
                                             margin: '15px 16px 10px 16px',
                                             fontWeight: 'bold'
-                                        }}
-                                    >
+                                        }}>
                                         {getUser()?.username}
                                     </Typography>
                                 </div>
@@ -272,8 +261,7 @@ const Layout = ({ history }) => {
                                     style={{
                                         color: themes.default.gray,
                                         margin: '15px 16px 10px 16px'
-                                    }}
-                                >
+                                    }}>
                                     {getUser()?.email}
                                 </Typography>
                                 <MenuItem
@@ -281,9 +269,8 @@ const Layout = ({ history }) => {
                                         border: `1px solid ${themes.default.lightGray}`
                                     }}
                                     onClick={() => {
-                                        history.push('/settings')
-                                    }}
-                                >
+                                        history.push('/profile')
+                                    }}>
                                     Meus Dados
                                 </MenuItem>
                                 <MenuItem
@@ -293,8 +280,7 @@ const Layout = ({ history }) => {
                                     onClick={() => {
                                         logout()
                                         history.push('/login')
-                                    }}
-                                >
+                                    }}>
                                     Sair
                                 </MenuItem>
                             </Menu>
@@ -305,8 +291,7 @@ const Layout = ({ history }) => {
                                 onClose={() => {
                                     setUsersPopup(false)
                                 }}
-                                scroll="body"
-                            >
+                                scroll='body'>
                                 <DialogTitle>
                                     <Typography style={styles.dialogTitle}>
                                         Escolha o Usuário
@@ -320,7 +305,7 @@ const Layout = ({ history }) => {
                                     <List>
                                         {getUsersList().map(user => (
                                             <ListItem
-                                                key="User"
+                                                key='User'
                                                 button
                                                 style={styles.link}
                                                 onClick={() => {
@@ -328,33 +313,28 @@ const Layout = ({ history }) => {
                                                     window.location.reload(
                                                         false
                                                     )
-                                                }}
-                                            >
+                                                }}>
                                                 <ListItemAvatar>
                                                     <Avatar
                                                         style={{
                                                             background:
                                                                 themes.default
                                                                     .green
-                                                        }}
-                                                    >
+                                                        }}>
                                                         <RoomIcon />
                                                     </Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText>
                                                     <Typography
-                                                        style={styles.name}
-                                                    >
+                                                        style={styles.name}>
                                                         {user?.username}
                                                     </Typography>
                                                     <Typography
-                                                        style={styles.number}
-                                                    >
+                                                        style={styles.number}>
                                                         {user?.email}
                                                     </Typography>
                                                     <Typography
-                                                        style={styles.address}
-                                                    >
+                                                        style={styles.address}>
                                                         {' '}
                                                         {`${user?.person?.name.split(
                                                             ' '
@@ -380,22 +360,19 @@ const Layout = ({ history }) => {
                                             display: 'flex',
                                             justifyContent: 'center',
                                             margin: '0px 0px 10px 0px'
-                                        }}
-                                    >
-                                        <Tooltip title="Cadastrar Usuário">
+                                        }}>
+                                        <Tooltip title='Cadastrar Usuário'>
                                             <IconButton
                                                 onClick={() => {
                                                     alert('ADD USER')
-                                                }}
-                                            >
+                                                }}>
                                                 <Avatar
                                                     style={{
                                                         background:
                                                             themes.default
                                                                 .green,
                                                         width: '40px'
-                                                    }}
-                                                >
+                                                    }}>
                                                     <AddIcon />
                                                 </Avatar>
                                             </IconButton>
@@ -410,8 +387,7 @@ const Layout = ({ history }) => {
                                 onClose={() => {
                                     setConsumerUnitsPopup(false)
                                 }}
-                                scroll="body"
-                            >
+                                scroll='body'>
                                 <DialogTitle>
                                     <Typography style={styles.dialogTitle}>
                                         Escolha a Unidade Consumidora
@@ -436,8 +412,7 @@ const Layout = ({ history }) => {
                                                             true
                                                         )
                                                     }}
-                                                    key={consumerUnit?.number}
-                                                >
+                                                    key={consumerUnit?.number}>
                                                     <ListItemAvatar>
                                                         <Avatar
                                                             style={{
@@ -445,22 +420,19 @@ const Layout = ({ history }) => {
                                                                     themes
                                                                         .default
                                                                         .green
-                                                            }}
-                                                        >
+                                                            }}>
                                                             <RoomIcon />
                                                         </Avatar>
                                                     </ListItemAvatar>
                                                     <ListItemText>
                                                         <Typography
-                                                            style={styles.name}
-                                                        >
+                                                            style={styles.name}>
                                                             {consumerUnit?.name}
                                                         </Typography>
                                                         <Typography
                                                             style={
                                                                 styles.number
-                                                            }
-                                                        >
+                                                            }>
                                                             UC:{' '}
                                                             {
                                                                 consumerUnit?.number
@@ -469,8 +441,7 @@ const Layout = ({ history }) => {
                                                         <Typography
                                                             style={
                                                                 styles.address
-                                                            }
-                                                        >
+                                                            }>
                                                             {
                                                                 consumerUnit?.address
                                                             }
@@ -487,22 +458,19 @@ const Layout = ({ history }) => {
                                             display: 'flex',
                                             justifyContent: 'center',
                                             margin: '0px 0px 10px 0px'
-                                        }}
-                                    >
-                                        <Tooltip title="Cadastrar Unidade">
+                                        }}>
+                                        <Tooltip title='Cadastrar Unidade'>
                                             <IconButton
                                                 onClick={() => {
                                                     alert('ADD U.C.')
-                                                }}
-                                            >
+                                                }}>
                                                 <Avatar
                                                     style={{
                                                         background:
                                                             themes.default
                                                                 .green,
                                                         width: '40px'
-                                                    }}
-                                                >
+                                                    }}>
                                                     <AddIcon />
                                                 </Avatar>
                                             </IconButton>

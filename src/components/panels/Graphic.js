@@ -101,28 +101,28 @@ const Graphic = ({ device, setDevicePopup }) => {
             let before = new Date()
 
             switch (period) {
-                case 0:
-                    before.setDate(before.getDate() - 10)
-                    break
-                case 1:
-                    before.setDate(before.getDate() - 30)
-                    break
-                case 2:
-                    before.setDate(before.getDate() - 60)
-                    break
-                case 3:
-                    before.setDate(before.getDate() - 90)
-                    break
-                default:
-                    before.setDate(before.getDate() - 10)
-                    break
+            case 0:
+                before.setDate(before.getDate() - 10)
+                break
+            case 1:
+                before.setDate(before.getDate() - 30)
+                break
+            case 2:
+                before.setDate(before.getDate() - 60)
+                break
+            case 3:
+                before.setDate(before.getDate() - 90)
+                break
+            default:
+                before.setDate(before.getDate() - 10)
+                break
             }
 
             setLoading(true)
 
             const response = await api.get(
                 `/device/messages?device=${
-                device.id
+                    device.id
                 }&from=${before.toISOString()}&to=${now.toISOString()}`
             )
 
@@ -178,35 +178,33 @@ const Graphic = ({ device, setDevicePopup }) => {
                     <Plot {...plotProps} />
                 </>
             ) : (
-                        <Plot {...plotProps} />
-                    )}
+                <Plot {...plotProps} />
+            )}
 
             <div style={styles.controls}>
-                <Tooltip title="Fechar">
+                <Tooltip title='Fechar'>
                     <IconButton
-                        component="span"
+                        component='span'
                         onClick={() => {
                             setDevicePopup(false)
                         }}
-                        style={styles.controlBtn}
-                    >
+                        style={styles.controlBtn}>
                         <CloseIcon />
                     </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Dividir tela">
+                <Tooltip title='Dividir tela'>
                     <IconButton
-                        component="span"
+                        component='span'
                         onClick={() => {
                             setDoubleScreen(!doubleScreen)
                         }}
-                        style={styles.controlBtn}
-                    >
+                        style={styles.controlBtn}>
                         {doubleScreen ? (
                             <RemoveScreenIcon />
                         ) : (
-                                <AddScreenIcon />
-                            )}
+                            <AddScreenIcon />
+                        )}
                     </IconButton>
                 </Tooltip>
 
@@ -214,8 +212,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                     style={styles.select}
                     onChange={event => {
                         setPeriod(event.target.options.selectedIndex)
-                    }}
-                >
+                    }}>
                     <option style={styles.option}>10 Dias</option>
                     <option style={styles.option}>30 Dias</option>
                     <option style={styles.option}>60 Dias</option>
@@ -228,8 +225,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                                 style={{
                                     ...styles.display,
                                     borderColor: themes.default.traceColors[0]
-                                }}
-                            >
+                                }}>
                                 {display.temperature} °C
                             </Typography>
                         </li>
@@ -240,8 +236,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                                 style={{
                                     ...styles.display,
                                     borderColor: themes.default.traceColors[1]
-                                }}
-                            >
+                                }}>
                                 {display.humidity} % U.R.
                             </Typography>
                         </li>
@@ -252,8 +247,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                                 style={{
                                     ...styles.display,
                                     borderColor: themes.default.traceColors[2]
-                                }}
-                            >
+                                }}>
                                 {display.voltage} V
                             </Typography>
                         </li>
@@ -264,8 +258,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                                 style={{
                                     ...styles.display,
                                     borderColor: themes.default.traceColors[3]
-                                }}
-                            >
+                                }}>
                                 {display.voltageLevel} % V Max
                             </Typography>
                         </li>

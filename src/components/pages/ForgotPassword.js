@@ -170,7 +170,7 @@ const Login = ({ history }) => {
                 <Typography style={styles.logoContainer}>
                     <img
                         src={logo}
-                        alt="Tech Amazon Logo"
+                        alt='Tech Amazon Logo'
                         style={styles.logoImg}
                     />
                     Uirapuru
@@ -181,14 +181,14 @@ const Login = ({ history }) => {
                         Enviamos um link para o seu email
                     </Typography>
                 ) : (
-                        <TextField
-                            {...textFieldProps}
-                            label="Email ou Nome de usuário"
-                            onChange={event => {
-                                setUsername(event.target.value)
-                            }}
-                        />
-                    )}
+                    <TextField
+                        {...textFieldProps}
+                        label='Email ou Nome de usuário'
+                        onChange={event => {
+                            setUsername(event.target.value)
+                        }}
+                    />
+                )}
 
                 {loading ? (
                     <div style={styles.loadingContainer}>
@@ -196,23 +196,21 @@ const Login = ({ history }) => {
                     </div>
                 ) : emailSent ? (
                     <Button
-                        variant="contained"
-                        color="primary"
+                        variant='contained'
+                        color='primary'
                         onClick={goToLogin}
-                        className={classes.button}
-                    >
+                        className={classes.button}>
                         FAZER LOGIN
                     </Button>
                 ) : (
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                            >
-                                ENVIAR LINK
+                    <Button
+                        type='submit'
+                        variant='contained'
+                        color='primary'
+                        className={classes.button}>
+                        ENVIAR LINK
                     </Button>
-                        )}
+                )}
 
                 <Snackbar
                     open={error}
@@ -223,7 +221,7 @@ const Login = ({ history }) => {
                         'aria-describedby': 'message-id'
                     }}
                     message={
-                        <span id="message-id">
+                        <span id='message-id'>
                             {errorMessage}, por favor tente novamente
                         </span>
                     }
