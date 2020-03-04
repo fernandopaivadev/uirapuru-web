@@ -2,27 +2,20 @@ import React, { useState, useEffect, memo } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
-    Typography,
     Avatar,
-    IconButton,
     Dialog,
-    DialogContentText,
-    DialogTitle,
     List,
     ListItem,
     ListItemText,
-    ListItemAvatar,
-    Tooltip,
-    Menu,
-    MenuItem
+    ListItemAvatar
 } from '@material-ui/core'
 
 import {
-    Close as CloseIcon,
     Room as RoomIcon,
     Face as FaceIcon,
     Dashboard as DashboardIcon,
-    Add as AddIcon
+    ExitToApp as LogoutIcon,
+    Person as ProfileIcon
 } from '@material-ui/icons'
 
 import {
@@ -36,96 +29,13 @@ import {
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
 import logo from '../../assets/logo.svg'
 
-import themes from '../../themes'
+import '../../styles/layout.css'
 
 const Layout = ({ history }) => {
-    const styles = {
-        navbar: {
-            width: '100vw',
-            height: '55px',
-            display: 'flex',
-            justifyContent: 'space-around',
-            color: themes.default.white,
-            background: `${themes.default.black}c`
-        },
-        logo: {
-            display: 'flex',
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            whiteSpace: 'nowrap',
-            marginRight: 'auto'
-        },
-        logoAvatar: {
-            marginRight: '15px',
-            marginLeft: '15px'
-        },
-        profile: {
-            display: 'flex',
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginLeft: 'auto'
-        },
-        consumerUnit: {
-            display: 'flex',
-            height: '100%',
-            width: '33vw',
-            alignItems: 'center',
-            justifyContent: 'center',
-            whiteSpace: 'nowrap',
-            cursor: 'pointer'
-        },
-        title: {
-            fontSize: '20px',
-            fontWeight: '600',
-            letterSpacing: '1.5px',
-            fontFamily: 'vibrocentric'
-        },
-        consumerUnitTitle: {
-            fontSize: '20px',
-            fontWeight: '500',
-            letterSpacing: '1.5px'
-        },
-        link: {
-            width: '100%',
-            cursor: 'pointer',
-            display: 'flex'
-        },
-        name: {
-            fontSize: '20px',
-            color: themes.default.green,
-            fontWeight: '500'
-        },
-        number: {
-            fontSize: '18px',
-            color: themes.default.gray,
-            fontWeight: '500'
-        },
-        address: {
-            fontSize: '18px',
-            color: themes.default.gray
-        },
-        dialogTitle: {
-            fontSize: '28px',
-            color: themes.default.gray,
-            fontWeight: '500',
-            textAlign: 'center',
-            margin: '0px 0px -20px 0px'
-        },
-        empty: {
-            fontSize: '24px',
-            color: themes.default.lightGray,
-            fontWeight: '500',
-            margin: '20px'
-        }
-    }
-
     const [usersPopup, setUsersPopup] = useState(isAdmin() && !getUser())
     const [consumerUnitsPopup, setConsumerUnitsPopup] = useState(
-        !getConsumerUnit()
+        getUser() && !getConsumerUnit()
     )
-    const [profilePopup, setProfilePopup] = useState(null)
 
     useEffect(() => {
         if (!isAuthenticated()) {
@@ -134,356 +44,210 @@ const Layout = ({ history }) => {
         // eslint-disable-next-line
     }, [])
 
-    return (
-        <div>
-            <nav>
-                <ul style={styles.navbar}>
-                    <li style={styles.logo} key='logo'>
-                        <Avatar src={logo} style={styles.logoAvatar} />
+    return <ul className='navbar'>
+        <li className='logo' key='logo'>
+            <img src={logo} alt='Tech Amazon Logo'/>
+            <h1 className='text'>
+                    Uirapuru
+                {isAdmin() ? ' [Admin]' : null}
+            </h1>
+        </li>
 
-                        <Typography style={styles.title}>
-                            Uirapuru
-                            {isAdmin() ? ' [Admin]' : null}
-                        </Typography>
-                    </li>
+        <li
+            key='consumer-unit'
+            onClick={() => {
+                setConsumerUnitsPopup(true)
+            }}>
+
+            {getConsumerUnit() ?
+                <h1 className='consumerUnitName'>
+                    {getConsumerUnit()?.name}
+                </h1>
+                : null
+            }
+        </li>
+
+        <li className='profile' key='profile'>
+            <h1 className='username'>{getUser()?.username ?? ''}</h1>
+
+            <button>
+                {getUser()?.person
+                    ? getUser()?.person?.name.split('')[0]
+                    : getUser()?.company?.tradeName.split('')[0]
+                }
+            </button>
+
+            <ul className='menu'>
+                <div className='user'>
+                    <Avatar className='avatar'>
+                        {getUser()?.person
+                            ? getUser()?.person?.name.split('')[0]
+                            : getUser()?.company?.tradeName.split('')[0]
+                        }
+                    </Avatar>
+
+                    <div className='text'>
+                        <h1 className='username'>
+                            {getUser()?.username || 'Administrador'
+                            }
+                        </h1>
+                        <h2 className='email'>{getUser()?.email}</h2>
+                    </div>
+                </div>
+
+                {isAdmin() ?
                     <li
-                        style={styles.consumerUnit}
-                        key='consumer-unit'
+                        className='item'
                         onClick={() => {
-                            setConsumerUnitsPopup(true)
+                            setUsersPopup(true)
                         }}>
-                        {getConsumerUnit() ? (
-                            <Typography style={styles.consumerUnitTitle}>
-                                {getConsumerUnit()?.name}
-                            </Typography>
-                        ) : null}
+                        <FaceIcon className='icon' />
+                            Usuários
                     </li>
-                    <li style={styles.profile} key='profile'>
-                        {isAdmin() ? (
-                            <Tooltip title='Usuários'>
-                                <IconButton
-                                    onClick={() => {
-                                        setUsersPopup(true)
-                                    }}
-                                    color='inherit'>
-                                    <FaceIcon />
-                                </IconButton>
-                            </Tooltip>
-                        ) : null}
-                        <Tooltip title='Unidades Consumidoras'>
-                            <IconButton
+                    : null
+                }
+
+                {getUser() ?
+                    <div>
+                        <li
+                            className='item'
+                            onClick={() => {
+                                history.push('/profile')
+                            }}>
+                            <ProfileIcon className='icon' />
+                                Meus dados
+                        </li>
+
+                        <li
+                            className='item'
+                            onClick={() => {
+                                setConsumerUnitsPopup(true)
+                            }}>
+                            <RoomIcon className='icon' />
+                                Unidades
+                        </li>
+
+                        <li
+                            className='item'
+                            onClick={() => {
+                                history.push('/dashboard')
+                            }}>
+                            <DashboardIcon className='icon' />
+                                Dashboard
+                        </li>
+                    </div>
+                    : null
+                }
+
+                {isAdmin() || getUser() ?
+                    <li
+                        className='item'
+                        onClick={() => {
+                            logout()
+                            history.push('/login')
+                        }}>
+                        <LogoutIcon className='icon' />
+                            Sair
+                    </li>
+                    : null
+                }
+            </ul>
+
+            <Dialog
+                open={usersPopup}
+                onClose={() => {
+                    setUsersPopup(false)
+                }}
+                scroll='body'>
+                <h1 className='dialog-title'>Escolha o Usuário</h1>
+
+                {getUsersList()?.length <= 0 ?
+                    <h1 className='empty'>
+                        Não há usuários cadastrados
+                    </h1>
+                    :
+                    <List>
+                        {getUsersList()?.map(user =>
+                            <ListItem
+                                key='User'
+                                button
+                                className='dialog-item'
                                 onClick={() => {
-                                    setConsumerUnitsPopup(true)
-                                }}
-                                color='inherit'>
-                                <RoomIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title='Dashboard'>
-                            <IconButton
-                                onClick={() => {
-                                    history.push('/dashboard')
-                                }}
-                                color='inherit'>
-                                <DashboardIcon />
-                            </IconButton>
-                        </Tooltip>
-                        {isAdmin() && !getUser() ? (
-                            <Tooltip title='Sair'>
-                                <IconButton
-                                    onClick={() => {
-                                        logout()
-                                        history.push('/login')
-                                    }}
-                                    color='inherit'>
-                                    <CloseIcon />
-                                </IconButton>
-                            </Tooltip>
-                        ) : (
-                            <Tooltip title='Perfil'>
-                                <IconButton
-                                    onClick={event => {
-                                        setProfilePopup(event.currentTarget)
-                                    }}
-                                    color='inherit'>
-                                    <Avatar
-                                        style={{
-                                            background: themes.default.green
-                                        }}>
-                                        {getUser()?.person
-                                            ? getUser()?.person?.name.split(
-                                                  ''
-                                              )[0]
-                                            : getUser()?.company?.tradeName.split(
-                                                  ''
-                                              )[0]}
-                                    </Avatar>
-                                </IconButton>
-                            </Tooltip>
-                        )}
-                        {getUser() ? (
-                            <Menu
-                                anchorEl={profilePopup}
-                                keepMounted
-                                open={Boolean(profilePopup)}
-                                onClose={() => {
-                                    setProfilePopup(null)
+                                    storeUser(user)
+                                    window.location.reload(false)
                                 }}>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Avatar
-                                        style={{
-                                            background: themes.default.green,
-                                            color: themes.default.white,
-                                            margin: '0px 0px 0px 20px'
-                                        }}>
-                                        {getUser().person
-                                            ? getUser()?.person?.name.split(
-                                                  ''
-                                              )[0]
-                                            : getUser()?.company?.tradeName.split(
-                                                  ''
-                                              )[0]}
+                                <ListItemAvatar>
+                                    <Avatar className='avatar'>
+                                        <FaceIcon className='icon'/>
                                     </Avatar>
-                                    <Typography
-                                        style={{
-                                            color: themes.default.green,
-                                            margin: '15px 16px 10px 16px',
-                                            fontWeight: 'bold'
-                                        }}>
-                                        {getUser()?.username}
-                                    </Typography>
-                                </div>
-                                <Typography
-                                    style={{
-                                        color: themes.default.gray,
-                                        margin: '15px 16px 10px 16px'
-                                    }}>
-                                    {getUser()?.email}
-                                </Typography>
-                                <MenuItem
-                                    style={{
-                                        border: `1px solid ${themes.default.lightGray}`
-                                    }}
-                                    onClick={() => {
-                                        history.push('/profile')
-                                    }}>
-                                    Meus Dados
-                                </MenuItem>
-                                <MenuItem
-                                    style={{
-                                        borderBottom: `1px solid ${themes.default.lightGray}`
-                                    }}
-                                    onClick={() => {
-                                        logout()
-                                        history.push('/login')
-                                    }}>
-                                    Sair
-                                </MenuItem>
-                            </Menu>
-                        ) : null}
-                        {isAdmin() ? (
-                            <Dialog
-                                open={usersPopup}
-                                onClose={() => {
-                                    setUsersPopup(false)
+                                </ListItemAvatar>
+
+                                <ListItemText>
+                                    <h1 className='username'>
+                                        {user?.username}
+                                    </h1>
+
+                                    <h1 className='email'>
+                                        {user?.email}
+                                    </h1>
+                                </ListItemText>
+                            </ListItem>
+                        )}
+                    </List>
+                }
+            </Dialog>
+
+            <Dialog
+                open={consumerUnitsPopup}
+                onClose={() => {
+                    setConsumerUnitsPopup(false)
+                }}
+                scroll='body'>
+                <h1 className='dialog-title'>
+                    Escolha a Unidade Consumidora
+                </h1>
+
+                {getUser()?.consumerUnits?.length <= 0 ?
+                    <h1 className='empty'>
+                        Não há unidades consumidoras cadastradas
+                    </h1>
+                    :
+                    <List>
+                        {getUser()?.consumerUnits?.map(consumerUnit =>
+                            <ListItem
+                                button
+                                className='dialog-item'
+                                onClick={() => {
+                                    storeConsumerUnit(consumerUnit)
+                                    document.location.reload(true)
                                 }}
-                                scroll='body'>
-                                <DialogTitle>
-                                    <Typography style={styles.dialogTitle}>
-                                        Escolha o Usuário
-                                    </Typography>
-                                </DialogTitle>
-                                {getUsersList().length <= 0 ? (
-                                    <DialogContentText style={styles.empty}>
-                                        Não há usuários cadastrados
-                                    </DialogContentText>
-                                ) : (
-                                    <List>
-                                        {getUsersList().map(user => (
-                                            <ListItem
-                                                key='User'
-                                                button
-                                                style={styles.link}
-                                                onClick={() => {
-                                                    storeUser(user)
-                                                    window.location.reload(
-                                                        false
-                                                    )
-                                                }}>
-                                                <ListItemAvatar>
-                                                    <Avatar
-                                                        style={{
-                                                            background:
-                                                                themes.default
-                                                                    .green
-                                                        }}>
-                                                        <RoomIcon />
-                                                    </Avatar>
-                                                </ListItemAvatar>
-                                                <ListItemText>
-                                                    <Typography
-                                                        style={styles.name}>
-                                                        {user?.username}
-                                                    </Typography>
-                                                    <Typography
-                                                        style={styles.number}>
-                                                        {user?.email}
-                                                    </Typography>
-                                                    <Typography
-                                                        style={styles.address}>
-                                                        {' '}
-                                                        {`${user?.person?.name.split(
-                                                            ' '
-                                                        )[0] ??
-                                                            user?.company?.tradeName.split(
-                                                                ' '
-                                                            )[0]}
-                                                    ${user?.person?.name.split(
-                                                        ' '
-                                                    )[1] ??
-                                                        user?.company?.tradeName.split(
-                                                            ' '
-                                                        )[1]}`}
-                                                    </Typography>
-                                                </ListItemText>
-                                            </ListItem>
-                                        ))}
-                                    </List>
-                                )}
-                                {isAdmin() ? (
-                                    <ListItem
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            margin: '0px 0px 10px 0px'
-                                        }}>
-                                        <Tooltip title='Cadastrar Usuário'>
-                                            <IconButton
-                                                onClick={() => {
-                                                    alert('ADD USER')
-                                                }}>
-                                                <Avatar
-                                                    style={{
-                                                        background:
-                                                            themes.default
-                                                                .green,
-                                                        width: '40px'
-                                                    }}>
-                                                    <AddIcon />
-                                                </Avatar>
-                                            </IconButton>
-                                        </Tooltip>
-                                    </ListItem>
-                                ) : null}
-                            </Dialog>
-                        ) : null}
-                        {getUser() ? (
-                            <Dialog
-                                open={consumerUnitsPopup}
-                                onClose={() => {
-                                    setConsumerUnitsPopup(false)
-                                }}
-                                scroll='body'>
-                                <DialogTitle>
-                                    <Typography style={styles.dialogTitle}>
-                                        Escolha a Unidade Consumidora
-                                    </Typography>
-                                </DialogTitle>
-                                {getUser()?.consumerUnits?.length <= 0 ? (
-                                    <DialogContentText style={styles.empty}>
-                                        Não há unidades consumidoras cadastradas
-                                    </DialogContentText>
-                                ) : (
-                                    <List>
-                                        {getUser()?.consumerUnits?.map(
-                                            consumerUnit => (
-                                                <ListItem
-                                                    button
-                                                    style={styles.link}
-                                                    onClick={() => {
-                                                        storeConsumerUnit(
-                                                            consumerUnit
-                                                        )
-                                                        document.location.reload(
-                                                            true
-                                                        )
-                                                    }}
-                                                    key={consumerUnit?.number}>
-                                                    <ListItemAvatar>
-                                                        <Avatar
-                                                            style={{
-                                                                background:
-                                                                    themes
-                                                                        .default
-                                                                        .green
-                                                            }}>
-                                                            <RoomIcon />
-                                                        </Avatar>
-                                                    </ListItemAvatar>
-                                                    <ListItemText>
-                                                        <Typography
-                                                            style={styles.name}>
-                                                            {consumerUnit?.name}
-                                                        </Typography>
-                                                        <Typography
-                                                            style={
-                                                                styles.number
-                                                            }>
-                                                            UC:{' '}
-                                                            {
-                                                                consumerUnit?.number
-                                                            }
-                                                        </Typography>
-                                                        <Typography
-                                                            style={
-                                                                styles.address
-                                                            }>
-                                                            {
-                                                                consumerUnit?.address
-                                                            }
-                                                        </Typography>
-                                                    </ListItemText>
-                                                </ListItem>
-                                            )
-                                        )}
-                                    </List>
-                                )}
-                                {isAdmin() ? (
-                                    <ListItem
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            margin: '0px 0px 10px 0px'
-                                        }}>
-                                        <Tooltip title='Cadastrar Unidade'>
-                                            <IconButton
-                                                onClick={() => {
-                                                    alert('ADD U.C.')
-                                                }}>
-                                                <Avatar
-                                                    style={{
-                                                        background:
-                                                            themes.default
-                                                                .green,
-                                                        width: '40px'
-                                                    }}>
-                                                    <AddIcon />
-                                                </Avatar>
-                                            </IconButton>
-                                        </Tooltip>
-                                    </ListItem>
-                                ) : null}
-                            </Dialog>
-                        ) : null}
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    )
+                                key={consumerUnit?.number}>
+                                <ListItemAvatar>
+                                    <Avatar className='avatar'>
+                                        <RoomIcon className='icon'/>
+                                    </Avatar>
+                                </ListItemAvatar>
+
+                                <ListItemText>
+                                    <h1 className='name'>
+                                        {consumerUnit?.name}
+                                    </h1>
+
+                                    <h1 className='number'>
+                                        UC: {consumerUnit?.number}
+                                    </h1>
+
+                                    <h1 className='address'>
+                                        {consumerUnit?.address}
+                                    </h1>
+                                </ListItemText>
+                            </ListItem>
+                        )}
+                    </List>
+                }
+            </Dialog>
+        </li>
+    </ul>
 }
 
 export default withRouter(memo(Layout))

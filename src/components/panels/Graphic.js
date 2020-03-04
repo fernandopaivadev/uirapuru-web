@@ -5,10 +5,7 @@ import { api } from '../../services/api'
 import Plot from './Plot'
 
 import {
-    Typography,
-    IconButton,
-    CircularProgress,
-    Tooltip
+    CircularProgress
 } from '@material-ui/core'
 
 import {
@@ -19,73 +16,7 @@ import {
 
 import themes from '../../themes'
 
-const styles = {
-    option: {
-        font: `14px ${themes.default.black}`,
-        fontWeight: '600'
-    },
-    select: {
-        width: '100px',
-        height: '50px',
-        padding: '10px',
-        margin: '10px auto 10px auto',
-        borderRadius: '5px',
-        border: `1px ${themes.default.green} solid`,
-        font: `14px ${themes.default.green}`,
-        fontWeight: '600'
-    },
-    main: {
-        display: 'flex',
-        position: 'relative'
-    },
-    controlBtn: {
-        width: '45px',
-        height: '45px',
-        background: themes.default.green,
-        color: themes.default.white,
-        margin: '10px auto 10px auto'
-    },
-    controls: {
-        position: 'absolute',
-        top: '0',
-        right: '0',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around'
-    },
-    display: {
-        color: themes.default.black,
-        fontSize: '18px',
-        fontWeight: '600',
-        margin: '10px auto 10px auto',
-        padding: '5px 10px 5px 10px',
-        borderRadius: '5px',
-        border: `3px ${themes.default.green} solid`
-    },
-    time: {
-        color: themes.default.black,
-        fontSize: '14px',
-        fontWeight: '600',
-        margin: '15px auto 15px auto',
-        padding: '10px',
-        borderRadius: '5px',
-        border: `1px ${themes.default.green} solid`
-    },
-    loadingContainer: {
-        width: '100vw',
-        height: '90vh',
-        margin: 'auto'
-    },
-    loading: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
-    },
-    loadingIcon: {
-        color: themes.default.green
-    }
-}
+import '../../styles/graphic.css'
 
 const Graphic = ({ device, setDevicePopup }) => {
     const [display, setDisplay] = useState({})
@@ -126,29 +57,28 @@ const Graphic = ({ device, setDevicePopup }) => {
                 }&from=${before.toISOString()}&to=${now.toISOString()}`
             )
 
-            const { status } = response
+            const status = response?.status
 
             if (status === 200) {
-                const { messages } = response.data
+                const messages = response?.data?.messages
 
-                let _values = []
-                let _timestamps = []
+                if (messages.length > 0) {
+                    let _values = []
+                    let _timestamps = []
 
-                messages.forEach(message => {
-                    _values.push(JSON.parse(message.payload))
-                    _timestamps.push(message.timestamp)
-                })
+                    messages.forEach(message => {
+                        _values.push(JSON.parse(message.payload))
+                        _timestamps.push(message.timestamp)
+                    })
 
-                setValues(_values)
-                setTimestamps(_timestamps)
+                    setValues(_values)
+                    setTimestamps(_timestamps)
+                }
+
                 setLoading(false)
             }
         } catch (err) {
-            try {
-                console.log(err.response.data.message)
-            } catch (err) {
-                console.log(err.message)
-            }
+            console.log(err?.message ?? err?.response?.data?.message)
         }
     }
 
@@ -164,116 +94,124 @@ const Graphic = ({ device, setDevicePopup }) => {
         doubleScreen
     }
 
-    return (
-        <div style={styles.main}>
-            {loading ? (
-                <div style={styles.loadingContainer}>
-                    <div style={styles.loading}>
-                        <CircularProgress style={styles.loadingIcon} />
-                    </div>
+    return <div className='graphic'>
+        {loading ?
+            <div className='loading-container'>
+                <CircularProgress className='loading' />
+            </div>
+            :
+            values.length > 0 ?
+                doubleScreen ?
+                    <>
+                        <Plot {...plotProps} />
+                        <Plot {...plotProps} />
+                    </>
+                    :
+                    <Plot {...plotProps} />
+                :
+                <div className='empty'>
+                    <h1 className='text'>
+                        Não há dados registrados
+                    </h1>
                 </div>
-            ) : doubleScreen ? (
-                <>
-                    <Plot {...plotProps} />
-                    <Plot {...plotProps} />
-                </>
-            ) : (
-                <Plot {...plotProps} />
-            )}
+        }
 
-            <div style={styles.controls}>
-                <Tooltip title='Fechar'>
-                    <IconButton
-                        component='span'
-                        onClick={() => {
-                            setDevicePopup(false)
-                        }}
-                        style={styles.controlBtn}>
-                        <CloseIcon />
-                    </IconButton>
-                </Tooltip>
+        {!loading ?
+            <div className='controls'>
+                <button
+                    onClick={() => {
+                        setDevicePopup(false)
+                    }}
+                    className='close'
+                >
+                    <CloseIcon className='icon'/>
+                </button>
 
-                <Tooltip title='Dividir tela'>
-                    <IconButton
-                        component='span'
-                        onClick={() => {
-                            setDoubleScreen(!doubleScreen)
-                        }}
-                        style={styles.controlBtn}>
-                        {doubleScreen ? (
-                            <RemoveScreenIcon />
-                        ) : (
-                            <AddScreenIcon />
-                        )}
-                    </IconButton>
-                </Tooltip>
+                {values.length > 0 ?
+                    <>
+                        <button
+                            onClick={() => {
+                                setDoubleScreen(!doubleScreen)
+                            }}
+                            className='button'
+                        >
+                            {doubleScreen ?
+                                <RemoveScreenIcon className='icon' />
+                                :
+                                <AddScreenIcon className='icon' />
+                            }
+                        </button>
 
-                <select
-                    style={styles.select}
-                    onChange={event => {
-                        setPeriod(event.target.options.selectedIndex)
-                    }}>
-                    <option style={styles.option}>10 Dias</option>
-                    <option style={styles.option}>30 Dias</option>
-                    <option style={styles.option}>60 Dias</option>
-                    <option style={styles.option}>90 Dias</option>
-                </select>
+                        <select
+                            onChange={event => {
+                                setPeriod(event.target.options.selectedIndex)
+                            }}>
+                            <option>10 Dias</option>
+                            <option>30 Dias</option>
+                            <option>60 Dias</option>
+                            <option>90 Dias</option>
+                        </select>
+                    </>
+                    :null
+                }
                 <ul>
-                    {display.temperature ? (
-                        <li>
-                            <Typography
-                                style={{
-                                    ...styles.display,
-                                    borderColor: themes.default.traceColors[0]
-                                }}>
+                    {display.temperature ?
+                        <li
+                            style={{
+                                border: `0.3rem solid ${themes.default.traceColors[0]}`
+                            }}>
+                            <h1>
                                 {display.temperature} °C
-                            </Typography>
+                            </h1>
                         </li>
-                    ) : null}
-                    {display.humidity ? (
-                        <li>
-                            <Typography
-                                style={{
-                                    ...styles.display,
-                                    borderColor: themes.default.traceColors[1]
-                                }}>
+                        : null
+                    }
+                    {display.humidity ?
+                        <li
+                            style={{
+                                border: `0.3rem solid ${themes.default.traceColors[1]}`
+                            }}>
+                            <h1 className='value'>
                                 {display.humidity} % U.R.
-                            </Typography>
+                            </h1>
                         </li>
-                    ) : null}
-                    {display.voltage ? (
-                        <li>
-                            <Typography
-                                style={{
-                                    ...styles.display,
-                                    borderColor: themes.default.traceColors[2]
-                                }}>
+                        : null
+                    }
+                    {display.voltage ?
+                        <li
+                            style={{
+                                border: `0.3rem solid ${themes.default.traceColors[2]}`
+                            }}>
+                            <h1 className='value'>
                                 {display.voltage} V
-                            </Typography>
+                            </h1>
                         </li>
-                    ) : null}
-                    {display.voltageLevel ? (
-                        <li>
-                            <Typography
-                                style={{
-                                    ...styles.display,
-                                    borderColor: themes.default.traceColors[3]
-                                }}>
+                        : null
+                    }
+                    {display.voltageLevel ?
+                        <li
+                            style={{
+                                border: `0.3rem solid ${themes.default.traceColors[3]}`
+                            }}>
+                            <h1 className='value'>
                                 {display.voltageLevel} % V Max
-                            </Typography>
+                            </h1>
                         </li>
-                    ) : null}
-                    {display.time ? (
+                        : null
+                    }
+                    {display.time ?
                         <li>
-                            <Typography style={styles.time}>
+                            <h1 className='time'>
                                 {display.time}
-                            </Typography>
+                            </h1>
                         </li>
-                    ) : null}
+                        : null
+                    }
                 </ul>
             </div>
-        </div>
-    )
+            : null
+        }
+    </div>
 }
 
 export default memo(Graphic)

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import { Paper, Avatar } from '@material-ui/core'
-
-import { Edit as EditIcon } from '@material-ui/icons'
-
 import { Scope } from '@unform/core'
 import { Form } from '@unform/web'
 
@@ -13,57 +9,9 @@ import Input from '../forms/Input'
 import { isAdmin } from '../../services/auth'
 import { getUser, getConsumerUnit } from '../../services/storage'
 
-import themes from '../../themes'
+import '../../styles/profile.css'
 
-const styles = {
-    empty: {
-        position: 'absolute',
-        textAlign: 'center',
-        color: themes.default.lightGray,
-        fontSize: '32px',
-        fontWeight: 'bold',
-        top: '50%',
-        left: '50%',
-        transform: 'translateX(-50%) translateY(-50%)'
-    },
-    paper: {
-        position: 'absolute',
-        display: 'flex',
-        background: themes.default.white,
-        top: '50%',
-        left: '50%',
-        transform: 'translateX(-50%) translateY(-50%)',
-        textAlign: 'left'
-    },
-    button: {
-        transform: 'translateX(480%)',
-        fontSize: '16px',
-        background: themes.default.green,
-        color: themes.default.white,
-        width: '60px',
-        height: '60px',
-        cursor: 'pointer'
-    },
-    section: {
-        padding: '20px',
-        margin: '20px'
-    },
-    input: {
-        fontSize: '20px',
-        color: '#333',
-        border: '2px solid',
-        borderRadius: '3px',
-        borderColor: themes.default.green,
-        padding: '10px',
-        margin: '10px 0 10px 0'
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column'
-    }
-}
-
-const Settings = () => {
+const Profile = () => {
     const [user, setUser] = useState({
         person: {},
         consumerUnits: [
@@ -174,138 +122,133 @@ const Settings = () => {
         }
     }
 
-    const Profile = () => (
-        <div style={styles.section}>
-            <Form style={styles.form}>
-                <Input
-                    name='username'
-                    label='Nome de usuário'
-                    defaultValue={user?.username ?? ''}
-                    style={styles.input}
-                />
-                <Input
-                    name='email'
-                    label='Email'
-                    defaultValue={user?.email ?? ''}
-                    style={styles.input}
-                />
-                <Input
-                    name='phone'
-                    label='Telefone'
-                    defaultValue={formatPhone(user?.phone) ?? ''}
-                    style={styles.input}
-                />
-                {user?.person ? (
-                    <Scope path='person'>
-                        <Input
-                            name='cpf'
-                            label='CPF'
-                            defaultValue={formatCPF(user?.person?.cpf) ?? ''}
-                            style={styles.input}
-                        />
-                        <Input
-                            name='birth'
-                            label='Data de nascimento'
-                            defaultValue={formatDate(user?.person?.birth) ?? ''}
-                            style={styles.input}
-                        />
-                    </Scope>
-                ) : (
-                    <Scope path='company'>
-                        <Input
-                            name='cnpj'
-                            label='CNPJ'
-                            defaultValue={
-                                formatCNPJ(user?.company?.cnpj) ?? '--'
-                            }
-                            style={styles.input}
-                        />
-                        <Input
-                            name='name'
-                            label='Nome fantasia'
-                            defaultValue={user?.company?.name ?? ''}
-                            style={styles.input}
-                        />
-                        <Input
-                            name='tradeName'
-                            label='Razão social'
-                            defaultValue={user?.company?.tradeName ?? ''}
-                            style={styles.input}
-                        />
-                    </Scope>
-                )}
-            </Form>
+    const handleSubmit = () => {
+        alert('SUBMIT')
+    }
 
-            {isAdmin() ? (
-                <Avatar
-                    style={styles.button}
-                    onClick={() => alert('EDIT MODE')}>
-                    <EditIcon />
-                </Avatar>
-            ) : null}
+    return <div className='profile'>
+        <Layout />
+        <div className='card'>
+            {getUser?
+                <Form onSubmit={handleSubmit}>
+                    <h1>
+                    Usuário
+                    </h1>
+                    <Input
+                        name='username'
+                        label='Nome de usuário'
+                        defaultValue={user?.username ?? ''}
+
+                    />
+                    <Input
+                        name='email'
+                        label='Email'
+                        defaultValue={user?.email ?? ''}
+
+                    />
+                    <Input
+                        name='phone'
+                        label='Telefone'
+                        defaultValue={formatPhone(user?.phone) ?? ''}
+
+                    />
+                    {user?.person ?
+                        <Scope path='person'>
+                            <Input
+                                name='cpf'
+                                label='CPF'
+                                defaultValue={formatCPF(user?.person?.cpf) ?? ''}
+
+                            />
+                            <Input
+                                name='birth'
+                                label='Data de nascimento'
+                                defaultValue={formatDate(user?.person?.birth) ?? ''}
+
+                            />
+                        </Scope>
+                        :
+                        <Scope path='company'>
+                            <Input
+                                name='cnpj'
+                                label='CNPJ'
+                                defaultValue={
+                                    formatCNPJ(user?.company?.cnpj) ?? '--'
+                                }
+
+                            />
+                            <Input
+                                name='name'
+                                label='Nome fantasia'
+                                defaultValue={user?.company?.name ?? ''}
+
+                            />
+                            <Input
+                                name='tradeName'
+                                label='Razão social'
+                                defaultValue={user?.company?.tradeName ?? ''}
+
+                            />
+                        </Scope>
+                    }
+                    {isAdmin() ?
+                        <button type='submit'>Alterar</button>
+                        : null}
+                </Form>
+                : null
+            }
+
+            {getConsumerUnit() ?
+                <Form onSubmit={handleSubmit}>
+                    <h1>
+                    Unidade consumidora
+                    </h1>
+
+                    <Input
+                        name='number'
+                        label='Número'
+                        defaultValue={consumerUnit?.number ?? ''}
+
+                    />
+                    <Input
+                        name='name'
+                        label='Nome'
+                        defaultValue={consumerUnit?.name ?? ''}
+
+                    />
+                    <Input
+                        name='address'
+                        label='Endereço'
+                        defaultValue={consumerUnit?.address ?? ''}
+
+                    />
+                    <Input
+                        name='zip'
+                        label='CEP'
+                        defaultValue={consumerUnit?.zip ?? ''}
+
+                    />
+                    <Input
+                        name='city'
+                        label='Cidade'
+                        defaultValue={consumerUnit?.city ?? ''}
+
+                    />
+                    <Input
+                        name='state'
+                        label='Estado'
+                        defaultValue={consumerUnit?.state ?? ''}
+
+                    />
+                    {isAdmin() ?
+                        <button type='submit'>Alterar</button>
+                        : null
+                    }
+                </Form>
+                : null
+            }
         </div>
-    )
-
-    const ConsumerUnit = () => (
-        <div style={styles.section}>
-            <Form style={styles.form}>
-                <Input
-                    name='number'
-                    label='Número'
-                    defaultValue={consumerUnit?.number ?? ''}
-                    style={styles.input}
-                />
-                <Input
-                    name='name'
-                    label='Nome'
-                    defaultValue={consumerUnit?.name ?? ''}
-                    style={styles.input}
-                />
-                <Input
-                    name='address'
-                    label='Endereço'
-                    defaultValue={consumerUnit?.address ?? ''}
-                    style={styles.input}
-                />
-                <Input
-                    name='zip'
-                    label='CEP'
-                    defaultValue={consumerUnit?.zip ?? ''}
-                    style={styles.input}
-                />
-                <Input
-                    name='city'
-                    label='Cidade'
-                    defaultValue={consumerUnit?.city ?? ''}
-                    style={styles.input}
-                />
-                <Input
-                    name='state'
-                    label='Estado'
-                    defaultValue={consumerUnit?.state ?? ''}
-                    style={styles.input}
-                />
-            </Form>
-
-            {isAdmin() ? (
-                <Avatar
-                    style={styles.button}
-                    onClick={() => alert('EDIT MODE')}>
-                    <EditIcon />
-                </Avatar>
-            ) : null}
-        </div>
-    )
-
-    return (
-        <>
-            <Layout />
-            <Paper style={styles.paper}>
-                <Profile />
-                <ConsumerUnit />
-            </Paper>
-        </>
-    )
+    </div>
 }
 
-export default Settings
+export default Profile

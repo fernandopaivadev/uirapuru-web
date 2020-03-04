@@ -3,7 +3,7 @@ import { storeUser, storeUsersList } from '../../services/storage'
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
 import { api } from '../../services/api'
 
-const Loading = ({ history }) => {
+const Fetch = ({ history }) => {
     const getData = async () => {
         try {
             if (isAuthenticated()) {
@@ -26,14 +26,9 @@ const Loading = ({ history }) => {
                 history.push('/login')
             }
         } catch (err) {
-            try {
-                console.log(err.response.data.message)
-            } catch (err) {
-                console.log(err.message)
-            } finally {
-                logout()
-                history.push('/login')
-            }
+            console.log(err?.message ?? err?.response?.data?.message)
+            logout()
+            history.push('/login')
         }
     }
 
@@ -45,4 +40,4 @@ const Loading = ({ history }) => {
     return null
 }
 
-export default Loading
+export default Fetch

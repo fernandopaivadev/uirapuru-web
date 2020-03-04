@@ -5,7 +5,7 @@ const themes = {
         purple: '#d900b7',
         black: '#333',
         gray: '#555',
-        lightGray: '#ddd',
+        lightGray: '#aaa',
         white: '#fff',
         traceColors: ['#ffbd45', '#1e88e5', '#df78ef', '#ff5722']
     },

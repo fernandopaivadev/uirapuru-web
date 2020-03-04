@@ -9,19 +9,18 @@ import Fetch from './components/functions/Fetch'
 import Dashboard from './components/pages/Dashboard'
 import Profile from './components/pages/Profile'
 
-const Routes = () => (
-    <Router>
-        <Switch>
-            <Route path='/login' exact component={Login} />
-            <Route path='/admin/login' exact component={AdminLogin} />
-            <Route path='/forgot-password' exact component={ForgotPassword} />
-            <Route path='/reset-password' component={ResetPassword} />
-            <Route path='/loading' exact component={Fetch} />
-            <Route path='/dashboard' exact component={Dashboard} />
-            <Route path='/profile' exact component={Profile} />
-            <Redirect to='/loading' />
-        </Switch>
-    </Router>
-)
+const Routes = () => <Router>
+    <Switch>
+        <Route path='/login' exact component={Login} />
+        <Route path='/admin/login' exact component={AdminLogin} />
+        <Route path='/forgot-password' exact component={ForgotPassword} />
+        <Route path='/reset-password' component={ResetPassword} />
+        <Route path='/fetch' exact component={Fetch} />
+        <Route path='/dashboard' exact component={Dashboard} />
+        <Route path='/profile' exact component={Profile} />
+        <Redirect to='/fetch' />
+    </Switch>
+</Router>
+
 
 export default Routes

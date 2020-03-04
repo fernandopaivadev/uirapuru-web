@@ -1,6 +1,6 @@
 import React, { useEffect, useState, memo } from 'react'
 
-import { Paper, Typography, Dialog, DialogTitle } from '@material-ui/core/'
+import { Dialog } from '@material-ui/core/'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -16,76 +16,20 @@ import { baseURL } from '../../services/api'
 import { getConsumerUnit } from '../../services/storage'
 import io from 'socket.io-client'
 
-import themes from '../../themes'
-
-const styles = {
-    devices: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translateX(-50%) translateY(-50%)',
-        display: 'flex'
-    },
-    empty: {
-        position: 'absolute',
-        textAlign: 'center',
-        color: themes.default.gray,
-        padding: '30px',
-        fontSize: '32px',
-        fontWeight: 'bold',
-        top: '50%',
-        left: '50%',
-        transform: 'translateX(-50%) translateY(-50%)'
-    },
-    paper: {
-        display: 'flex',
-        flexDirection: 'column',
-        background: themes.default.white,
-        padding: '20px',
-        textAlign: 'center',
-        minWidth: '150px',
-        width: '350px',
-        cursor: 'pointer',
-        margin: '20px'
-    },
-    title: {
-        fontSize: '24px',
-        color: themes.default.green,
-        fontWeight: 'bold'
-    },
-    valueIcon: {
-        fontSize: '27px'
-    },
-    value: {
-        margin: '0px 20px 0px 20px',
-        fontSize: '24px',
-        color: themes.default.gray,
-        textAlign: 'left',
-        fontWeight: '600',
-        display: 'flex',
-        alignItems: 'center'
-    },
-    cardText: {
-        fontSize: '24px',
-        color: themes.default.gray,
-        margin: '5px'
-    },
-    dialogTitle: {
-        textAlign: 'center',
-        alignItems: 'top'
-    }
-}
+import '../../styles/dashboard.css'
 
 const Dashboard = () => {
     const [initialized, setInitialized] = useState(false)
     const [consumerUnit, setConsumerUnit] = useState({
         devices: []
     })
+
     const [newMessage, setNewMessage] = useState({
         isNew: false,
         topic: '',
         payload: ''
     })
+
     const [buffer, setBuffer] = useState([])
 
     const [devicePopup, setDevicePopup] = useState(false)
@@ -171,102 +115,106 @@ const Dashboard = () => {
         const humidity = h
         const voltage = v1
 
-        return (
-            <Paper style={styles.paper}>
-                <Typography style={styles.title}>{name}</Typography>
-                {temperature ? (
-                    <div style={styles.value}>
-                        <FontAwesomeIcon
-                            style={styles.valueIcon}
-                            icon={faThermometerThreeQuarters}
-                        />
-                        <Typography style={styles.cardText}>
-                            Temperatura:
-                        </Typography>
+        return <div className='card'>
+            <h1 className='title'>{name}</h1>
+            {temperature ?
+                <div className='value'>
+                    <FontAwesomeIcon
+                        className='icon'
+                        icon={faThermometerThreeQuarters}
+                    />
+                    <h1 className='text'>
+                        Temperatura:
+                    </h1>
+                    <h1 className='payload'>
                         {temperature} °C
-                    </div>
-                ) : null}
-                {humidity ? (
-                    <div style={styles.value}>
-                        <FontAwesomeIcon
-                            style={styles.valueIcon}
-                            icon={faTint}
-                        />
-                        <Typography style={styles.cardText}>
-                            Umidade:
-                        </Typography>
+                    </h1>
+                </div>
+                : null
+            }
+            {humidity ?
+                <div className='value'>
+                    <FontAwesomeIcon
+                        className='icon'
+                        icon={faTint}
+                    />
+                    <h1 className='text'>
+                        Umidade:
+                    </h1>
+                    <h1 className='payload'>
                         {humidity} %
-                    </div>
-                ) : null}
-                {voltage ? (
-                    <div style={styles.value}>
-                        <FontAwesomeIcon
-                            style={styles.valueIcon}
-                            icon={faBolt}
-                        />
-                        <Typography style={styles.cardText}>Tensão:</Typography>
+                    </h1>
+                </div>
+                : null
+            }
+            {voltage ?
+                <div className='value'>
+                    <FontAwesomeIcon
+                        className='icon'
+                        icon={faBolt}
+                    />
+                    <h1 className='text'>
+                        Tensão:
+                    </h1>
+                    <h1 className='payload'>
                         {voltage} V
-                    </div>
-                ) : null}
-                {!value ? (
-                    <Typography style={styles.cardText}>
-                        Desconectado
-                    </Typography>
-                ) : null}
-            </Paper>
-        )
+                    </h1>
+                </div>
+                : null
+            }
+            {!value ?
+                <h1 className='disconnected'>
+                    Desconectado
+                </h1>
+                : null
+            }
+        </div>
     }
 
-    return (
-        <div>
-            <Layout />
-            {consumerUnit?.devices?.length > 0 ? (
-                <ul style={styles.devices}>
-                    {consumerUnit.devices.map((device, index) => {
-                        const value = JSON.parse(buffer[index] ?? null)
+    return <div className='dashboard'>
+        <Layout />
+        {consumerUnit?.devices?.length > 0 ?
+            <ul className='devices'>
+                {consumerUnit.devices.map((device, index) => {
+                    const value = JSON.parse(buffer[index] ?? null)
 
-                        return (
-                            <li
-                                key={index}
-                                onClick={() => {
-                                    setDevicePopup(true)
-                                    setCurrentDevice(device)
-                                }}>
-                                <Card name={device.name} value={value} />
-                            </li>
-                        )
-                    })}
-                </ul>
-            ) : (
-                <Paper style={styles.empty}>Dispositivos não encontrados</Paper>
-            )}
-            {devicePopup ? (
-                <Dialog
-                    open={devicePopup}
-                    onClose={() => {
-                        setDevicePopup(false)
-                        setCurrentDevice(null)
-                    }}
-                    scroll='paper'
-                    fullScreen>
-                    <DialogTitle style={styles.dialogTitle}>
-                        <Typography style={styles.title}>
-                            {currentDevice.name}
-                        </Typography>
-                    </DialogTitle>
-                    <div
-                        style={{
-                            padding: '0px 30px 30px 30px'
+                    return <li
+                        key={index}
+                        onClick={() => {
+                            setDevicePopup(true)
+                            setCurrentDevice(device)
                         }}>
-                        <Graphic
-                            device={currentDevice}
-                            setDevicePopup={setDevicePopup}
-                        />
-                    </div>
-                </Dialog>
-            ) : null}
-        </div>
-    )
+                        <Card name={device.name} value={value} />
+                    </li>
+                })}
+            </ul>
+            :
+            <div className='empty'>
+                <h1 className='text'>
+                    Dispositivos não encontrados
+                </h1>
+            </div>
+        }
+        {devicePopup ?
+            <Dialog
+                open={devicePopup}
+                onClose={() => {
+                    setDevicePopup(false)
+                    setCurrentDevice(null)
+                }}
+                scroll='paper'
+                fullScreen>
+                <h1 className='dialog-title'>
+                    {currentDevice.name}
+                </h1>
+                <Graphic
+                    device={currentDevice}
+                    setDevicePopup={setDevicePopup}
+                />
+            </Dialog>
+            : null
+        }
+    </div>
 }
 
 export default memo(Dashboard)

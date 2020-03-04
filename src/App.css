@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 * {
     margin: 0;
@@ -6,25 +6,42 @@
     outline: 0;
     list-style: none;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
+    overflow-x: hidden;
 }
 
-html, body, #root {
+html {
+    --default-green: #309d20;
+    --default-light-green: #3fc82a;
+    --default-white: #fff;
+    --default-black: #333;
+    --default-gray: #555;
+    --default-light-gray: #aaa;
+    font-size: 65.5%;
+}
+
+html,
+body,
+#root {
     height: 100%;
+    overflow: hidden;
 }
 
 body {
-    background: linear-gradient(rgb(0, 0, 0, 0.05), rgb(0, 0, 0, 0.05)), url('./assets/background.webp') no-repeat;
+    background: linear-gradient(rgb(0, 0, 0, 0.05), rgb(0, 0, 0, 0.05)),
+        url("./assets/background.webp") no-repeat;
     background-size: cover;
     -webkit-font-smoothing: antialiased !important;
 }
 
-body, input, button {
-    font-family: 'Roboto', sans-serif;
+body,
+input,
+button {
+    font-family: "Roboto", sans-serif;
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 0.5rem;
 }
 
 ::-webkit-scrollbar-track-piece {
@@ -32,11 +49,23 @@ body, input, button {
 }
 
 ::-webkit-scrollbar-thumb:vertical {
-    height: 5px;
+    height: 0.5rem;
     background-color: #555;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-    width: 5px;
+    width: 0.5rem;
     background-color: #555;
+}
+
+@media screen and (min-width: 2000px) {
+    html {
+        font-size: 75%;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    html {
+        font-size: 45%;
+    }
 }

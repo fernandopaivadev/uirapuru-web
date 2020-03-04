@@ -20,8 +20,9 @@
         },
         "sourceType": "module"
     },
-    "plugins": ["react", "prettier", "import"],
+    "plugins": ["react", "import"],
     "rules": {
+        "no-extra-parens": "error",
         "indent": ["error", 4],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single"],

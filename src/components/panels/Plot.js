@@ -29,7 +29,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
     let voltageLevel = []
 
     voltage.forEach(voltage => {
-        const level = (voltage / maxVoltage) * 100
+        const level = voltage / maxVoltage * 100
         voltageLevel.push(level.toFixed(2))
     })
 
@@ -92,92 +92,91 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
         }
     ]
 
-    return (
-        <Suspense fallback=''>
-            <Plotly
-                data={[...traces]}
-                layout={{
-                    //dragmode: 'pan',
-                    modebar: {
-                        color: themes.default.green
-                    },
-                    legend: {
-                        orientation: 'h',
-                        x: 0.0,
-                        y: 1.05,
-                        font: {
-                            size: doubleScreen ? 16 : 20
-                        }
-                    },
-                    hoverlabel: {
-                        font: {
-                            size: 30,
-                            color: themes.default.white
-                        }
-                    },
-                    margin: {
-                        l: 30,
-                        r: 30,
-                        b: 120,
-                        t: 50,
-                        pad: 0
-                    },
-                    uirevision: false,
-                    spikedistance: -1,
-                    xaxis: {
-                        showgrid: false,
-                        showspikes: true,
-                        spikemode: 'across',
-                        spikesnap: 'cursor',
-                        //spikesnap: 'data',
-                        spikedash: 'solid',
-                        spikecolor: themes.default.lightGray,
-                        spikethickness: 2
-                    },
-                    yaxis: {
-                        fixedrange: true
+    return <Suspense fallback='' className='plot'>
+        <Plotly
+            data={[...traces]}
+            layout={{
+                //dragmode: 'pan',
+                modebar: {
+                    color: themes.default.green
+                },
+                legend: {
+                    orientation: 'h',
+                    x: 0.0,
+                    y: 1.05,
+                    font: {
+                        size: doubleScreen ? 16 : 20
                     }
-                }}
-                config={{
-                    scrollZoom: true,
-                    toImageButtonOptions: {
-                        filename: 'Uirapuru_Graph',
-                        format: 'png',
-                        width: '2560',
-                        height: '1440'
-                    },
-                    displaylogo: false,
-                    displayModeBar: true,
-                    //!---------------------------------------------------
-                    /*//! BUTTON NAMES
-                "zoom2d", "pan2d", "select2d", "lasso2d",
-                "zoomIn2d", "zoomOut2d", "autoScale2d",
-                "resetScale2d", "hoverClosestCartesian",
-                "hoverCompareCartesian", "zoom3d", "pan3d",
-                "resetCameraDefault3d", "resetCameraLastSave3d",
-                "hoverClosest3d", "orbitRotation", "tableRotation",
-                "zoomInGeo", "zoomOutGeo", "resetGeo",
-                "hoverClosestGeo", "toImage", "sendDataToCloud",
-                "hoverClosestGl2d", "hoverClosestPie", "toggleHover",
-                "resetViews", "toggleSpikelines", "resetViewMapbox"
-                */
-                    //!---------------------------------------------------
-                    modeBarButtons: [
-                        [
-                            'toImage',
-                            'hoverClosestCartesian',
-                            'hoverCompareCartesian',
-                            'sendDataToCloud'
-                        ]
+                },
+                hoverlabel: {
+                    font: {
+                        size: 30,
+                        color: themes.default.white
+                    }
+                },
+                margin: {
+                    l: 30,
+                    r: 30,
+                    b: 120,
+                    t: 50,
+                    pad: 0
+                },
+                uirevision: false,
+                spikedistance: -1,
+                xaxis: {
+                    showgrid: false,
+                    showspikes: true,
+                    spikemode: 'across',
+                    spikesnap: 'cursor',
+                    //spikesnap: 'data',
+                    spikedash: 'solid',
+                    spikecolor: themes.default.lightGray,
+                    spikethickness: 2
+                },
+                yaxis: {
+                    fixedrange: true
+                }
+            }}
+            config={{
+                scrollZoom: true,
+                toImageButtonOptions: {
+                    filename: 'Uirapuru_Graph',
+                    format: 'png',
+                    width: '2560',
+                    height: '1440'
+                },
+                displaylogo: false,
+                displayModeBar: true,
+                //!---------------------------------------------------
+                /*//! BUTTON NAMES
+                    "zoom2d", "pan2d", "select2d", "lasso2d",
+                    "zoomIn2d", "zoomOut2d", "autoScale2d",
+                    "resetScale2d", "hoverClosestCartesian",
+                    "hoverCompareCartesian", "zoom3d", "pan3d",
+                    "resetCameraDefault3d", "resetCameraLastSave3d",
+                    "hoverClosest3d", "orbitRotation", "tableRotation",
+                    "zoomInGeo", "zoomOutGeo", "resetGeo",
+                    "hoverClosestGeo", "toImage", "sendDataToCloud",
+                    "hoverClosestGl2d", "hoverClosestPie", "toggleHover",
+                    "resetViews", "toggleSpikelines", "resetViewMapbox"
+                    */
+                //!---------------------------------------------------
+                modeBarButtons: [
+                    [
+                        'toImage',
+                        'hoverClosestCartesian',
+                        'hoverCompareCartesian',
+                        'sendDataToCloud'
                     ]
-                }}
-                style={{
-                    height: '100vh',
-                    width:
+                ]
+            }}
+            style={{
+                height: '100vh',
+                width:
                         window.innerWidth > 2500
                             ? doubleScreen
-                                ? '46vw'
-                                : '92vw'
+                                ? '45vw'
+                                : '90vw'
                             : window.innerWidth > 1400
                                 ? doubleScreen
                                     ? '44vw'
@@ -185,24 +184,24 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
                                 : doubleScreen
                                     ? '42.5vw'
                                     : '85vw'
-                }}
-                onClick={event => {
-                    const selectedTime = new Date(
+            }}
+            onClick={event => {
+                const selectedTime = new Date(
                         event?.points[0]?.x
-                    ).toLocaleString()
-                    const index = timeString.indexOf(selectedTime)
+                ).toLocaleString()
 
-                    setDisplay({
-                        time: selectedTime,
-                        humidity: humidity[index],
-                        temperature: temperature[index],
-                        voltage: voltage[index],
-                        voltageLevel: voltageLevel[index]
-                    })
-                }}
-            />
-        </Suspense>
-    )
+                const index = timeString.indexOf(selectedTime)
+
+                setDisplay({
+                    time: selectedTime,
+                    humidity: humidity[index],
+                    temperature: temperature[index],
+                    voltage: voltage[index],
+                    voltageLevel: voltageLevel[index]
+                })
+            }}
+        />
+    </Suspense>
 }
 
 export default memo(Plot)

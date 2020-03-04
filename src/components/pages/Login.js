@@ -1,112 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
 import {
-    TextField,
-    Button,
     Snackbar,
     CircularProgress,
-    Link,
-    Typography,
     Paper
 } from '@material-ui/core'
 
-import { makeStyles } from '@material-ui/core/styles'
 import { login, isAuthenticated } from '../../services/auth'
 import { api } from '../../services/api'
 import logo from '../../assets/logo.svg'
 
-import themes from '../../themes'
-
-const useStyles = makeStyles(() => ({
-    button: {
-        marginTop: '30px',
-        fontSize: '16px',
-        background: themes.default.green,
-        marginLeft: '10px',
-        marginRight: '10px',
-        cursor: 'pointer',
-        color: themes.default.white,
-        '&:hover': {
-            backgroundColor: themes.default.lightGreen
-        }
-    },
-    textField: {
-        width: '250px',
-        '& label.Mui-focused': {
-            color: themes.default.lightGreen
-        },
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: themes.default.green
-            },
-            '&:hover fieldset': {
-                borderColor: themes.default.lightGreen
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: themes.default.lightGreen
-            }
-        }
-    },
-    link: {
-        cursor: 'pointer',
-        textDecoration: 'none',
-        color: themes.default.black,
-        '&:hover': {
-            textDecoration: 'none',
-            color: themes.default.green
-        }
-    }
-}))
-
-const styles = {
-    paper: {
-        position: 'absolute',
-        display: 'flex',
-        background: themes.default.white,
-        padding: '30px',
-        textAlign: 'center',
-        top: '50%',
-        left: '50%',
-        transform: 'translateX(-50%) translateY(-50%)',
-        width: '350px'
-    },
-    logoContainer: {
-        display: 'flex',
-        fontSize: '35px',
-        fontFamily: 'vibrocentric',
-        color: themes.default.black,
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: 'auto'
-    },
-    logoImg: {
-        width: '60px',
-        margin: '0px 10px 0px 0px'
-    },
-    loadingContainer: {
-        marginTop: '30px',
-        justifyContent: 'center'
-    },
-    loading: {
-        color: themes.default.green
-    },
-    buttonText: {
-        fontSize: '18px',
-        fontWeight: '500'
-    },
-    linksContainer: {
-        fontSize: '16px',
-        color: themes.default.gray,
-        textAlign: 'center',
-        marginTop: '20px',
-        display: 'flex',
-        flexDirection: 'column'
-    }
-}
+import '../../styles/login.css'
 
 const Login = ({ history }) => {
-    const classes = useStyles()
-
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
@@ -129,26 +35,24 @@ const Login = ({ history }) => {
                 `/user/auth?username=${username}&password=${password}`
             )
 
-            const { status } = response
+            const status = response?.status
 
             if (status === 200) {
                 setLoading(false)
                 login(response.data.token)
-                history.push('/loading')
+                history.push('/fetch')
             }
         } catch (err) {
-            console.log(err.response.data.message)
+            console.log(err?.message ?? err?.response?.data?.message)
 
-            if (err.response.status === 404) {
+            const status = err?.response?.status
+
+            if (status === 404) {
                 setErrorMessage('Usuário não encontrado')
-            }
-
-            if (err.response.status === 401) {
+            } else if (status === 401) {
                 setErrorMessage('Senha incorreta')
-            }
-
-            if (err.response.status === 500) {
-                setErrorMessage('Ocorreu um erro interno')
+            } else {
+                setErrorMessage('Ocorreu um erro')
             }
 
             setLoading(false)
@@ -156,93 +60,84 @@ const Login = ({ history }) => {
         }
     }
 
-    const textFieldProps = {
-        id: 'outlined-name',
-        required: true,
-        margin: 'normal',
-        variant: 'outlined',
-        className: classes.textField
-    }
-
-    return (
-        <Paper style={styles.paper}>
-            <form onSubmit={handleSubmit}>
-                <Typography style={styles.logoContainer}>
-                    <img
-                        src={logo}
-                        alt='Tech Amazon Logo'
-                        style={styles.logoImg}
-                    />
-                    Uirapuru
-                </Typography>
-
-                <TextField
-                    {...textFieldProps}
-                    label='E-mail ou nome de usuário'
-                    onChange={event => {
-                        setUsername(event.target.value)
-                    }}
+    return <Paper className='login'>
+        <form onSubmit={handleSubmit}>
+            <div className='logo'>
+                <img
+                    src={logo}
+                    alt='Tech Amazon Logo'
                 />
-                <TextField
-                    {...textFieldProps}
-                    label='Senha'
-                    type='password'
-                    onChange={event => {
-                        setPassword(event.target.value)
-                    }}
-                />
+                <h1>Uirapuru</h1>
+            </div>
 
-                {loading ? (
-                    <div style={styles.loadingContainer}>
-                        <CircularProgress style={styles.loading} />
-                    </div>
-                ) : (
-                    <Button
-                        type='submit'
-                        variant='contained'
-                        className={classes.button}>
-                        <Typography style={styles.buttonText}>
-                            ENTRAR
-                        </Typography>
-                    </Button>
-                )}
+            <h1 className='label'>
+                E-mail ou nome de usuário
+            </h1>
+            <input
+                required
+                onChange={event => {
+                    setUsername(event.target.value)
+                }}
+            />
 
-                {loading ? null : (
-                    <Typography style={styles.linksContainer}>
-                        <Link
-                            className={classes.link}
-                            onClick={() => {
-                                history.push('/forgot-password')
-                            }}>
+            <h1 className='label'>
+                Senha
+            </h1>
+            <input
+                type='password'
+                required
+                onChange={event => {
+                    setPassword(event.target.value)
+                }}
+            />
+
+            {loading ?
+                <div className='loading-container'>
+                    <CircularProgress className='loading' />
+                </div>
+                :
+                <button type='submit'>
+                    ENTRAR
+                </button>
+            }
+
+            {loading ? null :
+                <>
+                    <a
+                        href='/#/forgot-password'
+                        className='link'
+                        onClick={() => {
+                            history.push('/forgot-password')
+                        }}>
                             Esqueci minha senha
-                        </Link>
-                        <Link
-                            className={classes.link}
-                            onClick={() => {
-                                history.push('/admin/login')
-                            }}>
+                    </a>
+                    <a
+                        href='/#/admin/login'
+                        className='link'
+                        onClick={() => {
+                            history.push('/admin/login')
+                        }}>
                             Sou administrador
-                        </Link>
-                    </Typography>
-                )}
+                    </a>
+                </>
+            }
 
-                <Snackbar
-                    open={error}
-                    onClose={() => {
-                        setError(false)
-                    }}
-                    ContentProps={{
-                        'aria-describedby': 'message-id'
-                    }}
-                    message={
-                        <span id='message-id'>
-                            {errorMessage}, por favor tente novamente
-                        </span>
-                    }
-                />
-            </form>
-        </Paper>
-    )
+            <Snackbar
+                open={error}
+                onClose={() => {
+                    setError(false)
+                }}
+                ContentProps={{
+                    'aria-describedby': 'message-id'
+                }}
+                message={
+                    <span id='message-id'>
+                        {errorMessage}, por favor tente novamente
+                    </span>
+                }
+            />
+        </form>
+    </Paper>
 }
 
 export default Login
