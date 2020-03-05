@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 import { adminLogin, isAuthenticated } from '../../services/auth'
 import { api } from '../../services/api'
+import fetch from '../../services/fetch'
+
 import logo from '../../assets/logo.svg'
 
 import '../../styles/login.css'
@@ -28,7 +30,10 @@ const Login = ({ history }) => {
             if (status === 200) {
                 setLoading(false)
                 adminLogin(response.data.token)
-                history.push('/fetch')
+
+                if(await fetch()) {
+                    history.push('/dashboard')
+                }
             }
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)

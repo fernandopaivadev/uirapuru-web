@@ -131,24 +131,24 @@ const Profile = () => {
             {getUser?
                 <Form onSubmit={handleSubmit}>
                     <h1>
-                    Usuário
+                        Usuário
                     </h1>
                     <Input
                         name='username'
                         label='Nome de usuário'
-                        defaultValue={user?.username ?? ''}
+                        value={user?.username ?? ''}
 
                     />
                     <Input
                         name='email'
                         label='Email'
-                        defaultValue={user?.email ?? ''}
+                        value={user?.email ?? ''}
 
                     />
                     <Input
                         name='phone'
                         label='Telefone'
-                        defaultValue={formatPhone(user?.phone) ?? ''}
+                        value={formatPhone(user?.phone) ?? ''}
 
                     />
                     {user?.person ?
@@ -156,13 +156,13 @@ const Profile = () => {
                             <Input
                                 name='cpf'
                                 label='CPF'
-                                defaultValue={formatCPF(user?.person?.cpf) ?? ''}
+                                value={formatCPF(user?.person?.cpf) ?? ''}
 
                             />
                             <Input
                                 name='birth'
                                 label='Data de nascimento'
-                                defaultValue={formatDate(user?.person?.birth) ?? ''}
+                                value={formatDate(user?.person?.birth) ?? ''}
 
                             />
                         </Scope>
@@ -171,7 +171,7 @@ const Profile = () => {
                             <Input
                                 name='cnpj'
                                 label='CNPJ'
-                                defaultValue={
+                                value={
                                     formatCNPJ(user?.company?.cnpj) ?? '--'
                                 }
 
@@ -179,14 +179,19 @@ const Profile = () => {
                             <Input
                                 name='name'
                                 label='Nome fantasia'
-                                defaultValue={user?.company?.name ?? ''}
+                                value={user?.company?.name ?? ''}
 
                             />
                             <Input
                                 name='tradeName'
                                 label='Razão social'
-                                defaultValue={user?.company?.tradeName ?? ''}
+                                value={user?.company?.tradeName ?? ''}
 
+                            />
+                            <Input
+                                name='description'
+                                label='Descrição'
+                                value={user?.company?.description ?? ''}
                             />
                         </Scope>
                     }
@@ -197,43 +202,43 @@ const Profile = () => {
             {getConsumerUnit() ?
                 <Form onSubmit={handleSubmit}>
                     <h1>
-                    Unidade consumidora
+                        Unidade consumidora
                     </h1>
 
                     <Input
                         name='number'
                         label='Número'
-                        defaultValue={consumerUnit?.number ?? ''}
+                        value={consumerUnit?.number ?? ''}
 
                     />
                     <Input
                         name='name'
                         label='Nome'
-                        defaultValue={consumerUnit?.name ?? ''}
+                        value={consumerUnit?.name ?? ''}
 
                     />
                     <Input
                         name='address'
                         label='Endereço'
-                        defaultValue={consumerUnit?.address ?? ''}
+                        value={consumerUnit?.address ?? ''}
 
                     />
                     <Input
                         name='zip'
                         label='CEP'
-                        defaultValue={consumerUnit?.zip ?? ''}
+                        value={consumerUnit?.zip ?? ''}
 
                     />
                     <Input
                         name='city'
                         label='Cidade'
-                        defaultValue={consumerUnit?.city ?? ''}
+                        value={consumerUnit?.city ?? ''}
 
                     />
                     <Input
                         name='state'
                         label='Estado'
-                        defaultValue={consumerUnit?.state ?? ''}
+                        value={consumerUnit?.state ?? ''}
 
                     />
                 </Form>

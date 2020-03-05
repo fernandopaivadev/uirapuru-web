@@ -13,8 +13,9 @@
 }
 
 .profile .card input {
-    padding: 1rem;
+    padding: 0.5rem;
     width: 100%;
+    min-width: 30rem;
     border: 0.2rem solid var(--default-green);
     border-radius: 0.3rem;
     font-size: 1.8rem;
@@ -24,6 +25,7 @@
 
 .profile .card label {
     font-size: 1.8rem;
+    font-weight: 600;
     width: 100%;
     color: #555;
 }

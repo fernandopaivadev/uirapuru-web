@@ -4,9 +4,7 @@ import { useField } from '@unform/core'
 const Input = ({ name, label, ...rest }) => {
     const inputRef = useRef(null)
 
-    const { fieldName, defaultValue = '', registerField, error } = useField(
-        name
-    )
+    const { fieldName, defaultValue = '', registerField, error } = useField(name)
 
     useEffect(() => {
         registerField({

@@ -18,6 +18,8 @@ import {
 } from '../../services/storage'
 
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
+import fetch from '../../services/fetch'
+
 import logo from '../../assets/logo.svg'
 
 import '../../styles/layout.css'
@@ -31,6 +33,10 @@ const Layout = ({ history }) => {
     useEffect(() => {
         if (!isAuthenticated()) {
             history.push('/login')
+        } else {
+            if(!fetch()) {
+                history.push('/login')
+            }
         }
         // eslint-disable-next-line
     }, [])
@@ -155,12 +161,13 @@ const Layout = ({ history }) => {
 
                         {getUsersList()?.length <= 0 ?
                             <h1 className='empty'>
-                        Não há usuários cadastrados
+                                Não há usuários cadastrados
                             </h1>
                             :
                             <ul>
                                 {getUsersList()?.map(user =>
                                     <li
+                                        key={user?.username}
                                         className='item'
                                         onClick={() => {
                                             storeUser(user)
@@ -197,23 +204,23 @@ const Layout = ({ history }) => {
                 >
                     <div className='dialog'>
                         <h1 className='title'>
-                        Escolha a Unidade Consumidora
+                            Escolha a Unidade Consumidora
                         </h1>
 
                         {getUser()?.consumerUnits?.length <= 0 ?
                             <h1 className='empty'>
-                            Não há unidades consumidoras cadastradas
+                                Não há unidades consumidoras cadastradas
                             </h1>
                             :
                             <ul>
                                 {getUser()?.consumerUnits?.map(consumerUnit =>
                                     <li
+                                        key={consumerUnit.number}
                                         className='item'
                                         onClick={() => {
                                             storeConsumerUnit(consumerUnit)
                                             document.location.reload(true)
-                                        }}
-                                        key={consumerUnit?.number}>
+                                        }}>
 
                                         <div className='avatar'>
                                             <RoomIcon className='icon'/>

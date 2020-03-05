@@ -5,7 +5,6 @@ import Login from './components/pages/Login'
 import AdminLogin from './components/pages/AdminLogin'
 import ForgotPassword from './components/pages/ForgotPassword'
 import ResetPassword from './components/pages/ResetPassword'
-import Fetch from './components/functions/Fetch'
 import Dashboard from './components/pages/Dashboard'
 import Profile from './components/pages/Profile'
 
@@ -15,10 +14,9 @@ const Routes = () => <Router>
         <Route path='/admin/login' exact component={AdminLogin} />
         <Route path='/forgot-password' exact component={ForgotPassword} />
         <Route path='/reset-password' component={ResetPassword} />
-        <Route path='/fetch' exact component={Fetch} />
         <Route path='/dashboard' exact component={Dashboard} />
         <Route path='/profile' exact component={Profile} />
-        <Redirect to='/fetch' />
+        <Redirect to='/login' />
     </Switch>
 </Router>
 
