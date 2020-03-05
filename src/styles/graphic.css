@@ -20,6 +20,9 @@
     background: var(--default-green);
     transition: all 0.2s ease;
     margin: 0 auto 1rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .graphic .controls button:hover {

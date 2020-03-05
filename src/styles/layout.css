@@ -47,7 +47,7 @@
     font-size: 2rem;
 }
 
-.navbar .avatar {
+.navbar .profile .avatar {
     background: var(--default-green);
     border-radius: 50%;
     color: #fff;
@@ -165,8 +165,6 @@
     min-height: 18rem;
     z-index: 1;
     border-radius: 0.5rem;
-    display: block;
-    justify-content: center;
 }
 
 .navbar .container .dialog .item {
@@ -174,8 +172,7 @@
     align-items: center;
     cursor: pointer;
     border-radius: 0.5rem;
-    padding: 0 1rem 1rem 0;
-    margin: 0 2rem 2rem 0;
+    padding: 0 2rem 0 2rem;
 }
 
 .navbar .container .dialog .item:hover {
@@ -191,7 +188,7 @@
 .navbar .container .dialog .item .avatar {
     background: var(--default-green);
     color: #fff;
-    margin: 2rem;
+    margin: 2rem 2rem 2rem 0rem;
 }
 
 .navbar .container .dialog .item .avatar .icon {
