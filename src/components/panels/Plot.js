@@ -171,19 +171,19 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
                 ]
             }}
             style={{
-                height: '100vh',
+                height: '90vh',
                 width:
-                        window.innerWidth > 2500
+                    window.innerWidth > 2500
+                        ? doubleScreen
+                            ? '45vw'
+                            : '90vw'
+                        : window.innerWidth > 1400
                             ? doubleScreen
-                                ? '45vw'
-                                : '90vw'
-                            : window.innerWidth > 1400
-                                ? doubleScreen
-                                    ? '44vw'
-                                    : '88vw'
-                                : doubleScreen
-                                    ? '42.5vw'
-                                    : '85vw'
+                                ? '44vw'
+                                : '88vw'
+                            : doubleScreen
+                                ? '42.5vw'
+                                : '85vw'
             }}
             onClick={event => {
                 const selectedTime = new Date(

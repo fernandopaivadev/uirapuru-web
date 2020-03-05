@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
-import {
-    Snackbar,
-    CircularProgress,
-    Paper
-} from '@material-ui/core'
-
 import { login, isAuthenticated } from '../../services/auth'
 import { api } from '../../services/api'
 import logo from '../../assets/logo.svg'
 
 import '../../styles/login.css'
+import '../../styles/util.css'
+
 
 const Login = ({ history }) => {
     const [username, setUsername] = useState('')
@@ -60,7 +56,7 @@ const Login = ({ history }) => {
         }
     }
 
-    return <Paper className='login'>
+    return <div className='login'>
         <form onSubmit={handleSubmit}>
             <div className='logo'>
                 <img
@@ -93,7 +89,7 @@ const Login = ({ history }) => {
 
             {loading ?
                 <div className='loading-container'>
-                    <CircularProgress className='loading' />
+                    <progress className='pure-material-progress-circular'/>
                 </div>
                 :
                 <button type='submit'>
@@ -122,22 +118,14 @@ const Login = ({ history }) => {
                 </>
             }
 
-            <Snackbar
-                open={error}
-                onClose={() => {
-                    setError(false)
-                }}
-                ContentProps={{
-                    'aria-describedby': 'message-id'
-                }}
-                message={
-                    <span id='message-id'>
-                        {errorMessage}, por favor tente novamente
-                    </span>
-                }
-            />
+            {error ?
+                <h1 className='message'>
+                    {errorMessage}
+                </h1>
+                :null
+            }
         </form>
-    </Paper>
+    </div>
 }
 
 export default Login

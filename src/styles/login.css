@@ -1,10 +1,11 @@
 .login {
     width: 38rem;
-    max-height: 43rem;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 0.5rem;
 }
 
 .login form {
@@ -42,7 +43,7 @@
 }
 
 .login form input {
-    margin: 1rem;
+    margin: 0.5rem 0 1.5rem 0;
     width: 28rem;
     height: 4rem;
     border-radius: 0.3rem;
@@ -87,21 +88,13 @@
 
 .login form .loading-container {
     width: 5rem;
-    height: 5rem;
+    height: 5.5rem;
     margin: 2rem auto 0 auto;
 }
 
-.login form .loading-container .loading {
-    color: var(--default-green);
-}
-
-.login form #message-id {
-    font-size: 1.6rem;
-}
-
 .login form .message {
-    font-size: 2rem;
-    color: #555;
+    font-size: 1.6rem;
+    color: #d00;
     margin: 2rem;
     text-align: center;
 }

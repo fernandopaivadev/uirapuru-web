@@ -6,7 +6,6 @@ import { Form } from '@unform/web'
 import Layout from '../layouts/Layout'
 import Input from '../forms/Input'
 
-import { isAdmin } from '../../services/auth'
 import { getUser, getConsumerUnit } from '../../services/storage'
 
 import '../../styles/profile.css'
@@ -191,9 +190,6 @@ const Profile = () => {
                             />
                         </Scope>
                     }
-                    {isAdmin() ?
-                        <button type='submit'>Alterar</button>
-                        : null}
                 </Form>
                 : null
             }
@@ -240,10 +236,6 @@ const Profile = () => {
                         defaultValue={consumerUnit?.state ?? ''}
 
                     />
-                    {isAdmin() ?
-                        <button type='submit'>Alterar</button>
-                        : null
-                    }
                 </Form>
                 : null
             }

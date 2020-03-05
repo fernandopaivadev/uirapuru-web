@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
-import {
-    Snackbar,
-    CircularProgress,
-    Paper
-} from '@material-ui/core'
-
 import { adminLogin, isAuthenticated } from '../../services/auth'
 import { api } from '../../services/api'
 import logo from '../../assets/logo.svg'
 
 import '../../styles/login.css'
+import '../../styles/util.css'
 
 const Login = ({ history }) => {
     const [level, setLevel] = useState('0')
@@ -65,7 +60,7 @@ const Login = ({ history }) => {
     }, [])
 
 
-    return <Paper className='login'>
+    return <div className='login'>
         <form onSubmit={handleSubmit}>
             <div className='logo'>
                 <img
@@ -98,7 +93,7 @@ const Login = ({ history }) => {
 
             {loading ?
                 <div className='loading-container'>
-                    <CircularProgress className='loading' />
+                    <progress className='pure-material-progress-circular'/>
                 </div>
                 :
                 <button type='submit'>
@@ -106,83 +101,14 @@ const Login = ({ history }) => {
                 </button>
             }
 
-            <Snackbar
-                open={error}
-                onClose={() => {
-                    setError(false)
-                }}
-                ContentProps={{
-                    'aria-describedby': 'message-id'
-                }}
-                message={
-                    <span id='message-id'>
-                        {errorMessage}, por favor tente novamente
-                    </span>
-                }
-            />
+            {error ?
+                <h1 className='message'>
+                    {errorMessage}
+                </h1>
+                :null
+            }
         </form>
-    </Paper>
-
-/*
-    return (
-        <Paper className='login'>
-            <form onSubmit={handleSubmit}>
-                <Typography style={styles.logoContainer}>
-                    <img
-                        src={logo}
-                        alt='Tech Amazon Logo'
-                        style={styles.logoImg}
-                    />
-                    Uirapuru
-                </Typography>
-
-                <TextField
-                    {...textFieldProps}
-                    label='Nível de acesso'
-                    onChange={event => {
-                        setLevel(event.target.value)
-                    }}
-                />
-                <TextField
-                    {...textFieldProps}
-                    label='Senha'
-                    type='password'
-                    onChange={event => {
-                        setPassword(event.target.value)
-                    }}
-                />
-
-                {loading ?
-                    <div className={classes.progress}>
-                        <CircularProgress className={classes.progressLine} />
-                    </div>
-                    :
-                    <Button
-                        type='submit'
-                        variant='contained'
-                        color='primary'
-                        className={classes.button}>
-                        <Typography>ENTRAR</Typography>
-                    </Button>
-                }
-
-                <Snackbar
-                    open={error}
-                    onClose={() => {
-                        setError(false)
-                    }}
-                    ContentProps={{
-                        'aria-describedby': 'message-id'
-                    }}
-                    message={
-                        <span id='message-id'>
-                            {errorMessage}, por favor tente novamente
-                        </span>
-                    }
-                />
-            </form>
-        </Paper>
-    )*/
+    </div>
 }
 
 export default Login

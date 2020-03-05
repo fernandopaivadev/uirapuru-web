@@ -2,15 +2,6 @@ import React, { useState, useEffect, memo } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
-    Avatar,
-    Dialog,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemAvatar
-} from '@material-ui/core'
-
-import {
     Room as RoomIcon,
     Face as FaceIcon,
     Dashboard as DashboardIcon,
@@ -79,17 +70,16 @@ const Layout = ({ history }) => {
 
             <ul className='menu'>
                 <div className='user'>
-                    <Avatar className='avatar'>
+                    <div className='avatar'>
                         {getUser()?.person
                             ? getUser()?.person?.name.split('')[0]
                             : getUser()?.company?.tradeName.split('')[0]
                         }
-                    </Avatar>
+                    </div>
 
                     <div className='text'>
                         <h1 className='username'>
-                            {getUser()?.username || 'Administrador'
-                            }
+                            {getUser()?.username || 'Administrador'}
                         </h1>
                         <h2 className='email'>{getUser()?.email}</h2>
                     </div>
@@ -153,99 +143,103 @@ const Layout = ({ history }) => {
                 }
             </ul>
 
-            <Dialog
-                open={usersPopup}
-                onClose={() => {
-                    setUsersPopup(false)
-                }}
-                scroll='body'>
-                <h1 className='dialog-title'>Escolha o Usuário</h1>
+            {usersPopup ?
+                <div
+                    className='container'
+                    onClick={() => {
+                        setUsersPopup(false)
+                    }}
+                >
+                    <div className='dialog'>
+                        <h1 className='title'>Escolha o Usuário</h1>
 
-                {getUsersList()?.length <= 0 ?
-                    <h1 className='empty'>
+                        {getUsersList()?.length <= 0 ?
+                            <h1 className='empty'>
                         Não há usuários cadastrados
-                    </h1>
-                    :
-                    <List>
-                        {getUsersList()?.map(user =>
-                            <ListItem
-                                key='User'
-                                button
-                                className='dialog-item'
-                                onClick={() => {
-                                    storeUser(user)
-                                    window.location.reload(false)
-                                }}>
-                                <ListItemAvatar>
-                                    <Avatar className='avatar'>
-                                        <FaceIcon className='icon'/>
-                                    </Avatar>
-                                </ListItemAvatar>
+                            </h1>
+                            :
+                            <ul>
+                                {getUsersList()?.map(user =>
+                                    <li
+                                        className='item'
+                                        onClick={() => {
+                                            storeUser(user)
+                                            window.location.reload(false)
+                                        }}>
+                                        <div className='avatar'>
+                                            <FaceIcon className='icon'/>
+                                        </div>
 
-                                <ListItemText>
-                                    <h1 className='username'>
-                                        {user?.username}
-                                    </h1>
+                                        <div className='text'>
+                                            <h1 className='username'>
+                                                {user?.username}
+                                            </h1>
 
-                                    <h1 className='email'>
-                                        {user?.email}
-                                    </h1>
-                                </ListItemText>
-                            </ListItem>
+                                            <h1 className='email'>
+                                                {user?.email}
+                                            </h1>
+                                        </div>
+                                    </li>
                         )}
-                    </List>
-                }
-            </Dialog>
+                            </ul>
+                        }
+                    </div>
+                </div>
+                : null
+            }
 
-            <Dialog
-                open={consumerUnitsPopup}
-                onClose={() => {
-                    setConsumerUnitsPopup(false)
-                }}
-                scroll='body'>
-                <h1 className='dialog-title'>
-                    Escolha a Unidade Consumidora
-                </h1>
+            {consumerUnitsPopup ?
+                <div
+                    className='container'
+                    onClick={() => {
+                        setConsumerUnitsPopup(false)
+                    }}
+                >
+                    <div className='dialog'>
+                        <h1 className='title'>
+                        Escolha a Unidade Consumidora
+                        </h1>
 
-                {getUser()?.consumerUnits?.length <= 0 ?
-                    <h1 className='empty'>
-                        Não há unidades consumidoras cadastradas
-                    </h1>
-                    :
-                    <List>
-                        {getUser()?.consumerUnits?.map(consumerUnit =>
-                            <ListItem
-                                button
-                                className='dialog-item'
-                                onClick={() => {
-                                    storeConsumerUnit(consumerUnit)
-                                    document.location.reload(true)
-                                }}
-                                key={consumerUnit?.number}>
-                                <ListItemAvatar>
-                                    <Avatar className='avatar'>
-                                        <RoomIcon className='icon'/>
-                                    </Avatar>
-                                </ListItemAvatar>
+                        {getUser()?.consumerUnits?.length <= 0 ?
+                            <h1 className='empty'>
+                            Não há unidades consumidoras cadastradas
+                            </h1>
+                            :
+                            <ul>
+                                {getUser()?.consumerUnits?.map(consumerUnit =>
+                                    <li
+                                        className='item'
+                                        onClick={() => {
+                                            storeConsumerUnit(consumerUnit)
+                                            document.location.reload(true)
+                                        }}
+                                        key={consumerUnit?.number}>
 
-                                <ListItemText>
-                                    <h1 className='name'>
-                                        {consumerUnit?.name}
-                                    </h1>
+                                        <div className='avatar'>
+                                            <RoomIcon className='icon'/>
+                                        </div>
 
-                                    <h1 className='number'>
-                                        UC: {consumerUnit?.number}
-                                    </h1>
+                                        <div className='text'>
+                                            <h1 className='name'>
+                                                {consumerUnit?.name}
+                                            </h1>
 
-                                    <h1 className='address'>
-                                        {consumerUnit?.address}
-                                    </h1>
-                                </ListItemText>
-                            </ListItem>
+                                            <h1 className='number'>
+                                            UC: {consumerUnit?.number}
+                                            </h1>
+
+                                            <h1 className='address'>
+                                                {consumerUnit?.address}
+                                            </h1>
+                                        </div>
+                                    </li>
                         )}
-                    </List>
-                }
-            </Dialog>
+                            </ul>
+                        }
+                    </div>
+                </div>
+                : null
+            }
         </li>
     </ul>
 }

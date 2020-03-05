@@ -1,7 +1,5 @@
 import React, { useEffect, useState, memo } from 'react'
 
-import { Dialog } from '@material-ui/core/'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faThermometerThreeQuarters,
@@ -17,6 +15,7 @@ import { getConsumerUnit } from '../../services/storage'
 import io from 'socket.io-client'
 
 import '../../styles/dashboard.css'
+import themes from '../../themes'
 
 const Dashboard = () => {
     const [initialized, setInitialized] = useState(false)
@@ -118,10 +117,17 @@ const Dashboard = () => {
         return <div className='card'>
             <h1 className='title'>{name}</h1>
             {temperature ?
-                <div className='value'>
+                <div className='value'
+                    style={{
+                        borderColor: themes.default.traceColors[0]
+                    }}
+                >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faThermometerThreeQuarters}
+                        style={{
+                            color: themes.default.traceColors[0]
+                        }}
                     />
                     <h1 className='text'>
                         Temperatura:
@@ -133,10 +139,17 @@ const Dashboard = () => {
                 : null
             }
             {humidity ?
-                <div className='value'>
+                <div className='value'
+                    style={{
+                        borderColor: themes.default.traceColors[1]
+                    }}
+                >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faTint}
+                        style={{
+                            color: themes.default.traceColors[1]
+                        }}
                     />
                     <h1 className='text'>
                         Umidade:
@@ -148,10 +161,17 @@ const Dashboard = () => {
                 : null
             }
             {voltage ?
-                <div className='value'>
+                <div className='value'
+                    style={{
+                        borderColor: themes.default.traceColors[2]
+                    }}
+                >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faBolt}
+                        style={{
+                            color: themes.default.traceColors[2]
+                        }}
                     />
                     <h1 className='text'>
                         Tensão:
@@ -173,46 +193,38 @@ const Dashboard = () => {
 
     return <div className='dashboard'>
         <Layout />
-        {consumerUnit?.devices?.length > 0 ?
-            <ul className='devices'>
-                {consumerUnit.devices.map((device, index) => {
-                    const value = JSON.parse(buffer[index] ?? null)
-
-                    return <li
-                        key={index}
-                        onClick={() => {
-                            setDevicePopup(true)
-                            setCurrentDevice(device)
-                        }}>
-                        <Card name={device.name} value={value} />
-                    </li>
-                })}
-            </ul>
-            :
-            <div className='empty'>
-                <h1 className='text'>
-                    Dispositivos não encontrados
-                </h1>
-            </div>
-        }
         {devicePopup ?
-            <Dialog
-                open={devicePopup}
-                onClose={() => {
-                    setDevicePopup(false)
-                    setCurrentDevice(null)
-                }}
-                scroll='paper'
-                fullScreen>
-                <h1 className='dialog-title'>
+            <div className='dialog'>
+                <h1 className='title'>
                     {currentDevice.name}
                 </h1>
                 <Graphic
                     device={currentDevice}
                     setDevicePopup={setDevicePopup}
                 />
-            </Dialog>
-            : null
+            </div>
+            :
+            consumerUnit?.devices?.length > 0 ?
+                <ul className='devices'>
+                    {consumerUnit.devices.map((device, index) => {
+                        const value = JSON.parse(buffer[index] ?? null)
+
+                        return <li
+                            key={index}
+                            onClick={() => {
+                                setDevicePopup(true)
+                                setCurrentDevice(device)
+                            }}>
+                            <Card name={device.name} value={value} />
+                        </li>
+                    })}
+                </ul>
+                :
+                <div className='empty'>
+                    <h1 className='text'>
+                    Dispositivos não encontrados
+                    </h1>
+                </div>
         }
     </div>
 }

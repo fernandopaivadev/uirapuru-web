@@ -56,10 +56,19 @@
     font-weight: 600;
 }
 
-.dialog-title {
+.dashboard > .dialog {
+    background: #fff;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard .dialog .title {
     text-align: center;
     margin: 2rem;
     overflow: hidden;
+    color: var(--default-green);
 }
 
 .dashboard .card .disconnected {
@@ -91,7 +100,7 @@
     text-align: center;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
     .dashboard .devices {
         display: flex;
         flex-direction: column;

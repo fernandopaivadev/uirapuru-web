@@ -5,10 +5,6 @@ import { api } from '../../services/api'
 import Plot from './Plot'
 
 import {
-    CircularProgress
-} from '@material-ui/core'
-
-import {
     Close as CloseIcon,
     AddToQueue as AddScreenIcon,
     RemoveFromQueue as RemoveScreenIcon
@@ -17,6 +13,7 @@ import {
 import themes from '../../themes'
 
 import '../../styles/graphic.css'
+import '../../styles/util.css'
 
 const Graphic = ({ device, setDevicePopup }) => {
     const [display, setDisplay] = useState({})
@@ -97,7 +94,7 @@ const Graphic = ({ device, setDevicePopup }) => {
     return <div className='graphic'>
         {loading ?
             <div className='loading-container'>
-                <CircularProgress className='loading' />
+                <progress className='pure-material-progress-circular'/>
             </div>
             :
             values.length > 0 ?

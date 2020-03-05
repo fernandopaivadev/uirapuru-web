@@ -47,8 +47,15 @@
     font-size: 2rem;
 }
 
-.navbar .profile .avatar {
+.navbar .avatar {
     background: var(--default-green);
+    border-radius: 50%;
+    color: #fff;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navbar .profile button {
@@ -76,14 +83,16 @@
 .navbar .profile .menu {
     position: absolute;
     bottom: 100;
-    transform: translate(-0.5rem, 1rem);
+    transform: translate(-0.5rem, 10%);
     right: 0;
     margin: 10rem 0 0 0;
     background: var(--default-white);
     border-radius: 0.5rem;
+    border: 0.1rem solid #ccc;
     visibility: hidden;
     opacity: 0;
     transition: all 0.2s ease;
+    z-index: 1;
 }
 
 .navbar .profile .menu .user {
@@ -136,34 +145,72 @@
     background: #eee;
 }
 
-.dialog-title {
+.navbar .container {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    background: #333c;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    align-content: center;
+    justify-content: center;
+}
+
+.navbar .container .dialog {
+    background: #fff;
+    min-width: 35rem;
+    min-height: 18rem;
+    z-index: 1;
+    border-radius: 0.5rem;
+    display: block;
+    justify-content: center;
+}
+
+.navbar .container .dialog .item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 0 1rem 1rem 0;
+    margin: 0 2rem 2rem 0;
+}
+
+.navbar .container .dialog .item:hover {
+    background: #eee;
+}
+
+.navbar .container .dialog .title {
     color: var(--default-green);
     font-size: 2.4rem;
     margin: 2rem;
 }
 
-.dialog-item .avatar {
+.navbar .container .dialog .item .avatar {
     background: var(--default-green);
     color: #fff;
+    margin: 2rem;
 }
 
-.dialog-item .avatar .icon {
+.navbar .container .dialog .item .avatar .icon {
     font-size: 2rem;
 }
 
-.dialog-item .name,
-.dialog-item .username {
+.navbar .container .dialog .item .text .name,
+.navbar .container .dialog .item .text .username {
     color: #333;
     font-size: 2rem;
 }
 
-.dialog-item .number,
-.dialog-item .email {
+.navbar .container .dialog .item .text .number,
+.navbar .container .dialog .item .text .email {
     color: #555;
     font-size: 1.8rem;
 }
 
-.dialog-item .address {
+.navbar .container .dialog .item .text .address {
     color: #555;
     font-size: 1.6rem;
 }
