@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import {
     Room as RoomIcon,
-    Face as FaceIcon,
+    RecentActors as UsersIcon,
     Dashboard as DashboardIcon,
     ExitToApp as LogoutIcon,
     Person as ProfileIcon
@@ -45,8 +45,7 @@ const Layout = ({ history }) => {
         <li className='logo' key='logo'>
             <img src={logo} alt='Tech Amazon Logo'/>
             <h1 className='text'>
-                    Uirapuru
-                {isAdmin() ? ' [Admin]' : null}
+                Uirapuru
             </h1>
         </li>
 
@@ -65,7 +64,10 @@ const Layout = ({ history }) => {
         </li>
 
         <li className='profile' key='profile'>
-            <h1 className='username'>{getUser()?.username ?? ''}</h1>
+            <h1 className='username'>
+                {isAdmin() ? <i>Admin - </i> : null}
+                {getUser()?.username ?? ''}
+            </h1>
 
             <button>
                 {getUser()?.person
@@ -97,7 +99,7 @@ const Layout = ({ history }) => {
                         onClick={() => {
                             setUsersPopup(true)
                         }}>
-                        <FaceIcon className='icon' />
+                        <UsersIcon className='icon' />
                             Usuários
                     </li>
                     : null
@@ -174,7 +176,7 @@ const Layout = ({ history }) => {
                                             window.location.reload(false)
                                         }}>
                                         <div className='avatar'>
-                                            <FaceIcon className='icon'/>
+                                            <UsersIcon className='icon'/>
                                         </div>
 
                                         <div className='text'>

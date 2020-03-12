@@ -37,7 +37,7 @@
     width: 10rem;
     height: 5rem;
     padding: 0.5rem;
-    margin: 1rem;
+    margin: 0.5rem;
     border-radius: 0.5rem;
     border: 0.2rem solid var(--default-green);
     font-size: 1.6rem;
@@ -47,11 +47,11 @@
     margin: 1.5rem;
     border: 0.1rem solid var(--default-green);
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .graphic .controls ul li .value {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: #555;
 }
 

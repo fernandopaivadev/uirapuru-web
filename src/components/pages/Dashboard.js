@@ -222,7 +222,7 @@ const Dashboard = () => {
                 :
                 <div className='empty'>
                     <h1 className='text'>
-                    Dispositivos não encontrados
+                        Dispositivos não encontrados
                     </h1>
                 </div>
         }

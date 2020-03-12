@@ -35,13 +35,10 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
 
     const traces = [
         {
-            mode: 'lines+markers',
+            mode: 'lines',
             name: 'Temperatura (°C)',
-            marker: {
-                color: themes.default.traceColors[0],
-                size: 8
-            },
             line: {
+                color: themes.default.traceColors[0],
                 width: 2
             },
             x: [...time],
@@ -49,13 +46,10 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
             hovertemplate: '%{y} °C'
         },
         {
-            mode: 'lines+markers',
+            mode: 'lines',
             name: 'Umidade (%)',
-            marker: {
-                color: themes.default.traceColors[1],
-                size: 8
-            },
             line: {
+                color: themes.default.traceColors[1],
                 width: 2
             },
             x: [...time],
@@ -63,13 +57,10 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
             hovertemplate: '%{y} %'
         },
         {
-            mode: 'lines+markers',
+            mode: 'lines',
             name: 'Tensão (V)',
-            marker: {
-                color: themes.default.traceColors[2],
-                size: 8
-            },
             line: {
+                color: themes.default.traceColors[2],
                 width: 2
             },
             x: [...time],
@@ -77,13 +68,10 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
             hovertemplate: '%{y} V'
         },
         {
-            mode: 'lines+markers',
+            mode: 'lines',
             name: 'Nível de Tensão (%)',
-            marker: {
-                color: themes.default.traceColors[3],
-                size: 8
-            },
             line: {
+                color: themes.default.traceColors[3],
                 width: 2
             },
             x: [...time],
@@ -110,7 +98,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
                 },
                 hoverlabel: {
                     font: {
-                        size: 30,
+                        size: 24,
                         color: themes.default.white
                     }
                 },
@@ -146,7 +134,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
                     height: '1440'
                 },
                 displaylogo: false,
-                displayModeBar: true,
+                //displayModeBar: true,
                 //!---------------------------------------------------
                 /*//! BUTTON NAMES
                     "zoom2d", "pan2d", "select2d", "lasso2d",
@@ -172,22 +160,11 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
             }}
             style={{
                 height: '90vh',
-                width:
-                    window.innerWidth > 2500
-                        ? doubleScreen
-                            ? '45vw'
-                            : '90vw'
-                        : window.innerWidth > 1400
-                            ? doubleScreen
-                                ? '44vw'
-                                : '88vw'
-                            : doubleScreen
-                                ? '42.5vw'
-                                : '85vw'
+                width: doubleScreen ? '45vw' : '90vw'
             }}
             onClick={event => {
                 const selectedTime = new Date(
-                        event?.points[0]?.x
+                    event?.points[0]?.x
                 ).toLocaleString()
 
                 const index = timeString.indexOf(selectedTime)

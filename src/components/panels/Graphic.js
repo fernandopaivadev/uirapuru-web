@@ -119,8 +119,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                     onClick={() => {
                         setDevicePopup(false)
                     }}
-                    className='close'
-                >
+                    className='close'>
                     <CloseIcon className='icon'/>
                 </button>
 
@@ -130,8 +129,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                             onClick={() => {
                                 setDoubleScreen(!doubleScreen)
                             }}
-                            className='button'
-                        >
+                            className='button'>
                             {doubleScreen ?
                                 <RemoveScreenIcon className='icon' />
                                 :
@@ -149,15 +147,17 @@ const Graphic = ({ device, setDevicePopup }) => {
                             <option>90 Dias</option>
                         </select>
                     </>
-                    :null
+                    : null
                 }
                 <ul>
                     {display.temperature ?
                         <li
                             style={{
-                                border: `0.3rem solid ${themes.default.traceColors[0]}`
+                                border: `0.3rem solid ${
+                                    themes.default.traceColors[0]
+                                }`
                             }}>
-                            <h1>
+                            <h1 className='value'>
                                 {display.temperature} °C
                             </h1>
                         </li>
@@ -166,7 +166,9 @@ const Graphic = ({ device, setDevicePopup }) => {
                     {display.humidity ?
                         <li
                             style={{
-                                border: `0.3rem solid ${themes.default.traceColors[1]}`
+                                border: `0.3rem solid ${
+                                    themes.default.traceColors[1]
+                                }`
                             }}>
                             <h1 className='value'>
                                 {display.humidity} % U.R.
@@ -177,7 +179,9 @@ const Graphic = ({ device, setDevicePopup }) => {
                     {display.voltage ?
                         <li
                             style={{
-                                border: `0.3rem solid ${themes.default.traceColors[2]}`
+                                border: `0.3rem solid ${
+                                    themes.default.traceColors[2]
+                                }`
                             }}>
                             <h1 className='value'>
                                 {display.voltage} V
@@ -188,7 +192,9 @@ const Graphic = ({ device, setDevicePopup }) => {
                     {display.voltageLevel ?
                         <li
                             style={{
-                                border: `0.3rem solid ${themes.default.traceColors[3]}`
+                                border: `0.3rem solid ${
+                                    themes.default.traceColors[3]
+                                }`
                             }}>
                             <h1 className='value'>
                                 {display.voltageLevel} % V Max
