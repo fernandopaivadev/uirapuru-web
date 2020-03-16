@@ -34,6 +34,9 @@ const Dashboard = () => {
     const [devicePopup, setDevicePopup] = useState(false)
     const [currentDevice, setCurrentDevice] = useState(null)
 
+    const [connected, setConnected] = useState([])
+    const [timeoutId, setTimeoutId] = useState([])
+
     const webSocketConfig = () => {
         try {
             let devicesList = []
@@ -101,13 +104,27 @@ const Dashboard = () => {
                     })
 
                     setBuffer(_buffer)
+
+                    let _connected = [...connected]
+                    _connected[index] = true
+                    setConnected(_connected)
+
+                    clearTimeout(timeoutId[index])
+
+                    let _timeoutId = [...timeoutId]
+                    _timeoutId[index] = setTimeout(() => {
+                        let _connected = [...connected]
+                        _connected[index] = false
+                        setConnected(_connected)
+                    }, 10000)
+                    setTimeoutId(_timeoutId)
                 }
             })
         }
         // eslint-disable-next-line
     }, [newMessage])
 
-    const Card = ({ name, value }) => {
+    const Card = ({ name, id, index, value }) => {
         const { t, h, v1 } = value ?? {}
 
         const temperature = t
@@ -116,6 +133,8 @@ const Dashboard = () => {
 
         return <div className='card'>
             <h1 className='title'>{name}</h1>
+            <h1 className='subtitle'>{id}</h1>
+
             {temperature ?
                 <div className='value'
                     style={{
@@ -182,7 +201,7 @@ const Dashboard = () => {
                 </div>
                 : null
             }
-            {!value ?
+            {!connected[index] ?
                 <h1 className='disconnected'>
                     Desconectado
                 </h1>
@@ -215,7 +234,12 @@ const Dashboard = () => {
                                 setDevicePopup(true)
                                 setCurrentDevice(device)
                             }}>
-                            <Card name={device.name} value={value} />
+                            <Card
+                                name={device.name}
+                                id={device.id}
+                                index={index}
+                                value={value}
+                            />
                         </li>
                     })}
                 </ul>
