@@ -125,6 +125,10 @@ const Dashboard = () => {
     }, [newMessage])
 
     const Card = ({ name, id, index, value }) => {
+        if(!connected[index]) {
+            value = null
+        }
+
         const { t, h, v1 } = value ?? {}
 
         const temperature = t
