@@ -18,10 +18,11 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
     let voltage = []
 
     values.forEach(values => {
-        const { t, h, v1 } = values ?? {}
+        //const { t, h, v1 } = values ?? {}
+        const { t, v1 } = values ?? {}
 
         temperature.push(t)
-        humidity.push(h)
+        //humidity.push(h)
         voltage.push(v1)
     })
 

@@ -197,7 +197,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                                 }`
                             }}>
                             <h1 className='value'>
-                                {display.voltageLevel} % V Max
+                                {display.voltageLevel} % V
                             </h1>
                         </li>
                         : null

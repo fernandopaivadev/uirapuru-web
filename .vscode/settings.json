@@ -27,6 +27,9 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
 
-    "editor.rulers": [{ "column": 80, "color": "#5500aa" }],
+    "editor.rulers": [{
+        "column": 80,
+        "color": "#0055aa"
+    }],
     "editor.fontLigatures": true
 }

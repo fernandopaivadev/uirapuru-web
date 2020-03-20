@@ -125,14 +125,16 @@ const Dashboard = () => {
     }, [newMessage])
 
     const Card = ({ name, id, index, value }) => {
-        if(!connected[index]) {
+        if (!connected[index]) {
             value = null
         }
 
-        const { t, h, v1 } = value ?? {}
+        //const { t, h, v1 } = value ?? {}
+        const { t, v1 } = value ?? {}
 
         const temperature = t
-        const humidity = h
+        //const humidity = h
+        const humidity = null
         const voltage = v1
 
         return <div className='card'>
