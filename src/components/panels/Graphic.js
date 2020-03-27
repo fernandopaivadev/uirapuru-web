@@ -15,6 +15,17 @@ import themes from '../../themes'
 import '../../styles/graphic.css'
 import '../../styles/util.css'
 
+
+let mobile = false
+
+window.onload = () => {
+    const { innerHeight, innerWidth } = window
+
+    if (innerHeight > innerWidth) {
+        mobile = true
+    }
+}
+
 const Graphic = ({ device, setDevicePopup }) => {
     const [display, setDisplay] = useState({})
     const [loading, setLoading] = useState(false)
@@ -88,7 +99,8 @@ const Graphic = ({ device, setDevicePopup }) => {
         values,
         timestamps,
         setDisplay,
-        doubleScreen
+        doubleScreen,
+        mobile
     }
 
     return <div className='graphic'>
@@ -125,18 +137,21 @@ const Graphic = ({ device, setDevicePopup }) => {
 
                 {values.length > 0 ?
                     <>
-                        <button
-                            onClick={() => {
-                                setDoubleScreen(!doubleScreen)
-                            }}
-                            className='button'>
-                            {doubleScreen ?
-                                <RemoveScreenIcon className='icon' />
-                                :
-                                <AddScreenIcon className='icon' />
-                            }
-                        </button>
-
+                        {!mobile ?
+                            <button
+                                onClick={() => {
+                                    setDoubleScreen(!doubleScreen)
+                                }}
+                                className='button'>
+                                {doubleScreen ?
+                                    <RemoveScreenIcon className='icon' />
+                                    :
+                                    <AddScreenIcon className='icon' />
+                                }
+                            </button>
+                            :
+                            null
+                        }
                         <select
                             onChange={event => {
                                 setPeriod(event.target.options.selectedIndex)

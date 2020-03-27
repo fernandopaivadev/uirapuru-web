@@ -10,7 +10,6 @@ import {
 } from '@material-ui/icons'
 
 import {
-    storeUser,
     getUser,
     getConsumerUnit,
     storeConsumerUnit,
@@ -156,8 +155,7 @@ const Layout = ({ history }) => {
                     className='container'
                     onClick={() => {
                         setUsersPopup(false)
-                    }}
-                >
+                    }}>
                     <div className='dialog'>
                         <h1 className='title'>Escolha o Usuário</h1>
 
@@ -172,7 +170,7 @@ const Layout = ({ history }) => {
                                         key={user?.username}
                                         className='item'
                                         onClick={() => {
-                                            storeUser(user)
+                                            fetch(user._id)
                                             window.location.reload(false)
                                         }}>
                                         <div className='avatar'>

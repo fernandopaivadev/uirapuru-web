@@ -83,3 +83,23 @@
     font-weight: 600;
     color: #aaa;
 }
+
+@media screen and (max-width: 400px) {
+    .graphic .controls {
+        display: flex;
+        flex-direction: row-reverse;
+        overflow: hidden;
+        align-items: center;
+        width: 40%;
+    }
+
+    .graphic .controls ul {
+        display: none;
+    }
+
+    .graphic {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}

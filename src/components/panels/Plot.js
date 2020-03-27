@@ -4,7 +4,7 @@ import themes from '../../themes'
 
 const Plotly = lazy(() => import('react-plotly.js'))
 
-const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
+const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
     let time = []
     let timeString = []
 
@@ -89,17 +89,21 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen }) => {
                 modebar: {
                     color: themes.default.green
                 },
+                //showlegend: !mobile,
                 legend: {
                     orientation: 'h',
                     x: 0.0,
-                    y: 1.05,
+                    y: 10,
                     font: {
-                        size: doubleScreen ? 16 : 20
+                        size: mobile ?
+                            12
+                            :
+                            doubleScreen ? 16 : 20
                     }
                 },
                 hoverlabel: {
                     font: {
-                        size: 24,
+                        size: mobile ? 18 : 24,
                         color: themes.default.white
                     }
                 },
