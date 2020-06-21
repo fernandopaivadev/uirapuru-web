@@ -1,0 +1,35 @@
+.graphic {
+    display: flex;
+    padding: 0 2rem 2rem 2rem;
+    justify-content: space-around;
+}
+
+.graphic .loading-container {
+    position: absolute;
+    width: 5.5rem;
+    height: 5.5rem;
+    top: 50%;
+    left: 50%;
+}
+
+.graphic .empty {
+    height: 100vh;
+    width: 90vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.graphic .empty .text {
+    font-size: 30px;
+    font-weight: 600;
+    color: #aaa;
+}
+
+@media screen and (max-width: 400px) {
+    .graphic {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}

@@ -1,0 +1,52 @@
+.realtime {
+    padding: 2.5rem;
+    margin: 2rem;
+    background: #fff;
+    border-radius: 0.5rem;
+    justify-content: center;
+    max-width: 35rem;
+}
+
+.realtime .title {
+    color: var(--default-green);
+    font-size: 2rem;
+    text-align: center;
+}
+
+.realtime .display {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.realtime .display .value {
+    margin: 1.5rem auto 1.5rem auto;
+    display: flex;
+    justify-content: left;
+    border: 0.1rem solid var(--default-green);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.realtime .display .value .icon {
+    font-size: 2.4rem;
+    color: var(--default-green);
+}
+
+.realtime .display .value .text {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #555;
+    margin: 0 1.5rem 0 1.5rem;
+}
+
+.realtime .display .value .payload {
+    color: #333;
+    font-weight: 600;
+}
+
+.realtime .disconnected {
+    color: #aaa;
+    text-align: center;
+    font-size: 2rem;
+}

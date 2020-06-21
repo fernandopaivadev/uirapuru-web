@@ -1,0 +1,100 @@
+.login {
+    width: 38rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 0.5rem;
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 2.5rem;
+}
+
+.login form .logo {
+    display: flex;
+    margin: 1rem auto 1.5rem auto;
+    align-items: center;
+}
+
+.login form .logo h1 {
+    font-size: 3.4rem;
+    font-weight: 400;
+    letter-spacing: 0.3rem;
+    color: #333;
+}
+
+.login form .logo img {
+    width: 5rem;
+    margin: 0 1.5rem 0 0;
+}
+
+.login form .label {
+    font-size: 1.6rem;
+    color: #555;
+    width: 28rem;
+    text-align: left;
+}
+
+.login form input {
+    margin: 0.5rem 0 1.5rem 0;
+    width: 28rem;
+    height: 4rem;
+    border-radius: 0.3rem;
+    border: 0.1rem solid var(--default-green);
+    font-size: 2rem;
+    padding: 0.5rem;
+}
+
+.login form input:focus,
+.login form input:hover {
+    border-color: var(--default-light-green);
+}
+
+.login form button {
+    width: 15rem;
+    height: 4rem;
+    font-size: 2rem;
+    font-weight: 600;
+    border-radius: 0.3rem;
+    border: none;
+    background: var(--default-green);
+    color: #fff;
+    margin: 1.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login form button:hover {
+    background: var(--default-light-green);
+}
+
+.login form .link {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #777;
+    text-decoration: none;
+}
+
+.login form .link:hover {
+    color: var(--default-light-green);
+}
+
+.login form .loading-container {
+    width: 5rem;
+    height: 5.5rem;
+    margin: 2rem auto 0 auto;
+}
+
+.login form .message {
+    font-size: 1.6rem;
+    color: #d00;
+    margin: 2rem;
+    text-align: center;
+}
