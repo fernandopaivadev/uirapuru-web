@@ -1,18 +1,10 @@
-.graphic {
-    display: flex;
-    padding: 0 2rem 2rem 2rem;
-    justify-content: space-around;
-}
-
-<<<<<<< HEAD
-=======
-.graphic .controls {
+.controls {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.graphic .controls button {
+.controls button {
     border-radius: 50%;
     width: 4rem;
     height: 4rem;
@@ -27,15 +19,15 @@
     align-items: center;
 }
 
-.graphic .controls button:hover {
+.controls button:hover {
     background: var(--default-light-green);
 }
 
-.graphic .controls .icon {
+.controls .icon {
     font-size: 2rem;
 }
 
-.graphic .controls select {
+.controls select {
     width: 10rem;
     height: 5rem;
     padding: 0.5rem;
@@ -45,7 +37,7 @@
     font-size: 1.6rem;
 }
 
-.graphic .controls ul li {
+.controls ul li {
     width: 10rem;
     margin: 1.5rem;
     border: 0.1rem solid var(--default-green);
@@ -54,42 +46,17 @@
     text-align: center;
 }
 
-.graphic .controls ul li .value {
+.controls ul li .value {
     font-size: 1.6rem;
     color: #555;
 }
 
-.graphic .controls ul li .time {
+.controls ul li .time {
     font-size: 1.4rem;
     color: #555;
 }
 
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
-.graphic .loading-container {
-    position: absolute;
-    width: 5.5rem;
-    height: 5.5rem;
-    top: 50%;
-    left: 50%;
-}
-
-.graphic .empty {
-    height: 100vh;
-    width: 90vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.graphic .empty .text {
-    font-size: 30px;
-    font-weight: 600;
-    color: #aaa;
-}
-
 @media screen and (max-width: 400px) {
-<<<<<<< HEAD
-=======
     .graphic .controls {
         display: flex;
         flex-direction: row-reverse;
@@ -100,12 +67,5 @@
 
     .graphic .controls ul {
         display: none;
-    }
-
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
-    .graphic {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
     }
 }

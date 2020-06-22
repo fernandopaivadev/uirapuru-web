@@ -15,7 +15,11 @@
     "spellright.documentTypes": ["markdown", "latex", "plaintext"],
 
     "[javascript]": {
+<<<<<<< HEAD
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+=======
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
     },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
@@ -27,6 +31,14 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
 
-    "editor.rulers": [{ "column": 80, "color": "#5500aa" }],
+    "editor.rulers": [{
+        "column": 80,
+        "color": "#0055aa"
+    }],
+<<<<<<< HEAD
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16
+=======
     "editor.fontLigatures": true
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 }

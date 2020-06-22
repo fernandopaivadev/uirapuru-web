@@ -23,7 +23,7 @@ import logo from '../../assets/logo.svg'
 
 import '../../styles/layout.css'
 
-const Layout = ({ history }) => {
+const NavBar = ({ history }) => {
     const [usersPopup, setUsersPopup] = useState(isAdmin() && !getUser())
     const [consumerUnitsPopup, setConsumerUnitsPopup] = useState(
         getUser() && !getConsumerUnit()
@@ -33,7 +33,7 @@ const Layout = ({ history }) => {
         if (!isAuthenticated()) {
             history.push('/login')
         } else {
-            if(!fetch()) {
+            if (!fetch()) {
                 history.push('/login')
             }
         }
@@ -42,7 +42,7 @@ const Layout = ({ history }) => {
 
     return <ul className='navbar'>
         <li className='logo' key='logo'>
-            <img src={logo} alt='Tech Amazon Logo'/>
+            <img src={logo} alt='Tech Amazon Logo' />
             <h1 className='text'>
                 Uirapuru
             </h1>
@@ -69,9 +69,12 @@ const Layout = ({ history }) => {
             </h1>
 
             <button>
-                {getUser()?.person
-                    ? getUser()?.person?.name.split('')[0]
-                    : getUser()?.company?.tradeName.split('')[0]
+                {getUser() ?
+                    getUser()?.person
+                        ? getUser()?.person?.name.split('')[0]
+                        : getUser()?.company?.tradeName.split('')[0]
+                    :
+                    'A'
                 }
             </button>
 
@@ -174,7 +177,7 @@ const Layout = ({ history }) => {
                                             window.location.reload(false)
                                         }}>
                                         <div className='avatar'>
-                                            <UsersIcon className='icon'/>
+                                            <UsersIcon className='icon' />
                                         </div>
 
                                         <div className='text'>
@@ -187,7 +190,7 @@ const Layout = ({ history }) => {
                                             </h1>
                                         </div>
                                     </li>
-                        )}
+                                )}
                             </ul>
                         }
                     </div>
@@ -223,7 +226,7 @@ const Layout = ({ history }) => {
                                         }}>
 
                                         <div className='avatar'>
-                                            <RoomIcon className='icon'/>
+                                            <RoomIcon className='icon' />
                                         </div>
 
                                         <div className='text'>
@@ -232,7 +235,7 @@ const Layout = ({ history }) => {
                                             </h1>
 
                                             <h1 className='number'>
-                                            UC: {consumerUnit?.number}
+                                                UC: {consumerUnit?.number}
                                             </h1>
 
                                             <h1 className='address'>
@@ -240,7 +243,7 @@ const Layout = ({ history }) => {
                                             </h1>
                                         </div>
                                     </li>
-                        )}
+                                )}
                             </ul>
                         }
                     </div>
@@ -251,4 +254,4 @@ const Layout = ({ history }) => {
     </ul>
 }
 
-export default withRouter(memo(Layout))
+export default withRouter(memo(NavBar))
