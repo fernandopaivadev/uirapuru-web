@@ -13,7 +13,6 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
         timeString.push(new Date(String(timestamp)).toLocaleString())
     })
 
-<<<<<<< HEAD
     let temperature1 = []
     let humidity1 = []
     let voltage = []
@@ -39,19 +38,6 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
         current3.push(i3)
         voltage4.push(v4)
         current4.push(i4)
-=======
-    let temperature = []
-    let humidity = []
-    let voltage = []
-
-    values.forEach(values => {
-        //const { t, h, v1 } = values ?? {}
-        const { t, v1 } = values ?? {}
-
-        temperature.push(t)
-        //humidity.push(h)
-        voltage.push(v1)
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
     })
 
     const maxVoltage = Math.max(...voltage)
@@ -65,55 +51,34 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
     const traces = [
         {
             mode: 'lines',
-<<<<<<< HEAD
             name: 'Temperatura 1 (°C)',
-=======
-            name: 'Temperatura (°C)',
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             line: {
                 color: themes.default.traceColors[0],
                 width: 2
             },
             x: [...time],
-<<<<<<< HEAD
             y: [...temperature1],
-=======
-            y: [...temperature],
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             hovertemplate: '%{y} °C'
         },
         {
             mode: 'lines',
-<<<<<<< HEAD
             name: 'Umidade 1 (%)',
-=======
-            name: 'Umidade (%)',
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             line: {
                 color: themes.default.traceColors[1],
                 width: 2
             },
             x: [...time],
-<<<<<<< HEAD
             y: [...humidity1],
-=======
-            y: [...humidity],
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             hovertemplate: '%{y} %'
         },
         {
             mode: 'lines',
-<<<<<<< HEAD
             name: 'Tensão 1 (V)',
-=======
-            name: 'Tensão (V)',
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             line: {
                 color: themes.default.traceColors[2],
                 width: 2
             },
             x: [...time],
-<<<<<<< HEAD
             y: [...voltage1],
             hovertemplate: '%{y} V'
         }
@@ -175,85 +140,7 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
                     //displayModeBar: true,
                     //!---------------------------------------------------
                     /*//! BUTTON NAMES
-=======
-            y: [...voltage],
-            hovertemplate: '%{y} V'
-        },
-        {
-            mode: 'lines',
-            name: 'Nível de Tensão (%)',
-            line: {
-                color: themes.default.traceColors[3],
-                width: 2
-            },
-            x: [...time],
-            y: [...voltageLevel],
-            hovertemplate: '%{y} %'
-        }
-    ]
 
-    return <Suspense fallback='' className='plot'>
-        <Plotly
-            data={[...traces]}
-            layout={{
-                //dragmode: 'pan',
-                modebar: {
-                    color: themes.default.green
-                },
-                //showlegend: !mobile,
-                legend: {
-                    orientation: 'h',
-                    x: 0.0,
-                    y: 10,
-                    font: {
-                        size: mobile ?
-                            12
-                            :
-                            doubleScreen ? 16 : 20
-                    }
-                },
-                hoverlabel: {
-                    font: {
-                        size: mobile ? 18 : 24,
-                        color: themes.default.white
-                    }
-                },
-                margin: {
-                    l: 30,
-                    r: 30,
-                    b: 120,
-                    t: 50,
-                    pad: 0
-                },
-                uirevision: false,
-                spikedistance: -1,
-                xaxis: {
-                    showgrid: false,
-                    showspikes: true,
-                    spikemode: 'across',
-                    spikesnap: 'cursor',
-                    //spikesnap: 'data',
-                    spikedash: 'solid',
-                    spikecolor: themes.default.lightGray,
-                    spikethickness: 2
-                },
-                yaxis: {
-                    fixedrange: true
-                }
-            }}
-            config={{
-                scrollZoom: true,
-                toImageButtonOptions: {
-                    filename: 'Uirapuru_Graph',
-                    format: 'png',
-                    width: '2560',
-                    height: '1440'
-                },
-                displaylogo: false,
-                //displayModeBar: true,
-                //!---------------------------------------------------
-                /*//! BUTTON NAMES
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
                     "zoom2d", "pan2d", "select2d", "lasso2d",
                     "zoomIn2d", "zoomOut2d", "autoScale2d",
                     "resetScale2d", "hoverClosestCartesian",
@@ -265,7 +152,6 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
                     "hoverClosestGl2d", "hoverClosestPie", "toggleHover",
                     "resetViews", "toggleSpikelines", "resetViewMapbox"
                     */
-<<<<<<< HEAD
                     //!---------------------------------------------------
                     modeBarButtons: [
                         [
@@ -309,39 +195,6 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
             />
         </Suspense>
     )
-=======
-                //!---------------------------------------------------
-                modeBarButtons: [
-                    [
-                        'toImage',
-                        'hoverClosestCartesian',
-                        'hoverCompareCartesian',
-                        'sendDataToCloud'
-                    ]
-                ]
-            }}
-            style={{
-                height: '90vh',
-                width: doubleScreen ? '45vw' : '90vw'
-            }}
-            onClick={event => {
-                const selectedTime = new Date(
-                    event?.points[0]?.x
-                ).toLocaleString()
-
-                const index = timeString.indexOf(selectedTime)
-
-                setDisplay({
-                    time: selectedTime,
-                    humidity: humidity[index],
-                    temperature: temperature[index],
-                    voltage: voltage[index],
-                    voltageLevel: voltageLevel[index]
-                })
-            }}
-        />
-    </Suspense>
->>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 }
 
 export default memo(Plot)
