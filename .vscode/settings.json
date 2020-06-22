@@ -36,9 +36,18 @@
         "color": "#0055aa"
     }],
 <<<<<<< HEAD
+<<<<<<< HEAD
     "editor.fontLigatures": true,
     "editor.fontSize": 16
 =======
+=======
+=======
+<<<<<<< HEAD
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16
+=======
+>>>>>>> master
+>>>>>>> ad70c575d6f1c1a19740f21ad176edc1f89b4629
     "editor.fontLigatures": true
 >>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 }

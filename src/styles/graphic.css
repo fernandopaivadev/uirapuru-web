@@ -90,6 +90,12 @@
 @media screen and (max-width: 400px) {
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> master
+>>>>>>> ad70c575d6f1c1a19740f21ad176edc1f89b4629
     .graphic .controls {
         display: flex;
         flex-direction: row-reverse;
@@ -102,7 +108,14 @@
         display: none;
     }
 
+<<<<<<< HEAD
 >>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
+>>>>>>> master
+>>>>>>> ad70c575d6f1c1a19740f21ad176edc1f89b4629
     .graphic {
         display: flex;
         flex-direction: column-reverse;

@@ -20,7 +20,14 @@ import themes from '../../themes'
 import '../../styles/graphic.css'
 import '../../styles/util.css'
 
+<<<<<<< HEAD
 >>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
+>>>>>>> master
+>>>>>>> ad70c575d6f1c1a19740f21ad176edc1f89b4629
 
 let mobile = false
 
@@ -33,6 +40,11 @@ window.onload = () => {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> ad70c575d6f1c1a19740f21ad176edc1f89b4629
 const Graphic = ({ device }) => {
     const [display, setDisplay] = useState({})
     const [loading, setLoading] = useState(false)
@@ -40,6 +52,10 @@ const Graphic = ({ device }) => {
     const [timestamps, setTimestamps] = useState([])
     const [period, setPeriod] = useState()
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> master
+>>>>>>> ad70c575d6f1c1a19740f21ad176edc1f89b4629
 const Graphic = ({ device, setDevicePopup }) => {
     const [display, setDisplay] = useState({})
     const [loading, setLoading] = useState(false)
@@ -148,6 +164,12 @@ const Graphic = ({ device, setDevicePopup }) => {
         timestamps,
         setDisplay,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        doubleScreen,
+=======
+<<<<<<< HEAD
+>>>>>>> ad70c575d6f1c1a19740f21ad176edc1f89b4629
         mobile
     }
 
@@ -158,6 +180,10 @@ const Graphic = ({ device, setDevicePopup }) => {
 =======
         doubleScreen,
 >>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
+<<<<<<< HEAD
+=======
+>>>>>>> master
+>>>>>>> ad70c575d6f1c1a19740f21ad176edc1f89b4629
         mobile
     }
 
