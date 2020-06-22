@@ -1,5 +1,8 @@
 import React, { useEffect, useState, memo } from 'react'
 
+<<<<<<< HEAD
+import NavBar from '../panels/NavBar'
+=======
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faThermometerThreeQuarters,
@@ -8,14 +11,22 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import Layout from '../layouts/Layout'
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 import Graphic from '../panels/Graphic'
 import { isAuthenticated, getToken } from '../../services/auth'
 import { baseURL } from '../../services/api'
 import { getConsumerUnit } from '../../services/storage'
 import io from 'socket.io-client'
 
+<<<<<<< HEAD
+import RealTime from '../panels/RealTime'
+import DeviceMenu from '../panels/DeviceMenu'
+
+import '../../styles/dashboard.css'
+=======
 import '../../styles/dashboard.css'
 import themes from '../../themes'
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 
 const Dashboard = () => {
     const [initialized, setInitialized] = useState(false)
@@ -31,8 +42,13 @@ const Dashboard = () => {
 
     const [buffer, setBuffer] = useState([])
 
+<<<<<<< HEAD
+    const [currentDevice, setCurrentDevice] = useState(null)
+    const [index, setIndex] = useState(null)
+=======
     const [devicePopup, setDevicePopup] = useState(false)
     const [currentDevice, setCurrentDevice] = useState(null)
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 
     const [connected, setConnected] = useState([])
     const [timeoutId, setTimeoutId] = useState([])
@@ -78,9 +94,15 @@ const Dashboard = () => {
     useEffect(() => {
         try {
             if (isAuthenticated()) {
+<<<<<<< HEAD
+                setInitialized(true)
+                setConsumerUnit(getConsumerUnit() ?? null)
+                webSocketConfig()
+=======
                 setConsumerUnit(getConsumerUnit() ?? null)
                 webSocketConfig()
                 setInitialized(true)
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             }
         } catch (err) {
             console.log(err.message)
@@ -124,6 +146,34 @@ const Dashboard = () => {
         // eslint-disable-next-line
     }, [newMessage])
 
+<<<<<<< HEAD
+    return <div className='dashboard'>
+        <NavBar />
+        <DeviceMenu
+            devices={consumerUnit?.devices}
+            setCurrentDevice={setCurrentDevice}
+            setIndex={setIndex}
+        />
+        <div className='main'>
+            {currentDevice ?
+                <div className='container'>
+                    <RealTime
+                        value={buffer[index]}
+                        connected={connected[index]}
+                    />
+                    <Graphic
+                        device={currentDevice}
+                    />
+                </div>
+                :
+                <div className='empty'>
+                    <h1 className='text'>
+                        Escolha um dispositivo
+                    </h1>
+                </div>
+            }
+        </div>
+=======
     const Card = ({ name, id, index, value }) => {
         if (!connected[index]) {
             value = null
@@ -256,6 +306,7 @@ const Dashboard = () => {
                     </h1>
                 </div>
         }
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
     </div>
 }
 

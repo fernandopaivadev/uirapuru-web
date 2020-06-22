@@ -4,6 +4,11 @@ import { api } from '../../services/api'
 
 import Plot from './Plot'
 
+<<<<<<< HEAD
+import '../../styles/graphic.css'
+import '../../styles/util.css'
+import ControlMenu from './ControlMenu'
+=======
 import {
     Close as CloseIcon,
     AddToQueue as AddScreenIcon,
@@ -15,6 +20,10 @@ import themes from '../../themes'
 import '../../styles/graphic.css'
 import '../../styles/util.css'
 
+<<<<<<< HEAD
+=======
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
+>>>>>>> master
 
 let mobile = false
 
@@ -26,6 +35,17 @@ window.onload = () => {
     }
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+const Graphic = ({ device }) => {
+    const [display, setDisplay] = useState({})
+    const [loading, setLoading] = useState(false)
+    const [values, setValues] = useState([])
+    const [timestamps, setTimestamps] = useState([])
+    const [period, setPeriod] = useState()
+=======
+>>>>>>> master
 const Graphic = ({ device, setDevicePopup }) => {
     const [display, setDisplay] = useState({})
     const [loading, setLoading] = useState(false)
@@ -33,6 +53,7 @@ const Graphic = ({ device, setDevicePopup }) => {
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
     const [period, setPeriod] = useState(null)
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 
     const getMessages = async () => {
         try {
@@ -40,6 +61,26 @@ const Graphic = ({ device, setDevicePopup }) => {
             let before = new Date()
 
             switch (period) {
+<<<<<<< HEAD
+                case 4:
+                    before.setDate(before.getDate() - 30)
+                    break
+                case 3:
+                    before.setDate(before.getDate() - 60)
+                    break
+                case 2:
+                    before.setDate(before.getDate() - 90)
+                    break
+                case 1:
+                    before.setDate(before.getDate() - 120)
+                    break
+                case 0:
+                    before.setDate(before.getDate() - 180)
+                    break
+                default:
+                    before.setDate(before.getDate() - 180)
+                    break
+=======
             case 0:
                 before.setDate(before.getDate() - 10)
                 break
@@ -55,13 +96,18 @@ const Graphic = ({ device, setDevicePopup }) => {
             default:
                 before.setDate(before.getDate() - 10)
                 break
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             }
 
             setLoading(true)
 
             const response = await api.get(
                 `/device/messages?device=${
+<<<<<<< HEAD
+                device.id
+=======
                     device.id
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
                 }&from=${before.toISOString()}&to=${now.toISOString()}`
             )
 
@@ -81,6 +127,10 @@ const Graphic = ({ device, setDevicePopup }) => {
 
                     setValues(_values)
                     setTimestamps(_timestamps)
+<<<<<<< HEAD
+                    console.log(values)
+=======
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
                 }
 
                 setLoading(false)
@@ -93,19 +143,44 @@ const Graphic = ({ device, setDevicePopup }) => {
     useEffect(() => {
         getMessages()
         // eslint-disable-next-line
+<<<<<<< HEAD
+    }, [period, device])
+=======
     }, [period])
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 
     const plotProps = {
         values,
         timestamps,
         setDisplay,
+<<<<<<< HEAD
         doubleScreen,
+=======
+<<<<<<< HEAD
+        mobile
+    }
+
+    const controlMenuProps = {
+        display,
+        setPeriod,
+        values,
+=======
+        doubleScreen,
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
+>>>>>>> master
         mobile
     }
 
     return <div className='graphic'>
         {loading ?
             <div className='loading-container'>
+<<<<<<< HEAD
+                <progress className='pure-material-progress-circular' />
+            </div>
+            :
+            values.length > 0 ?
+                <Plot {...plotProps} />
+=======
                 <progress className='pure-material-progress-circular'/>
             </div>
             :
@@ -117,6 +192,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                     </>
                     :
                     <Plot {...plotProps} />
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
                 :
                 <div className='empty'>
                     <h1 className='text'>
@@ -126,6 +202,11 @@ const Graphic = ({ device, setDevicePopup }) => {
         }
 
         {!loading ?
+<<<<<<< HEAD
+            <ControlMenu
+                {...controlMenuProps}
+            />
+=======
             <div className='controls'>
                 <button
                     onClick={() => {
@@ -227,6 +308,7 @@ const Graphic = ({ device, setDevicePopup }) => {
                     }
                 </ul>
             </div>
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             : null
         }
     </div>

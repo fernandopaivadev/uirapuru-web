@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { Scope } from '@unform/core'
 import { Form } from '@unform/web'
 
+<<<<<<< HEAD
+import NavBar from '../panels/NavBar'
+=======
 import Layout from '../layouts/Layout'
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 import Input from '../forms/Input'
 
 import { getUser, getConsumerUnit } from '../../services/storage'
@@ -126,9 +130,15 @@ const Profile = () => {
     }
 
     return <div className='profile'>
+<<<<<<< HEAD
+        <NavBar />
+        <div className='card'>
+            {getUser ?
+=======
         <Layout />
         <div className='card'>
             {getUser?
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
                 <Form onSubmit={handleSubmit}>
                     <h1>
                         Usuário
