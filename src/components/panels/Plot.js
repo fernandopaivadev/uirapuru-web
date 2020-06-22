@@ -4,7 +4,7 @@ import themes from '../../themes'
 
 const Plotly = lazy(() => import('react-plotly.js'))
 
-const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
+const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
     let time = []
     let timeString = []
 
@@ -163,34 +163,8 @@ const Plot = ({ values, timestamps, setDisplay, doubleScreen, mobile }) => {
                     ]
                 }}
                 style={{
-                    height: '80vh',
-                    width: '70vw'
-                }}
-                onClick={event => {
-                    const selectedTime = new Date(
-                        event?.points[0]?.x
-                    ).toLocaleString()
-
-                    const index = timeString.indexOf(selectedTime)
-
-                    setDisplay({
-                        time: selectedTime,
-
-                        humidity1: humidity1[index],
-                        temperature1: temperature1[index],
-
-                        voltage1: voltage1[index],
-                        current1: current1[index],
-
-                        voltage2: voltage2[index],
-                        current2: current2[index],
-
-                        voltage3: voltage3[index],
-                        current3: current3[index],
-
-                        voltage4: voltage4[index],
-                        current4: current4[index],
-                    })
+                    height: '85vh',
+                    width: '95%'
                 }}
             />
         </Suspense>

@@ -1,24 +1,6 @@
 .graphic {
     display: flex;
     padding: 0 2rem 2rem 2rem;
-    justify-content: space-around;
-}
-
-    .graphic .controls {
-        display: flex;
-        flex-direction: row-reverse;
-        overflow: hidden;
-        align-items: center;
-        width: 40%;
-    }
-
-    .graphic .controls ul {
-        display: none;
-    }
-
-    .graphic {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-    }
+    justify-content: left;
+    width: 100%;
 }

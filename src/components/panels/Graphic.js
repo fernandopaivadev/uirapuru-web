@@ -6,7 +6,6 @@ import Plot from './Plot'
 
 import '../../styles/graphic.css'
 import '../../styles/util.css'
-import ControlMenu from './ControlMenu'
 
 let mobile = false
 
@@ -19,43 +18,22 @@ window.onload = () => {
 }
 
 const Graphic = ({ device }) => {
-    const [display, setDisplay] = useState({})
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
-    const [period, setPeriod] = useState()
 
     const getMessages = async () => {
         try {
             const now = new Date()
-            let before = new Date()
+            const before = new Date()
 
-            switch (period) {
-                case 4:
-                    before.setDate(before.getDate() - 30)
-                    break
-                case 3:
-                    before.setDate(before.getDate() - 60)
-                    break
-                case 2:
-                    before.setDate(before.getDate() - 90)
-                    break
-                case 1:
-                    before.setDate(before.getDate() - 120)
-                    break
-                case 0:
-                    before.setDate(before.getDate() - 180)
-                    break
-                default:
-                    before.setDate(before.getDate() - 180)
-                    break
-            }
-
+            before.setDate(before.getDate() - 180)
+ 
             setLoading(true)
 
             const response = await api.get(
                 `/device/messages?device=${
-                device.id
+                    device.id
                 }&from=${before.toISOString()}&to=${now.toISOString()}`
             )
 
@@ -88,47 +66,29 @@ const Graphic = ({ device }) => {
     useEffect(() => {
         getMessages()
         // eslint-disable-next-line
-    }, [period, device])
+    }, [device])
 
     const plotProps = {
         values,
         timestamps,
-        setDisplay,
-        doubleScreen,
-        mobile
+        mobile,
     }
 
-    const controlMenuProps = {
-        display,
-        setPeriod,
-        values,
-    }
-
-    return <div className='graphic'>
-        {
-            loading ?
-                <div className='loading-container'>
-                    <progress className='pure-material-progress-circular' />
-                </div >
-                :
-                values.length > 0 ?
+    return (
+        <div className="graphic">
+            {loading ? 
+                <div className="loading-container">
+                    <progress className="pure-material-progress-circular" />
+                </div>
+                : values.length > 0 ? 
                     <Plot {...plotProps} />
-                    :
-                    <div className='empty'>
-                        <h1 className='text'>
-                            Não há dados registrados
-                    </h1>
+                    : 
+                    <div className="empty">
+                        <h1 className="text">Não há dados registrados</h1>
                     </div>
-        }
-
-        {
-            !loading ?
-                <ControlMenu
-                    {...controlMenuProps}
-                />
-                : null
-        }
-    </div >
+            }
+        </div>
+    )
 }
 
 export default memo(Graphic)
