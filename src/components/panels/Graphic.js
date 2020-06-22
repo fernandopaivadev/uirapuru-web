@@ -4,9 +4,23 @@ import { api } from '../../services/api'
 
 import Plot from './Plot'
 
+<<<<<<< HEAD
 import '../../styles/graphic.css'
 import '../../styles/util.css'
 import ControlMenu from './ControlMenu'
+=======
+import {
+    Close as CloseIcon,
+    AddToQueue as AddScreenIcon,
+    RemoveFromQueue as RemoveScreenIcon
+} from '@material-ui/icons'
+
+import themes from '../../themes'
+
+import '../../styles/graphic.css'
+import '../../styles/util.css'
+
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 
 let mobile = false
 
@@ -18,12 +32,22 @@ window.onload = () => {
     }
 }
 
+<<<<<<< HEAD
 const Graphic = ({ device }) => {
     const [display, setDisplay] = useState({})
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
     const [period, setPeriod] = useState()
+=======
+const Graphic = ({ device, setDevicePopup }) => {
+    const [display, setDisplay] = useState({})
+    const [loading, setLoading] = useState(false)
+    const [doubleScreen, setDoubleScreen] = useState(false)
+    const [values, setValues] = useState([])
+    const [timestamps, setTimestamps] = useState([])
+    const [period, setPeriod] = useState(null)
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 
     const getMessages = async () => {
         try {
@@ -31,6 +55,7 @@ const Graphic = ({ device }) => {
             let before = new Date()
 
             switch (period) {
+<<<<<<< HEAD
                 case 4:
                     before.setDate(before.getDate() - 30)
                     break
@@ -49,13 +74,34 @@ const Graphic = ({ device }) => {
                 default:
                     before.setDate(before.getDate() - 180)
                     break
+=======
+            case 0:
+                before.setDate(before.getDate() - 10)
+                break
+            case 1:
+                before.setDate(before.getDate() - 30)
+                break
+            case 2:
+                before.setDate(before.getDate() - 60)
+                break
+            case 3:
+                before.setDate(before.getDate() - 90)
+                break
+            default:
+                before.setDate(before.getDate() - 10)
+                break
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             }
 
             setLoading(true)
 
             const response = await api.get(
                 `/device/messages?device=${
+<<<<<<< HEAD
                 device.id
+=======
+                    device.id
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
                 }&from=${before.toISOString()}&to=${now.toISOString()}`
             )
 
@@ -75,7 +121,10 @@ const Graphic = ({ device }) => {
 
                     setValues(_values)
                     setTimestamps(_timestamps)
+<<<<<<< HEAD
                     console.log(values)
+=======
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
                 }
 
                 setLoading(false)
@@ -88,12 +137,17 @@ const Graphic = ({ device }) => {
     useEffect(() => {
         getMessages()
         // eslint-disable-next-line
+<<<<<<< HEAD
     }, [period, device])
+=======
+    }, [period])
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
 
     const plotProps = {
         values,
         timestamps,
         setDisplay,
+<<<<<<< HEAD
         mobile
     }
 
@@ -101,17 +155,34 @@ const Graphic = ({ device }) => {
         display,
         setPeriod,
         values,
+=======
+        doubleScreen,
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
         mobile
     }
 
     return <div className='graphic'>
         {loading ?
             <div className='loading-container'>
+<<<<<<< HEAD
                 <progress className='pure-material-progress-circular' />
             </div>
             :
             values.length > 0 ?
                 <Plot {...plotProps} />
+=======
+                <progress className='pure-material-progress-circular'/>
+            </div>
+            :
+            values.length > 0 ?
+                doubleScreen ?
+                    <>
+                        <Plot {...plotProps} />
+                        <Plot {...plotProps} />
+                    </>
+                    :
+                    <Plot {...plotProps} />
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
                 :
                 <div className='empty'>
                     <h1 className='text'>
@@ -121,9 +192,113 @@ const Graphic = ({ device }) => {
         }
 
         {!loading ?
+<<<<<<< HEAD
             <ControlMenu
                 {...controlMenuProps}
             />
+=======
+            <div className='controls'>
+                <button
+                    onClick={() => {
+                        setDevicePopup(false)
+                    }}
+                    className='close'>
+                    <CloseIcon className='icon'/>
+                </button>
+
+                {values.length > 0 ?
+                    <>
+                        {!mobile ?
+                            <button
+                                onClick={() => {
+                                    setDoubleScreen(!doubleScreen)
+                                }}
+                                className='button'>
+                                {doubleScreen ?
+                                    <RemoveScreenIcon className='icon' />
+                                    :
+                                    <AddScreenIcon className='icon' />
+                                }
+                            </button>
+                            :
+                            null
+                        }
+                        <select
+                            onChange={event => {
+                                setPeriod(event.target.options.selectedIndex)
+                            }}>
+                            <option>10 Dias</option>
+                            <option>30 Dias</option>
+                            <option>60 Dias</option>
+                            <option>90 Dias</option>
+                        </select>
+                    </>
+                    : null
+                }
+                <ul>
+                    {display.temperature ?
+                        <li
+                            style={{
+                                border: `0.3rem solid ${
+                                    themes.default.traceColors[0]
+                                }`
+                            }}>
+                            <h1 className='value'>
+                                {display.temperature} °C
+                            </h1>
+                        </li>
+                        : null
+                    }
+                    {display.humidity ?
+                        <li
+                            style={{
+                                border: `0.3rem solid ${
+                                    themes.default.traceColors[1]
+                                }`
+                            }}>
+                            <h1 className='value'>
+                                {display.humidity} % U.R.
+                            </h1>
+                        </li>
+                        : null
+                    }
+                    {display.voltage ?
+                        <li
+                            style={{
+                                border: `0.3rem solid ${
+                                    themes.default.traceColors[2]
+                                }`
+                            }}>
+                            <h1 className='value'>
+                                {display.voltage} V
+                            </h1>
+                        </li>
+                        : null
+                    }
+                    {display.voltageLevel ?
+                        <li
+                            style={{
+                                border: `0.3rem solid ${
+                                    themes.default.traceColors[3]
+                                }`
+                            }}>
+                            <h1 className='value'>
+                                {display.voltageLevel} % V
+                            </h1>
+                        </li>
+                        : null
+                    }
+                    {display.time ?
+                        <li>
+                            <h1 className='time'>
+                                {display.time}
+                            </h1>
+                        </li>
+                        : null
+                    }
+                </ul>
+            </div>
+>>>>>>> 1117c4f3f0e8118264dfebe75ced234abcf5108f
             : null
         }
     </div>
