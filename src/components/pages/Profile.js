@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 import { Scope } from '@unform/core'
-import { Form } from '@unform/web'
 
 import NavBar from '../panels/NavBar'
-import Input from '../forms/Input'
 
 import { getUser, getConsumerUnit } from '../../services/storage'
 
@@ -129,23 +127,23 @@ const Profile = () => {
         <NavBar />
         <div className='card'>
             {getUser ?
-                <Form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <h1>
                         Usuário
                     </h1>
-                    <Input
+                    <input
                         name='username'
                         label='Nome de usuário'
                         value={user?.username ?? ''}
 
                     />
-                    <Input
+                    <input
                         name='email'
                         label='Email'
                         value={user?.email ?? ''}
 
                     />
-                    <Input
+                    <input
                         name='phone'
                         label='Telefone'
                         value={formatPhone(user?.phone) ?? ''}
@@ -153,13 +151,13 @@ const Profile = () => {
                     />
                     {user?.person ?
                         <Scope path='person'>
-                            <Input
+                            <input
                                 name='cpf'
                                 label='CPF'
                                 value={formatCPF(user?.person?.cpf) ?? ''}
 
                             />
-                            <Input
+                            <input
                                 name='birth'
                                 label='Data de nascimento'
                                 value={formatDate(user?.person?.birth) ?? ''}
@@ -168,7 +166,7 @@ const Profile = () => {
                         </Scope>
                         :
                         <Scope path='company'>
-                            <Input
+                            <input
                                 name='cnpj'
                                 label='CNPJ'
                                 value={
@@ -176,72 +174,72 @@ const Profile = () => {
                                 }
 
                             />
-                            <Input
+                            <input
                                 name='name'
                                 label='Nome fantasia'
                                 value={user?.company?.name ?? ''}
 
                             />
-                            <Input
+                            <input
                                 name='tradeName'
                                 label='Razão social'
                                 value={user?.company?.tradeName ?? ''}
 
                             />
-                            <Input
+                            <input
                                 name='description'
                                 label='Descrição'
                                 value={user?.company?.description ?? ''}
                             />
                         </Scope>
                     }
-                </Form>
+                </form>
                 : null
             }
 
             {getConsumerUnit() ?
-                <Form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <h1>
                         Unidade consumidora
                     </h1>
 
-                    <Input
+                    <input
                         name='number'
                         label='Número'
                         value={consumerUnit?.number ?? ''}
 
                     />
-                    <Input
+                    <input
                         name='name'
                         label='Nome'
                         value={consumerUnit?.name ?? ''}
 
                     />
-                    <Input
+                    <input
                         name='address'
                         label='Endereço'
                         value={consumerUnit?.address ?? ''}
 
                     />
-                    <Input
+                    <input
                         name='zip'
                         label='CEP'
                         value={consumerUnit?.zip ?? ''}
 
                     />
-                    <Input
+                    <input
                         name='city'
                         label='Cidade'
                         value={consumerUnit?.city ?? ''}
 
                     />
-                    <Input
+                    <input
                         name='state'
                         label='Estado'
                         value={consumerUnit?.state ?? ''}
 
                     />
-                </Form>
+                </form>
                 : null
             }
         </div>

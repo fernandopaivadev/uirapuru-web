@@ -73,7 +73,7 @@ const Dashboard = () => {
         try {
             if (isAuthenticated()) {
                 setInitialized(true)
-                setConsumerUnit(getConsumerUnit() ?? null)
+                setConsumerUnit(getConsumerUnit() ?? { devices: [] })
                 webSocketConfig()
             }
         } catch (err) {

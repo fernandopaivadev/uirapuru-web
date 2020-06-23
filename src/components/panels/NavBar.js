@@ -6,7 +6,7 @@ import {
     RecentActors as UsersIcon,
     Dashboard as DashboardIcon,
     ExitToApp as LogoutIcon,
-    Person as ProfileIcon
+    //Person as ProfileIcon
 } from '@material-ui/icons'
 
 import {
@@ -21,7 +21,7 @@ import fetch from '../../services/fetch'
 
 import logo from '../../assets/logo.svg'
 
-import '../../styles/layout.css'
+import '../../styles/navbar.css'
 
 const NavBar = ({ history }) => {
     const [usersPopup, setUsersPopup] = useState(isAdmin() && !getUser())
@@ -58,7 +58,10 @@ const NavBar = ({ history }) => {
                 <h1 className='consumerUnitName'>
                     {getConsumerUnit()?.name}
                 </h1>
-                : null
+                :
+                <h1 className='consumerUnitName'>
+                    Escolha a Unidade Consumidora
+                </h1>
             }
         </li>
 
@@ -109,14 +112,14 @@ const NavBar = ({ history }) => {
 
                 {getUser() ?
                     <div>
-                        <li
+                        {/*<li
                             className='item'
                             onClick={() => {
                                 history.push('/profile')
                             }}>
                             <ProfileIcon className='icon' />
                                 Meus dados
-                        </li>
+                        </li>*/}
 
                         <li
                             className='item'
