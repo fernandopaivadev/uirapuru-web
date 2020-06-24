@@ -53,7 +53,9 @@ const Graphic = ({ device }) => {
 
                     setValues(_values)
                     setTimestamps(_timestamps)
-                    console.log(values)
+                } else {
+                    setValues([])
+                    setTimestamps([])
                 }
 
                 setLoading(false)

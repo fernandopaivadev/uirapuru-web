@@ -10,18 +10,15 @@ import {
 import themes from '../../themes'
 import '../../styles/realtime.css'
 
-const RealTime = ({ value, connected }) => {
-    if (!connected) {
-        value = null
+const RealTime = ({ payload, connected }) => {
+    if(!connected) {
+        payload = '{}'
     }
 
-    const { t1, h1, v1, i1, v2, i2 } = value ?? {}
-
+    const values = JSON.parse(payload ?? '{}')
+    const { t1, h1, v1, i1, v2, i2 } = values ?? {}
+    
     return <div className='realtime'>
-        <h1 className='title'>
-            Tempo real
-        </h1>
-
         {!connected ?
             <h1 className='disconnected'>
                 Desconectado
@@ -79,7 +76,7 @@ const RealTime = ({ value, connected }) => {
                         }}
                     />
                     <h1 className='text'>
-                        Tensão de entrada AC:
+                        Tensão AC:
                     </h1>
                     <h1 className='payload'>
                         {v1} V
@@ -98,7 +95,7 @@ const RealTime = ({ value, connected }) => {
                         }}
                     />
                     <h1 className='text'>
-                        Corrente de entrada AC:
+                        Corrente AC:
                     </h1>
                     <h1 className='payload'>
                         {i1} A
@@ -117,7 +114,7 @@ const RealTime = ({ value, connected }) => {
                         }}
                     />
                     <h1 className='text'>
-                        Tensão de saída DC:
+                        Tensão DC:
                     </h1>
                     <h1 className='payload'>
                         {v2} V
@@ -136,7 +133,7 @@ const RealTime = ({ value, connected }) => {
                         }}
                     />
                     <h1 className='text'>
-                        Corrente de saída DC:
+                        Corrente DC:
                     </h1>
                     <h1 className='payload'>
                         {i2} A

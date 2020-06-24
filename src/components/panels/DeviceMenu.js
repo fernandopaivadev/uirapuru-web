@@ -2,7 +2,7 @@ import React from 'react'
 
 import '../../styles/devicemenu.css'
 
-const DeviceMenu = ({ devices, setCurrentDevice, setIndex }) => (
+const DeviceMenu = ({ devices, setCurrentDevice, setIndex }) => 
     <ul className='sidebar'>
         {devices.map((device, index) => {
             return <li
@@ -18,6 +18,5 @@ const DeviceMenu = ({ devices, setCurrentDevice, setIndex }) => (
         })
         }
     </ul>
-)
 
 export default DeviceMenu

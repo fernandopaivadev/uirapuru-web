@@ -91,6 +91,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
                 layout={{
                     //dragmode: 'pan',
                     modebar: {},
+                    showlegend: false,
                     legend: {
                         orientation: 'h',
                         x: 0.0,
@@ -163,7 +164,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
                     ]
                 }}
                 style={{
-                    height: '85vh',
+                    height: '90vh',
                     width: '95%'
                 }}
             />

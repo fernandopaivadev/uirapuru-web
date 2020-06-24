@@ -2,24 +2,16 @@
     padding: 2.5rem;
     border-radius: 0.5rem;
     justify-content: center;
-    width: 100%;
+    width: 90%;
     height: 100%;
 }
 
-.realtime .title {
-    color: var(--default-green);
-    font-size: 2rem;
-    text-align: center;
-}
-
 .realtime .display {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    display: flex;
 }
 
 .realtime .display .value {
-    margin: 1.5rem auto 1.5rem auto;
+    margin: auto;
     display: flex;
     justify-content: left;
     border: 0.1rem solid var(--default-green);
@@ -33,7 +25,7 @@
 }
 
 .realtime .display .value .text {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 500;
     color: #555;
     margin: 0 1.5rem 0 1.5rem;
@@ -42,6 +34,7 @@
 .realtime .display .value .payload {
     color: #333;
     font-weight: 600;
+    font-size: 1.8rem;
 }
 
 .realtime .disconnected {

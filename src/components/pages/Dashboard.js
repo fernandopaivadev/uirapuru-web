@@ -129,7 +129,7 @@ const Dashboard = () => {
             {currentDevice ?
                 <div className='container'>
                     <RealTime
-                        value={buffer[index]}
+                        payload={buffer[index]}
                         connected={connected[index]}
                     />
                     <Graphic
