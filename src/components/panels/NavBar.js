@@ -2,6 +2,7 @@ import React, { useState, useEffect, memo } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
+    Person as ProfileIcon,
     Room as RoomIcon,
     RecentActors as UsersIcon,
     Dashboard as DashboardIcon,
@@ -13,7 +14,8 @@ import {
     getUser,
     getConsumerUnit,
     storeConsumerUnit,
-    getUsersList
+    getUsersList,
+    storeUser
 } from '../../services/storage'
 
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
@@ -87,6 +89,8 @@ const NavBar = ({ history }) => {
                         {getUser()?.person
                             ? getUser()?.person?.name.split('')[0]
                             : getUser()?.company?.tradeName.split('')[0]
+                            ||
+                            'A'
                         }
                     </div>
 
@@ -112,14 +116,18 @@ const NavBar = ({ history }) => {
 
                 {getUser() ?
                     <div>
-                        {/*<li
-                            className='item'
-                            onClick={() => {
-                                history.push('/profile')
-                            }}>
-                            <ProfileIcon className='icon' />
+                        {getConsumerUnit() ?
+                            <li
+                                className='item'
+                                onClick={() => {
+                                    history.push('/profile')
+                                }}>
+                                <ProfileIcon className='icon' />
                                 Meus dados
-                        </li>*/}
+                            </li>
+                            :
+                            null
+                        }
 
                         <li
                             className='item'
@@ -177,6 +185,7 @@ const NavBar = ({ history }) => {
                                         className='item'
                                         onClick={() => {
                                             fetch(user._id)
+                                            storeUser(user)
                                             window.location.reload(false)
                                         }}>
                                         <div className='avatar'>
@@ -201,7 +210,7 @@ const NavBar = ({ history }) => {
                 : null
             }
 
-            {consumerUnitsPopup ?
+            {getUser() && consumerUnitsPopup ?
                 <div
                     className='container'
                     onClick={() => {

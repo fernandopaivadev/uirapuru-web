@@ -15,7 +15,6 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
 
     let temperature1 = []
     let humidity1 = []
-    let voltage = []
     let voltage1 = []
     let current1 = []
     let voltage2 = []
@@ -38,14 +37,6 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
         current3.push(i3)
         voltage4.push(v4)
         current4.push(i4)
-    })
-
-    const maxVoltage = Math.max(...voltage)
-    let voltageLevel = []
-
-    voltage.forEach(voltage => {
-        const level = voltage / maxVoltage * 100
-        voltageLevel.push(level.toFixed(2))
     })
 
     const traces = [

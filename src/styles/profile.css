@@ -1,20 +1,10 @@
-.profile .card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.profile .main {
     background: #fff;
-    display: flex;
-    border-radius: 0.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-content: center;
-    padding: 3rem;
+    width: 100vw;
 }
 
-.profile .card input {
+.profile .main input {
     padding: 0.5rem;
-    width: 100%;
     min-width: 30rem;
     border: 0.2rem solid var(--default-green);
     border-radius: 0.3rem;
@@ -23,14 +13,18 @@
     color: #333;
 }
 
-.profile .card label {
+.profile .main label {
     font-size: 1.8rem;
     font-weight: 600;
-    width: 100%;
     color: #555;
 }
 
-.profile .card form {
+.profile .main input,
+.profile .main label {
+    width: 50%;
+}
+
+.profile .main form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,8 +32,8 @@
     margin: 1rem 2rem 1rem 2rem;
 }
 
-.profile .card form h1 {
+.profile .main form h1 {
     color: var(--default-green);
     font-size: 2.4rem;
-    margin: 0 0 1.5rem 0;
+    margin: 1.5rem 0 1rem 0;
 }

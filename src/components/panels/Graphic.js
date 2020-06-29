@@ -28,7 +28,7 @@ const Graphic = ({ device }) => {
             const before = new Date()
 
             before.setDate(before.getDate() - 180)
- 
+
             setLoading(true)
 
             const response = await api.get(
@@ -49,6 +49,7 @@ const Graphic = ({ device }) => {
                     messages.forEach(message => {
                         _values.push(JSON.parse(message.payload))
                         _timestamps.push(message.timestamp)
+                        console.log(message.timestamp)
                     })
 
                     setValues(_values)
@@ -78,13 +79,13 @@ const Graphic = ({ device }) => {
 
     return (
         <div className="graphic">
-            {loading ? 
+            {loading ?
                 <div className="loading-container">
                     <progress className="pure-material-progress-circular" />
                 </div>
-                : values.length > 0 ? 
+                : values.length > 0 ?
                     <Plot {...plotProps} />
-                    : 
+                    :
                     <div className="empty">
                         <h1 className="text">Não há dados registrados</h1>
                     </div>

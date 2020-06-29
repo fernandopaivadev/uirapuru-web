@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
-import { Scope } from '@unform/core'
-
 import NavBar from '../panels/NavBar'
 
 import { getUser, getConsumerUnit } from '../../services/storage'
@@ -125,73 +122,66 @@ const Profile = () => {
 
     return <div className='profile'>
         <NavBar />
-        <div className='card'>
+        <div className='main'>
             {getUser ?
                 <form onSubmit={handleSubmit}>
                     <h1>
-                        Usuário
+                        Dados do Usuário
                     </h1>
+                    <label>Nome de usuário</label>
                     <input
                         name='username'
-                        label='Nome de usuário'
                         value={user?.username ?? ''}
-
                     />
+                    <label>Email</label>
                     <input
                         name='email'
-                        label='Email'
                         value={user?.email ?? ''}
-
                     />
+                    <label>Telefone</label>
                     <input
                         name='phone'
-                        label='Telefone'
                         value={formatPhone(user?.phone) ?? ''}
-
                     />
                     {user?.person ?
-                        <Scope path='person'>
+                        <>
+                            <label>CPF</label>
                             <input
                                 name='cpf'
-                                label='CPF'
                                 value={formatCPF(user?.person?.cpf) ?? ''}
-
                             />
+                            <label>Data de nascimento</label>
                             <input
                                 name='birth'
-                                label='Data de nascimento'
                                 value={formatDate(user?.person?.birth) ?? ''}
-
                             />
-                        </Scope>
+                        </>
                         :
-                        <Scope path='company'>
+                        <>
+                            <label>CNPJ</label>
                             <input
                                 name='cnpj'
-                                label='CNPJ'
                                 value={
                                     formatCNPJ(user?.company?.cnpj) ?? '--'
                                 }
-
                             />
+                            <label>Nome de usuário</label>
                             <input
                                 name='name'
-                                label='Nome fantasia'
                                 value={user?.company?.name ?? ''}
-
                             />
+                            <label>Razão social</label>
                             <input
                                 name='tradeName'
-                                label='Razão social'
                                 value={user?.company?.tradeName ?? ''}
 
                             />
+                            <label>Descrição</label>
                             <input
                                 name='description'
-                                label='Descrição'
                                 value={user?.company?.description ?? ''}
                             />
-                        </Scope>
+                        </>
                     }
                 </form>
                 : null
@@ -200,49 +190,49 @@ const Profile = () => {
             {getConsumerUnit() ?
                 <form onSubmit={handleSubmit}>
                     <h1>
-                        Unidade consumidora
+                        Dados da Unidade Consumidora
                     </h1>
-
+                    <label>Número</label>
                     <input
                         name='number'
-                        label='Número'
                         value={consumerUnit?.number ?? ''}
-
                     />
+                    <label>Nome</label>
                     <input
                         name='name'
-                        label='Nome'
                         value={consumerUnit?.name ?? ''}
-
                     />
+                    <label>Endereço</label>
                     <input
                         name='address'
-                        label='Endereço'
                         value={consumerUnit?.address ?? ''}
-
                     />
+                    <label>CEP</label>
                     <input
                         name='zip'
-                        label='CEP'
                         value={consumerUnit?.zip ?? ''}
-
                     />
+                    <label>Cidade</label>
                     <input
                         name='city'
-                        label='Cidade'
                         value={consumerUnit?.city ?? ''}
-
                     />
+                    <label>Estado</label>
                     <input
                         name='state'
-                        label='Estado'
                         value={consumerUnit?.state ?? ''}
-
                     />
                 </form>
                 : null
             }
         </div>
+
+        {/*<div className='map'>
+        <img src='https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap
+&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
+&markers=color:red%7Clabel:C%7C40.718217,-73.998284
+&key=AIzaSyDQR94ajWpJzrd8qHcP1unyJzSD0MnzXS8'/>
+        </div>*/}
     </div >
 }
 
