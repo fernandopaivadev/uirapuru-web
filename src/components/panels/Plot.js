@@ -19,13 +19,9 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
     let current1 = []
     let voltage2 = []
     let current2 = []
-    let voltage3 = []
-    let current3 = []
-    let voltage4 = []
-    let current4 = []
 
     values.forEach(values => {
-        const { t, h, t1, h1, v1, i1, v2, i2, v3, i3, v4, i4 } = values ?? {}
+        const { t, h, t1, h1, v1, i1, v2, i2  } = values ?? {}
 
         temperature1.push(t1 ?? t)
         humidity1.push(h1 ?? h)
@@ -33,16 +29,12 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
         current1.push(i1)
         voltage2.push(v2)
         current2.push(i2)
-        voltage3.push(v3)
-        current3.push(i3)
-        voltage4.push(v4)
-        current4.push(i4)
     })
 
     const traces = [
         {
             mode: 'lines',
-            name: 'Temperatura 1 (°C)',
+            name: 'Temperatura (°C)',
             line: {
                 color: themes.default.traceColors[0],
                 width: 2
@@ -53,7 +45,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
         },
         {
             mode: 'lines',
-            name: 'Umidade 1 (%)',
+            name: 'Umidade (%)',
             line: {
                 color: themes.default.traceColors[1],
                 width: 2
@@ -72,6 +64,39 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             x: [...time],
             y: [...voltage1],
             hovertemplate: '%{y} V'
+        },
+        {
+            mode: 'lines',
+            name: 'Corrente 1 (A)',
+            line: {
+                color: themes.default.traceColors[2],
+                width: 2
+            },
+            x: [...time],
+            y: [...current1],
+            hovertemplate: '%{y} A'
+        },
+        {
+            mode: 'lines',
+            name: 'Tensão 2 (V)',
+            line: {
+                color: themes.default.traceColors[3],
+                width: 2
+            },
+            x: [...time],
+            y: [...voltage2],
+            hovertemplate: '%{y} V'
+        },
+        {
+            mode: 'lines',
+            name: 'Corrente 2 (A)',
+            line: {
+                color: themes.default.traceColors[4],
+                width: 2
+            },
+            x: [...time],
+            y: [...current2],
+            hovertemplate: '%{y} A'
         }
     ]
 

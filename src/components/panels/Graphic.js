@@ -27,7 +27,7 @@ const Graphic = ({ device }) => {
             const now = new Date()
             const before = new Date()
 
-            before.setDate(before.getDate() - 180)
+            before.setDate(before.getDate() - 90)
 
             setLoading(true)
 
@@ -46,10 +46,9 @@ const Graphic = ({ device }) => {
                     let _values = []
                     let _timestamps = []
 
-                    messages.forEach(message => {
-                        _values.push(JSON.parse(message.payload))
-                        _timestamps.push(message.timestamp)
-                        console.log(message.timestamp)
+                    messages.forEach(({ payload, timestamp }) => {
+                        _values.push(JSON.parse(payload))
+                        _timestamps.push(timestamp)
                     })
 
                     setValues(_values)

@@ -17,7 +17,7 @@ const RealTime = ({ payload, connected }) => {
 
     const values = JSON.parse(payload ?? '{}')
     const { t1, h1, v1, i1, v2, i2 } = values ?? {}
-    
+
     return <div className='realtime'>
         {!connected ?
             <h1 className='disconnected'>
