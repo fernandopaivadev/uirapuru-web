@@ -36,7 +36,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             mode: 'lines',
             name: 'Temperatura (°C)',
             line: {
-                color: themes.default.temperature,
+                color: themes.default.traceColors[0],
                 width: 2
             },
             x: [...time],
@@ -47,7 +47,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             mode: 'lines',
             name: 'Umidade (%)',
             line: {
-                color: themes.default.humidity,
+                color: themes.default.traceColors[1],
                 width: 2
             },
             x: [...time],
@@ -58,7 +58,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             mode: 'lines',
             name: 'Tensão CA (V)',
             line: {
-                color: themes.default.voltage,
+                color: themes.default.traceColors[2],
                 width: 2
             },
             x: [...time],
@@ -69,7 +69,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             mode: 'lines',
             name: 'Corrente CA (A)',
             line: {
-                color: themes.default.current,
+                color: themes.default.traceColors[3],
                 width: 2
             },
             x: [...time],
@@ -80,7 +80,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             mode: 'lines',
             name: 'Tensão CC (V)',
             line: {
-                color: themes.default.voltage,
+                color: themes.default.traceColors[4],
                 width: 2
             },
             x: [...time],
@@ -91,7 +91,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             mode: 'lines',
             name: 'Corrente CC (A)',
             line: {
-                color: themes.default.current,
+                color: themes.default.traceColors[5],
                 width: 2
             },
             x: [...time],
@@ -142,7 +142,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
                         spikethickness: 2
                     },
                     yaxis: {
-                        fixedrange: true
+                        fixedrange: false
                     }
                 }}
                 config={{
@@ -153,8 +153,8 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
                         width: '2560',
                         height: '1440'
                     },
-                    //displaylogo: false,
-                    //displayModeBar: true,
+                    displaylogo: false,
+                    displayModeBar: true,
                     //!---------------------------------------------------
                     /*//! BUTTON NAMES
 

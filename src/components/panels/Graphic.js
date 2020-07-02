@@ -17,55 +17,23 @@ window.onload = () => {
     }
 }
 
-const Graphic = ({ device, arrowCommand, setArrowCommand }) => {
+const Graphic = ({ device, navigateChart }) => {
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
-    const [period, setPeriod] = useState({
-        begin: new Date(),
-        end: new Date()
-    })
     const nDays = 1
 
     const getMessages = async () => {
         try {
-            if(arrowCommand === 'back') {
-                const begin = period.begin
-                const end = period.end
-
-                begin.setDate(begin.getDate() - nDays)
-                end.setDate(end.getDate() - nDays)
-
-                setPeriod({ begin, end })
-            } else if (arrowCommand === 'forward') {
-                const begin = period.begin
-                const end = period.end
-
-                begin.setDate(begin.getDate() + nDays)
-                end.setDate(end.getDate() + nDays)
-
-                setPeriod({ begin, end })
-            }
-
-            setLoading(true)
-            if(arrowCommand) {
-                setArrowCommand(null)
-            }
-
             let begin = new Date()
             let end = new Date()
 
-            begin.setDate(begin.getDate - nDays)
+            begin.setDate(begin.getDate() - nDays)
 
-            if(!(period.begin || period.end)) {
-                setPeriod({
-                    begin,
-                    end
-                })
-            } else {
-                begin = period.begin
-                end = period.end
-            }
+            begin.setDate(begin.getDate() + nDays * navigateChart)
+            end.setDate(end.getDate() + nDays * navigateChart)
+
+            setLoading(true)
 
             const response = await api.get(
                 `/device/messages?device=${
@@ -105,7 +73,7 @@ const Graphic = ({ device, arrowCommand, setArrowCommand }) => {
     useEffect(() => {
         getMessages()
         // eslint-disable-next-line
-    }, [device, arrowCommand, period])
+    }, [device, navigateChart])
 
     const plotProps = {
         values,

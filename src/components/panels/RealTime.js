@@ -14,7 +14,7 @@ import {
 import themes from '../../themes'
 import '../../styles/realtime.css'
 
-const RealTime = ({ payload, connected, setArrowCommand }) => {
+const RealTime = ({ payload, connected, navigateChart, setNavigateChart }) => {
     if(!connected) {
         payload = '{}'
     }
@@ -32,14 +32,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
                 className='arrow'
                 icon={faArrowLeft}
                 onClick={() => {
-                    setArrowCommand('back')
+                    setNavigateChart(navigateChart - 1)
                 }}
             />
             <FontAwesomeIcon
                 className='arrow'
                 icon={faArrowRight}
                 onClick={() => {
-                    setArrowCommand('foward')
+                    setNavigateChart(navigateChart + 1)
                 }}
             />
         </div>
@@ -51,14 +51,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
             <div className='display'>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.temperature
+                        borderColor: themes.default.traceColors[0]
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faThermometerThreeQuarters}
                         style={{
-                            color: themes.default.temperature
+                            color: themes.default.traceColors[0]
                         }}
                     />
                     <h1 className='text'>
@@ -70,14 +70,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.humidity
+                        borderColor: themes.default.traceColors[1]
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faTint}
                         style={{
-                            color: themes.default.humidity
+                            color: themes.default.traceColors[1]
                         }}
                     />
                     <h1 className='text'>
@@ -89,14 +89,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.voltage
+                        borderColor: themes.default.traceColors[2]
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faBolt}
                         style={{
-                            color: themes.default.voltage
+                            color: themes.default.traceColors[2]
                         }}
                     />
                     <h1 className='text'>
@@ -108,14 +108,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.current
+                        borderColor: themes.default.traceColors[3]
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faBolt}
                         style={{
-                            color: themes.default.current
+                            color: themes.default.traceColors[3]
                         }}
                     />
                     <h1 className='text'>
@@ -127,14 +127,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.voltage
+                        borderColor: themes.default.traceColors[4]
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faEllipsisH}
                         style={{
-                            color: themes.default.voltage
+                            color: themes.default.traceColors[4]
                         }}
                     />
                     <h1 className='text'>
@@ -146,14 +146,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.current
+                        borderColor: themes.default.traceColors[5]
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faEllipsisH}
                         style={{
-                            color: themes.default.current
+                            color: themes.default.traceColors[5]
                         }}
                     />
                     <h1 className='text'>
@@ -165,14 +165,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.energy
+                        borderColor: themes.default.traceColors[6]
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faPlug}
                         style={{
-                            color: themes.default.energy
+                            color: themes.default.traceColors[6]
                         }}
                     />
                     <h1 className='text'>
@@ -184,14 +184,14 @@ const RealTime = ({ payload, connected, setArrowCommand }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.energy
+                        borderColor: themes.default.traceColors[7]
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faPlug}
                         style={{
-                            color: themes.default.energy
+                            color: themes.default.traceColors[7]
                         }}
                     />
                     <h1 className='text'>
