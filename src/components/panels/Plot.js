@@ -36,7 +36,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             mode: 'lines',
             name: 'Temperatura (°C)',
             line: {
-                color: themes.default.traceColors[0],
+                color: themes.default.temperature,
                 width: 2
             },
             x: [...time],
@@ -47,7 +47,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             mode: 'lines',
             name: 'Umidade (%)',
             line: {
-                color: themes.default.traceColors[1],
+                color: themes.default.humidity,
                 width: 2
             },
             x: [...time],
@@ -56,9 +56,9 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
         },
         {
             mode: 'lines',
-            name: 'Tensão 1 (V)',
+            name: 'Tensão CA (V)',
             line: {
-                color: themes.default.traceColors[2],
+                color: themes.default.voltage,
                 width: 2
             },
             x: [...time],
@@ -67,9 +67,9 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
         },
         {
             mode: 'lines',
-            name: 'Corrente 1 (A)',
+            name: 'Corrente CA (A)',
             line: {
-                color: themes.default.traceColors[2],
+                color: themes.default.current,
                 width: 2
             },
             x: [...time],
@@ -78,9 +78,9 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
         },
         {
             mode: 'lines',
-            name: 'Tensão 2 (V)',
+            name: 'Tensão CC (V)',
             line: {
-                color: themes.default.traceColors[3],
+                color: themes.default.voltage,
                 width: 2
             },
             x: [...time],
@@ -89,9 +89,9 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
         },
         {
             mode: 'lines',
-            name: 'Corrente 2 (A)',
+            name: 'Corrente CC (A)',
             line: {
-                color: themes.default.traceColors[4],
+                color: themes.default.current,
                 width: 2
             },
             x: [...time],
@@ -107,7 +107,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
                 layout={{
                     //dragmode: 'pan',
                     modebar: {},
-                    showlegend: false,
+                    //showlegend: false,
                     legend: {
                         orientation: 'h',
                         x: 0.0,

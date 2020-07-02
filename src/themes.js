@@ -7,14 +7,19 @@ const themes = {
         gray: '#555',
         lightGray: '#aaa',
         white: '#fff',
-        traceColors: [
+        temperature: '#ffbd45',
+        humidity: '#1e88e5',
+        voltage: '#df78ef',
+        current: '#ff5722',
+        energy: '#9900ff'
+        /*traceColors: [
             '#ffbd45',
             '#1e88e5',
             '#df78ef',
             '#ff5722',
+            '#df78ef',
             '#ff5722',
-            '#ff5722'
-        ]
+        ]*/
     },
     uirapuru: {
         yellow: '#ffcd04',

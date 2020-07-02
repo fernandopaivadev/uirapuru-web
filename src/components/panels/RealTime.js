@@ -4,21 +4,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faThermometerThreeQuarters,
     faTint,
-    faBolt
+    faBolt,
+    faEllipsisH,
+    faPlug,
+    faArrowLeft,
+    faArrowRight
 } from '@fortawesome/free-solid-svg-icons'
 
 import themes from '../../themes'
 import '../../styles/realtime.css'
 
-const RealTime = ({ payload, connected }) => {
+const RealTime = ({ payload, connected, setArrowCommand }) => {
     if(!connected) {
         payload = '{}'
+    }
+
+    const getEnergy = () => {
+        return 'CALCULAR'
     }
 
     const values = JSON.parse(payload ?? '{}')
     const { t1, h1, v1, i1, v2, i2 } = values ?? {}
 
     return <div className='realtime'>
+        <div className='arrow-container'>
+            <FontAwesomeIcon
+                className='arrow'
+                icon={faArrowLeft}
+                onClick={() => {
+                    setArrowCommand('back')
+                }}
+            />
+            <FontAwesomeIcon
+                className='arrow'
+                icon={faArrowRight}
+                onClick={() => {
+                    setArrowCommand('foward')
+                }}
+            />
+        </div>
         {!connected ?
             <h1 className='disconnected'>
                 Desconectado
@@ -27,18 +51,18 @@ const RealTime = ({ payload, connected }) => {
             <div className='display'>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.traceColors[0]
+                        borderColor: themes.default.temperature
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faThermometerThreeQuarters}
                         style={{
-                            color: themes.default.traceColors[0]
+                            color: themes.default.temperature
                         }}
                     />
                     <h1 className='text'>
-                        Temperatura:
+                        T:
                     </h1>
                     <h1 className='payload'>
                         {t1} °C
@@ -46,18 +70,18 @@ const RealTime = ({ payload, connected }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.traceColors[1]
+                        borderColor: themes.default.humidity
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faTint}
                         style={{
-                            color: themes.default.traceColors[1]
+                            color: themes.default.humidity
                         }}
                     />
                     <h1 className='text'>
-                        Umidade:
+                        HRA:
                     </h1>
                     <h1 className='payload'>
                         {h1} %
@@ -65,18 +89,18 @@ const RealTime = ({ payload, connected }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.traceColors[2]
+                        borderColor: themes.default.voltage
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faBolt}
                         style={{
-                            color: themes.default.traceColors[2]
+                            color: themes.default.voltage
                         }}
                     />
                     <h1 className='text'>
-                        Tensão AC:
+                        Vca:
                     </h1>
                     <h1 className='payload'>
                         {v1} V
@@ -84,18 +108,18 @@ const RealTime = ({ payload, connected }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.traceColors[3]
+                        borderColor: themes.default.current
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
                         icon={faBolt}
                         style={{
-                            color: themes.default.traceColors[3]
+                            color: themes.default.current
                         }}
                     />
                     <h1 className='text'>
-                        Corrente AC:
+                        Ica:
                     </h1>
                     <h1 className='payload'>
                         {i1} A
@@ -103,18 +127,18 @@ const RealTime = ({ payload, connected }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.traceColors[2]
+                        borderColor: themes.default.voltage
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
-                        icon={faBolt}
+                        icon={faEllipsisH}
                         style={{
-                            color: themes.default.traceColors[2]
+                            color: themes.default.voltage
                         }}
                     />
                     <h1 className='text'>
-                        Tensão DC:
+                        Vcc:
                     </h1>
                     <h1 className='payload'>
                         {v2} V
@@ -122,21 +146,59 @@ const RealTime = ({ payload, connected }) => {
                 </div>
                 <div className='value'
                     style={{
-                        borderColor: themes.default.traceColors[3]
+                        borderColor: themes.default.current
                     }}
                 >
                     <FontAwesomeIcon
                         className='icon'
-                        icon={faBolt}
+                        icon={faEllipsisH}
                         style={{
-                            color: themes.default.traceColors[3]
+                            color: themes.default.current
                         }}
                     />
                     <h1 className='text'>
-                        Corrente DC:
+                        Icc:
                     </h1>
                     <h1 className='payload'>
                         {i2} A
+                    </h1>
+                </div>
+                <div className='value'
+                    style={{
+                        borderColor: themes.default.energy
+                    }}
+                >
+                    <FontAwesomeIcon
+                        className='icon'
+                        icon={faPlug}
+                        style={{
+                            color: themes.default.energy
+                        }}
+                    />
+                    <h1 className='text'>
+                        Eca:
+                    </h1>
+                    <h1 className='payload'>
+                        {getEnergy()}
+                    </h1>
+                </div>
+                <div className='value'
+                    style={{
+                        borderColor: themes.default.energy
+                    }}
+                >
+                    <FontAwesomeIcon
+                        className='icon'
+                        icon={faPlug}
+                        style={{
+                            color: themes.default.energy
+                        }}
+                    />
+                    <h1 className='text'>
+                        Ecc:
+                    </h1>
+                    <h1 className='payload'>
+                        {getEnergy()}
                     </h1>
                 </div>
             </div>

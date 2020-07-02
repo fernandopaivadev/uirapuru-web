@@ -13,32 +13,60 @@
 .realtime .display .value {
     margin: auto;
     display: flex;
-    justify-content: left;
+    left: 0;
     border: 0.1rem solid var(--default-green);
     border-radius: 0.5rem;
     padding: 1rem;
+    align-items: center;
 }
 
 .realtime .display .value .icon {
-    font-size: 2.4rem;
+    font-size: 2rem;
     color: var(--default-green);
 }
 
 .realtime .display .value .text {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 500;
     color: #555;
-    margin: 0 1.5rem 0 1.5rem;
+    margin: 0 0.8rem 0 0.8rem;
 }
 
 .realtime .display .value .payload {
     color: #333;
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
 }
 
 .realtime .disconnected {
     color: #aaa;
     text-align: center;
     font-size: 2rem;
+}
+
+.realtime .arrow-container {
+    position: absolute;
+    height: 9rem;
+    width: 14rem;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.realtime .arrow {
+    font-size: 2rem;
+    margin: 1rem;
+    cursor: pointer;
+    color: #fff;
+    background: #309d20;
+    border-radius: 50%;
+    padding: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+.realtime .arrow:hover {
+    background: #3de223;
 }

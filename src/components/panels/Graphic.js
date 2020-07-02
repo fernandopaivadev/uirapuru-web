@@ -17,24 +17,61 @@ window.onload = () => {
     }
 }
 
-const Graphic = ({ device }) => {
+const Graphic = ({ device, arrowCommand, setArrowCommand }) => {
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
+    const [period, setPeriod] = useState({
+        begin: new Date(),
+        end: new Date()
+    })
+    const nDays = 1
 
     const getMessages = async () => {
         try {
-            const now = new Date()
-            const before = new Date()
+            if(arrowCommand === 'back') {
+                const begin = period.begin
+                const end = period.end
 
-            before.setDate(before.getDate() - 90)
+                begin.setDate(begin.getDate() - nDays)
+                end.setDate(end.getDate() - nDays)
+
+                setPeriod({ begin, end })
+            } else if (arrowCommand === 'forward') {
+                const begin = period.begin
+                const end = period.end
+
+                begin.setDate(begin.getDate() + nDays)
+                end.setDate(end.getDate() + nDays)
+
+                setPeriod({ begin, end })
+            }
 
             setLoading(true)
+            if(arrowCommand) {
+                setArrowCommand(null)
+            }
+
+            let begin = new Date()
+            let end = new Date()
+
+            begin.setDate(begin.getDate - nDays)
+
+            if(!(period.begin || period.end)) {
+                setPeriod({
+                    begin,
+                    end
+                })
+            } else {
+                begin = period.begin
+                end = period.end
+            }
 
             const response = await api.get(
                 `/device/messages?device=${
                     device.id
-                }&from=${before.toISOString()}&to=${now.toISOString()}`
+                }&from=${begin.toISOString()
+                }&to=${end.toISOString()}`
             )
 
             const status = response?.status
@@ -68,7 +105,7 @@ const Graphic = ({ device }) => {
     useEffect(() => {
         getMessages()
         // eslint-disable-next-line
-    }, [device])
+    }, [device, arrowCommand, period])
 
     const plotProps = {
         values,

@@ -30,6 +30,7 @@ const Dashboard = () => {
     const [index, setIndex] = useState(null)
     const [connected, setConnected] = useState([])
     const [timeoutId, setTimeoutId] = useState([])
+    const [arrowCommand, setArrowCommand] = useState(null)
 
     const webSocketConfig = () => {
         try {
@@ -131,9 +132,12 @@ const Dashboard = () => {
                     <RealTime
                         payload={buffer[index]}
                         connected={connected[index]}
+                        setArrowCommand={setArrowCommand}
                     />
                     <Graphic
                         device={currentDevice}
+                        arrowCommand={arrowCommand}
+                        setArrowCommand={setArrowCommand}
                     />
                 </div>
                 :
