@@ -17,7 +17,7 @@ window.onload = () => {
     }
 }
 
-const Graphic = ({ device, navigateChart }) => {
+const Graphic = ({ device, navigateChart, setEnergyValue }) => {
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
@@ -79,6 +79,7 @@ const Graphic = ({ device, navigateChart }) => {
         values,
         timestamps,
         mobile,
+        setEnergyValue
     }
 
     return (

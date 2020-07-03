@@ -4,13 +4,11 @@ import themes from '../../themes'
 
 const Plotly = lazy(() => import('react-plotly.js'))
 
-const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
+const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => {
     let time = []
-    let timeString = []
 
     timestamps.forEach(timestamp => {
         time.push(new Date(String(timestamp)))
-        timeString.push(new Date(String(timestamp)).toLocaleString())
     })
 
     let temperature1 = []
@@ -105,9 +103,10 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
             <Plotly
                 data={[...traces]}
                 layout={{
-                    //dragmode: 'pan',
+                    dragmode: 'select',
+                    selectdirection: 'h',
                     modebar: {},
-                    //showlegend: false,
+                    showlegend: true,
                     legend: {
                         orientation: 'h',
                         x: 0.0,
@@ -182,6 +181,27 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile }) => {
                 style={{
                     height: '90vh',
                     width: '95%'
+                }}
+                onSelected={event => {
+                    try {
+                        const begin = time.indexOf(Date(event.range.x[0]))
+                        const end = time.indexOf(Date(event.range.x[1]))
+                        console.log(event.range.x[0], event.range.x[1])
+                        let acEnergy = null
+                        let dcEnergy = null
+
+                        for (let k = begin; k < end; k++) {
+                            acEnergy += voltage1[k] * current1[k]
+                            dcEnergy += voltage2[k] * current2[k]
+                        }
+
+                        setEnergyValue({
+                            ac: acEnergy,
+                            dc: dcEnergy
+                        })
+                    } catch (err) {
+                        console.log(err.message)
+                    }
                 }}
             />
         </Suspense>

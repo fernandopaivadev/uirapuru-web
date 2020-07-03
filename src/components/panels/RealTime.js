@@ -14,13 +14,9 @@ import {
 import themes from '../../themes'
 import '../../styles/realtime.css'
 
-const RealTime = ({ payload, connected, navigateChart, setNavigateChart }) => {
+const RealTime = ({ payload, connected, navigateChart, setNavigateChart, energyValue }) => {
     if(!connected) {
         payload = '{}'
-    }
-
-    const getEnergy = () => {
-        return 'CALCULAR'
     }
 
     const values = JSON.parse(payload ?? '{}')
@@ -179,7 +175,7 @@ const RealTime = ({ payload, connected, navigateChart, setNavigateChart }) => {
                         Eca:
                     </h1>
                     <h1 className='payload'>
-                        {getEnergy()}
+                        {energyValue.ac ?? ' -- '}
                     </h1>
                 </div>
                 <div className='value'
@@ -198,7 +194,7 @@ const RealTime = ({ payload, connected, navigateChart, setNavigateChart }) => {
                         Ecc:
                     </h1>
                     <h1 className='payload'>
-                        {getEnergy()}
+                        {energyValue.dc ?? ' -- '}
                     </h1>
                 </div>
             </div>

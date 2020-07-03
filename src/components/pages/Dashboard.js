@@ -31,6 +31,10 @@ const Dashboard = () => {
     const [connected, setConnected] = useState([])
     const [timeoutId, setTimeoutId] = useState([])
     const [navigateChart, setNavigateChart] = useState(0)
+    const [energyValue, setEnergyValue] = useState({
+        ac: null,
+        dc: null
+    })
 
     const webSocketConfig = () => {
         try {
@@ -134,10 +138,12 @@ const Dashboard = () => {
                         connected={connected[index]}
                         navigateChart={navigateChart}
                         setNavigateChart={setNavigateChart}
+                        energyValue={energyValue}
                     />
                     <Graphic
                         device={currentDevice}
                         navigateChart={navigateChart}
+                        setEnergyValue={setEnergyValue}
                     />
                 </div>
                 :
