@@ -5,12 +5,6 @@ import themes from '../../themes'
 const Plotly = lazy(() => import('react-plotly.js'))
 
 const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => {
-    let time = []
-
-    timestamps.forEach(timestamp => {
-        time.push(new Date(String(timestamp)))
-    })
-
     let temperature1 = []
     let humidity1 = []
     let voltage1 = []
@@ -37,7 +31,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[0],
                 width: 2
             },
-            x: [...time],
+            x: [...timestamps],
             y: [...temperature1],
             hovertemplate: '%{y} °C'
         },
@@ -48,7 +42,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[1],
                 width: 2
             },
-            x: [...time],
+            x: [...timestamps],
             y: [...humidity1],
             hovertemplate: '%{y} %'
         },
@@ -59,7 +53,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[2],
                 width: 2
             },
-            x: [...time],
+            x: [...timestamps],
             y: [...voltage1],
             hovertemplate: '%{y} V'
         },
@@ -70,7 +64,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[3],
                 width: 2
             },
-            x: [...time],
+            x: [...timestamps],
             y: [...current1],
             hovertemplate: '%{y} A'
         },
@@ -81,7 +75,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[4],
                 width: 2
             },
-            x: [...time],
+            x: [...timestamps],
             y: [...voltage2],
             hovertemplate: '%{y} V'
         },
@@ -92,7 +86,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[5],
                 width: 2
             },
-            x: [...time],
+            x: [...timestamps],
             y: [...current2],
             hovertemplate: '%{y} A'
         }
@@ -147,7 +141,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 config={{
                     scrollZoom: true,
                     toImageButtonOptions: {
-                        filename: 'Uirapuru_Graph',
+                        filename: 'uirapuru_chart',
                         format: 'png',
                         width: '2560',
                         height: '1440'
@@ -184,9 +178,12 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 }}
                 onSelected={event => {
                     try {
-                        const begin = time.indexOf(Date(event.range.x[0]))
-                        const end = time.indexOf(Date(event.range.x[1]))
-                        console.log(event.range.x[0], event.range.x[1])
+                        const beginDate = new Date(event.range.x[0])
+                        const endDate = new Date(event.range.x[1])
+
+                        const begin = timestamps.indexOf(beginDate.toISOString())
+                        const end = timestamps.indexOf(endDate.toISOString())
+
                         let acEnergy = null
                         let dcEnergy = null
 
