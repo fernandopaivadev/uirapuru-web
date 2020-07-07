@@ -7,6 +7,7 @@ import {
     RecentActors as UsersIcon,
     Dashboard as DashboardIcon,
     ExitToApp as LogoutIcon,
+    Add as AddIcon
     //Person as ProfileIcon
 } from '@material-ui/icons'
 
@@ -103,14 +104,24 @@ const NavBar = ({ history }) => {
                 </div>
 
                 {isAdmin() ?
-                    <li
-                        className='item'
-                        onClick={() => {
-                            setUsersPopup(true)
-                        }}>
-                        <UsersIcon className='icon' />
+                    <>
+                        <li
+                            className='item'
+                            onClick={() => {
+                                setUsersPopup(true)
+                            }}>
+                            <UsersIcon className='icon' />
                             Usuários
-                    </li>
+                        </li>
+                        <li
+                            className='item'
+                            onClick={() => {
+                                history.push('/new-user')
+                            }}>
+                            <AddIcon className='icon' />
+                            Cadastrar
+                        </li>
+                    </>
                     : null
                 }
 

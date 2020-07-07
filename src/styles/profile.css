@@ -1,6 +1,7 @@
 .profile .main {
     background: #fff;
     width: 100vw;
+    height: 100vh;
 }
 
 .profile .main input {

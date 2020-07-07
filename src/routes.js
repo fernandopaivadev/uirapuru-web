@@ -7,6 +7,7 @@ import ForgotPassword from './components/pages/ForgotPassword'
 import ResetPassword from './components/pages/ResetPassword'
 import Dashboard from './components/pages/Dashboard'
 import Profile from './components/pages/Profile'
+import NewRecord from './components/pages/NewRecord'
 
 const Routes = () => <Router>
     <Switch>
@@ -16,6 +17,7 @@ const Routes = () => <Router>
         <Route path='/reset-password' component={ResetPassword} />
         <Route path='/dashboard' exact component={Dashboard} />
         <Route path='/profile' exact component={Profile} />
+        <Route path='/new-user' exact component={NewRecord} />
         <Redirect to='/login' />
     </Switch>
 </Router>
