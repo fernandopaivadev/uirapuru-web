@@ -181,20 +181,42 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                         const beginDate = new Date(event.range.x[0])
                         const endDate = new Date(event.range.x[1])
 
-                        const begin = timestamps.indexOf(beginDate.toISOString())
-                        const end = timestamps.indexOf(endDate.toISOString())
-
                         let acEnergy = null
                         let dcEnergy = null
+                        let begin = null
+                        let end = null
+
+                        timestamps.forEach((timestamp, index) => {
+                            const date = new Date(timestamp)
+                            const UTCMilliseconds = date.getUTCMilliseconds()
+
+                            if (UTCMilliseconds ===
+                                beginDate.getUTCMilliseconds()) {
+                                begin = index
+                            }
+
+                            if (UTCMilliseconds ===
+                                endDate.getUTCMilliseconds()) {
+                                end = index
+                            }
+                        })
+
+                        const T = Math.abs(
+                            endDate.getUTCMilliseconds()
+                            -
+                            beginDate.getUTCMilliseconds()
+                        )
+                        const N = Math.abs(end - begin)
+                        const dt = T / N
 
                         for (let k = begin; k < end; k++) {
-                            acEnergy += voltage1[k] * current1[k]
-                            dcEnergy += voltage2[k] * current2[k]
+                            acEnergy += voltage1[k] * current1[k] * dt
+                            dcEnergy += voltage2[k] * current2[k] * dt
                         }
 
                         setEnergyValue({
-                            ac: acEnergy,
-                            dc: dcEnergy
+                            ac: Math.round(acEnergy / 1000),
+                            dc: Math.round(dcEnergy / 1000)
                         })
                     } catch (err) {
                         console.log(err.message)
