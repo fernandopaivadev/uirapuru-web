@@ -116,15 +116,11 @@ const Profile = () => {
         }
     }
 
-    const handleSubmit = () => {
-        alert('SUBMIT')
-    }
-
     return <div className='profile'>
         <NavBar />
         <div className='main'>
             {getUser ?
-                <form onSubmit={handleSubmit}>
+                <form>
                     <h1>
                         Dados do Usuário
                     </h1>
@@ -188,7 +184,7 @@ const Profile = () => {
             }
 
             {getConsumerUnit() ?
-                <form onSubmit={handleSubmit}>
+                <form>
                     <h1>
                         Dados da Unidade Consumidora
                     </h1>

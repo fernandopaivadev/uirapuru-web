@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import NavBar from '../panels/NavBar'
-import { getUser } from '../../services/storage'
 //import { api } from '../../services/api'
 
 import '../../styles/newrecord.css'
 
 const NewUser = () => {
     const [userType, setUserType] = useState(0)
-    const [consumerUnitOwner, setConsumerUnitOwner] = useState(0)
-
     let newUser = {}
 
     const registerUser = () => {
@@ -40,18 +37,10 @@ const NewUser = () => {
             state: document.querySelector('#unit-state').value
         }
 
-        let user = {}
-
-        if(consumerUnitOwner === 0) {
-            user = getUser()
-            user.consumerUnits.push(newConsumerUnit)
-        } else if (consumerUnitOwner === 1) {
-            user = newUser
-            user.consumerUnits.push(newConsumerUnit)
-        }
+        newUser.consumerUnits.push(newConsumerUnit)
     }
 
-    return <div className='new-user'>
+    return <div className='new-record'>
         <NavBar />
         <div className='main'>
             <form onSubmit={registerUser}>
@@ -140,18 +129,6 @@ const NewUser = () => {
                 <h1>
                     Nova Unidade Consumidora
                 </h1>
-
-                <div className='select'>
-                    <label>Selecione:</label>
-                    <select
-                        onChange={event => {
-                            setConsumerUnitOwner(event.target.options.selectedIndex)
-                        }}
-                    >
-                        <option>Do usuário atual</option>
-                        <option>Do novo usuário</option>
-                    </select>
-                </div>
 
                 <label>Número</label>
                 <input

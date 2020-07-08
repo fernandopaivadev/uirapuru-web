@@ -1,10 +1,10 @@
-.new-user .main {
+.new-record .main {
     background: #fff;
     width: 100vw;
     height: 100vh;
 }
 
-.new-user .main input {
+.new-record .main input {
     padding: 0.5rem;
     min-width: 30rem;
     border: 0.2rem solid var(--default-green);
@@ -14,18 +14,18 @@
     color: #333;
 }
 
-.new-user .main label {
+.new-record .main label {
     font-size: 1.8rem;
     font-weight: 600;
     color: #555;
 }
 
-.new-user .main input,
-.new-user .main label {
+.new-record .main input,
+.new-record .main label {
     width: 50%;
 }
 
-.new-user .main form {
+.new-record .main form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,13 +33,13 @@
     margin: 1rem 2rem 1rem 2rem;
 }
 
-.new-user .main form h1 {
+.new-record .main form h1 {
     color: var(--default-green);
     font-size: 2.4rem;
     margin: 1.5rem 0 1rem 0;
 }
 
-.new-user button {
+.new-record button {
     border-radius: 0.5rem;
     border: none;
     width: 20rem;
@@ -52,11 +52,11 @@
     margin: 2rem 0 5rem 0;
 }
 
-.new-user button:hover {
+.new-record button:hover {
     background: #41ca2b;
 }
 
-.new-user .select {
+.new-record .select {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,7 +67,7 @@
     margin: 2rem;
 }
 
-.new-user .select select {
+.new-record .select select {
     font-size: 1.8rem;
     padding: 0.5rem;
     border: 0.1rem solid #309d20;
