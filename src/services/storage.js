@@ -11,17 +11,17 @@ const getUsersList = () => JSON.parse(localStorage.getItem(USERS_LIST_KEY))
 const storeUsersList = usersList =>
     localStorage.setItem(USERS_LIST_KEY, JSON.stringify(usersList))
 
-const clearData = () => {
-    localStorage.removeItem(USER_KEY)
-    localStorage.removeItem(USERS_LIST_KEY)
-    localStorage.removeItem(CONSUMER_UNIT_KEY)
-}
-
 const storeConsumerUnit = consumerUnit =>
     localStorage.setItem(CONSUMER_UNIT_KEY, JSON.stringify(consumerUnit))
 
 const getConsumerUnit = () =>
     JSON.parse(localStorage.getItem(CONSUMER_UNIT_KEY))
+
+const clearData = () => {
+    localStorage.removeItem(USER_KEY)
+    localStorage.removeItem(USERS_LIST_KEY)
+    localStorage.removeItem(CONSUMER_UNIT_KEY)
+}
 
 export {
     getUser,
