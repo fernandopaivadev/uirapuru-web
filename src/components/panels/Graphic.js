@@ -4,6 +4,11 @@ import { api } from '../../services/api'
 
 import Plot from './Plot'
 
+import {
+    storeMessagesCache,
+    getMessagesCache
+} from '../../services/storage'
+
 import '../../styles/graphic.css'
 import '../../styles/util.css'
 
@@ -58,6 +63,8 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
 
                     setValues(_values)
                     setTimestamps(_timestamps)
+                    storeMessagesCache(messages)
+                    console.log(getMessagesCache())
                 } else {
                     setValues([])
                     setTimestamps([])

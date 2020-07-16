@@ -123,6 +123,17 @@ const Dashboard = () => {
         // eslint-disable-next-line
     }, [newMessage])
 
+    const RealTimeProps = {
+        navigateChart,
+        setNavigateChart,
+        energyValue
+    }
+
+    const GraphicProps = {
+        navigateChart,
+        setEnergyValue
+    }
+
     return <div className='dashboard'>
         <NavBar />
         <DeviceMenu
@@ -136,14 +147,11 @@ const Dashboard = () => {
                     <RealTime
                         payload={buffer[index]}
                         connected={connected[index]}
-                        navigateChart={navigateChart}
-                        setNavigateChart={setNavigateChart}
-                        energyValue={energyValue}
+                        { ...RealTimeProps }
                     />
                     <Graphic
                         device={currentDevice}
-                        navigateChart={navigateChart}
-                        setEnergyValue={setEnergyValue}
+                        { ...GraphicProps }
                     />
                 </div>
                 :

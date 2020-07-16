@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 
 import { login, isAuthenticated } from '../../services/auth'
 import { api } from '../../services/api'
@@ -133,4 +133,4 @@ const Login = ({ history }) => {
     </div>
 }
 
-export default Login
+export default memo(Login)
