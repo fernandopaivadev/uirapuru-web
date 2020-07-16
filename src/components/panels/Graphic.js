@@ -34,7 +34,6 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
             end.setDate(end.getDate() + nDays * navigateChart)
 
             setLoading(true)
-            console.time()
 
             const response = await api.get(
                 `/device/messages?device=${
@@ -46,7 +45,6 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
             const status = response?.status
 
             if (status === 200) {
-                console.timeEnd()
                 const messages = response?.data?.messages
 
                 if (messages.length > 0) {
