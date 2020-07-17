@@ -5,8 +5,8 @@ import { api } from '../../services/api'
 import Plot from './Plot'
 
 import {
-    storeMessagesCache,
-    getMessagesCache
+    storeMessagesCache
+//getMessagesCache
 } from '../../services/storage'
 
 import '../../styles/graphic.css'
@@ -27,6 +27,39 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
     const nDays = 1
+
+    const storeCache = async () => {
+        try {
+            let begin = new Date()
+            let end = new Date()
+
+            begin.setDate(begin.getDate() - 30)
+
+            const response = await api.get(
+                `/device/messages?device=${
+                    device.id
+                }&from=${begin.toISOString()
+                }&to=${end.toISOString()}`
+            )
+
+            const status = response?.status
+
+            if(status === 200) {
+                console.log('200')
+                const messages = response?.data?.messages
+
+                if (messages.length > 0) {
+                    console.log('MESSAGES')
+                    storeMessagesCache(messages)
+                } else {
+                    setValues([])
+                    setTimestamps([])
+                }
+            }
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
 
     const getMessages = async () => {
         try {
@@ -63,8 +96,6 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
 
                     setValues(_values)
                     setTimestamps(_timestamps)
-                    storeMessagesCache(messages)
-                    console.log(getMessagesCache())
                 } else {
                     setValues([])
                     setTimestamps([])
@@ -78,6 +109,7 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
     }
 
     useEffect(() => {
+        storeCache()
         getMessages()
         // eslint-disable-next-line
     }, [device, navigateChart])

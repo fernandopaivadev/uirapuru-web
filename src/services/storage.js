@@ -5,11 +5,6 @@ const USERS_LIST_KEY = 'users-list'
 const CONSUMER_UNIT_KEY = 'consumer-unit'
 const MESSAGES_CACHE_KEY = 'messages-cache'
 
-const getMessagesCache = () =>
-    JSON.parse(
-        decompressFromUTF16(localStorage.getItem(MESSAGES_CACHE_KEY))
-    )
-
 const storeMessagesCache = messages => {
     localStorage.setItem(
         MESSAGES_CACHE_KEY,
@@ -17,41 +12,46 @@ const storeMessagesCache = messages => {
     )
 }
 
-const getUser = () =>
+const getMessagesCache = () =>
     JSON.parse(
-        decompressFromUTF16(localStorage.getItem(USER_KEY))
+        decompressFromUTF16(localStorage.getItem(MESSAGES_CACHE_KEY))
     )
 
 const storeUser = user => {
     localStorage.setItem(
         USER_KEY,
-        compressToUTF16(JSON.stringify(user))
+        JSON.stringify(user)
     )
 }
 
-const getUsersList = () =>
+const getUser = () =>
     JSON.parse(
-        decompressFromUTF16(localStorage.getItem(USERS_LIST_KEY))
+        localStorage.getItem(USER_KEY)
     )
 
 const storeUsersList = usersList => {
     localStorage.setItem(
         USERS_LIST_KEY,
-        compressToUTF16(JSON.stringify(usersList))
+        JSON.stringify(usersList)
     )
 }
 
-const getConsumerUnit = () =>
+const getUsersList = () =>
     JSON.parse(
-        decompressFromUTF16(localStorage.getItem(CONSUMER_UNIT_KEY))
+        localStorage.getItem(USERS_LIST_KEY)
     )
 
 const storeConsumerUnit = consumerUnit => {
     localStorage.setItem(
         CONSUMER_UNIT_KEY,
-        compressToUTF16(JSON.stringify(consumerUnit))
+        JSON.stringify(consumerUnit)
     )
 }
+
+const getConsumerUnit = () =>
+    JSON.parse(
+        localStorage.getItem(CONSUMER_UNIT_KEY)
+    )
 
 const clearData = () => {
     localStorage.removeItem(USER_KEY)
