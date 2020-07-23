@@ -51,6 +51,13 @@ const NewUser = () => {
                 <input
                     id='username'
                 />
+
+                <label>Senha</label>
+                <input
+                    name='new-password'
+                    id='password'
+                />
+
                 <label>Email</label>
                 <input
                     id='email'
@@ -58,7 +65,7 @@ const NewUser = () => {
                 <label>Telefone</label>
                 <input
                     id='phone'
-                    type='number'
+                    inputMode='numeric'
                 />
 
                 <div className='select'>
@@ -82,7 +89,7 @@ const NewUser = () => {
                         <label>CPF</label>
                         <input
                             id='cpf'
-                            type='number'
+                            inputMode='numeric'
                         />
                         <label>Data de nascimento</label>
                         <input
@@ -98,7 +105,7 @@ const NewUser = () => {
                         <label>CNPJ</label>
                         <input
                             id='cnpj'
-                            type='number'
+                            inputMode='numeric'
                         />
                         <label>Razão social</label>
                         <input
@@ -133,7 +140,7 @@ const NewUser = () => {
                 <label>Número</label>
                 <input
                     id='unit-number'
-                    type='number'
+                    inputMode='numeric'
                 />
                 <label>Nome</label>
                 <input
@@ -146,7 +153,7 @@ const NewUser = () => {
                 <label>CEP</label>
                 <input
                     id='unit-zip'
-                    type='number'
+                    inputMode='numeric'
                 />
                 <label>Cidade</label>
                 <input

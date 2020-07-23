@@ -21,8 +21,7 @@ const Login = ({ history }) => {
         if (isAuthenticated()) {
             history.push('/dashboard')
         }
-        // eslint-disable-next-line
-    }, [])
+    }, [history])
 
     const handleSubmit = async event => {
         try {
@@ -61,6 +60,20 @@ const Login = ({ history }) => {
         }
     }
 
+    const togglePassword = event => {
+        event.preventDefault()
+        const passwordInput = document.querySelector('#password')
+        const togglePasswordButton = document.querySelector('#toggle-password')
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text'
+            togglePasswordButton.innerHTML='Ocultar'
+        } else {
+            passwordInput.type = 'password'
+            togglePasswordButton.innerHTML='Exibir'
+        }
+    }
+
     return <div className='login'>
         <form onSubmit={handleSubmit}>
             <div className='logo'>
@@ -71,20 +84,37 @@ const Login = ({ history }) => {
                 <h1>Uirapuru</h1>
             </div>
 
-            <h1 className='label'>
+            <label htmlFor='email'>
                 E-mail ou nome de usuário
-            </h1>
+            </label>
             <input
+                autoFocus
+                placeholder='Nome de usuário ou Email'
+                id='email'
                 required
                 onChange={event => {
                     setUsername(event.target.value)
                 }}
             />
 
-            <h1 className='label'>
-                Senha
-            </h1>
+            <div className='container'>
+                <label htmlFor='password'>
+                    Senha
+                </label>
+                <a
+                    href='/#/login'
+                    id='toggle-password'
+                    onClick={event => {
+                        togglePassword(event)
+                    }}
+                >
+                    Exibir
+                </a>
+            </div>
+
             <input
+                placeholder='Senha'
+                id='password'
                 type='password'
                 required
                 onChange={event => {

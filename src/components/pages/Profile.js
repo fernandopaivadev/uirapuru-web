@@ -30,12 +30,8 @@ const Profile = () => {
     ])
 
     useEffect(() => {
-        try {
-            setUser(getUser())
-            setConsumerUnit(getConsumerUnit())
-        } catch (err) {
-            console.log(err.message)
-        }
+        setUser(getUser())
+        setConsumerUnit(getConsumerUnit())
     }, [])
 
     const formatDate = timeStamp => {

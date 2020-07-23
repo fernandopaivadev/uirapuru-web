@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react'
+import React, { useEffect, useState, useCallback, memo } from 'react'
 
 import NavBar from '../panels/NavBar'
 import Graphic from '../panels/Graphic'
@@ -13,7 +13,6 @@ import DeviceMenu from '../panels/DeviceMenu'
 import '../../styles/dashboard.css'
 
 const Dashboard = () => {
-    const [initialized, setInitialized] = useState(false)
     const [consumerUnit, setConsumerUnit] = useState({
         devices: []
     })
@@ -30,13 +29,17 @@ const Dashboard = () => {
     const [index, setIndex] = useState(null)
     const [connected, setConnected] = useState([])
     const [timeoutId, setTimeoutId] = useState([])
-    const [navigateChart, setNavigateChart] = useState(0)
+    const [navigateChart, setNavigateChart] = useState({
+        day: new Date().getDate(),
+        month: new Date().getMonth(),
+        year: new Date().getFullYear()
+    })
     const [energyValue, setEnergyValue] = useState({
         ac: null,
         dc: null
     })
 
-    const webSocketConfig = () => {
+    const webSocketConfig = useCallback(() => {
         try {
             let devicesList = []
 
@@ -72,20 +75,19 @@ const Dashboard = () => {
         } catch (err) {
             console.log(err.message)
         }
-    }
+    }, [consumerUnit])
 
     useEffect(() => {
-        try {
-            if (isAuthenticated()) {
-                setInitialized(true)
-                setConsumerUnit(getConsumerUnit() ?? { devices: [] })
-                webSocketConfig()
-            }
-        } catch (err) {
-            console.log(err.message)
+        if (isAuthenticated()) {
+            setConsumerUnit(getConsumerUnit() ?? { devices: [] })
         }
-        // eslint-disable-next-line
-    }, [initialized])
+    }, [])
+
+    useEffect(() => {
+        if (isAuthenticated()) {
+            webSocketConfig()
+        }
+    }, [webSocketConfig])
 
     useEffect(() => {
         const { isNew, topic, payload } = newMessage
@@ -120,8 +122,7 @@ const Dashboard = () => {
                 }
             })
         }
-        // eslint-disable-next-line
-    }, [newMessage])
+    }, [buffer, connected, consumerUnit, newMessage, timeoutId])
 
     const RealTimeProps = {
         navigateChart,

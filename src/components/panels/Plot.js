@@ -97,8 +97,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
             <Plotly
                 data={[...traces]}
                 layout={{
-                    dragmode: 'select',
-                    selectdirection: 'h',
+                    dragmode: 'zoom',
                     modebar: {},
                     showlegend: true,
                     legend: {
@@ -135,7 +134,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                         spikethickness: 2
                     },
                     yaxis: {
-                        fixedrange: false
+                        fixedrange: true
                     }
                 }}
                 config={{

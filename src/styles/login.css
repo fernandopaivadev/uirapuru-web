@@ -35,8 +35,15 @@
     margin: 0 1.5rem 0 0;
 }
 
-.login form .label {
+.login form .container {
+    width: 28rem;
+    display: flex;
+    justify-content: stretch;
+}
+
+.login form label {
     font-size: 1.6rem;
+    font-weight: 600;
     color: #555;
     width: 28rem;
     text-align: left;
@@ -48,8 +55,8 @@
     height: 4rem;
     border-radius: 0.3rem;
     border: 0.1rem solid var(--default-green);
-    font-size: 2rem;
-    padding: 0.5rem;
+    font-size: 1.8rem;
+    padding: 1rem;
 }
 
 .login form input:focus,
@@ -57,7 +64,23 @@
     border-color: var(--default-light-green);
 }
 
-.login form button {
+.login form #toggle-password {
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-radius: 0.5rem;
+    width: 7rem;
+    font-size: 1.6rem;
+    padding: 0.2rem;
+    text-decoration: none;
+    color: #333;
+}
+
+.login form #toggle-password:hover {
+    color: #309d20;
+}
+
+.login form button[type='submit'] {
     width: 15rem;
     height: 4rem;
     font-size: 2rem;

@@ -15,15 +15,10 @@ const Login = ({ history, match }) => {
     const [passwordChanged, setPasswordChanged] = useState(false)
 
     useEffect(() => {
-        try {
-            if (isAuthenticated()) {
-                history.push('/consumer-units')
-            }
-        } catch (err) {
-            console.log(err.message)
+        if (isAuthenticated()) {
+            history.push('/consumer-units')
         }
-        // eslint-disable-next-line
-    }, [])
+    }, [history])
 
     const handleSubmit = async event => {
         try {

@@ -1,13 +1,8 @@
-import React, { useEffect, useState, memo } from 'react'
+import React, { useEffect, useState, memo, useCallback } from 'react'
 
 import { api } from '../../services/api'
 
 import Plot from './Plot'
-
-import {
-    storeMessagesCache
-//getMessagesCache
-} from '../../services/storage'
 
 import '../../styles/graphic.css'
 import '../../styles/util.css'
@@ -26,50 +21,22 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
-    const nDays = 1
 
-    const storeCache = async () => {
+    const getMessages = useCallback(async () => {
         try {
+            const { day, month, year } = navigateChart
+
             let begin = new Date()
             let end = new Date()
 
-            begin.setDate(begin.getDate() - 30)
+            begin.setDate(day - 1)
+            end.setDate(day)
 
-            const response = await api.get(
-                `/device/messages?device=${
-                    device.id
-                }&from=${begin.toISOString()
-                }&to=${end.toISOString()}`
-            )
+            begin.setFullYear(year)
+            end.setFullYear(year)
 
-            const status = response?.status
-
-            if(status === 200) {
-                console.log('200')
-                const messages = response?.data?.messages
-
-                if (messages.length > 0) {
-                    console.log('MESSAGES')
-                    storeMessagesCache(messages)
-                } else {
-                    setValues([])
-                    setTimestamps([])
-                }
-            }
-        } catch (err) {
-            console.log(err.message)
-        }
-    }
-
-    const getMessages = async () => {
-        try {
-            let begin = new Date()
-            let end = new Date()
-
-            begin.setDate(begin.getDate() - nDays)
-
-            begin.setDate(begin.getDate() + nDays * navigateChart)
-            end.setDate(end.getDate() + nDays * navigateChart)
+            begin.setMonth(month)
+            end.setMonth(month)
 
             setLoading(true)
 
@@ -106,13 +73,11 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
         }
-    }
+    }, [device, navigateChart])
 
     useEffect(() => {
-        storeCache()
         getMessages()
-        // eslint-disable-next-line
-    }, [device, navigateChart])
+    }, [device, navigateChart, getMessages])
 
     const plotProps = {
         values,

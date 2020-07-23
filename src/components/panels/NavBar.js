@@ -40,8 +40,7 @@ const NavBar = ({ history }) => {
                 history.push('/login')
             }
         }
-        // eslint-disable-next-line
-    }, [])
+    }, [history])
 
     return <ul className='navbar'>
         <li className='logo' key='logo'>

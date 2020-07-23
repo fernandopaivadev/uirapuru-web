@@ -54,15 +54,10 @@ const Login = ({ history }) => {
     }
 
     useEffect(() => {
-        try {
-            if (isAuthenticated()) {
-                history.push('/admin/users-list')
-            }
-        } catch (err) {
-            console.log(err.message)
+        if (isAuthenticated()) {
+            history.push('/admin/users-list')
         }
-        // eslint-disable-next-line
-    }, [])
+    }, [history])
 
 
     return <div className='login'>

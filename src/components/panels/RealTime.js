@@ -6,7 +6,7 @@ import {
     faTint,
     faBolt,
     faEllipsisH,
-    faPlug,
+    //faPlug,
     faArrowLeft,
     faArrowRight
 } from '@fortawesome/free-solid-svg-icons'
@@ -14,7 +14,13 @@ import {
 import themes from '../../themes'
 import '../../styles/realtime.css'
 
-const RealTime = ({ payload, connected, navigateChart, setNavigateChart, energyValue }) => {
+const RealTime = ({
+    payload,
+    connected,
+    navigateChart,
+    setNavigateChart,
+    /*energyValue*/
+}) => {
     if(!connected) {
         payload = '{}'
     }
@@ -23,21 +29,80 @@ const RealTime = ({ payload, connected, navigateChart, setNavigateChart, energyV
     const { t1, h1, v1, i1, v2, i2 } = values ?? {}
 
     return <div className='realtime'>
-        <div className='arrow-container'>
+        <div className='navigation'>
             <FontAwesomeIcon
                 className='arrow'
                 icon={faArrowLeft}
                 onClick={() => {
-                    setNavigateChart(navigateChart - 1)
+                    let { day } = navigateChart
+
+                    if (day > 1) {
+                        day--
+                    }
+
+                    setNavigateChart({
+                        day,
+                        ...navigateChart
+                    })
                 }}
             />
             <FontAwesomeIcon
                 className='arrow'
                 icon={faArrowRight}
                 onClick={() => {
-                    setNavigateChart(navigateChart + 1)
+                    let { day } = navigateChart
+
+                    if (day < 31 ) {
+                        day++
+                    }
+
+                    setNavigateChart({
+                        day,
+                        ...navigateChart
+                    })
                 }}
             />
+            <select
+                id='select-month'
+                onChange={event => {
+                    setNavigateChart({
+                        month: event.target[
+                            event.target.selectedIndex
+                        ].innerText,
+                        ...navigateChart
+                    })
+                }}
+                defaultValue={new Date().getMonth()}
+            >
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+            </select>
+            <select
+                id='select-year'
+                onChange={event => {
+                    setNavigateChart({
+                        year: event.target[
+                            event.target.selectedIndex
+                        ].innerText,
+                        ...navigateChart
+                    })
+                }}
+                defaultValue={new Date().getFullYear()}
+            >
+                <option>2020</option>
+                <option>2019</option>
+                <option>2018</option>
+            </select>
         </div>
         {!connected ?
             <h1 className='disconnected'>
@@ -159,7 +224,7 @@ const RealTime = ({ payload, connected, navigateChart, setNavigateChart, energyV
                         {i2} A
                     </h1>
                 </div>
-                <div className='value'
+                {/*<div className='value'
                     style={{
                         borderColor: themes.default.traceColors[6]
                     }}
@@ -196,7 +261,7 @@ const RealTime = ({ payload, connected, navigateChart, setNavigateChart, energyV
                     <h1 className='payload'>
                         {energyValue.dc ?? ' -- '}
                     </h1>
-                </div>
+                </div>*/}
             </div>
         }
     </div>
