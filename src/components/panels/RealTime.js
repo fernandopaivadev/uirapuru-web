@@ -34,32 +34,22 @@ const RealTime = ({
                 className='arrow'
                 icon={faArrowLeft}
                 onClick={() => {
-                    let { day } = navigateChart
+                    const _navigateChart = navigateChart
 
-                    if (day > 1) {
-                        day--
-                    }
+                    _navigateChart.day = _navigateChart.day - 1
 
-                    setNavigateChart({
-                        day,
-                        ...navigateChart
-                    })
+                    setNavigateChart(_navigateChart)
                 }}
             />
             <FontAwesomeIcon
                 className='arrow'
                 icon={faArrowRight}
                 onClick={() => {
-                    let { day } = navigateChart
+                    const _navigateChart = navigateChart
 
-                    if (day < 31 ) {
-                        day++
-                    }
+                    _navigateChart.day = _navigateChart.day + 1
 
-                    setNavigateChart({
-                        day,
-                        ...navigateChart
-                    })
+                    setNavigateChart(_navigateChart)
                 }}
             />
             <select
@@ -68,11 +58,11 @@ const RealTime = ({
                     setNavigateChart({
                         month: event.target[
                             event.target.selectedIndex
-                        ].innerText,
+                        ].innerText - 1,
                         ...navigateChart
                     })
                 }}
-                defaultValue={new Date().getMonth()}
+                defaultValue={new Date().getMonth() + 1}
             >
                 <option>1</option>
                 <option>2</option>

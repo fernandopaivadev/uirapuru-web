@@ -29,14 +29,26 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
             let begin = new Date()
             let end = new Date()
 
+            begin.setHours(0)
+            begin.setMinutes(0)
+            begin.setSeconds(0)
+            begin.setMilliseconds(0)
+
+            end.setHours(0)
+            end.setMinutes(0)
+            end.setSeconds(0)
+            end.setMilliseconds(0)
+
             begin.setDate(day - 1)
             end.setDate(day)
+
+            begin.setMonth(month)
+            end.setMonth(month)
 
             begin.setFullYear(year)
             end.setFullYear(year)
 
-            begin.setMonth(month)
-            end.setMonth(month)
+            console.log(begin.toISOString(), end.toISOString())
 
             setLoading(true)
 
