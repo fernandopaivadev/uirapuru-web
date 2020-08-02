@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -6,9 +6,9 @@ import {
     faTint,
     faBolt,
     faEllipsisH,
+    faArrowRight,
+    faArrowLeft
     //faPlug,
-    faArrowLeft,
-    faArrowRight
 } from '@fortawesome/free-solid-svg-icons'
 
 import themes from '../../themes'
@@ -17,8 +17,8 @@ import '../../styles/realtime.css'
 const RealTime = ({
     payload,
     connected,
-    navigateChart,
-    setNavigateChart,
+    datePicker,
+    setDatePicker
     /*energyValue*/
 }) => {
     if(!connected) {
@@ -28,71 +28,79 @@ const RealTime = ({
     const values = JSON.parse(payload ?? '{}')
     const { t1, h1, v1, i1, v2, i2 } = values ?? {}
 
+    const changeDate = (direction) => {
+        const [day, month, year] = datePicker.split('/')
+        const currentDate = new Date(`${year}-${month}-${day}`)
+        let newDate = null
+
+        if (direction === 'prev') {
+            newDate = new Date(
+                currentDate.getTime() - 24 * 60 * 60 * 1000
+            )
+        } else if (direction === 'next') {
+            newDate = new Date(
+                currentDate.getTime() + 24 * 60 * 60 * 1000
+            )
+        }
+
+        setDatePicker(
+            `${
+                newDate.getDate()
+            }/${
+                newDate.getMonth() + 1
+            }/${
+                newDate.getFullYear()
+            }`
+        )
+    }
+
+    useEffect(() => {
+        const datePickerInput = document.querySelector(
+            '.realtime .navigation .date-picker-input'
+        )
+
+        datePickerInput.value = datePicker
+    }, [datePicker])
+
     return <div className='realtime'>
         <div className='navigation'>
-            <FontAwesomeIcon
-                className='arrow'
-                icon={faArrowLeft}
-                onClick={() => {
-                    const _navigateChart = navigateChart
-
-                    _navigateChart.day = _navigateChart.day - 1
-
-                    setNavigateChart(_navigateChart)
-                }}
-            />
-            <FontAwesomeIcon
-                className='arrow'
-                icon={faArrowRight}
-                onClick={() => {
-                    const _navigateChart = navigateChart
-
-                    _navigateChart.day = _navigateChart.day + 1
-
-                    setNavigateChart(_navigateChart)
-                }}
-            />
-            <select
-                id='select-month'
-                onChange={event => {
-                    setNavigateChart({
-                        month: event.target[
-                            event.target.selectedIndex
-                        ].innerText - 1,
-                        ...navigateChart
-                    })
-                }}
-                defaultValue={new Date().getMonth() + 1}
+            <div
+                className='prev-day'
+                onClick={() => {changeDate('prev')}}
             >
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-            </select>
-            <select
-                id='select-year'
-                onChange={event => {
-                    setNavigateChart({
-                        year: event.target[
-                            event.target.selectedIndex
-                        ].innerText,
-                        ...navigateChart
-                    })
-                }}
-                defaultValue={new Date().getFullYear()}
+                <FontAwesomeIcon
+                    icon={faArrowLeft}
+                />
+            </div>
+            <div
+                className='next-day'
+                onClick={() => {changeDate('next')}}
             >
-                <option>2020</option>
-                <option>2019</option>
-                <option>2018</option>
-            </select>
+                <FontAwesomeIcon
+                    icon={faArrowRight}
+                />
+            </div>
+            <form>
+                <input
+                    type='text'
+                    className='date-picker-input'
+                    defaultValue={datePicker}
+                />
+                <button
+                    className='date-picker-btn'
+                    onClick={event => {
+                        event.preventDefault()
+
+                        const datePickerInput = document.querySelector(
+                            '.realtime .navigation .date-picker-input'
+                        )
+
+                        setDatePicker(datePickerInput.value)
+                    }}
+                >
+                OK
+                </button>
+            </form>
         </div>
         {!connected ?
             <h1 className='disconnected'>

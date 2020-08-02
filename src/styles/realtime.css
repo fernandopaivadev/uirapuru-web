@@ -8,7 +8,7 @@
 
 .realtime .display {
     display: flex;
-    width: 80%;
+    width: 70%;
     margin: auto;
 }
 
@@ -49,35 +49,63 @@
 .realtime .navigation {
     position: absolute;
     height: 9rem;
-    width: 22rem;
+    width: 30rem;
     top: 0;
-    left: 3rem;
+    left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.realtime .arrow {
-    font-size: 2rem;
-    margin: 1rem;
-    cursor: pointer;
-    color: #fff;
-    background: #309d20;
-    border-radius: 50%;
-    padding: 0.5rem;
-    width: 3rem;
-    height: 3rem;
-}
-
-.realtime .arrow:hover {
-    background: #3de223;
-}
-
-.realtime #select-month,
-.realtime #select-year {
-    margin: 0.5rem;
-    padding: 0.2rem;
-    font-size: 1.6rem;
+.realtime .navigation .date-picker-input {
+    border: 0.1rem solid #309d20;
     border-radius: 0.5rem;
-    border-color: #309d20;
+    padding: 0.5rem;
+    font-size: 1.6rem;
+    width: 10rem;
+    text-align: center;
+    margin: 1rem;
+    transition: all 0.2s ease;
+}
+
+.realtime .navigation .date-picker-input:hover {
+    background: #ccc;
+}
+
+.realtime .navigation .date-picker-btn {
+    border: none;
+    border-radius: 0.5rem;
+    background: #309d20;
+    padding: 0.8rem;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: auto auto auto 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.realtime .navigation .date-picker-btn:hover {
+    background: #4ecc3b;
+}
+
+.realtime .navigation .prev-day,
+.realtime .navigation .next-day {
+    background: #309d20;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.realtime .navigation .prev-day:hover,
+.realtime .navigation .next-day:hover {
+    background: #4ecc3b;
 }

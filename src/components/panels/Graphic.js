@@ -17,14 +17,22 @@ window.onload = () => {
     }
 }
 
-const Graphic = ({ device, navigateChart, setEnergyValue }) => {
+const Graphic = ({ device, setEnergyValue, datePicker }) => {
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
 
+    const isLeapYear = year =>
+        year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)
+
+
     const getMessages = useCallback(async () => {
         try {
-            const { day, month, year } = navigateChart
+            let [day, month, year] = datePicker.split('/')
+
+            day = Number(day)
+            month = Number(month) - 1
+            year = Number(year)
 
             let begin = new Date()
             let end = new Date()
@@ -39,16 +47,31 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
             end.setSeconds(0)
             end.setMilliseconds(0)
 
-            begin.setDate(day - 1)
-            end.setDate(day)
+            begin.setDate(day)
+            end.setDate(day + 1)
 
             begin.setMonth(month)
-            end.setMonth(month)
+
+            if (month === 1) {
+                if(isLeapYear(year) && day === 29) {
+                    end.setMonth(month + 1)
+                    end.setDate(1)
+                } else if(!isLeapYear(year) && day === 28) {
+                    end.setMonth(month + 1)
+                    end.setDate(1)
+                }
+            } else if ([3, 5, 8, 10].includes(month) && day === 30) {
+                end.setMonth(month + 1)
+                end.setDate(1)
+            } else if (day === 31) {
+                end.setMonth(month + 1)
+                end.setDate(1)
+            } else {
+                end.setMonth(month)
+            }
 
             begin.setFullYear(year)
             end.setFullYear(year)
-
-            console.log(begin.toISOString(), end.toISOString())
 
             setLoading(true)
 
@@ -85,11 +108,11 @@ const Graphic = ({ device, navigateChart, setEnergyValue }) => {
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
         }
-    }, [device, navigateChart])
+    }, [device, datePicker])
 
     useEffect(() => {
         getMessages()
-    }, [device, navigateChart, getMessages])
+    }, [getMessages])
 
     const plotProps = {
         values,

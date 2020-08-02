@@ -29,11 +29,13 @@ const Dashboard = () => {
     const [index, setIndex] = useState(null)
     const [connected, setConnected] = useState([])
     const [timeoutId, setTimeoutId] = useState([])
-    const [navigateChart, setNavigateChart] = useState({
-        day: new Date().getDate(),
-        month: new Date().getMonth(),
-        year: new Date().getFullYear()
-    })
+    const [datePicker, setDatePicker] = useState(`${
+        new Date().getDate()
+    }/${
+        new Date().getMonth() + 1
+    }/${
+        new Date().getFullYear()
+    }`)
     const [energyValue, setEnergyValue] = useState({
         ac: null,
         dc: null
@@ -124,17 +126,6 @@ const Dashboard = () => {
         }
     }, [buffer, connected, consumerUnit, newMessage, timeoutId])
 
-    const RealTimeProps = {
-        navigateChart,
-        setNavigateChart,
-        energyValue
-    }
-
-    const GraphicProps = {
-        navigateChart,
-        setEnergyValue
-    }
-
     return <div className='dashboard'>
         <NavBar />
         <DeviceMenu
@@ -148,11 +139,14 @@ const Dashboard = () => {
                     <RealTime
                         payload={buffer[index]}
                         connected={connected[index]}
-                        { ...RealTimeProps }
+                        energyValue={energyValue}
+                        datePicker={datePicker}
+                        setDatePicker={setDatePicker}
                     />
                     <Graphic
                         device={currentDevice}
-                        { ...GraphicProps }
+                        setEnergyValue={setEnergyValue}
+                        datePicker={datePicker}
                     />
                 </div>
                 :
