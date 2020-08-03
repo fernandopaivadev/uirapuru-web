@@ -1,4 +1,4 @@
-.sidebar {
+.devicemenu {
     background: #333c;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.sidebar li {
+.devicemenu li {
     margin: 0 1rem 0 1rem;
     width: 100%;
     border-bottom: 0.2rem solid #fff;
@@ -18,33 +18,33 @@
     justify-content: center;
 }
 
-.sidebar li:nth-child(1) {
+.devicemenu li:nth-child(1) {
     border-top: 0.2rem solid #fff;
 }
 
-.sidebar li:hover {
+.devicemenu li:hover {
     background: #333;
 }
 
-.sidebar li .title {
+.devicemenu li .title {
     font-size: 1.8rem;
     color: #fff;
     margin: 1rem;
 }
 
-.sidebar li .subtitle {
+.devicemenu li .subtitle {
     font-size: 1.4rem;
     color: #fff;
     margin: 1rem;
 }
 
-.sidebar .title {
+.devicemenu .title {
     color: var(--default-green);
     font-size: 2rem;
     text-align: center;
 }
 
-.sidebar .subtitle {
+.devicemenu .subtitle {
     color: var(--default-light-gray);
     font-size: 1.4rem;
     text-align: center;

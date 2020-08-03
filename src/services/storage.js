@@ -53,10 +53,16 @@ const getConsumerUnit = () =>
         localStorage.getItem(CONSUMER_UNIT_KEY)
     )
 
-const clearData = () => {
-    localStorage.removeItem(USER_KEY)
-    localStorage.removeItem(USERS_LIST_KEY)
-    localStorage.removeItem(CONSUMER_UNIT_KEY)
+const clearData = item => {
+    if (item === 'consumerUnit') {
+        localStorage.removeItem(CONSUMER_UNIT_KEY)
+    } else if (item === 'user') {
+        localStorage.removeItem(USER_KEY)
+    } else if (item === 'all') {
+        localStorage.removeItem(USER_KEY)
+        localStorage.removeItem(USERS_LIST_KEY)
+        localStorage.removeItem(CONSUMER_UNIT_KEY)
+    }
 }
 
 export {

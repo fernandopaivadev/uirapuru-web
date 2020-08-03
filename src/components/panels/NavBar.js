@@ -16,7 +16,8 @@ import {
     getConsumerUnit,
     storeConsumerUnit,
     getUsersList,
-    storeUser
+    storeUser,
+    clearData
 } from '../../services/storage'
 
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
@@ -196,7 +197,8 @@ const NavBar = ({ history }) => {
                                         onClick={() => {
                                             fetch(user._id)
                                             storeUser(user)
-                                            window.location.reload(false)
+                                            clearData('consumerUnit')
+                                            document.location.reload(false)
                                         }}>
                                         <div className='avatar'>
                                             <UsersIcon className='icon' />
@@ -244,7 +246,7 @@ const NavBar = ({ history }) => {
                                         className='item'
                                         onClick={() => {
                                             storeConsumerUnit(consumerUnit)
-                                            document.location.reload(true)
+                                            document.location.reload(false)
                                         }}>
 
                                         <div className='avatar'>

@@ -19,7 +19,7 @@ const adminLogin = token => {
 const logout = () => {
     localStorage.removeItem(TOKEN_KEY)
     localStorage.removeItem(IS_ADMIN_KEY)
-    clearData()
+    clearData('all')
 }
 
 export { isAuthenticated, isAdmin, getToken, login, adminLogin, logout }
