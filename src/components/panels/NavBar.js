@@ -16,7 +16,6 @@ import {
     getConsumerUnit,
     storeConsumerUnit,
     getUsersList,
-    storeUser,
     clearData
 } from '../../services/storage'
 
@@ -76,9 +75,7 @@ const NavBar = ({ history }) => {
 
             <button>
                 {getUser() ?
-                    getUser()?.person
-                        ? getUser()?.person?.name.split('')[0]
-                        : getUser()?.company?.tradeName.split('')[0]
+                    getUser()?.username?.split('')[0]
                     :
                     'A'
                 }
@@ -194,11 +191,13 @@ const NavBar = ({ history }) => {
                                     <li
                                         key={user?.username}
                                         className='item'
-                                        onClick={() => {
-                                            fetch(user._id)
-                                            storeUser(user)
-                                            clearData('consumerUnit')
-                                            document.location.reload(false)
+                                        onClick={async () => {
+                                            const ok = await fetch(user._id)
+
+                                            if(ok) {
+                                                clearData('consumerUnit')
+                                                document.location.reload(false)
+                                            }
                                         }}>
                                         <div className='avatar'>
                                             <UsersIcon className='icon' />
