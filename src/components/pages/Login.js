@@ -89,7 +89,6 @@ const Login = ({ history }) => {
             </label>
             <input
                 autoFocus
-                placeholder='Nome de usuário ou Email'
                 id='email'
                 required
                 onChange={event => {
@@ -113,7 +112,6 @@ const Login = ({ history }) => {
             </div>
 
             <input
-                placeholder='Senha'
                 id='password'
                 type='password'
                 required

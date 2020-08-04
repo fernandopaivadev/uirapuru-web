@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo} from 'react'
 
 import { adminLogin, isAuthenticated } from '../../services/auth'
 import { api } from '../../services/api'
@@ -70,9 +70,9 @@ const Login = ({ history }) => {
                 <h1>Uirapuru</h1>
             </div>
 
-            <h1 className='label'>
+            <label htmlFor='email'>
                 Nível de acesso
-            </h1>
+            </label>
             <input
                 required
                 onChange={event => {
@@ -80,9 +80,9 @@ const Login = ({ history }) => {
                 }}
             />
 
-            <h1 className='label'>
+            <label htmlFor='password'>
                 Senha
-            </h1>
+            </label>
             <input
                 type='password'
                 required
@@ -111,4 +111,4 @@ const Login = ({ history }) => {
     </div>
 }
 
-export default Login
+export default memo(Login)
