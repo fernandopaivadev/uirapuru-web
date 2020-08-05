@@ -62,13 +62,12 @@ const RealTime = ({
         datePickerInput.value = datePicker
     }, [datePicker])
 
-    const formatDate = input => {
-        return input
+    const formatDate = input =>
+        input
             .replace(/\D/g, '')
             .replace(/(\d{2})(\d)/, '$1/$2')
             .replace(/(\d{2})(\d)/, '$1/$2')
             .replace(/(\d{4})(\d)/, '$1')
-    }
 
     return <div className='realtime'>
         <div className='navigation'>
