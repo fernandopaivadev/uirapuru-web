@@ -1,10 +1,8 @@
 .dashboard .main {
     background: #fff;
-    width: 90vw;
+    width: 100vw;
     height: 100vh;
     position: fixed;
-    left: 25rem;
-    top: 5rem;
     overflow: hidden;
 }
 

@@ -1,5 +1,7 @@
 .devicemenu {
-    background: #333c;
+    background: linear-gradient(#3339, #3339),
+        url('../assets/background.webp') no-repeat;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -8,10 +10,13 @@
     height: 100vh;
     width: 25rem;
     align-items: center;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease;
 }
 
 .devicemenu li {
-    margin: 0 1rem 0 1rem;
     width: 100%;
     border-bottom: 0.2rem solid #fff;
     cursor: pointer;
@@ -23,7 +28,7 @@
 }
 
 .devicemenu li:hover {
-    background: #333;
+    background: #333c;
 }
 
 .devicemenu li .title {

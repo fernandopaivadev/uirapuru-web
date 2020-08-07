@@ -173,7 +173,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 }}
                 style={{
                     height: '90vh',
-                    width: '95%'
+                    width: '100%'
                 }}
                 onSelected={event => {
                     try {

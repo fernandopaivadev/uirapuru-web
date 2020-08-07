@@ -16,7 +16,7 @@ const DeviceMenu = ({ devices, setCurrentDevice, setIndex }) =>
 
                     document
                         .querySelector(`.devicemenu li:nth-child(${index + 1})`)
-                        .style = 'background-color: #333'
+                        .style = 'background-color: #333c'
 
                     setCurrentDevice(device)
                     setIndex(index)

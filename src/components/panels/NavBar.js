@@ -22,8 +22,6 @@ import {
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
 import fetch from '../../services/fetch'
 
-import logo from '../../assets/logo.svg'
-
 import '../../styles/navbar.css'
 
 const NavBar = ({ history }) => {
@@ -40,11 +38,28 @@ const NavBar = ({ history }) => {
                 history.push('/login')
             }
         }
+
+        document
+            .querySelector('.devicemenu')
+            .style.visibility = 'hidden'
     }, [history])
 
     return <ul className='navbar'>
         <li className='logo' key='logo'>
-            <img src={logo} alt='Tech Amazon Logo' />
+            <button
+                onClick={() => {
+                    const deviceMenu = document
+                        .querySelector('.devicemenu')
+
+                    if (deviceMenu.style.visibility === 'hidden') {
+                        deviceMenu.style.visibility = 'visible'
+                        deviceMenu.style.opacity = 1
+                    } else {
+                        deviceMenu.style.visibility = 'hidden'
+                        deviceMenu.style.opacity = 0
+                    }
+                }}
+            />
             <h1 className='text'>
                 Uirapuru
             </h1>
