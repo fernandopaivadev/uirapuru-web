@@ -111,7 +111,7 @@ const RealTime = ({
                 </button>
             </form>
         </div>
-        {connected ?
+        {!connected ?
             <h1 className='disconnected'>
                 Desconectado
             </h1>
