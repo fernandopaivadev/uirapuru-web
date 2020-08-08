@@ -18,6 +18,12 @@ const DeviceMenu = ({ devices, setCurrentDevice, setIndex }) =>
                         .querySelector(`.devicemenu li:nth-child(${index + 1})`)
                         .style = 'background-color: #333c'
 
+                    const deviceMenu = document
+                        .querySelector('.devicemenu')
+
+                    deviceMenu.style.visibility = 'hidden'
+                    deviceMenu.style.opacity = 0
+
                     setCurrentDevice(device)
                     setIndex(index)
                 }}

@@ -7,15 +7,6 @@ import Plot from './Plot'
 import '../../styles/graphic.css'
 import '../../styles/util.css'
 
-let mobile = false
-
-window.onload = () => {
-    const { innerHeight, innerWidth } = window
-
-    if (innerHeight > innerWidth) {
-        mobile = true
-    }
-}
 
 const Graphic = ({ device, setEnergyValue, datePicker }) => {
     const [loading, setLoading] = useState(false)
@@ -117,7 +108,6 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
     const plotProps = {
         values,
         timestamps,
-        mobile,
         setEnergyValue
     }
 

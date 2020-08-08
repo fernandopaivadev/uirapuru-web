@@ -4,7 +4,7 @@ import themes from '../../themes'
 
 const Plotly = lazy(() => import('react-plotly.js'))
 
-const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => {
+const Plot = ({ values, timestamps, setEnergyValue }) => {
     let temperature1 = []
     let humidity1 = []
     let voltage1 = []
@@ -105,12 +105,12 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                         x: 0.0,
                         y: 10,
                         font: {
-                            size: mobile ? 12 : doubleScreen ? 16 : 20
+                            size: 20
                         }
                     },
                     hoverlabel: {
                         font: {
-                            size: mobile ? 18 : 24,
+                            size: 24,
                             color: themes.default.white
                         }
                     },

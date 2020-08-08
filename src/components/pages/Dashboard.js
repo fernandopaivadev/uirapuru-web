@@ -12,6 +12,16 @@ import DeviceMenu from '../panels/DeviceMenu'
 
 import '../../styles/dashboard.css'
 
+let mobile = false
+
+window.onload = () => {
+    const { innerHeight, innerWidth } = window
+
+    if (innerHeight > innerWidth) {
+        mobile = true
+    }
+}
+
 const Dashboard = () => {
     const [consumerUnit, setConsumerUnit] = useState({
         devices: []
@@ -143,11 +153,14 @@ const Dashboard = () => {
                         datePicker={datePicker}
                         setDatePicker={setDatePicker}
                     />
-                    <Graphic
-                        device={currentDevice}
-                        setEnergyValue={setEnergyValue}
-                        datePicker={datePicker}
-                    />
+                    {!mobile ?
+                        <Graphic
+                            device={currentDevice}
+                            setEnergyValue={setEnergyValue}
+                            datePicker={datePicker}
+                        />
+                        : null
+                    }
                 </div>
                 :
                 <div className='empty'>

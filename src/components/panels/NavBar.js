@@ -24,6 +24,8 @@ import fetch from '../../services/fetch'
 
 import '../../styles/navbar.css'
 
+let isDashboard = false
+
 const NavBar = ({ history }) => {
     const [usersPopup, setUsersPopup] = useState(isAdmin() && !getUser())
     const [consumerUnitsPopup, setConsumerUnitsPopup] = useState(
@@ -39,24 +41,30 @@ const NavBar = ({ history }) => {
             }
         }
 
-        document
-            .querySelector('.devicemenu')
-            .style.visibility = 'hidden'
+        isDashboard = history.location.pathname === '/dashboard'
+
+        if (isDashboard) {
+            document
+                .querySelector('.devicemenu')
+                .style.visibility = 'hidden'
+        }
     }, [history])
 
     return <ul className='navbar'>
         <li className='logo' key='logo'>
             <button
                 onClick={() => {
-                    const deviceMenu = document
-                        .querySelector('.devicemenu')
+                    if (isDashboard) {
+                        const deviceMenu = document
+                            .querySelector('.devicemenu')
 
-                    if (deviceMenu.style.visibility === 'hidden') {
-                        deviceMenu.style.visibility = 'visible'
-                        deviceMenu.style.opacity = 1
-                    } else {
-                        deviceMenu.style.visibility = 'hidden'
-                        deviceMenu.style.opacity = 0
+                        if (deviceMenu.style.visibility === 'hidden') {
+                            deviceMenu.style.visibility = 'visible'
+                            deviceMenu.style.opacity = 1
+                        } else {
+                            deviceMenu.style.visibility = 'hidden'
+                            deviceMenu.style.opacity = 0
+                        }
                     }
                 }}
             />

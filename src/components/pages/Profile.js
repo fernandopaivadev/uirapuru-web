@@ -36,7 +36,7 @@ const Profile = () => {
 
     const formatTimeStamp = timeStamp =>
         timeStamp
-            .replace(/\D/g, '')
+            ?.replace(/\D/g, '')
             .replace(/(\d{2})(\d)/, '$1/$2')
             .replace(/(\d{2})(\d)/, '$1/$2')
             .replace(/(\d{4})(\d)/, '$1')
@@ -79,16 +79,19 @@ const Profile = () => {
                     <input
                         name='username'
                         value={user?.username ?? ''}
+                        readOnly
                     />
                     <label>Email</label>
                     <input
                         name='email'
                         value={user?.email ?? ''}
+                        readOnly
                     />
                     <label>Telefone</label>
                     <input
                         name='phone'
                         value={formatPhone(user?.phone) ?? ''}
+                        readOnly
                     />
                     {user?.person ?
                         <>
@@ -96,11 +99,13 @@ const Profile = () => {
                             <input
                                 name='cpf'
                                 value={formatCPF(user?.person?.cpf) ?? ''}
+                                readOnly
                             />
                             <label>Data de nascimento</label>
                             <input
                                 name='birth'
                                 value={formatTimeStamp(user?.person?.birth) ?? ''}
+                                readOnly
                             />
                         </>
                         :
@@ -111,22 +116,25 @@ const Profile = () => {
                                 value={
                                     formatCNPJ(user?.company?.cnpj) ?? '--'
                                 }
+                                readOnly
                             />
                             <label>Nome de usuário</label>
                             <input
                                 name='name'
                                 value={user?.company?.name ?? ''}
+                                readOnly
                             />
                             <label>Razão social</label>
                             <input
                                 name='tradeName'
                                 value={user?.company?.tradeName ?? ''}
-
+                                readOnly
                             />
                             <label>Descrição</label>
                             <input
                                 name='description'
                                 value={user?.company?.description ?? ''}
+                                readOnly
                             />
                         </>
                     }
@@ -135,7 +143,7 @@ const Profile = () => {
             }
 
             {getConsumerUnit() ?
-                <form>
+                <form readOnly>
                     <h1>
                         Dados da Unidade Consumidora
                     </h1>
@@ -143,31 +151,37 @@ const Profile = () => {
                     <input
                         name='number'
                         value={consumerUnit?.number ?? ''}
+                        readOnly
                     />
                     <label>Nome</label>
                     <input
                         name='name'
                         value={consumerUnit?.name ?? ''}
+                        readOnly
                     />
                     <label>Endereço</label>
                     <input
                         name='address'
                         value={consumerUnit?.address ?? ''}
+                        readOnly
                     />
                     <label>CEP</label>
                     <input
                         name='zip'
                         value={formatCEP(consumerUnit?.zip) ?? ''}
+                        readOnly
                     />
                     <label>Cidade</label>
                     <input
                         name='city'
                         value={consumerUnit?.city ?? ''}
+                        readOnly
                     />
                     <label>Estado</label>
                     <input
                         name='state'
                         value={consumerUnit?.state ?? ''}
+                        readOnly
                     />
                 </form>
                 : null

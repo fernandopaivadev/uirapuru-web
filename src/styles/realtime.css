@@ -109,3 +109,31 @@
 .realtime .navigation .next-day:hover {
     background: var(--default-light-green);
 }
+
+@media screen and (max-width: 600px) {
+    .realtime .navigation {
+        display: none;
+    }
+
+    .realtime .display {
+        flex-direction: column;
+        height: 70vh;
+    }
+
+    .realtime .display .value .icon {
+        font-size: 3rem;
+    }
+
+    .realtime .display .value .text {
+        font-size: 2.4rem;
+        font-weight: 500;
+        color: #555;
+        margin: 0 0.8rem 0 0.8rem;
+    }
+
+    .realtime .display .value .payload {
+        color: #333;
+        font-weight: 600;
+        font-size: 2.4rem;
+    }
+}
