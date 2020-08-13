@@ -17,7 +17,7 @@ let mobile = false
 window.onload = () => {
     const { innerHeight, innerWidth } = window
 
-    if (innerHeight > innerWidth) {
+    if (innerHeight > innerWidth || innerWidth <= 760) {
         mobile = true
     }
 }

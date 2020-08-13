@@ -110,7 +110,7 @@
     background: var(--default-light-green);
 }
 
-@media screen and (max-width: 600px) {
+@media only screen and (max-width: 760px) {
     .realtime .navigation {
         display: none;
     }
@@ -118,6 +118,10 @@
     .realtime .display {
         flex-direction: column;
         height: 70vh;
+    }
+
+    .realtime .display .value {
+        min-width: 22rem;
     }
 
     .realtime .display .value .icon {
