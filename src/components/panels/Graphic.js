@@ -82,9 +82,10 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
                     let _values = []
                     let _timestamps = []
 
-                    messages.forEach(({ payload, timestamp }) => {
-                        _values.push(JSON.parse(payload))
-                        _timestamps.push(timestamp)
+                    messages.forEach(({ payload }) => {
+                        const dataObject = JSON.parse(payload)
+                        _values.push(dataObject)
+                        _timestamps.push(dataObject.rtc)
                     })
 
                     setValues(_values)
