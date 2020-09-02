@@ -7,7 +7,8 @@ import {
     RecentActors as UsersIcon,
     Dashboard as DashboardIcon,
     ExitToApp as LogoutIcon,
-    Add as AddIcon
+    Add as AddIcon,
+    Menu as MenuIcon
     //Person as ProfileIcon
 } from '@material-ui/icons'
 
@@ -67,7 +68,26 @@ const NavBar = ({ history }) => {
                         }
                     }
                 }}
-            />
+            >
+                <MenuIcon className="menu-icon" />
+
+            </button>
+            {/* <button
+                onClick={() => {
+                    if (isDashboard) {
+                        const deviceMenu = document
+                            .querySelector('.devicemenu')
+
+                        if (deviceMenu.style.visibility === 'hidden') {
+                            deviceMenu.style.visibility = 'visible'
+                            deviceMenu.style.opacity = 1
+                        } else {
+                            deviceMenu.style.visibility = 'hidden'
+                            deviceMenu.style.opacity = 0
+                        }
+                    }
+                }}
+            /> */}
             <h1 className='text'>
                 Uirapuru
             </h1>
@@ -217,7 +237,7 @@ const NavBar = ({ history }) => {
                                         onClick={async () => {
                                             const ok = await fetch(user._id)
 
-                                            if(ok) {
+                                            if (ok) {
                                                 clearData('consumerUnit')
                                                 document.location.reload(false)
                                             }
