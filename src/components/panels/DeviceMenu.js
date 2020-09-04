@@ -1,38 +1,45 @@
 import React from 'react'
 
+import {getUser} from '../../services/storage'
+
 import '../../styles/devicemenu.css'
 
-const DeviceMenu = ({ devices, setCurrentDevice, setIndex }) =>
+const DeviceMenu = ({ setCurrentDevice, setIndex }) =>
     <ul className='devicemenu'>
-        {devices.map((device, index) => {
-            return <li
-                key={index}
-                onClick={() => {
-                    for (let k = 0; k < devices.length; k++) {
-                        document
-                            .querySelector(`.devicemenu li:nth-child(${k + 1})`)
-                            .style = 'background-color: none'
+        {getUser()?.consumerUnits?.map((consumerUnit, index) =>
+            <li className='unit'
+                key={ index }
+                onClick = {() =>{
+                    const device = document.querySelector('.devicemenu .unit .devices-list li')
+
+                    if(device.style.display === 'block'){
+                        device.style.display = 'none'
+                    } else {
+                        device.style.display = 'block'
                     }
-
-                    document
-                        .querySelector(`.devicemenu li:nth-child(${index + 1})`)
-                        .style = 'background-color: #333c'
-
-                    const deviceMenu = document
-                        .querySelector('.devicemenu')
-
-                    deviceMenu.style.visibility = 'hidden'
-                    deviceMenu.style.opacity = 0
-
-                    setCurrentDevice(device)
-                    setIndex(index)
                 }}
             >
-                <h1 className='title'>{device.name}</h1>
-                <h1 className='subtitle'>{device.id}</h1>
+                <h1>
+                    { consumerUnit.name }
+                </h1>
+
+                <ul className='devices-list'>
+                    {consumerUnit.devices.map((device, index) =>
+                        <li
+                            key={ index }
+                            onClick = {() => {
+                                setCurrentDevice(device)
+                                setIndex(device)
+                            }}
+                        >
+                            { device.name }
+                        </li>
+                    )}
+                </ul>
             </li>
-        })
-        }
+        )}
     </ul>
+
+
 
 export default DeviceMenu

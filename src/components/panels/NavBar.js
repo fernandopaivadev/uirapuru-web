@@ -2,8 +2,7 @@ import React, { useState, useEffect, memo } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
-    Person as ProfileIcon,
-    Room as RoomIcon,
+    // Person as ProfileIcon,
     RecentActors as UsersIcon,
     Dashboard as DashboardIcon,
     ExitToApp as LogoutIcon,
@@ -12,10 +11,10 @@ import {
     //Person as ProfileIcon
 } from '@material-ui/icons'
 
+import logo from '../../assets/logo.svg'
+
 import {
     getUser,
-    getConsumerUnit,
-    storeConsumerUnit,
     getUsersList,
     clearData
 } from '../../services/storage'
@@ -27,11 +26,14 @@ import '../../styles/navbar.css'
 
 let isDashboard = false
 
+window.onload = () => {
+    const devicemenu = document.querySelector('.devicemenu')
+    devicemenu.style.opacity = '1'
+    devicemenu.style.visibility = 'visible'
+}
+
 const NavBar = ({ history }) => {
     const [usersPopup, setUsersPopup] = useState(isAdmin() && !getUser())
-    const [consumerUnitsPopup, setConsumerUnitsPopup] = useState(
-        getUser() && !getConsumerUnit()
-    )
 
     useEffect(() => {
         if (!isAuthenticated()) {
@@ -52,7 +54,7 @@ const NavBar = ({ history }) => {
     }, [history])
 
     return <ul className='navbar'>
-        <li className='logo' key='logo'>
+        <li className='menu'>
             <button
                 onClick={() => {
                     if (isDashboard) {
@@ -70,45 +72,18 @@ const NavBar = ({ history }) => {
                 }}
             >
                 <MenuIcon className="menu-icon" />
-
             </button>
-            {/* <button
-                onClick={() => {
-                    if (isDashboard) {
-                        const deviceMenu = document
-                            .querySelector('.devicemenu')
+        </li>
 
-                        if (deviceMenu.style.visibility === 'hidden') {
-                            deviceMenu.style.visibility = 'visible'
-                            deviceMenu.style.opacity = 1
-                        } else {
-                            deviceMenu.style.visibility = 'hidden'
-                            deviceMenu.style.opacity = 0
-                        }
-                    }
-                }}
-            /> */}
+        <li className='logo' key='logo'>
+
+            <img src={ logo } alt='tech amazon logo'/>
+
             <h1 className='text'>
                 Uirapuru
             </h1>
         </li>
 
-        <li
-            key='consumer-unit'
-            onClick={() => {
-                setConsumerUnitsPopup(true)
-            }}>
-
-            {getConsumerUnit() ?
-                <h1 className='consumerUnitName'>
-                    {getConsumerUnit()?.name}
-                </h1>
-                :
-                <h1 className='consumerUnitName'>
-                    Escolha a Unidade Consumidora
-                </h1>
-            }
-        </li>
 
         <li className='profile' key='profile'>
             <h1 className='username'>
@@ -167,27 +142,14 @@ const NavBar = ({ history }) => {
 
                 {getUser() ?
                     <div>
-                        {getConsumerUnit() ?
-                            <li
-                                className='item'
-                                onClick={() => {
-                                    history.push('/profile')
-                                }}>
-                                <ProfileIcon className='icon' />
-                                Meus dados
-                            </li>
-                            :
-                            null
-                        }
-
-                        <li
+                        {/* <li
                             className='item'
                             onClick={() => {
-                                setConsumerUnitsPopup(true)
+                                history.push('/profile')
                             }}>
-                            <RoomIcon className='icon' />
-                                Unidades
-                        </li>
+                            <ProfileIcon className='icon' />
+                                Meus dados
+                        </li> */}
 
                         <li
                             className='item'
@@ -253,59 +215,6 @@ const NavBar = ({ history }) => {
 
                                             <h1 className='email'>
                                                 {user?.email}
-                                            </h1>
-                                        </div>
-                                    </li>
-                                )}
-                            </ul>
-                        }
-                    </div>
-                </div>
-                : null
-            }
-
-            {getUser() && consumerUnitsPopup ?
-                <div
-                    className='container'
-                    onClick={() => {
-                        setConsumerUnitsPopup(false)
-                    }}
-                >
-                    <div className='dialog'>
-                        <h1 className='title'>
-                            Escolha a Unidade Consumidora
-                        </h1>
-
-                        {getUser()?.consumerUnits?.length <= 0 ?
-                            <h1 className='empty'>
-                                Não há unidades consumidoras cadastradas
-                            </h1>
-                            :
-                            <ul>
-                                {getUser()?.consumerUnits?.map(consumerUnit =>
-                                    <li
-                                        key={consumerUnit.number}
-                                        className='item'
-                                        onClick={() => {
-                                            storeConsumerUnit(consumerUnit)
-                                            document.location.reload(false)
-                                        }}>
-
-                                        <div className='avatar'>
-                                            <RoomIcon className='icon' />
-                                        </div>
-
-                                        <div className='text'>
-                                            <h1 className='name'>
-                                                {consumerUnit?.name}
-                                            </h1>
-
-                                            <h1 className='number'>
-                                                UC: {consumerUnit?.number}
-                                            </h1>
-
-                                            <h1 className='address'>
-                                                {consumerUnit?.address}
                                             </h1>
                                         </div>
                                     </li>

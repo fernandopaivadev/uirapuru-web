@@ -11,12 +11,11 @@
     display: flex;
     align-items: center;
     margin: 0 auto 0 0;
+    width: 18rem;
+    justify-content: space-around;
 }
 
-.navbar .logo button {
-    /* background-color: #fff;
-    background: url('../assets/logo.svg');
-    background-size: 100% 100%; */
+.navbar .menu button {
     background: #00000000;
     display: flex;
     justify-content: center;
@@ -33,12 +32,12 @@
     transition: all 0.2s ease;
 }
 
-.navbar .logo button .menu-icon {
+.navbar .menu button .menu-icon {
     color: #fff;
     font-size: 2.4rem;
 }
 
-.navbar .logo button:hover {
+.navbar .menu button:hover {
     background: #fff9;
 }
 
@@ -54,20 +53,14 @@
     }
 }
 
+.navbar .logo img {
+    width: 4.5rem;
+}
+
 .navbar .logo .text {
     color: var(--default-white);
     font-size: 2rem;
     letter-spacing: 0.3rem;
-}
-
-.navbar .consumerUnitName {
-    color: var(--default-white);
-    font-size: 2rem;
-    cursor: pointer;
-}
-
-.navbar .consumerUnitName:hover {
-    color: var(--default-green);
 }
 
 .navbar .profile {

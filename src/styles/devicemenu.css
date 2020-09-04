@@ -14,43 +14,68 @@
     visibility: hidden;
     opacity: 0;
     transition: all 0.2s ease;
+    border-top: 0.2rem solid #fff;
 }
 
 .devicemenu li {
     width: 100%;
-    border-bottom: 0.2rem solid #fff;
     cursor: pointer;
     justify-content: center;
 }
 
-.devicemenu li:nth-child(1) {
-    border-top: 0.2rem solid #fff;
+
+.devicemenu .unit ul li:hover {
+    background: #333c;
 }
 
-.devicemenu li:hover {
+.devicemenu .unit h1:hover {
     background: #333c;
+}
+
+
+.devicemenu .unit {
+    color: #fff;
+    margin: 1rem 1.5rem 1.5rem 5.7rem;
+}
+
+
+.devicemenu .unit .devices-list li {
+    margin-left: 1rem;
+    display: none;
+    padding: 0.8rem;
+    animation-name: effect;
+    animation-duration: 0.3s;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+@keyframes effect {
+    0% {
+        transform: translateY(-3rem);
+    }
+}
+
+.devicemenu li .title,
+.devicemenu li .subtitle {
+    color: #fff;
+    margin: 1.5rem;
 }
 
 .devicemenu li .title {
     font-size: 1.8rem;
     color: #fff;
-    margin: 1rem;
 }
 
 .devicemenu li .subtitle {
-    font-size: 1.4rem;
-    color: #fff;
-    margin: 1rem;
+    font-size: 1.4rem;   
 }
 
 .devicemenu .title {
     color: var(--default-green);
     font-size: 2rem;
-    text-align: center;
 }
 
 .devicemenu .subtitle {
     color: var(--default-light-gray);
     font-size: 1.4rem;
-    text-align: center;
 }
