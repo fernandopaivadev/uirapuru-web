@@ -1,6 +1,5 @@
 const USER_KEY = 'user'
 const USERS_LIST_KEY = 'users-list'
-const CONSUMER_UNIT_KEY = 'consumer-unit'
 
 const storeUser = user => {
     localStorage.setItem(
@@ -26,28 +25,8 @@ const getUsersList = () =>
         localStorage.getItem(USERS_LIST_KEY)
     )
 
-const storeConsumerUnit = consumerUnit => {
-    localStorage.setItem(
-        CONSUMER_UNIT_KEY,
-        JSON.stringify(consumerUnit)
-    )
-}
-
-const getConsumerUnit = () =>
-    JSON.parse(
-        localStorage.getItem(CONSUMER_UNIT_KEY)
-    )
-
-const clearData = item => {
-    if (item === 'consumerUnit') {
-        localStorage.removeItem(CONSUMER_UNIT_KEY)
-    } else if (item === 'user') {
-        localStorage.removeItem(USER_KEY)
-    } else if (item === 'all') {
-        localStorage.removeItem(USER_KEY)
-        localStorage.removeItem(USERS_LIST_KEY)
-        localStorage.removeItem(CONSUMER_UNIT_KEY)
-    }
+const clearData = () => {
+    localStorage.clear()
 }
 
 export {
@@ -55,7 +34,5 @@ export {
     storeUser,
     getUsersList,
     storeUsersList,
-    clearData,
-    storeConsumerUnit,
-    getConsumerUnit
+    clearData
 }

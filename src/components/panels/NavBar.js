@@ -2,11 +2,9 @@ import React, { useState, useEffect, memo } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
-    // Person as ProfileIcon,
     RecentActors as UsersIcon,
     Dashboard as DashboardIcon,
     ExitToApp as LogoutIcon,
-    Add as AddIcon,
     Menu as MenuIcon
     //Person as ProfileIcon
 } from '@material-ui/icons'
@@ -15,8 +13,7 @@ import logo from '../../assets/logo.svg'
 
 import {
     getUser,
-    getUsersList,
-    clearData
+    getUsersList
 } from '../../services/storage'
 
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
@@ -128,14 +125,6 @@ const NavBar = ({ history }) => {
                             <UsersIcon className='icon' />
                             Usuários
                         </li>
-                        <li
-                            className='item'
-                            onClick={() => {
-                                history.push('/new-user')
-                            }}>
-                            <AddIcon className='icon' />
-                            Cadastrar
-                        </li>
                     </>
                     : null
                 }
@@ -200,7 +189,6 @@ const NavBar = ({ history }) => {
                                             const ok = await fetch(user._id)
 
                                             if (ok) {
-                                                clearData('consumerUnit')
                                                 document.location.reload(false)
                                             }
                                         }}>

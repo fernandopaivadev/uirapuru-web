@@ -9,7 +9,6 @@
     left: 0;
     height: 100vh;
     width: 25rem;
-    align-items: center;
     z-index: 1;
     visibility: hidden;
     opacity: 0;
@@ -17,35 +16,32 @@
     border-top: 0.2rem solid #fff;
 }
 
-.devicemenu li {
+.devicemenu .unit {
     width: 100%;
     cursor: pointer;
-    justify-content: center;
 }
 
-
-.devicemenu .unit ul li:hover {
+.devicemenu .unit .devices-list:hover {
     background: #333c;
 }
 
-.devicemenu .unit h1:hover {
-    background: #333c;
+.devicemenu .unit p {
+    font-weight: 600;
+    font-size: 2rem;
+    margin: 1.5rem 0 0.5rem 2rem;
 }
-
 
 .devicemenu .unit {
     color: #fff;
-    margin: 1rem 1.5rem 1.5rem 5.7rem;
 }
 
-
-.devicemenu .unit .devices-list li {
-    margin-left: 1rem;
+.devicemenu .unit .devices-list .device-name {
+    margin: 0 1.5rem 0 3rem;
     display: none;
     padding: 0.8rem;
     animation-name: effect;
     animation-duration: 0.3s;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 600;
 }
 
@@ -55,19 +51,19 @@
     }
 }
 
-.devicemenu li .title,
-.devicemenu li .subtitle {
+.devicemenu .unit .title,
+.devicemenu .unit .subtitle {
     color: #fff;
     margin: 1.5rem;
 }
 
-.devicemenu li .title {
+.devicemenu .unit .title {
     font-size: 1.8rem;
     color: #fff;
 }
 
-.devicemenu li .subtitle {
-    font-size: 1.4rem;   
+.devicemenu .unit .subtitle {
+    font-size: 1.4rem;
 }
 
 .devicemenu .title {

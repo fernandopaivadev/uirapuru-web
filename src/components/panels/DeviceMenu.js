@@ -4,13 +4,15 @@ import {getUser} from '../../services/storage'
 
 import '../../styles/devicemenu.css'
 
-const DeviceMenu = ({ setCurrentDevice, setIndex }) =>
+const DeviceMenu = ({ setCurrentDevice, setDeviceIndex }) =>
     <ul className='devicemenu'>
         {getUser()?.consumerUnits?.map((consumerUnit, index) =>
             <li className='unit'
                 key={ index }
                 onClick = {() =>{
-                    const device = document.querySelector('.devicemenu .unit .devices-list li')
+                    const device = document.querySelector(
+                        '.devicemenu .unit .devices-list .device-name'
+                    )
 
                     if(device.style.display === 'block'){
                         device.style.display = 'none'
@@ -19,17 +21,18 @@ const DeviceMenu = ({ setCurrentDevice, setIndex }) =>
                     }
                 }}
             >
-                <h1>
+                <p>
                     { consumerUnit.name }
-                </h1>
+                </p>
 
                 <ul className='devices-list'>
                     {consumerUnit.devices.map((device, index) =>
                         <li
+                            className='device-name'
                             key={ index }
                             onClick = {() => {
                                 setCurrentDevice(device)
-                                setIndex(device)
+                                setDeviceIndex(index)
                             }}
                         >
                             { device.name }

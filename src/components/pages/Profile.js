@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import NavBar from '../panels/NavBar'
 
-import { getUser, getConsumerUnit } from '../../services/storage'
+import { getUser } from '../../services/storage'
 
 import '../../styles/profile.css'
 
 const Profile = () => {
-    const [user, setUser] = useState({
+    const [user, /*setUser*/] = useState({
         person: {},
         consumerUnits: [
             {
@@ -19,21 +19,6 @@ const Profile = () => {
         ]
     })
 
-    const [consumerUnit, setConsumerUnit] = useState([
-        {
-            devices: [
-                {
-                    mqttInstance: {}
-                }
-            ]
-        }
-    ])
-
-    useEffect(() => {
-        setUser(getUser())
-        setConsumerUnit(getConsumerUnit())
-    }, [])
-
     const formatTimeStamp = timeStamp =>
         timeStamp
             ?.replace(/\D/g, '')
@@ -41,10 +26,10 @@ const Profile = () => {
             .replace(/(\d{2})(\d)/, '$1/$2')
             .replace(/(\d{4})(\d)/, '$1')
 
-    const formatCEP = cep =>
-        cep
-            ?.replace(/\D/g, '')
-            .replace(/(\d{5})(\d)/, '$1-$2')
+    // const formatCEP = cep =>
+    //     cep
+    //         ?.replace(/\D/g, '')
+    //         .replace(/(\d{5})(\d)/, '$1-$2')
 
     const formatCPF = cpf =>
         cpf
@@ -142,7 +127,7 @@ const Profile = () => {
                 : null
             }
 
-            {getConsumerUnit() ?
+            {/* {getConsumerUnit() ?
                 <form readOnly>
                     <h1>
                         Dados da Unidade Consumidora
@@ -185,7 +170,7 @@ const Profile = () => {
                     />
                 </form>
                 : null
-            }
+            } */}
         </div>
 
         {/*<div className='map'>

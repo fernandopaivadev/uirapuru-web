@@ -2,9 +2,9 @@ import React, { useEffect, useState, useCallback, memo } from 'react'
 
 import NavBar from '../panels/NavBar'
 import Graphic from '../panels/Graphic'
+import { getUser } from '../../services/storage'
 import { isAuthenticated, getToken } from '../../services/auth'
 import { baseURL } from '../../services/api'
-import { getConsumerUnit } from '../../services/storage'
 import io from 'socket.io-client'
 
 import RealTime from '../panels/RealTime'
@@ -23,10 +23,6 @@ window.onload = () => {
 }
 
 const Dashboard = () => {
-    const [consumerUnit, setConsumerUnit] = useState({
-        devices: []
-    })
-
     const [newMessage, setNewMessage] = useState({
         isNew: false,
         topic: '',
@@ -36,7 +32,7 @@ const Dashboard = () => {
     const [buffer, setBuffer] = useState([])
 
     const [currentDevice, setCurrentDevice] = useState(null)
-    const [index, setIndex] = useState(null)
+    const [deviceIndex, setDeviceIndex] = useState(null)
     const [connected, setConnected] = useState([])
     const [timeoutId, setTimeoutId] = useState([])
     const [datePicker, setDatePicker] = useState(`${
@@ -50,14 +46,20 @@ const Dashboard = () => {
         ac: null,
         dc: null
     })
+    const [devicesList, setDevicesList] = useState([])
+
 
     const webSocketConfig = useCallback(() => {
         try {
-            let devicesList = []
+            let _devicesList = []
 
-            consumerUnit.devices.forEach(device => {
-                devicesList.push(device.id)
+            getUser().consumerUnits.forEach(consumerUnit => {
+                consumerUnit.devices.forEach(device => {
+                    _devicesList.push(device.id)
+                })
             })
+
+            setDevicesList(_devicesList)
 
             const socket = io(baseURL)
 
@@ -68,7 +70,7 @@ const Dashboard = () => {
             socket.on('auth', ({ ok }) => {
                 if (ok) {
                     socket.emit('listen', {
-                        devicesList
+                        devicesList: _devicesList
                     })
                 }
             })
@@ -87,12 +89,6 @@ const Dashboard = () => {
         } catch (err) {
             console.log(err.message)
         }
-    }, [consumerUnit])
-
-    useEffect(() => {
-        if (isAuthenticated()) {
-            setConsumerUnit(getConsumerUnit() ?? { devices: [] })
-        }
     }, [])
 
     useEffect(() => {
@@ -105,8 +101,8 @@ const Dashboard = () => {
         const { isNew, topic, payload } = newMessage
 
         if (isNew) {
-            consumerUnit.devices.forEach((device, index) => {
-                if (device.id === topic) {
+            devicesList.forEach((device, index) => {
+                if (device === topic) {
                     let _buffer = [...buffer]
                     _buffer[index] = payload
 
@@ -134,21 +130,20 @@ const Dashboard = () => {
                 }
             })
         }
-    }, [buffer, connected, consumerUnit, newMessage, timeoutId])
+    }, [buffer, connected, devicesList, newMessage, timeoutId])
 
     return <div className='dashboard'>
         <NavBar />
         <DeviceMenu
-            devices={consumerUnit?.devices}
             setCurrentDevice={setCurrentDevice}
-            setIndex={setIndex}
+            setDeviceIndex={setDeviceIndex}
         />
         <div className='main'>
             {currentDevice ?
                 <div className='container'>
                     <RealTime
-                        payload={buffer[index]}
-                        connected={connected[index]}
+                        payload={buffer[deviceIndex]}
+                        connected={connected[deviceIndex]}
                         energyValue={energyValue}
                         datePicker={datePicker}
                         setDatePicker={setDatePicker}
