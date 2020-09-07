@@ -4,7 +4,7 @@ import {getUser} from '../../services/storage'
 
 import '../../styles/devicemenu.css'
 
-const DeviceMenu = ({ setCurrentDevice, setDeviceIndex }) =>
+const DeviceMenu = ({ setDeviceIndex }) =>
     <ul className='devicemenu'>
         {getUser()?.consumerUnits?.map((consumerUnit, index) =>
             <li className='unit'
@@ -31,7 +31,6 @@ const DeviceMenu = ({ setCurrentDevice, setDeviceIndex }) =>
                             className='device-name'
                             key={ index }
                             onClick = {() => {
-                                setCurrentDevice(device)
                                 setDeviceIndex(index)
                             }}
                         >

@@ -13,6 +13,7 @@
     margin: 0 auto 0 0;
     width: 18rem;
     justify-content: space-around;
+    cursor: pointer;
 }
 
 .navbar .menu button {
@@ -38,7 +39,7 @@
 }
 
 .navbar .menu button:hover {
-    background: #fff9;
+    background: #fff5;
 }
 
 @keyframes flash {
@@ -46,7 +47,7 @@
         background: #00000000;
     }
     50% {
-        background: #fff9;
+        background: #fff5;
     }
     100% {
         background: #00000000;
@@ -63,18 +64,19 @@
     letter-spacing: 0.3rem;
 }
 
-.navbar .profile {
+.navbar .navigation {
     display: flex;
     align-items: center;
     margin: 0 0 0 auto;
 }
 
-.navbar .profile .username {
+.navbar .navigation > .username {
     color: var(--default-white);
     font-size: 2rem;
+    margin: 1rem;
 }
 
-.navbar .profile .avatar {
+.navbar .navigation .avatar {
     background: var(--default-green);
     border-radius: 50%;
     color: #fff;
@@ -85,7 +87,7 @@
     justify-content: center;
 }
 
-.navbar .profile button {
+.navbar .navigation button {
     border: none;
     border-radius: 50%;
     margin: 1rem;
@@ -98,16 +100,16 @@
     transition: all 0.2s ease;
 }
 
-.navbar .profile button:hover {
+.navbar .navigation button:hover {
     background: var(--default-light-green);
 }
 
-.navbar .profile button:focus + .menu {
+.navbar .navigation button:focus + .menu {
     visibility: visible;
     opacity: 1;
 }
 
-.navbar .profile .menu {
+.navbar .navigation .menu {
     position: absolute;
     bottom: 100;
     transform: translate(-0.5rem, 15%);
@@ -122,35 +124,35 @@
     z-index: 1;
 }
 
-.navbar .profile .menu .user {
+.navbar .navigation .menu .user {
     display: flex;
     align-items: center;
     margin: 0.5rem 1.5rem 0.5rem 1.5rem;
 }
 
-.navbar .profile .menu .user .avatar {
+.navbar .navigation .menu .user .avatar {
     background: var(--default-green);
     font-size: 2rem;
 }
 
-.navbar .profile .menu .user .text {
+.navbar .navigation .menu .user .text {
     display: flex;
     flex-direction: column;
     margin: 1rem;
     font-weight: 300;
 }
 
-.navbar .profile .menu .user .text .username {
+.navbar .navigation .menu .user .text .username {
     font-size: 2rem;
     color: #555;
 }
 
-.navbar .profile .menu .user .text .email {
+.navbar .navigation .menu .user .text .email {
     font-size: 1.6rem;
     color: #888;
 }
 
-.navbar .profile .menu .item {
+.navbar .navigation .menu .item {
     margin: 0.5rem;
     color: #555;
     display: flex;
@@ -161,82 +163,15 @@
     border-radius: 0.5rem;
 }
 
-.navbar .profile .menu .item .icon {
+.navbar .navigation .menu .item .icon {
     margin: 1rem;
     font-size: 2.4rem;
     color: var(--default-green);
 }
 
-.navbar .profile .menu .item:hover,
-.navbar .profile .menu .item .icon:hover {
+.navbar .navigation .menu .item:hover,
+.navbar .navigation .menu .item .icon:hover {
     background: #eee;
-}
-
-.navbar .container {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    background: #333c;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    align-content: center;
-    justify-content: center;
-}
-
-.navbar .container .dialog {
-    background: #fff;
-    min-width: 35rem;
-    min-height: 18rem;
-    z-index: 1;
-    border-radius: 0.5rem;
-}
-
-.navbar .container .dialog .item {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    padding: 0 2rem 0 2rem;
-}
-
-.navbar .container .dialog .item:hover {
-    background: #eee;
-}
-
-.navbar .container .dialog .title {
-    color: var(--default-green);
-    font-size: 2.4rem;
-    margin: 2rem;
-}
-
-.navbar .container .dialog .item .avatar {
-    background: var(--default-green);
-    color: #fff;
-    margin: 2rem 2rem 2rem 0rem;
-}
-
-.navbar .container .dialog .item .avatar .icon {
-    font-size: 2rem;
-}
-
-.navbar .container .dialog .item .text .name,
-.navbar .container .dialog .item .text .username {
-    color: #333;
-    font-size: 2rem;
-}
-
-.navbar .container .dialog .item .text .number,
-.navbar .container .dialog .item .text .email {
-    color: #555;
-    font-size: 1.8rem;
-}
-
-.navbar .container .dialog .item .text .address {
-    color: #555;
-    font-size: 1.6rem;
 }
 
 @media screen and (max-width: 800px) {

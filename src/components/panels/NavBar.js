@@ -1,19 +1,17 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useEffect, memo } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
     RecentActors as UsersIcon,
-    Dashboard as DashboardIcon,
     ExitToApp as LogoutIcon,
-    Menu as MenuIcon
-    //Person as ProfileIcon
+    Menu as MenuIcon,
+    Person as ProfileIcon
 } from '@material-ui/icons'
 
 import logo from '../../assets/logo.svg'
 
 import {
-    getUser,
-    getUsersList
+    getUser
 } from '../../services/storage'
 
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
@@ -30,8 +28,6 @@ window.onload = () => {
 }
 
 const NavBar = ({ history }) => {
-    const [usersPopup, setUsersPopup] = useState(isAdmin() && !getUser())
-
     useEffect(() => {
         if (!isAuthenticated()) {
             history.push('/login')
@@ -72,8 +68,13 @@ const NavBar = ({ history }) => {
             </button>
         </li>
 
-        <li className='logo' key='logo'>
-
+        <li
+            className='logo'
+            key='logo'
+            onClick={() => {
+                history.push('/dashboard')
+            }}
+        >
             <img src={ logo } alt='tech amazon logo'/>
 
             <h1 className='text'>
@@ -81,19 +82,14 @@ const NavBar = ({ history }) => {
             </h1>
         </li>
 
-
-        <li className='profile' key='profile'>
+        <li className='navigation' key='navigation'>
             <h1 className='username'>
-                {isAdmin() ? <i>Admin - </i> : null}
+                {isAdmin() ? 'Administrador | ': null}
                 {getUser()?.username ?? ''}
             </h1>
 
             <button>
-                {getUser() ?
-                    getUser()?.username?.split('')[0]
-                    :
-                    'A'
-                }
+                { getUser()?.username?.split('')[0] }
             </button>
 
             <ul className='menu'>
@@ -120,99 +116,38 @@ const NavBar = ({ history }) => {
                         <li
                             className='item'
                             onClick={() => {
-                                setUsersPopup(true)
+                                history.push('/users-list')
                             }}>
                             <UsersIcon className='icon' />
-                            Usuários
+                                Usuários
                         </li>
                     </>
                     : null
                 }
 
                 {getUser() ?
-                    <div>
-                        {/* <li
-                            className='item'
-                            onClick={() => {
-                                history.push('/profile')
-                            }}>
-                            <ProfileIcon className='icon' />
-                                Meus dados
-                        </li> */}
-
-                        <li
-                            className='item'
-                            onClick={() => {
-                                history.push('/dashboard')
-                            }}>
-                            <DashboardIcon className='icon' />
-                                Dashboard
-                        </li>
-                    </div>
-                    : null
-                }
-
-                {isAdmin() || getUser() ?
                     <li
                         className='item'
                         onClick={() => {
-                            logout()
-                            history.push('/login')
+                            // history.push('/profile')
+                            alert('IMPLEMENTAR')
                         }}>
-                        <LogoutIcon className='icon' />
-                            Sair
+                        <ProfileIcon className='icon' />
+                            Perfil
                     </li>
                     : null
                 }
-            </ul>
 
-            {usersPopup ?
-                <div
-                    className='container'
+                <li
+                    className='item'
                     onClick={() => {
-                        setUsersPopup(false)
+                        logout()
+                        history.push('/login')
                     }}>
-                    <div className='dialog'>
-                        <h1 className='title'>Escolha o Usuário</h1>
-
-                        {getUsersList()?.length <= 0 ?
-                            <h1 className='empty'>
-                                Não há usuários cadastrados
-                            </h1>
-                            :
-                            <ul>
-                                {getUsersList()?.map(user =>
-                                    <li
-                                        key={user?.username}
-                                        className='item'
-                                        onClick={async () => {
-                                            const ok = await fetch(user._id)
-
-                                            if (ok) {
-                                                document.location.reload(false)
-                                            }
-                                        }}>
-                                        <div className='avatar'>
-                                            <UsersIcon className='icon' />
-                                        </div>
-
-                                        <div className='text'>
-                                            <h1 className='username'>
-                                                {user?.username}
-                                            </h1>
-
-                                            <h1 className='email'>
-                                                {user?.email}
-                                            </h1>
-                                        </div>
-                                    </li>
-                                )}
-                            </ul>
-                        }
-                    </div>
-                </div>
-                : null
-            }
+                    <LogoutIcon className='icon' />
+                        Sair
+                </li>
+            </ul>
         </li>
     </ul>
 }

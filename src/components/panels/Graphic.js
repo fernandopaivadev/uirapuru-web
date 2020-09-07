@@ -8,7 +8,7 @@ import '../../styles/graphic.css'
 import '../../styles/util.css'
 
 
-const Graphic = ({ device, setEnergyValue, datePicker }) => {
+const Graphic = ({ deviceId, setEnergyValue, datePicker }) => {
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
@@ -68,7 +68,7 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
 
             const response = await api.get(
                 `/device/messages?device=${
-                    device.id
+                    deviceId
                 }&from=${begin.toISOString()
                 }&to=${end.toISOString()}`
             )
@@ -100,7 +100,7 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
         }
-    }, [device, datePicker])
+    }, [deviceId, datePicker])
 
     useEffect(() => {
         getMessages()

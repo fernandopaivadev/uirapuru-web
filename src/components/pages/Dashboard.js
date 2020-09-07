@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback, memo } from 'react'
 import NavBar from '../panels/NavBar'
 import Graphic from '../panels/Graphic'
 import { getUser } from '../../services/storage'
-import { isAuthenticated, getToken } from '../../services/auth'
+import { isAuthenticated, getToken, isAdmin } from '../../services/auth'
 import { baseURL } from '../../services/api'
 import io from 'socket.io-client'
 
@@ -22,7 +22,7 @@ window.onload = () => {
     }
 }
 
-const Dashboard = () => {
+const Dashboard = ({ history }) => {
     const [newMessage, setNewMessage] = useState({
         isNew: false,
         topic: '',
@@ -30,8 +30,6 @@ const Dashboard = () => {
     })
 
     const [buffer, setBuffer] = useState([])
-
-    const [currentDevice, setCurrentDevice] = useState(null)
     const [deviceIndex, setDeviceIndex] = useState(null)
     const [connected, setConnected] = useState([])
     const [timeoutId, setTimeoutId] = useState([])
@@ -93,9 +91,13 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (isAuthenticated()) {
-            webSocketConfig()
+            if(isAdmin() && !getUser()) {
+                history.push('/users-list')
+            } else {
+                webSocketConfig()
+            }
         }
-    }, [webSocketConfig])
+    }, [webSocketConfig, history])
 
     useEffect(() => {
         const { isNew, topic, payload } = newMessage
@@ -135,11 +137,10 @@ const Dashboard = () => {
     return <div className='dashboard'>
         <NavBar />
         <DeviceMenu
-            setCurrentDevice={setCurrentDevice}
             setDeviceIndex={setDeviceIndex}
         />
         <div className='main'>
-            {currentDevice ?
+            {devicesList[deviceIndex] ?
                 <div className='container'>
                     <RealTime
                         payload={buffer[deviceIndex]}
@@ -150,7 +151,7 @@ const Dashboard = () => {
                     />
                     {!mobile ?
                         <Graphic
-                            device={currentDevice}
+                            deviceId={devicesList[deviceIndex]}
                             setEnergyValue={setEnergyValue}
                             datePicker={datePicker}
                         />

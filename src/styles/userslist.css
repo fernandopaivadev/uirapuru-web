@@ -1,0 +1,68 @@
+.userslist {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    align-content: center;
+    justify-content: center;
+}
+
+.userslist .list {
+    background: #fff;
+    min-width: 35rem;
+    min-height: 18rem;
+    z-index: 1;
+    border-radius: 0.5rem;
+}
+
+.userslist .list .item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 0 2rem 0 2rem;
+}
+
+.userslist .list .item:hover {
+    background: #eee;
+}
+
+.userslist .list .title {
+    color: var(--default-green);
+    font-size: 2.4rem;
+    margin: 2rem;
+}
+
+.userslist .list .item {
+    color: #fff;
+    margin: 2rem 2rem 2rem 0rem;
+}
+
+.userslist .list .item .icon {
+    font-size: 4rem;
+    border-radius: 50%;
+    padding: 0.8rem;
+    margin: 1rem 1.5rem 1rem 1.5rem;
+    background: var(--default-green);
+}
+
+.userslist .list .item .text .name,
+.userslist .list .item .text .username {
+    color: #333;
+    font-size: 2rem;
+}
+
+.userslist .list .item .text .number,
+.userslist .list .item .text .email {
+    color: #555;
+    font-size: 1.8rem;
+}
+
+.userslist .list .item .text .address {
+    color: #555;
+    font-size: 1.6rem;
+}
