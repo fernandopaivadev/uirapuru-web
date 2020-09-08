@@ -19,8 +19,6 @@ import fetch from '../../services/fetch'
 
 import '../../styles/navbar.css'
 
-let isDashboard = false
-
 window.onload = () => {
     const devicemenu = document.querySelector('.devicemenu')
     devicemenu.style.opacity = '1'
@@ -36,31 +34,21 @@ const NavBar = ({ history }) => {
                 history.push('/login')
             }
         }
-
-        isDashboard = history.location.pathname === '/dashboard'
-
-        if (isDashboard) {
-            document
-                .querySelector('.devicemenu')
-                .style.visibility = 'hidden'
-        }
     }, [history])
 
     return <ul className='navbar'>
         <li className='menu'>
             <button
                 onClick={() => {
-                    if (isDashboard) {
-                        const deviceMenu = document
-                            .querySelector('.devicemenu')
+                    const deviceMenu = document
+                        .querySelector('.devicemenu')
 
-                        if (deviceMenu.style.visibility === 'hidden') {
-                            deviceMenu.style.visibility = 'visible'
-                            deviceMenu.style.opacity = 1
-                        } else {
-                            deviceMenu.style.visibility = 'hidden'
-                            deviceMenu.style.opacity = 0
-                        }
+                    if (deviceMenu.style.visibility === 'hidden') {
+                        deviceMenu.style.visibility = 'visible'
+                        deviceMenu.style.opacity = 1
+                    } else {
+                        deviceMenu.style.visibility = 'hidden'
+                        deviceMenu.style.opacity = 0
                     }
                 }}
             >
@@ -129,8 +117,7 @@ const NavBar = ({ history }) => {
                     <li
                         className='item'
                         onClick={() => {
-                            // history.push('/profile')
-                            alert('IMPLEMENTAR')
+                            history.push('/profile')
                         }}>
                         <ProfileIcon className='icon' />
                             Perfil

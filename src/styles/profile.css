@@ -1,7 +1,10 @@
 .profile .main {
     background: #fff;
     width: 100vw;
-    height: 100vh;
+    height: 95vh;
+    display: grid;
+    grid-template-rows: 90% 10%;
+    grid-template-columns: 1fr;
     justify-content: center;
 }
 
@@ -32,6 +35,36 @@
     align-items: center;
     justify-content: left;
     margin: 1rem 2rem 3rem 2rem;
+    
+}
+
+.profile .main .forms {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.profile .main .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile .main .navigation button {
+    width: 15rem;
+    height: 4rem;
+    font-size: 2rem;
+    font-weight: 600;
+    border-radius: 0.3rem;
+    border: none;
+    background: var(--default-green);
+    color: #fff;
+    margin: 1.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile .main .navigation button:hover {
+    background: var(--default-light-green);
 }
 
 .profile .main form h1 {
@@ -61,4 +94,15 @@
 
 .profile .button-container button:hover {
     background: #41ca2b;
+}
+
+.profile .main .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #777;
 }

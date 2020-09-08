@@ -4,7 +4,7 @@ import {getUser} from '../../services/storage'
 
 import '../../styles/devicemenu.css'
 
-const DeviceMenu = ({ setDeviceIndex }) =>
+const DeviceMenu = ({ setDeviceIndex, setConsumerUnitIndex }) =>
     <ul className='devicemenu'>
         {getUser()?.consumerUnits?.map((consumerUnit, index) =>
             <li className='unit'
@@ -19,6 +19,10 @@ const DeviceMenu = ({ setDeviceIndex }) =>
                     } else {
                         device.style.display = 'block'
                     }
+
+                    if(setConsumerUnitIndex) {
+                        setConsumerUnitIndex(index)
+                    }
                 }}
             >
                 <p>
@@ -31,7 +35,9 @@ const DeviceMenu = ({ setDeviceIndex }) =>
                             className='device-name'
                             key={ index }
                             onClick = {() => {
-                                setDeviceIndex(index)
+                                if(setDeviceIndex) {
+                                    setDeviceIndex(index)
+                                }
                             }}
                         >
                             { device.name }
