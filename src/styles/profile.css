@@ -42,6 +42,24 @@
     grid-template-columns: 1fr 1fr;
 }
 
+.profile .main .forms button {
+    width: 15rem;
+    height: 4rem;
+    font-size: 2rem;
+    font-weight: 600;
+    border-radius: 0.3rem;
+    border: none;
+    background: var(--default-green);
+    color: #fff;
+    margin: 1.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile .main .forms button:hover {
+    background: var(--default-light-green);
+}
+
 .profile .main .navigation {
     display: flex;
     align-items: center;

@@ -6,6 +6,10 @@ import DeviceMenu from '../panels/DeviceMenu'
 
 import { getUser } from '../../services/storage'
 
+import { isAdmin } from '../../services/auth'
+
+import { api } from '../../services/api'
+
 import '../../styles/profile.css'
 
 const formatPhone = phone =>
@@ -41,8 +45,37 @@ const formatTimeStamp = timeStamp =>
             .replace(/(\d{2})(\d)/, '$1/$2')
             .replace(/(\d{4})(\d)/, '$1')
 
+const handleSubmit = async (event, user ) => {
+    try {
+        event.preventDefault()
+
+        const response = await api.put('/user/update', user)
+
+        const status = response?.status
+
+        if (status === 200) {
+            alert('OK')
+        }
+    } catch (err) {
+        console.log(err?.message ?? err?.response?.data?.message)
+    }
+}
 
 const Profile = ({ history }) => {
+    const admin = isAdmin()
+    const user = getUser()
+    // const modifiedUser = new User(
+    //     {
+    //         username: null,
+    //         password: null,
+    //         email: null,
+    //         phone: null,
+    //         company: null,
+    //         person: null,
+    //         consumerUnits: null
+    //     }
+    // )
+
     const [ consumerUnitIndex, setConsumerUnitIndex ] = useState()
 
     return <div className='profile'>
@@ -59,34 +92,52 @@ const Profile = ({ history }) => {
                         <label>Nome de usuário</label>
                         <input
                             name='username'
-                            value={getUser()?.username ?? ''}
-                            readOnly
+                            defaultValue={getUser()?.username ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.username = event.target.value
+                            }}
                         />
                         <label>Email</label>
                         <input
                             name='email'
-                            value={getUser()?.email ?? ''}
-                            readOnly
+                            defaultValue={getUser()?.email ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.email = event.target.value
+                            }}
                         />
                         <label>Telefone</label>
                         <input
                             name='phone'
-                            value={formatPhone(getUser()?.phone) ?? ''}
-                            readOnly
+                            defaultValue={formatPhone(getUser()?.phone) ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.phone = event.target.value
+                            }}
                         />
                         {getUser()?.person ?
                             <>
                                 <label>CPF</label>
                                 <input
                                     name='cpf'
-                                    value={formatCPF(getUser()?.person?.cpf) ?? ''}
-                                    readOnly
+                                    defaultValue={formatCPF(getUser()?.person
+                                        ?.cpf) ?? ''}
+                                    readOnly= {!admin}
+                                    onChange={ event => {
+                                        user.person.cpf = event.target.value
+                                    }}
                                 />
                                 <label>Data de nascimento</label>
                                 <input
                                     name='birth'
-                                    value={formatTimeStamp(getUser()?.person?.birth) ?? ''}
-                                    readOnly
+                                    defaultValue={formatTimeStamp(getUser()
+                                        ?.person
+                                        ?.birth) ?? ''}
+                                    readOnly= {!admin}
+                                    onChange={ event => {
+                                        user.person.birth = event.target.value
+                                    }}
                                 />
                             </>
                             :
@@ -94,76 +145,139 @@ const Profile = ({ history }) => {
                                 <label>CNPJ</label>
                                 <input
                                     name='cnpj'
-                                    value={
-                                        formatCNPJ(getUser()?.company?.cnpj) ?? '--'
+                                    defaultValue={
+                                        formatCNPJ(getUser()?.company
+                                        ?.cnpj) ?? '--'
                                     }
-                                    readOnly
-                                />
-                                <label>Nome de usuário</label>
-                                <input
-                                    name='name'
-                                    value={getUser()?.company?.name ?? ''}
-                                    readOnly
+                                    readOnly= {!admin}
+                                    onChange={ event => {
+                                        user.company.cnpj = event.target.value
+                                    }}
                                 />
                                 <label>Razão social</label>
                                 <input
                                     name='tradeName'
-                                    value={getUser()?.company?.tradeName ?? ''}
-                                    readOnly
+                                    defaultValue={getUser()?.company
+                                        ?.tradeName ?? ''}
+                                    readOnly= {!admin}
+                                    onChange={ event => {
+                                        user.company.tradeName = event.target
+                                            .value
+                                    }}
                                 />
                                 <label>Descrição</label>
                                 <input
                                     name='description'
-                                    value={getUser()?.company?.description ?? ''}
-                                    readOnly
+                                    defaultValue={getUser()?.company
+                                        ?.description ?? ''}
+                                    readOnly= {!admin}
+                                    onChange={ event => {
+                                        user.company.description = event.target
+                                            .value
+                                    }}
                                 />
                             </>
+                        }
+                        {admin ?
+                            <button
+                                onClick={ event => {
+                                    handleSubmit(event, user)
+                                } }
+                            >
+                                Salvar
+                            </button>
+                            : null
                         }
                     </form>
                     : null
                 }
 
                 {getUser().consumerUnits[ consumerUnitIndex ] ?
-                    <form readOnly>
+                    <form>
                         <h1>
                                 Dados da Unidade Consumidora
                         </h1>
                         <label>Número</label>
                         <input
                             name='number'
-                            value={getUser().consumerUnits[ consumerUnitIndex ]?.number ?? ''}
-                            readOnly
+                            defaultValue={getUser()
+                                .consumerUnits[ consumerUnitIndex ]
+                                ?.number ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.consumerUnits[ consumerUnitIndex]
+                                    .number = event.target.value
+                            }}
                         />
                         <label>Nome</label>
                         <input
                             name='name'
-                            value={getUser().consumerUnits[ consumerUnitIndex ]?.name ?? ''}
-                            readOnly
+                            defaultValue={getUser()
+                                .consumerUnits[ consumerUnitIndex ]
+                                ?.name ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.consumerUnits[ consumerUnitIndex]
+                                    .name = event.target.value
+                            }}
                         />
                         <label>Endereço</label>
                         <input
                             name='address'
-                            value={getUser().consumerUnits[ consumerUnitIndex ]?.address ?? ''}
-                            readOnly
+                            defaultValue={getUser()
+                                .consumerUnits[ consumerUnitIndex ]
+                                ?.address ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.consumerUnits[ consumerUnitIndex]
+                                    .address = event.target.value
+                            }}
                         />
                         <label>CEP</label>
                         <input
                             name='zip'
-                            value={formatCEP(getUser().consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
-                            readOnly
+                            defaultValue={formatCEP(getUser()
+                                .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.consumerUnits[ consumerUnitIndex]
+                                    .zip = event.target.value
+                            }}
                         />
                         <label>Cidade</label>
                         <input
                             name='city'
-                            value={getUser().consumerUnits[ consumerUnitIndex ]?.city ?? ''}
-                            readOnly
+                            defaultValue={getUser()
+                                .consumerUnits[ consumerUnitIndex ]
+                                ?.city ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.consumerUnits[ consumerUnitIndex]
+                                    .city = event.target.value
+                            }}
                         />
                         <label>Estado</label>
                         <input
                             name='state'
-                            value={getUser().consumerUnits[ consumerUnitIndex ]?.state ?? ''}
-                            readOnly
+                            defaultValue={getUser()
+                                .consumerUnits[ consumerUnitIndex ]
+                                ?.state ?? ''}
+                            readOnly= {!admin}
+                            onChange={ event => {
+                                user.consumerUnits[ consumerUnitIndex]
+                                    .state = event.target.value
+                            }}
                         />
+                        {admin ?
+                            <button
+                                onClick={ event => {
+                                    handleSubmit(event, user)
+                                }}
+                            >
+                                Salvar
+                            </button>
+                            : null
+                        }
                     </form>
                     :
                     <div className='empty'>
@@ -183,5 +297,6 @@ const Profile = ({ history }) => {
         </div>
     </div>
 }
+
 
 export default Profile
