@@ -19,12 +19,6 @@ import fetch from '../../services/fetch'
 
 import '../../styles/navbar.css'
 
-window.onload = () => {
-    const devicemenu = document.querySelector('.devicemenu')
-    devicemenu.style.opacity = '1'
-    devicemenu.style.visibility = 'visible'
-}
-
 const NavBar = ({ history }) => {
     useEffect(() => {
         if (!isAuthenticated()) {
@@ -43,12 +37,12 @@ const NavBar = ({ history }) => {
                     const deviceMenu = document
                         .querySelector('.devicemenu')
 
-                    if (deviceMenu.style.visibility === 'hidden') {
-                        deviceMenu.style.visibility = 'visible'
-                        deviceMenu.style.opacity = 1
-                    } else {
+                    if (deviceMenu.style.visibility === 'visible') {
                         deviceMenu.style.visibility = 'hidden'
                         deviceMenu.style.opacity = 0
+                    } else {
+                        deviceMenu.style.visibility = 'visible'
+                        deviceMenu.style.opacity = 1
                     }
                 }}
             >

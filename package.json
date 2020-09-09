@@ -27,7 +27,7 @@
         "react-dom": "^16.13.1",
         "react-plotly.js": "^2.4.0",
         "react-router-dom": "^5.2.0",
-        "react-scripts": "^3.4.1",
+        "react-scripts": "^3.4.3",
         "socket.io-client": "^2.3.0"
     },
     "scripts": {
@@ -53,7 +53,7 @@
     "devDependencies": {
         "@commitlint/cli": "^9.1.1",
         "@commitlint/config-conventional": "^9.1.1",
-        "commitizen": "^4.1.2",
+        "commitizen": "^4.2.1",
         "cz-conventional-changelog": "^3.2.0",
         "eslint": "^6.6.0",
         "eslint-plugin-import": "^2.22.0",
