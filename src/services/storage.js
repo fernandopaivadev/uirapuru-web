@@ -25,8 +25,14 @@ const getUsersList = () =>
         localStorage.getItem(USERS_LIST_KEY)
     )
 
-const clearData = () => {
-    localStorage.clear()
+const clearData = item => {
+    if (item === 'user') {
+        localStorage.removeItem(USER_KEY)
+    } if (item === 'usersList') {
+        localStorage.removeItem(USERS_LIST_KEY)
+    } else {
+        localStorage.clear()
+    }
 }
 
 export {

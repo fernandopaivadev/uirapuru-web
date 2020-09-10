@@ -1,6 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
+import { isAuthenticated } from '../../services/auth'
+
 import {
     getUsersList
 } from '../../services/storage'
@@ -8,13 +10,17 @@ import {
 import fetch from '../../services/fetch'
 
 import {
-    RecentActors as UsersIcon
+    Person as UserIcon
 } from '@material-ui/icons'
 
 import '../../styles/userslist.css'
 
-const UsersList = ({ history }) =>
-    <div className='userslist'>
+const UsersList = ({ history }) => {
+    if (!isAuthenticated()) {
+        history.push('/login')
+    }
+
+    return <div className='userslist'>
         <div className='list'>
             <h1 className='title'>Escolha o Usuário</h1>
 
@@ -33,7 +39,7 @@ const UsersList = ({ history }) =>
                                     history.push('/dashboard')
                                 }
                             }}>
-                            <UsersIcon className='icon' />
+                            <UserIcon className='icon' />
 
                             <div className='text'>
                                 <h1 className='username'>
@@ -50,5 +56,5 @@ const UsersList = ({ history }) =>
             }
         </div>
     </div>
-
+}
 export default withRouter(UsersList)

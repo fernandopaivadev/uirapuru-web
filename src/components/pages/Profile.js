@@ -4,11 +4,13 @@ import NavBar from '../panels/NavBar'
 
 import DeviceMenu from '../panels/DeviceMenu'
 
-import { getUser } from '../../services/storage'
+import { getUser, clearData } from '../../services/storage'
 
-import { isAdmin } from '../../services/auth'
+import { isAdmin, logout } from '../../services/auth'
 
 import { api } from '../../services/api'
+
+import fetch from '../../services/fetch'
 
 import '../../styles/profile.css'
 
@@ -64,18 +66,6 @@ const handleSubmit = async (event, user ) => {
 const Profile = ({ history }) => {
     const admin = isAdmin()
     const user = getUser()
-    // const modifiedUser = new User(
-    //     {
-    //         username: null,
-    //         password: null,
-    //         email: null,
-    //         phone: null,
-    //         company: null,
-    //         person: null,
-    //         consumerUnits: null
-    //     }
-    // )
-
     const [ consumerUnitIndex, setConsumerUnitIndex ] = useState()
 
     return <div className='profile'>
@@ -114,6 +104,8 @@ const Profile = ({ history }) => {
                             readOnly= {!admin}
                             onChange={ event => {
                                 user.phone = event.target.value
+                                event.target.value =  formatPhone(event.target
+                                    .value)
                             }}
                         />
                         {getUser()?.person ?
@@ -126,6 +118,8 @@ const Profile = ({ history }) => {
                                     readOnly= {!admin}
                                     onChange={ event => {
                                         user.person.cpf = event.target.value
+                                        event.target.value =  formatCPF(event
+                                            .target.value)
                                     }}
                                 />
                                 <label>Data de nascimento</label>
@@ -152,6 +146,9 @@ const Profile = ({ history }) => {
                                     readOnly= {!admin}
                                     onChange={ event => {
                                         user.company.cnpj = event.target.value
+                                        user.phone = event.target.value
+                                        event.target.value =  formatCNPJ(event
+                                            .target.value)
                                     }}
                                 />
                                 <label>Razão social</label>
@@ -242,6 +239,8 @@ const Profile = ({ history }) => {
                             onChange={ event => {
                                 user.consumerUnits[ consumerUnitIndex]
                                     .zip = event.target.value
+                                event.target.value =  formatPhone(event.target
+                                    .value)
                             }}
                         />
                         <label>Cidade</label>
@@ -293,6 +292,40 @@ const Profile = ({ history }) => {
                 >
                     Dashboard
                 </button>
+                {admin ?
+                    <button
+                        className='delete'
+                        onClick={ async () => {
+                            try {
+                                const response = await api.delete(
+                                    `/user/remove?_id=${getUser()._id}`
+                                )
+
+                                const status = response?.status
+
+                                if(status === 200) {
+                                    clearData('user')
+                                    clearData('user-list')
+
+                                    if (await fetch()) {
+                                        history.push('/users-list')
+                                        console.log('ok')
+                                    } else {
+                                        logout()
+                                        history.push('/login')
+                                        console.log('bug')
+                                    }
+                                }
+
+                            } catch (err){
+                                console.log(err?.message ?? err?.response?.data?.message)
+                            }
+                        }}
+                    >
+                        Excluir Usuário
+                    </button>
+                    : null
+                }
             </div>
         </div>
     </div>
