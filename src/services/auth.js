@@ -17,7 +17,7 @@ const adminLogin = token => {
 }
 
 const logout = () => {
-    clearData()
+    clearData('all')
 }
 
 export { isAuthenticated, isAdmin, getToken, login, adminLogin, logout }

@@ -1,11 +1,9 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
-import { isAuthenticated } from '../../services/auth'
+import { isAuthenticated, logout } from '../../services/auth'
 
-import {
-    getUsersList
-} from '../../services/storage'
+import { getUsersList } from '../../services/storage'
 
 import fetch from '../../services/fetch'
 
@@ -22,8 +20,18 @@ const UsersList = ({ history }) => {
 
     return <div className='userslist'>
         <div className='list'>
-            <h1 className='title'>Escolha o Usuário</h1>
+            <div className='header'>
+                <h1 className='title'>Escolha o Usuário</h1>
 
+                <button
+                    onClick={() => {
+                        logout()
+                        history.push('/login')
+                    }}
+                >
+                    Sair
+                </button>
+            </div>
             {getUsersList()?.length <= 0 ?
                 <h1 className='empty'>
                     Não há usuários cadastrados

@@ -373,19 +373,17 @@ const Profile = ({ history }) => {
 
                                 if(status === 200) {
                                     clearData('user')
-                                    clearData('user-list')
+                                    clearData('users-list')
 
                                     if (await fetch()) {
                                         history.push('/users-list')
-                                        console.log('ok')
                                     } else {
                                         logout()
                                         history.push('/login')
-                                        console.log('bug')
                                     }
                                 }
 
-                            } catch (err){
+                            } catch (err) {
                                 console.log(
                                     err?.message ?? err?.response?.data?.message
                                 )

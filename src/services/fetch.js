@@ -13,12 +13,14 @@ const fetch = async (_id) => {
 
                     if (status === 200) {
                         storeUser(data?.user)
+                        return true
                     }
                 } else {
                     const { status, data } = await api.get('/users')
 
                     if (status === 200) {
                         storeUsersList(data?.usersList)
+                        return true
                     }
                 }
             } else {
@@ -26,10 +28,9 @@ const fetch = async (_id) => {
 
                 if (status === 200) {
                     storeUser(data?.user)
+                    return true
                 }
             }
-
-            return true
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
             logout()
