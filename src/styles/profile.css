@@ -1,7 +1,8 @@
 .profile .main {
     background: #fff;
     width: 100vw;
-    height: 95vh;
+    height: 96vh;
+    position: fixed;
     display: grid;
     grid-template-rows: 90% 10%;
     grid-template-columns: 1fr;
@@ -28,14 +29,12 @@
     width: 70%;
 }
 
-
 .profile .main form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: left;
     margin: 1rem 2rem 3rem 2rem;
-    
 }
 
 .profile .main .forms {
@@ -94,9 +93,6 @@
     background: #f56f55;
 }
 
-
-
-
 .profile .main form h1 {
     color: var(--default-green);
     font-size: 2.4rem;
@@ -135,4 +131,10 @@
     font-size: 3rem;
     font-weight: 600;
     color: #777;
+}
+
+.profile form .loading-container {
+    width: 5rem;
+    height: 5.5rem;
+    margin: 2rem auto 0 auto;
 }

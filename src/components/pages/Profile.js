@@ -17,12 +17,14 @@ import '../../styles/profile.css'
 const formatPhone = phone =>
         phone
             ?.replace(/\D/g, '')
+            .replace(/(\d{11})(\d)/, '$1')
             .replace(/(\d{2})(\d)/, '($1) $2')
             .replace(/(\d{5})(\d)/, '$1-$2')
 
 const formatCPF = cpf =>
         cpf
             ?.replace(/\D/g, '')
+            .replace(/(\d{11})(\d)/, '$1')
             .replace(/(\d{3})(\d)/, '$1.$2')
             .replace(/(\d{3})(\d)/, '$1.$2')
             .replace(/(\d{3})(\d)/, '$1-$2')
@@ -30,6 +32,7 @@ const formatCPF = cpf =>
 const formatCNPJ = cnpj =>
         cnpj
             ?.replace(/\D/g, '')
+            .replace(/(\d{14})(\d)/, '$1')
             .replace(/(\d{2})(\d)/, '$1.$2')
             .replace(/(\d{3})(\d)/, '$1.$2')
             .replace(/(\d{3})(\d)/, '$1.$2')
@@ -38,6 +41,7 @@ const formatCNPJ = cnpj =>
 const formatCEP = cep =>
         cep
             ?.replace(/\D/g, '')
+            .replace(/(\d{8})(\d)/, '$1')
             .replace(/(\d{5})(\d)/, '$1-$2')
 
 const formatTimeStamp = timeStamp =>
@@ -47,31 +51,56 @@ const formatTimeStamp = timeStamp =>
             .replace(/(\d{2})(\d)/, '$1/$2')
             .replace(/(\d{4})(\d)/, '$1')
 
-const handleSubmit = async (event, user ) => {
-    try {
-        event.preventDefault()
-
-        const response = await api.put('/user/update', user)
-
-        const status = response?.status
-
-        if (status === 200) {
-            alert('OK')
-        }
-    } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
-    }
-}
+const formatDate = input =>
+    input
+        .replace(/\D/g, '')
+        .replace(/(\d{8})(\d)/, '$1')
+        .replace(/(\d{2})(\d)/, '$1/$2')
+        .replace(/(\d{2})(\d)/, '$1/$2')
 
 const Profile = ({ history }) => {
     const admin = isAdmin()
     const user = getUser()
-    const [ consumerUnitIndex, setConsumerUnitIndex ] = useState()
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState()
+    const [success, setSuccess] = useState([false, false])
+    const [error, setError] = useState([false, false])
+
+    const handleSubmit = async (event, user, index ) => {
+        try {
+            event.preventDefault()
+
+            const response = await api.put('/user/update', user)
+
+            const status = response?.status
+
+            if (status === 202) {
+                const _success = success
+                _success[index] = true
+                setSuccess(_success)
+
+                const _error = error
+                _error[index] = false
+                setError(_error)
+                alert('OK')
+            } else {
+                const _success = success
+                _success[index] = false
+                setSuccess(_success)
+
+                const _error = error
+                _error[index] = true
+                setError(_error)
+            }
+        } catch (err) {
+            console.log(err?.message ?? err?.response?.data?.message)
+        }
+    }
 
     return <div className='profile'>
         <NavBar />
         <DeviceMenu
-            setConsumerUnitIndex = { setConsumerUnitIndex }/>
+            setConsumerUnitIndex = { setConsumerUnitIndex }
+        />
         <div className='main'>
             <div className='forms'>
                 {getUser ?
@@ -103,9 +132,10 @@ const Profile = ({ history }) => {
                             defaultValue={formatPhone(getUser()?.phone) ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
-                                user.phone = event.target.value
-                                event.target.value =  formatPhone(event.target
-                                    .value)
+                                user.phone = event.target.value.match(/\d+/g)
+                                event.target.value =  formatPhone(
+                                    event.target.value
+                                )
                             }}
                         />
                         {getUser()?.person ?
@@ -117,20 +147,25 @@ const Profile = ({ history }) => {
                                         ?.cpf) ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
-                                        user.person.cpf = event.target.value
-                                        event.target.value =  formatCPF(event
-                                            .target.value)
+                                        user.person.cpf = event
+                                            .target.value.match(/\d+/g)
+                                        event.target.value =  formatCPF(
+                                            event.target.value
+                                        )
                                     }}
                                 />
                                 <label>Data de nascimento</label>
                                 <input
                                     name='birth'
-                                    defaultValue={formatTimeStamp(getUser()
-                                        ?.person
-                                        ?.birth) ?? ''}
+                                    defaultValue={formatTimeStamp(
+                                        getUser()?.person?.birth
+                                    ) ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
                                         user.person.birth = event.target.value
+                                        event.target.value = formatDate(
+                                            event.target.value
+                                        )
                                     }}
                                 />
                             </>
@@ -140,15 +175,18 @@ const Profile = ({ history }) => {
                                 <input
                                     name='cnpj'
                                     defaultValue={
-                                        formatCNPJ(getUser()?.company
-                                        ?.cnpj) ?? '--'
+                                        formatCNPJ(
+                                            getUser()?.company?.cnpj
+                                        ) ?? '--'
                                     }
                                     readOnly= {!admin}
                                     onChange={ event => {
-                                        user.company.cnpj = event.target.value
+                                        user.company.cnpj = event
+                                            .target.value.match(/\d+/g)
                                         user.phone = event.target.value
-                                        event.target.value =  formatCNPJ(event
-                                            .target.value)
+                                        event.target.value =  formatCNPJ(
+                                            event.target.value
+                                        )
                                     }}
                                 />
                                 <label>Razão social</label>
@@ -158,7 +196,8 @@ const Profile = ({ history }) => {
                                         ?.tradeName ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
-                                        user.company.tradeName = event.target
+                                        user.company.tradeName = event
+                                            .target
                                             .value
                                     }}
                                 />
@@ -169,7 +208,8 @@ const Profile = ({ history }) => {
                                         ?.description ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
-                                        user.company.description = event.target
+                                        user.company.description = event
+                                            .target
                                             .value
                                     }}
                                 />
@@ -177,12 +217,16 @@ const Profile = ({ history }) => {
                         }
                         {admin ?
                             <button
-                                onClick={ event => {
-                                    handleSubmit(event, user)
-                                } }
+                                onClick={event => {
+                                    handleSubmit(event, user, 0)
+                                }}
                             >
                                 Salvar
                             </button>
+                            : null
+                        }
+                        {success[0] && !error[0] ?
+                            <h1>Salvo com sucesso!</h1>
                             : null
                         }
                     </form>
@@ -192,7 +236,7 @@ const Profile = ({ history }) => {
                 {getUser().consumerUnits[ consumerUnitIndex ] ?
                     <form>
                         <h1>
-                                Dados da Unidade Consumidora
+                            Dados da Unidade Consumidora
                         </h1>
                         <label>Número</label>
                         <input
@@ -237,9 +281,10 @@ const Profile = ({ history }) => {
                                 .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
-                                user.consumerUnits[ consumerUnitIndex]
-                                    .zip = event.target.value
-                                event.target.value =  formatPhone(event.target
+                                user
+                                    .consumerUnits[ consumerUnitIndex]
+                                    .zip = event.target.value.match(/\d+/g)
+                                event.target.value =  formatCEP(event.target
                                     .value)
                             }}
                         />
@@ -270,7 +315,7 @@ const Profile = ({ history }) => {
                         {admin ?
                             <button
                                 onClick={ event => {
-                                    handleSubmit(event, user)
+                                    handleSubmit(event, user, 1)
                                 }}
                             >
                                 Salvar
@@ -318,7 +363,9 @@ const Profile = ({ history }) => {
                                 }
 
                             } catch (err){
-                                console.log(err?.message ?? err?.response?.data?.message)
+                                console.log(
+                                    err?.message ?? err?.response?.data?.message
+                                )
                             }
                         }}
                     >
@@ -330,6 +377,5 @@ const Profile = ({ history }) => {
         </div>
     </div>
 }
-
 
 export default Profile

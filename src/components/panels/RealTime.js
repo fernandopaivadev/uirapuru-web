@@ -65,9 +65,9 @@ const RealTime = ({
     const formatDate = input =>
         input
             .replace(/\D/g, '')
+            .replace(/(\d{8})(\d)/, '$1')
             .replace(/(\d{2})(\d)/, '$1/$2')
             .replace(/(\d{2})(\d)/, '$1/$2')
-            .replace(/(\d{4})(\d)/, '$1')
 
     return <div className='realtime'>
         <div className='navigation'>

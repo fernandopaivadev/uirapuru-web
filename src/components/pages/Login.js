@@ -1,14 +1,16 @@
 import React, { useState, useEffect, memo } from 'react'
 
 import { login, isAuthenticated } from '../../services/auth'
+
 import { api } from '../../services/api'
+
 import fetch from '../../services/fetch'
 
 import logo from '../../assets/logo.svg'
 
 import '../../styles/login.css'
-import '../../styles/util.css'
 
+import '../../styles/util.css'
 
 const Login = ({ history }) => {
     const [username, setUsername] = useState('')
