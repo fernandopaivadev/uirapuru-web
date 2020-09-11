@@ -65,7 +65,7 @@ const Profile = ({ history }) => {
     const [success, setSuccess] = useState([false, false])
     const [error, setError] = useState([false, false])
 
-    const handleSubmit = async (event, user, index ) => {
+    const handleSubmit = async (event, user, index) => {
         try {
             event.preventDefault()
 
@@ -73,23 +73,26 @@ const Profile = ({ history }) => {
 
             const status = response?.status
 
-            if (status === 202) {
-                const _success = success
+            if (status === 200) {
+                const _success = [...success]
                 _success[index] = true
                 setSuccess(_success)
 
-                const _error = error
-                _error[index] = false
-                setError(_error)
-                alert('OK')
+                setTimeout(() => {
+                    const _success = [...success]
+                    _success[index] = false
+                    setSuccess(_success)
+                }, 1500)
             } else {
-                const _success = success
-                _success[index] = false
-                setSuccess(_success)
-
-                const _error = error
+                const _error = [...error]
                 _error[index] = true
                 setError(_error)
+
+                setTimeout(() => {
+                    const _error = [...error]
+                    _error[index] = false
+                    setError(_error)
+                }, 1500)
             }
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
@@ -225,8 +228,16 @@ const Profile = ({ history }) => {
                             </button>
                             : null
                         }
-                        {success[0] && !error[0] ?
-                            <h1>Salvo com sucesso!</h1>
+                        {success[0] && !error[0]?
+                            <p className='success'>
+                                Salvo com sucesso!
+                            </p>
+                            : null
+                        }
+                        {!success[0] && error[0]?
+                            <p className='error'>
+                                Ocorreu um erro
+                            </p>
                             : null
                         }
                     </form>
@@ -320,6 +331,18 @@ const Profile = ({ history }) => {
                             >
                                 Salvar
                             </button>
+                            : null
+                        }
+                        {success[1] && !error[1]?
+                            <p className='success'>
+                                Salvo com sucesso!
+                            </p>
+                            : null
+                        }
+                        {!success[1] && error[1]?
+                            <p className='error'>
+                                Ocorreu um erro
+                            </p>
                             : null
                         }
                     </form>
