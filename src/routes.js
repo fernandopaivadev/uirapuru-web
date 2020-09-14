@@ -8,6 +8,7 @@ import ResetPassword from './components/pages/ResetPassword'
 import Dashboard from './components/pages/Dashboard'
 import Profile from './components/pages/Profile'
 import UsersList from './components/pages/UsersList'
+import NewUser from './components/pages/NewUser'
 
 const Routes = () => <Router>
     <Switch>
@@ -18,6 +19,7 @@ const Routes = () => <Router>
         <Route path='/dashboard' exact component={Dashboard} />
         <Route path='/profile' exact component={Profile} />
         <Route path='/users-list' exact component={UsersList} />
+        <Route path='/new-user' exact component={NewUser} />
         <Redirect to='/login' />
     </Switch>
 </Router>

@@ -1,0 +1,91 @@
+.newuser .main {
+    background: #fff;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    overflow: hidden;
+}
+
+.newuser .main input {
+    padding: 0.5rem;
+    border: 0.2rem solid var(--default-green);
+    border-radius: 0.3rem;
+    font-size: 1.8rem;
+    margin: 0.2rem 0 3rem 0;
+    color: #333;
+}
+
+.newuser .main label {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.newuser .main input,
+.newuser .main label {
+    width: 40%;
+}
+
+.newuser .main form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    margin: 1rem 2rem 3rem 2rem;
+}
+
+.newuser .main form .checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40rem;
+}
+
+.newuser .main form .checkbox input[type='checkbox'] {
+    margin: 1rem;
+    width: 2.4rem;
+}
+
+.newuser .main form .checkbox label {
+    font-size: 2rem;
+}
+
+.newuser .main form .buttons {
+    display: flex;
+}
+
+.newuser .main form h1 {
+    color: var(--default-green);
+    font-size: 2.4rem;
+    margin: 1.5rem 0 2rem 0;
+}
+
+.newuser .main button {
+    width: 15rem;
+    height: 4rem;
+    font-size: 2rem;
+    font-weight: 600;
+    border-radius: 0.3rem;
+    border: none;
+    background: var(--default-green);
+    color: #fff;
+    margin: 1.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.newuser .main button:hover {
+    background: var(--default-light-green);
+}
+
+.newuser .main form .success {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--default-green);
+}
+
+.newuser .main form .error {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #d00;
+}

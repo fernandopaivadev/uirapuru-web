@@ -65,7 +65,7 @@ const Profile = ({ history }) => {
     const [success, setSuccess] = useState([false, false])
     const [error, setError] = useState([false, false])
 
-    const handleSubmit = async (event, user, index) => {
+    const handleSubmit = async (event, index) => {
         try {
             event.preventDefault()
 
