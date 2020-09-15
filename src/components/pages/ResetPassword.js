@@ -97,7 +97,10 @@ const Login = ({ history, match }) => {
                             FAZER LOGIN
                         </button>
                         :
-                        <button type='submit'>
+                        <button
+                            type='submit'
+                            className='classic-button'
+                        >
                             SALVAR
                         </button>
                 }

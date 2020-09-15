@@ -92,7 +92,10 @@ const Login = ({ history }) => {
                         FAZER LOGIN
                     </button>
                     :
-                    <button type='submit'>
+                    <button
+                        type='submit'
+                        className='classic-button'
+                    >
                         ENVIAR LINK
                     </button>
             }

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback, memo } from 'react'
 
 import NavBar from '../panels/NavBar'
 import Graphic from '../panels/Graphic'
-import { getUser } from '../../services/storage'
+import { getData } from '../../services/storage'
 import { isAuthenticated, getToken, isAdmin } from '../../services/auth'
 import { baseURL } from '../../services/api'
 import io from 'socket.io-client'
@@ -51,7 +51,7 @@ const Dashboard = ({ history }) => {
         try {
             let _devicesList = []
 
-            getUser().consumerUnits.forEach(consumerUnit => {
+            getData('user').consumerUnits.forEach(consumerUnit => {
                 consumerUnit.devices.forEach(device => {
                     _devicesList.push(device.id)
                 })
@@ -91,7 +91,7 @@ const Dashboard = ({ history }) => {
 
     useEffect(() => {
         if (isAuthenticated()) {
-            if(isAdmin() && !getUser()) {
+            if(isAdmin() && !getData('user')) {
                 history.push('/users-list')
             } else {
                 webSocketConfig()

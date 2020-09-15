@@ -127,7 +127,10 @@ const Login = ({ history }) => {
                     <progress className='pure-material-progress-circular'/>
                 </div>
                 :
-                <button type='submit'>
+                <button
+                    type='submit'
+                    className='classic-button'
+                >
                     ENTRAR
                 </button>
             }

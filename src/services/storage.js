@@ -1,29 +1,13 @@
-const USER_KEY = 'user'
-const USERS_LIST_KEY = 'users-list'
-
-const storeUser = user => {
+const storeData = (key, value) => {
     localStorage.setItem(
-        USER_KEY,
-        JSON.stringify(user)
+        key,
+        JSON.stringify(value)
     )
 }
 
-const getUser = () =>
-    JSON.parse(
-        localStorage.getItem(USER_KEY)
-    )
-
-const storeUsersList = usersList => {
-    localStorage.setItem(
-        USERS_LIST_KEY,
-        JSON.stringify(usersList)
-    )
-}
-
-const getUsersList = () =>
-    JSON.parse(
-        localStorage.getItem(USERS_LIST_KEY)
-    )
+const getData = key => JSON.parse(
+    localStorage.getItem(key)
+)
 
 const clearData = item => {
     if (item === 'all') {
@@ -34,9 +18,7 @@ const clearData = item => {
 }
 
 export {
-    getUser,
-    storeUser,
-    getUsersList,
-    storeUsersList,
+    storeData,
+    getData,
     clearData
 }

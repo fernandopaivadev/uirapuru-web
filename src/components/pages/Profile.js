@@ -4,7 +4,7 @@ import NavBar from '../panels/NavBar'
 
 import DeviceMenu from '../panels/DeviceMenu'
 
-import { getUser, clearData } from '../../services/storage'
+import { getData, clearData, storeData } from '../../services/storage'
 
 import { isAdmin, logout } from '../../services/auth'
 
@@ -13,6 +13,8 @@ import { api } from '../../services/api'
 import fetch from '../../services/fetch'
 
 import '../../styles/profile.css'
+
+import '../../styles/util.css'
 
 const formatPhone = phone =>
         phone
@@ -60,7 +62,7 @@ const formatDate = input =>
 
 const Profile = ({ history }) => {
     const admin = isAdmin()
-    const user = getUser()
+    const user = getData('user')
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [success, setSuccess] = useState([false, false])
     const [error, setError] = useState([false, false])
@@ -68,6 +70,8 @@ const Profile = ({ history }) => {
     const handleSubmit = async (event, index) => {
         try {
             event.preventDefault()
+
+            storeData('user')
 
             const response = await api.put('/user/update', user)
 
@@ -106,7 +110,7 @@ const Profile = ({ history }) => {
         />
         <div className='main'>
             <div className='forms'>
-                {getUser ?
+                {getData('user') ?
                     <form>
                         <h1>
                             Dados do Usuário
@@ -114,7 +118,7 @@ const Profile = ({ history }) => {
                         <label>Nome de usuário</label>
                         <input
                             name='username'
-                            defaultValue={getUser()?.username ?? ''}
+                            defaultValue={getData('user')?.username ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
                                 user.username = event.target.value
@@ -123,7 +127,7 @@ const Profile = ({ history }) => {
                         <label>Email</label>
                         <input
                             name='email'
-                            defaultValue={getUser()?.email ?? ''}
+                            defaultValue={getData('user')?.email ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
                                 user.email = event.target.value
@@ -132,7 +136,7 @@ const Profile = ({ history }) => {
                         <label>Telefone</label>
                         <input
                             name='phone'
-                            defaultValue={formatPhone(getUser()?.phone) ?? ''}
+                            defaultValue={formatPhone(getData('user')?.phone) ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
                                 user.phone = event.target.value.match(/\d+/g)
@@ -141,12 +145,12 @@ const Profile = ({ history }) => {
                                 )
                             }}
                         />
-                        {getUser()?.person ?
+                        {getData('user')?.person ?
                             <>
                                 <label>CPF</label>
                                 <input
                                     name='cpf'
-                                    defaultValue={formatCPF(getUser()?.person
+                                    defaultValue={formatCPF(getData('user')?.person
                                         ?.cpf) ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
@@ -161,7 +165,7 @@ const Profile = ({ history }) => {
                                 <input
                                     name='birth'
                                     defaultValue={formatTimeStamp(
-                                        getUser()?.person?.birth
+                                        getData('user')?.person?.birth
                                     ) ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
@@ -179,7 +183,7 @@ const Profile = ({ history }) => {
                                     name='cnpj'
                                     defaultValue={
                                         formatCNPJ(
-                                            getUser()?.company?.cnpj
+                                            getData('user')?.company?.cnpj
                                         ) ?? '--'
                                     }
                                     readOnly= {!admin}
@@ -195,7 +199,7 @@ const Profile = ({ history }) => {
                                 <label>Razão social</label>
                                 <input
                                     name='tradeName'
-                                    defaultValue={getUser()?.company
+                                    defaultValue={getData('user')?.company
                                         ?.tradeName ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
@@ -207,7 +211,7 @@ const Profile = ({ history }) => {
                                 <label>Descrição</label>
                                 <input
                                     name='description'
-                                    defaultValue={getUser()?.company
+                                    defaultValue={getData('user')?.company
                                         ?.description ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
@@ -220,6 +224,7 @@ const Profile = ({ history }) => {
                         }
                         {admin ?
                             <button
+                                className='classic-button'
                                 onClick={event => {
                                     handleSubmit(event, user, 0)
                                 }}
@@ -244,7 +249,7 @@ const Profile = ({ history }) => {
                     : null
                 }
 
-                {getUser().consumerUnits[ consumerUnitIndex ] ?
+                {getData('user').consumerUnits[ consumerUnitIndex ] ?
                     <form>
                         <h1>
                             Dados da Unidade Consumidora
@@ -252,7 +257,7 @@ const Profile = ({ history }) => {
                         <label>Número</label>
                         <input
                             name='number'
-                            defaultValue={getUser()
+                            defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.number ?? ''}
                             readOnly= {!admin}
@@ -264,7 +269,7 @@ const Profile = ({ history }) => {
                         <label>Nome</label>
                         <input
                             name='name'
-                            defaultValue={getUser()
+                            defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.name ?? ''}
                             readOnly= {!admin}
@@ -276,7 +281,7 @@ const Profile = ({ history }) => {
                         <label>Endereço</label>
                         <input
                             name='address'
-                            defaultValue={getUser()
+                            defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.address ?? ''}
                             readOnly= {!admin}
@@ -288,7 +293,7 @@ const Profile = ({ history }) => {
                         <label>CEP</label>
                         <input
                             name='zip'
-                            defaultValue={formatCEP(getUser()
+                            defaultValue={formatCEP(getData('user')
                                 .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
@@ -302,7 +307,7 @@ const Profile = ({ history }) => {
                         <label>Cidade</label>
                         <input
                             name='city'
-                            defaultValue={getUser()
+                            defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.city ?? ''}
                             readOnly= {!admin}
@@ -314,7 +319,7 @@ const Profile = ({ history }) => {
                         <label>Estado</label>
                         <input
                             name='state'
-                            defaultValue={getUser()
+                            defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.state ?? ''}
                             readOnly= {!admin}
@@ -325,6 +330,7 @@ const Profile = ({ history }) => {
                         />
                         {admin ?
                             <button
+                                className='classic-button'
                                 onClick={ event => {
                                     handleSubmit(event, user, 1)
                                 }}
@@ -354,6 +360,7 @@ const Profile = ({ history }) => {
             </div>
             <div className='navigation'>
                 <button
+                    className='classic-button'
                     onClick={() =>{
                         history.push('/dashboard')
                     }}
@@ -362,11 +369,12 @@ const Profile = ({ history }) => {
                 </button>
                 {admin ?
                     <button
-                        className='delete'
+                        id='delete-button'
+                        className='classic-button'
                         onClick={ async () => {
                             try {
                                 const response = await api.delete(
-                                    `/user/remove?_id=${getUser()._id}`
+                                    `/user/remove?_id=${getData('user')._id}`
                                 )
 
                                 const status = response?.status

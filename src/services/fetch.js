@@ -1,4 +1,4 @@
-import { storeUser, storeUsersList } from './storage'
+import { storeData } from './storage'
 import { isAuthenticated, isAdmin, logout } from './auth'
 import { api } from './api'
 
@@ -12,14 +12,14 @@ const fetch = async (_id) => {
                     )
 
                     if (status === 200) {
-                        storeUser(data?.user)
+                        storeData('user', data?.user)
                         return true
                     }
                 } else {
                     const { status, data } = await api.get('/users')
 
                     if (status === 200) {
-                        storeUsersList(data?.usersList)
+                        storeData('users-list',data?.usersList)
                         return true
                     }
                 }
@@ -27,7 +27,7 @@ const fetch = async (_id) => {
                 const { status, data } = await api.get('/user/data')
 
                 if (status === 200) {
-                    storeUser(data?.user)
+                    storeData('user', data?.user)
                     return true
                 }
             }

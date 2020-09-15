@@ -10,9 +10,7 @@ import {
 
 import logo from '../../assets/logo.svg'
 
-import {
-    getUser
-} from '../../services/storage'
+import { getData } from '../../services/storage'
 
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
 import fetch from '../../services/fetch'
@@ -67,19 +65,19 @@ const NavBar = ({ history }) => {
         <li className='navigation' key='navigation'>
             <h1 className='username'>
                 {isAdmin() ? 'Administrador | ': null}
-                {getUser()?.username ?? ''}
+                {getData('user')?.username ?? ''}
             </h1>
 
             <button>
-                { getUser()?.username?.split('')[0] }
+                { getData('user')?.username?.split('')[0] }
             </button>
 
             <ul className='menu'>
                 <div className='user'>
                     <div className='avatar'>
-                        {getUser()?.person
-                            ? getUser()?.person?.name.split('')[0]
-                            : getUser()?.company?.tradeName.split('')[0]
+                        {getData('user')?.person
+                            ? getData('user')?.person?.name.split('')[0]
+                            : getData('user')?.company?.tradeName.split('')[0]
                             ||
                             'A'
                         }
@@ -87,9 +85,9 @@ const NavBar = ({ history }) => {
 
                     <div className='text'>
                         <h1 className='username'>
-                            {getUser()?.username || 'Administrador'}
+                            {getData('user')?.username || 'Administrador'}
                         </h1>
-                        <h2 className='email'>{getUser()?.email}</h2>
+                        <h2 className='email'>{getData('user')?.email}</h2>
                     </div>
                 </div>
 
@@ -107,7 +105,7 @@ const NavBar = ({ history }) => {
                     : null
                 }
 
-                {getUser() ?
+                {getData('user') ?
                     <li
                         className='item'
                         onClick={() => {

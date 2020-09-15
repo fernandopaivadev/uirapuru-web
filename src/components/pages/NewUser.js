@@ -230,7 +230,10 @@ const NewUser = () => {
                             />
                         </>
                     }
-                    <button type='submit'>
+                    <button
+                        className='classic-button'
+                        type='submit'
+                    >
                         Avançar
                     </button>
                 </form>
@@ -301,12 +304,15 @@ const NewUser = () => {
                     />
 
                     <div className='buttons'>
-                        <button onClick={()=>
-                            setStep(0)
-                        }>
+                        <button
+                            className='classic-button'
+                            onClick={()=>
+                                setStep(0)
+                            }>
                             Voltar
                         </button>
                         <button
+                            className='classic-button'
                             type='submit'
                             onClick={ event => {
                                 event.preventDefault()
@@ -318,6 +324,7 @@ const NewUser = () => {
                         </button>
 
                         <button
+                            className='classic-button'
                             type='submit'
                             onClick={ event => {
                                 handleSubmit(event)
@@ -347,16 +354,3 @@ const NewUser = () => {
 }
 
 export default NewUser
-
-// {success[0] && !error[0]?
-//     <p className='success'>
-//         Salvo com sucesso!
-//     </p>
-//     : null
-// }
-// {!success[0] && error[0]?
-//     <p className='error'>
-//         Ocorreu um erro
-//     </p>
-//     : null
-// }

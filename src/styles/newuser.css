@@ -43,7 +43,7 @@
 
 .newuser .main form .checkbox input[type='checkbox'] {
     margin: 1rem;
-    width: 2.4rem;
+    width: 1.8rem;
 }
 
 .newuser .main form .checkbox label {
@@ -58,24 +58,6 @@
     color: var(--default-green);
     font-size: 2.4rem;
     margin: 1.5rem 0 2rem 0;
-}
-
-.newuser .main button {
-    width: 15rem;
-    height: 4rem;
-    font-size: 2rem;
-    font-weight: 600;
-    border-radius: 0.3rem;
-    border: none;
-    background: var(--default-green);
-    color: #fff;
-    margin: 1.8rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.newuser .main button:hover {
-    background: var(--default-light-green);
 }
 
 .newuser .main form .success {

@@ -1,12 +1,12 @@
 import React from 'react'
 
-import {getUser} from '../../services/storage'
+import { getData } from '../../services/storage'
 
 import '../../styles/devicemenu.css'
 
 const DeviceMenu = ({ setDeviceIndex, setConsumerUnitIndex }) =>
     <ul className='devicemenu'>
-        {getUser()?.consumerUnits?.map((consumerUnit, index) =>
+        {getData('user')?.consumerUnits?.map((consumerUnit, index) =>
             <li className='unit'
                 key={ index }
                 onClick = {() =>{

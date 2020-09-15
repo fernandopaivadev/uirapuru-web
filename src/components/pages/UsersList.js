@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import { isAuthenticated, logout } from '../../services/auth'
 
-import { getUsersList } from '../../services/storage'
+import { getData } from '../../services/storage'
 
 import fetch from '../../services/fetch'
 
@@ -32,13 +32,13 @@ const UsersList = ({ history }) => {
                     Sair
                 </button>
             </div>
-            {getUsersList()?.length <= 0 ?
+            {getData('users-list')?.length <= 0 ?
                 <h1 className='empty'>
                     Não há usuários cadastrados
                 </h1>
                 :
                 <ul>
-                    {getUsersList()?.map(user =>
+                    {getData('users-list')?.map(user =>
                         <li
                             key={user?.username}
                             className='item'
@@ -59,7 +59,7 @@ const UsersList = ({ history }) => {
                                 </h1>
                             </div>
                         </li>
-                )}
+                    )}
                 </ul>
             }
         </div>
