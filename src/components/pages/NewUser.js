@@ -46,6 +46,17 @@ const formatDate = input =>
         .replace(/(\d{2})(\d)/, '$1/$2')
 
 const NewUser = () => {
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('#save').addEventListener('click', () => {
+            handleSubmit()
+        })
+
+        document.querySelector('#add').addEventListener('click', () => {
+            user.consumerUnits.push(consumerUnit)
+            resetForm()
+        })
+    })
+
     const user = {
         username: '',
         password: '',
@@ -80,9 +91,8 @@ const NewUser = () => {
         document.querySelector('form').reset()
     }
 
-    const handleSubmit = async event => {
+    const handleSubmit = async () => {
         try {
-            event.preventDefault()
             const response = await api.post('/user/add', user)
 
             const status = response?.status
@@ -242,7 +252,9 @@ const NewUser = () => {
             }
 
             {step === 1 ?
-                <form onSubmit={ () => { }}>
+                <form onSubmit={event=>{
+                    event.preventDefault()
+                }}>
                     <h1>
                         Dados da Unidade Consumidora
                     </h1>
@@ -311,24 +323,19 @@ const NewUser = () => {
                             }>
                             Voltar
                         </button>
+
                         <button
-                            className='classic-button'
+                            id='add'
                             type='submit'
-                            onClick={ event => {
-                                event.preventDefault()
-                                user.consumerUnits.push(consumerUnit)
-                                resetForm()
-                            }}
+                            className='classic-button'
                         >
                             Adicionar UC
                         </button>
 
                         <button
-                            className='classic-button'
+                            id='save'
                             type='submit'
-                            onClick={ event => {
-                                handleSubmit(event)
-                            }}
+                            className='classic-button'
                         >
                             Salvar
                         </button>

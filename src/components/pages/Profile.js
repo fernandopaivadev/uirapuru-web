@@ -60,18 +60,50 @@ const formatDate = input =>
         .replace(/(\d{2})(\d)/, '$1/$2')
         .replace(/(\d{2})(\d)/, '$1/$2')
 
+const getOnlyNumbers = input =>
+    input
+        .replace(/\D/g, '')
+
 const Profile = ({ history }) => {
     const admin = isAdmin()
     const user = getData('user')
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
+    const [modal, setModal] = useState(false)
     const [success, setSuccess] = useState([false, false])
     const [error, setError] = useState([false, false])
+
+    const deleteUser = async () => {
+        try {
+            const response = await api.delete(
+                `/user/remove?_id=${getData('user')._id}`
+            )
+
+            const status = response?.status
+
+            if(status === 200) {
+                clearData('user')
+                clearData('users-list')
+
+                if (await fetch()) {
+                    history.push('/users-list')
+                } else {
+                    logout()
+                    history.push('/login')
+                }
+            }
+
+        } catch (err) {
+            console.log(
+                err?.message ?? err?.response?.data?.message
+            )
+        }
+    }
 
     const handleSubmit = async (event, index) => {
         try {
             event.preventDefault()
 
-            storeData('user')
+            storeData('user', user)
 
             const response = await api.put('/user/update', user)
 
@@ -100,6 +132,14 @@ const Profile = ({ history }) => {
             }
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
+
+            const status = err?.response?.status
+
+            if (status) {
+                const _error = [...error]
+                _error[index] = true
+                setError(_error)
+            }
         }
     }
 
@@ -108,6 +148,33 @@ const Profile = ({ history }) => {
         <DeviceMenu
             setConsumerUnitIndex = { setConsumerUnitIndex }
         />
+        { modal ?
+            <div className='modal-container'>
+                <div className='modal'>
+                    <p>Você tem certeza?</p>
+                    <div className='buttons'>
+                        <button
+                            className='classic-button'
+                            onClick={ () => {
+                                deleteUser()
+                            }}
+                        >
+                            Sim
+                        </button>
+                        <button
+                            id='cancel-button'
+                            className='classic-button'
+                            onClick= { () => {
+                                setModal(false)
+                            }}
+                        >
+                            Não
+                        </button>
+                    </div>
+                </div>
+            </div>
+            : null
+        }
         <div className='main'>
             <div className='forms'>
                 {getData('user') ?
@@ -139,7 +206,7 @@ const Profile = ({ history }) => {
                             defaultValue={formatPhone(getData('user')?.phone) ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
-                                user.phone = event.target.value.match(/\d+/g)
+                                user.phone = getOnlyNumbers(event.target.value)
                                 event.target.value =  formatPhone(
                                     event.target.value
                                 )
@@ -154,8 +221,9 @@ const Profile = ({ history }) => {
                                         ?.cpf) ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
-                                        user.person.cpf = event
-                                            .target.value.match(/\d+/g)
+                                        user.person.cpf = getOnlyNumbers(
+                                            event.target.value
+                                        )
                                         event.target.value =  formatCPF(
                                             event.target.value
                                         )
@@ -188,8 +256,9 @@ const Profile = ({ history }) => {
                                     }
                                     readOnly= {!admin}
                                     onChange={ event => {
-                                        user.company.cnpj = event
-                                            .target.value.match(/\d+/g)
+                                        user.company.cnpj = getOnlyNumbers(
+                                            event.target.value
+                                        )
                                         user.phone = event.target.value
                                         event.target.value =  formatCNPJ(
                                             event.target.value
@@ -226,7 +295,7 @@ const Profile = ({ history }) => {
                             <button
                                 className='classic-button'
                                 onClick={event => {
-                                    handleSubmit(event, user, 0)
+                                    handleSubmit(event, 0)
                                 }}
                             >
                                 Salvar
@@ -299,7 +368,7 @@ const Profile = ({ history }) => {
                             onChange={ event => {
                                 user
                                     .consumerUnits[ consumerUnitIndex]
-                                    .zip = event.target.value.match(/\d+/g)
+                                    .zip = getOnlyNumbers(event.target.value)
                                 event.target.value =  formatCEP(event.target
                                     .value)
                             }}
@@ -332,7 +401,7 @@ const Profile = ({ history }) => {
                             <button
                                 className='classic-button'
                                 onClick={ event => {
-                                    handleSubmit(event, user, 1)
+                                    handleSubmit(event, 1)
                                 }}
                             >
                                 Salvar
@@ -371,31 +440,8 @@ const Profile = ({ history }) => {
                     <button
                         id='delete-button'
                         className='classic-button'
-                        onClick={ async () => {
-                            try {
-                                const response = await api.delete(
-                                    `/user/remove?_id=${getData('user')._id}`
-                                )
-
-                                const status = response?.status
-
-                                if(status === 200) {
-                                    clearData('user')
-                                    clearData('users-list')
-
-                                    if (await fetch()) {
-                                        history.push('/users-list')
-                                    } else {
-                                        logout()
-                                        history.push('/login')
-                                    }
-                                }
-
-                            } catch (err) {
-                                console.log(
-                                    err?.message ?? err?.response?.data?.message
-                                )
-                            }
+                        onClick={ () => {
+                            setModal(true)
                         }}
                     >
                         Excluir Usuário

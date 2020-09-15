@@ -7,11 +7,10 @@ import { getData } from '../../services/storage'
 
 import fetch from '../../services/fetch'
 
-import {
-    Person as UserIcon
-} from '@material-ui/icons'
+import { Person as UserIcon } from '@material-ui/icons'
 
 import '../../styles/userslist.css'
+import '../../styles/util.css'
 
 const UsersList = ({ history }) => {
     if (!isAuthenticated()) {
@@ -21,9 +20,17 @@ const UsersList = ({ history }) => {
     return <div className='userslist'>
         <div className='list'>
             <div className='header'>
-                <h1 className='title'>Escolha o Usuário</h1>
-
+                <p className='title'>Escolha o Usuário</p>
                 <button
+                    className='classic-button'
+                    onClick={() => {
+                        history.push('/new-user')
+                    }}
+                >
+                    Criar Usuário
+                </button>
+                <button
+                    className='classic-button'
                     onClick={() => {
                         logout()
                         history.push('/login')

@@ -4,7 +4,7 @@
     height: 96vh;
     position: fixed;
     display: grid;
-    grid-template-rows: 90% 10%;
+    grid-template-rows: 85% 15%;
     grid-template-columns: 1fr;
     justify-content: center;
 }
@@ -50,7 +50,6 @@
 
 .profile .main .navigation #delete-button {
     background: #d00;
-    width: 18rem;
 }
 
 .profile .main .navigation #delete-button:hover {
@@ -96,4 +95,44 @@
     font-size: 2rem;
     font-weight: 600;
     color: #d00;
+}
+
+.profile .modal-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background: linear-gradient(#3339, #3339);
+    z-index: 1;
+}
+
+.profile .modal-container .modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 2rem 1rem 2rem;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+
+.profile .modal-container .modal p {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #555;
+    margin: 1rem;
+}
+
+.profile .modal-container .modal .buttons {
+    display: flex;
+}
+
+.profile .modal-container .modal .buttons #cancel-button {
+    background: #d00;
+}
+
+.profile .modal-container .modal .buttons #cancel-button:hover {
+    background: #f56f55;
 }

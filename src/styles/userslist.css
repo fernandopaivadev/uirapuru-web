@@ -13,7 +13,7 @@
 
 .userslist .list {
     background: #fff;
-    min-width: 35rem;
+    min-width: 40rem;
     min-height: 18rem;
     z-index: 1;
     border-radius: 0.5rem;
@@ -31,10 +31,11 @@
     background: #eee;
 }
 
-.userslist .list .title {
+.userslist .list .header .title {
     color: var(--default-green);
     font-size: 2.4rem;
-    margin: 2rem;
+    margin: 2.5rem 2rem 2rem 3rem;
+    font-weight: 600;
 }
 
 .userslist .list .item {
@@ -67,25 +68,7 @@
     font-size: 1.6rem;
 }
 
-.userslist .list .header{
+.userslist .list .header {
     display: flex;
-    justify-content: space-between;
-}
-
-.userslist .list  button {
-    width: 8rem;
-    height: 4rem;
-    font-size: 2rem;
-    font-weight: 600;
-    border-radius: 0.3rem;
-    border: none;
-    background: var(--default-green);
-    color: #fff;
-    margin: 1.8rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.userslist .list button:hover {
-    background: var(--default-light-green);
+    width: 100%;
 }
