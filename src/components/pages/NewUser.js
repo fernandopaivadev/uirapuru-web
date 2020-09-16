@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import NavBar from '../panels/NavBar'
 
@@ -6,46 +6,22 @@ import DeviceMenu from '../panels/DeviceMenu'
 
 import { api } from '../../services/api'
 
+import { logout } from '../../services/auth'
+
+import fetch from '../../services/fetch'
+
+import {
+    formatPhone,
+    formatCPF,
+    formatCNPJ,
+    formatCEP,
+    formatDate,
+    getOnlyNumbers
+} from '../../services/util'
+
 import '../../styles/newuser.css'
 
-const formatPhone = phone =>
-        phone
-            ?.replace(/\D/g, '')
-            .replace(/(\d{11})(\d)/, '$1')
-            .replace(/(\d{2})(\d)/, '($1) $2')
-            .replace(/(\d{5})(\d)/, '$1-$2')
-
-const formatCPF = cpf =>
-        cpf
-            ?.replace(/\D/g, '')
-            .replace(/(\d{11})(\d)/, '$1')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1-$2')
-
-const formatCNPJ = cnpj =>
-        cnpj
-            ?.replace(/\D/g, '')
-            .replace(/(\d{14})(\d)/, '$1')
-            .replace(/(\d{2})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{4})(\d)/, '$1-$2')
-
-const formatCEP = cep =>
-        cep
-            ?.replace(/\D/g, '')
-            .replace(/(\d{8})(\d)/, '$1')
-            .replace(/(\d{5})(\d)/, '$1-$2')
-
-const formatDate = input =>
-    input
-        .replace(/\D/g, '')
-        .replace(/(\d{8})(\d)/, '$1')
-        .replace(/(\d{2})(\d)/, '$1/$2')
-        .replace(/(\d{2})(\d)/, '$1/$2')
-
-const NewUser = () => {
+const NewUser = ({ history }) => {
     const user = {
         username: '',
         password: '',
@@ -72,18 +48,39 @@ const NewUser = () => {
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
 
+    useEffect( () => {
+        if (userType === 'person') {
+            delete user.company
+            user.person = {}
+        } else if (userType === 'company') {
+            delete user.person
+            user.company = {}
+        }
+    }, [userType])
+
     const validateForm = () => {
         const form = document.querySelector('form')
         const fields = Object.values(form)
         let isValid = true
 
         fields.forEach(field => {
-            if (field.value === '') {
+            if (field.tagName === 'INPUT' && field.value === '') {
                 isValid = false
             }
         })
 
         return isValid
+    }
+
+    const clearForm = () => {
+        const form = document.querySelector('form')
+        const fields = Object.values(form)
+
+        fields.forEach((field, index) => {
+            if (index > 4 && field.tagName === 'INPUT') {
+                field.value = ''
+            }
+        })
     }
 
     const resetForm = () => {
@@ -102,6 +99,15 @@ const NewUser = () => {
                 setTimeout(() => {
                     setSuccess(false)
                 }, 1500)
+
+                setTimeout (async () => {
+                    if (await fetch()) {
+                        history.push('/users-list')
+                    } else {
+                        logout()
+                        history.push('/login')
+                    }
+                }, 2500)
             } else {
                 setError(true)
 
@@ -113,6 +119,10 @@ const NewUser = () => {
             console.log(err?.message ?? err?.response?.data?.message)
 
             const status = err?.response?.status
+
+            if (status === 400) {
+                setErrorMessage(err?.response?.data?.message)
+            }
 
             if (status) {
                 setError(true)
@@ -155,7 +165,7 @@ const NewUser = () => {
                     <input
                         name='phone'
                         onChange={ event => {
-                            user.phone = event.target.value.match(/\d+/g)
+                            user.phone = getOnlyNumbers(event.target.value)
                             event.target.value =  formatPhone(
                                 event.target.value
                             )
@@ -166,13 +176,11 @@ const NewUser = () => {
                             type='checkbox'
                             onClick={() => {
                                 if (userType === 'company') {
+                                    clearForm()
                                     setUserType('person')
-                                    delete consumerUnit.company
-                                    consumerUnit.person = {}
                                 } else if (userType === 'person') {
+                                    clearForm()
                                     setUserType('company')
-                                    delete consumerUnit.person
-                                    consumerUnit.company = {}
                                 }
                             }}
                         />
@@ -184,8 +192,8 @@ const NewUser = () => {
                             <input
                                 name='cnpj'
                                 onChange={ event => {
-                                    user.company.cnpj = event
-                                        .target.value.match(/\d+/g)
+                                    user.company.cnpj = getOnlyNumbers(event
+                                        .target.value)
                                     event.target.value =  formatCNPJ(
                                         event.target.value
                                     )
@@ -216,8 +224,8 @@ const NewUser = () => {
                             <input
                                 name='cpf'
                                 onChange={ event => {
-                                    user.person.cpf = event
-                                        .target.value.match(/\d+/g)
+                                    user.person.cpf = getOnlyNumbers(event
+                                        .target.value)
                                     event.target.value =  formatCPF(
                                         event.target.value
                                     )
@@ -238,7 +246,8 @@ const NewUser = () => {
 
                     <button
                         className='classic-button'
-                        onClick={() => {
+                        onClick={ event => {
+                            event.preventDefault()
                             if (validateForm()) {
                                 setStep(1)
                             } else {
@@ -301,7 +310,7 @@ const NewUser = () => {
                         name='zip'
                         onChange={ event => {
                             consumerUnit
-                                .zip = event.target.value.match(/\d+/g)
+                                .zip = getOnlyNumbers(event.target.value)
                             event.target.value =  formatCEP(event.target
                                 .value)
                         }}
@@ -326,15 +335,18 @@ const NewUser = () => {
                     <div className='buttons'>
                         <button
                             className='classic-button'
-                            onClick={()=>
+                            onClick={event => {
+                                event.preventDefault()
                                 setStep(0)
-                            }>
+                            }}
+                        >
                             Voltar
                         </button>
 
                         <button
                             className='classic-button'
-                            onClick={() => {
+                            onClick={event => {
+                                event.preventDefault()
                                 if (validateForm()) {
                                     user.consumerUnits.push(consumerUnit)
                                     resetForm()
@@ -353,7 +365,8 @@ const NewUser = () => {
 
                         <button
                             className='classic-button'
-                            onClick={() => {
+                            onClick={event => {
+                                event.preventDefault()
                                 if (validateForm()) {
                                     handleSubmit()
                                 } else {

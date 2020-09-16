@@ -11,6 +11,8 @@ import {
     //faPlug,
 } from '@fortawesome/free-solid-svg-icons'
 
+import { formatDate } from '../../services/util'
+
 import themes from '../../themes'
 import '../../styles/realtime.css'
 
@@ -61,13 +63,6 @@ const RealTime = ({
 
         datePickerInput.value = datePicker
     }, [datePicker])
-
-    const formatDate = input =>
-        input
-            .replace(/\D/g, '')
-            .replace(/(\d{8})(\d)/, '$1')
-            .replace(/(\d{2})(\d)/, '$1/$2')
-            .replace(/(\d{2})(\d)/, '$1/$2')
 
     return <div className='realtime'>
         <div className='navigation'>
