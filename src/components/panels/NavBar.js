@@ -64,13 +64,18 @@ const NavBar = ({ history }) => {
 
         <li className='navigation' key='navigation'>
             <h1 className='username'>
-                {isAdmin() ? 'Administrador | ': null}
+                {isAdmin() ? '[Administrador] ': null}
                 {getData('user')?.username ?? ''}
+
+
             </h1>
 
-            <button>
-                { getData('user')?.username?.split('')[0] }
-            </button>
+            {getData('user') ?
+                <button>
+                    { getData('user')?.username?.split('')[0] }
+                </button>
+                : null
+            }
 
             <ul className='menu'>
                 <div className='user'>

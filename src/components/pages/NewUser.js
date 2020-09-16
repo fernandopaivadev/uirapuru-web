@@ -46,28 +46,12 @@ const formatDate = input =>
         .replace(/(\d{2})(\d)/, '$1/$2')
 
 const NewUser = () => {
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelector('#save').addEventListener('click', () => {
-            handleSubmit()
-        })
-
-        document.querySelector('#add').addEventListener('click', () => {
-            user.consumerUnits.push(consumerUnit)
-            resetForm()
-        })
-    })
-
     const user = {
         username: '',
         password: '',
         email: '',
         phone: '',
         company: {},
-        tradeName: '',
-        cnpj: '',
-        stateSubscription: '',
-        cpf: '',
-        birth: '',
         consumerUnits: []
     }
 
@@ -82,10 +66,25 @@ const NewUser = () => {
         devices: []
     }
 
-    const [step, setStep] = useState(1)
+    const [step, setStep] = useState(0)
     const [userType, setUserType] = useState('company')
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
+
+    const validateForm = () => {
+        const form = document.querySelector('form')
+        const fields = Object.values(form)
+        let isValid = true
+
+        fields.forEach(field => {
+            if (field.value === '') {
+                isValid = false
+            }
+        })
+
+        return isValid
+    }
 
     const resetForm = () => {
         document.querySelector('form').reset()
@@ -126,14 +125,13 @@ const NewUser = () => {
         <DeviceMenu />
         <div className='main'>
             {step === 0 ?
-                <form onSubmit={() => { setStep(1) }}>
+                <form>
                     <h1>
                         Dados do usuário
                     </h1>
                     <label>Nome de usuário</label>
                     <input
                         name='username'
-                        required
                         onChange={ event => {
                             user.username = event.target.value
                         }}
@@ -142,7 +140,6 @@ const NewUser = () => {
                     <input
                         type='password'
                         name='password'
-                        required
                         onChange={ event => {
                             user.password = event.target.value
                         }}
@@ -150,7 +147,6 @@ const NewUser = () => {
                     <label>Email</label>
                     <input
                         name='email'
-                        required
                         onChange={ event => {
                             user.email = event.target.value
                         }}
@@ -158,7 +154,6 @@ const NewUser = () => {
                     <label>Telefone</label>
                     <input
                         name='phone'
-                        required
                         onChange={ event => {
                             user.phone = event.target.value.match(/\d+/g)
                             event.target.value =  formatPhone(
@@ -240,12 +235,31 @@ const NewUser = () => {
                             />
                         </>
                     }
+
                     <button
                         className='classic-button'
-                        type='submit'
+                        onClick={() => {
+                            if (validateForm()) {
+                                setStep(1)
+                            } else {
+                                setErrorMessage('Preencha todos os campos')
+                                setError(true)
+
+                                setTimeout(() => {
+                                    setError(false)
+                                }, 3000)
+                            }
+                        }}
                     >
                         Avançar
                     </button>
+
+                    {!success && error?
+                        <p className='error'>
+                            { errorMessage }
+                        </p>
+                        : null
+                    }
                 </form>
                 :
                 null
@@ -261,7 +275,6 @@ const NewUser = () => {
                     <label>Número</label>
                     <input
                         name='number'
-                        required
                         onChange={ event => {
                             consumerUnit
                                 .number = event.target.value
@@ -270,7 +283,6 @@ const NewUser = () => {
                     <label>Nome</label>
                     <input
                         name='name'
-                        required
                         onChange={ event => {
                             consumerUnit
                                 .name = event.target.value
@@ -279,7 +291,6 @@ const NewUser = () => {
                     <label>Endereço</label>
                     <input
                         name='address'
-                        required
                         onChange={ event => {
                             consumerUnit
                                 .address = event.target.value
@@ -288,7 +299,6 @@ const NewUser = () => {
                     <label>CEP</label>
                     <input
                         name='zip'
-                        required
                         onChange={ event => {
                             consumerUnit
                                 .zip = event.target.value.match(/\d+/g)
@@ -299,7 +309,6 @@ const NewUser = () => {
                     <label>Cidade</label>
                     <input
                         name='city'
-                        required
                         onChange={ event => {
                             consumerUnit
                                 .city = event.target.value
@@ -308,7 +317,6 @@ const NewUser = () => {
                     <label>Estado</label>
                     <input
                         name='state'
-                        required
                         onChange={ event => {
                             consumerUnit
                                 .state = event.target.value
@@ -325,30 +333,53 @@ const NewUser = () => {
                         </button>
 
                         <button
-                            id='add'
-                            type='submit'
                             className='classic-button'
+                            onClick={() => {
+                                if (validateForm()) {
+                                    user.consumerUnits.push(consumerUnit)
+                                    resetForm()
+                                } else {
+                                    setErrorMessage('Preencha todos os campos')
+                                    setError(true)
+
+                                    setTimeout(() => {
+                                        setError(false)
+                                    }, 3000)
+                                }
+                            }}
                         >
                             Adicionar UC
                         </button>
 
                         <button
-                            id='save'
-                            type='submit'
                             className='classic-button'
+                            onClick={() => {
+                                if (validateForm()) {
+                                    handleSubmit()
+                                } else {
+                                    setErrorMessage('Preencha todos os campos')
+                                    setError(true)
+
+                                    setTimeout(() => {
+                                        setError(false)
+                                    }, 3000)
+                                }
+                            }}
                         >
                             Salvar
                         </button>
                     </div>
+
                     {success && !error?
                         <p className='success'>
                             Salvo com sucesso!
                         </p>
                         : null
                     }
+
                     {!success && error?
                         <p className='error'>
-                            Ocorreu um erro
+                            { errorMessage }
                         </p>
                         : null
                     }
