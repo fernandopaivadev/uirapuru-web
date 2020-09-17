@@ -11,6 +11,7 @@ import { logout } from '../../services/auth'
 import fetch from '../../services/fetch'
 
 import {
+    formatUsername,
     formatPhone,
     formatCPF,
     formatCNPJ,
@@ -47,29 +48,61 @@ const NewUser = ({ history }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
+    const isValid = []
 
     useEffect( () => {
         if (userType === 'person') {
             delete user.company
             user.person = {}
+
+            if (isValid.length) {
+                isValid.pop()
+            }
         } else if (userType === 'company') {
             delete user.person
             user.company = {}
+
+            if (isValid.length) {
+                isValid.push(false)
+            }
         }
     }, [userType])
 
-    const validateForm = () => {
-        const form = document.querySelector('form')
-        const fields = Object.values(form)
-        let isValid = true
+    useEffect(() => {
+        for (let k = 0; k < 8; k++) {
+            isValid.push(false)
+        }
+    }, [])
 
-        fields.forEach(field => {
-            if (field.tagName === 'INPUT' && field.value === '') {
-                isValid = false
+    const validateInput = (event, min, index, onlyNumbers) => {
+        console.log(isValid.length)
+        const { value } = event.target
+
+        if (onlyNumbers) {
+            if (getOnlyNumbers(value).length >= min) {
+                isValid[index] = true
+            } else {
+                isValid[index] = false
+            }
+        } else {
+            if (value.length >= min) {
+                isValid[index] = true
+            } else {
+                isValid[index] = false
+            }
+        }
+    }
+
+    const validateForm = () => {
+        let valid = true
+
+        isValid.forEach(item => {
+            if (item === false) {
+                valid = false
             }
         })
 
-        return isValid
+        return valid
     }
 
     const clearForm = () => {
@@ -129,7 +162,6 @@ const NewUser = ({ history }) => {
             }
         }
     }
-
     return <div className='newuser'>
         <NavBar />
         <DeviceMenu />
@@ -142,23 +174,38 @@ const NewUser = ({ history }) => {
                     <label>Nome de usuário</label>
                     <input
                         name='username'
+                        maxLength='20'
                         onChange={ event => {
+                            event.target.value = formatUsername(
+                                event.target.value
+                            )
                             user.username = event.target.value
+                        }}
+                        onBlur={event => {
+                            validateInput(event, 6, 0)
                         }}
                     />
                     <label>Senha</label>
                     <input
                         type='password'
                         name='password'
+                        maxLength='128'
                         onChange={ event => {
                             user.password = event.target.value
+                        }}
+                        onBlur={event => {
+                            validateInput(event, 6, 1)
                         }}
                     />
                     <label>Email</label>
                     <input
                         name='email'
+                        maxLength='40'
                         onChange={ event => {
                             user.email = event.target.value
+                        }}
+                        onBlur={event => {
+                            validateInput(event, 10, 2)
                         }}
                     />
                     <label>Telefone</label>
@@ -166,9 +213,12 @@ const NewUser = ({ history }) => {
                         name='phone'
                         onChange={ event => {
                             user.phone = getOnlyNumbers(event.target.value)
-                            event.target.value =  formatPhone(
+                            event.target.value = formatPhone(
                                 event.target.value
                             )
+                        }}
+                        onBlur={event => {
+                            validateInput(event, 6, 3, true)
                         }}
                     />
                     <div className='checkbox'>
@@ -198,28 +248,64 @@ const NewUser = ({ history }) => {
                                         event.target.value
                                     )
                                 }}
+                                onBlur={event => {
+                                    validateInput(event, 20, 4, true)
+                                }}
+                            />
+                            <label>Nome fantasia</label>
+                            <input
+                                name='name'
+                                maxLength='128'
+                                onChange={ event => {
+                                    user.company.name = event
+                                        .target
+                                        .value
+                                }}
+                                onBlur={event => {
+                                    validateInput(event, 6, 5)
+                                }}
                             />
                             <label>Razão social</label>
                             <input
                                 name='tradeName'
+                                maxLength='128'
                                 onChange={ event => {
                                     user.company.tradeName = event
                                         .target
                                         .value
                                 }}
+                                onBlur={event => {
+                                    validateInput(event, 6, 6)
+                                }}
                             />
                             <label>Descrição</label>
                             <input
                                 name='description'
+                                maxLength='512'
                                 onChange={ event => {
                                     user.company.description = event
                                         .target
                                         .value
                                 }}
+                                onBlur={event => {
+                                    validateInput(event, 10, 7)
+                                }}
                             />
                         </>
                         :
                         <>
+                            <label>Nome completo</label>
+                            <input
+                                name='name'
+                                maxLength='128'
+                                onChange={ event => {
+                                    user.person.name = event
+                                        .target.value
+                                }}
+                                onBlur={event => {
+                                    validateInput(event, 6, 4)
+                                }}
+                            />
                             <label>CPF</label>
                             <input
                                 name='cpf'
@@ -230,6 +316,9 @@ const NewUser = ({ history }) => {
                                         event.target.value
                                     )
                                 }}
+                                onBlur={event => {
+                                    validateInput(event, 11, 5, true)
+                                }}
                             />
                             <label>Data de nascimento</label>
                             <input
@@ -239,6 +328,9 @@ const NewUser = ({ history }) => {
                                     event.target.value = formatDate(
                                         event.target.value
                                     )
+                                }}
+                                onBlur={event => {
+                                    validateInput(event, 8, 6, true)
                                 }}
                             />
                         </>
@@ -284,14 +376,16 @@ const NewUser = ({ history }) => {
                     <label>Número</label>
                     <input
                         name='number'
+                        maxLength='64'
                         onChange={ event => {
                             consumerUnit
                                 .number = event.target.value
                         }}
                     />
-                    <label>Nome</label>
+                    <label>Nome da unidade consumidora</label>
                     <input
                         name='name'
+                        maxLength='64'
                         onChange={ event => {
                             consumerUnit
                                 .name = event.target.value
@@ -300,6 +394,7 @@ const NewUser = ({ history }) => {
                     <label>Endereço</label>
                     <input
                         name='address'
+                        maxLength='256'
                         onChange={ event => {
                             consumerUnit
                                 .address = event.target.value
@@ -308,6 +403,7 @@ const NewUser = ({ history }) => {
                     <label>CEP</label>
                     <input
                         name='zip'
+                        maxLength='64'
                         onChange={ event => {
                             consumerUnit
                                 .zip = getOnlyNumbers(event.target.value)
@@ -318,6 +414,7 @@ const NewUser = ({ history }) => {
                     <label>Cidade</label>
                     <input
                         name='city'
+                        maxLength='64'
                         onChange={ event => {
                             consumerUnit
                                 .city = event.target.value
@@ -326,6 +423,7 @@ const NewUser = ({ history }) => {
                     <label>Estado</label>
                     <input
                         name='state'
+                        maxLength='64'
                         onChange={ event => {
                             consumerUnit
                                 .state = event.target.value

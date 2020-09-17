@@ -1,3 +1,7 @@
+const formatUsername = username =>
+    username
+        ?.replace(/([a-z][0-9]{5})([a-z][0-9])/, '$1')
+
 const formatPhone = phone =>
         phone
             ?.replace(/\D/g, '')
@@ -47,6 +51,7 @@ const getOnlyNumbers = input =>
         .replace(/\D/g, '')
 
 export {
+    formatUsername,
     formatPhone,
     formatCPF,
     formatCNPJ,
