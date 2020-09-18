@@ -48,61 +48,25 @@ const NewUser = ({ history }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
-    const isValid = []
+    const [isValid, setIsValid] = useState([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+    ])
 
-    useEffect( () => {
-        if (userType === 'person') {
-            delete user.company
-            user.person = {}
+    const clearIsValid = () => {
+        const _isValid = [...isValid]
 
-            if (isValid.length) {
-                isValid.pop()
-            }
-        } else if (userType === 'company') {
-            delete user.person
-            user.company = {}
-
-            if (isValid.length) {
-                isValid.push(false)
-            }
-        }
-    }, [userType])
-
-    useEffect(() => {
-        for (let k = 0; k < 8; k++) {
-            isValid.push(false)
-        }
-    }, [])
-
-    const validateInput = (event, min, index, onlyNumbers) => {
-        console.log(isValid.length)
-        const { value } = event.target
-
-        if (onlyNumbers) {
-            if (getOnlyNumbers(value).length >= min) {
-                isValid[index] = true
-            } else {
-                isValid[index] = false
-            }
-        } else {
-            if (value.length >= min) {
-                isValid[index] = true
-            } else {
-                isValid[index] = false
-            }
-        }
-    }
-
-    const validateForm = () => {
-        let valid = true
-
-        isValid.forEach(item => {
-            if (item === false) {
-                valid = false
-            }
+        _isValid.forEach((item, index) => {
+            _isValid[index] = false
         })
 
-        return valid
+        setIsValid([..._isValid])
     }
 
     const clearForm = () => {
@@ -118,6 +82,55 @@ const NewUser = ({ history }) => {
 
     const resetForm = () => {
         document.querySelector('form').reset()
+    }
+
+    useEffect(() => {
+        if (userType === 'person') {
+            delete user.company
+            user.person = {}
+        } else if (userType === 'company') {
+            delete user.person
+            user.company = {}
+        }
+    }, [userType])
+
+    const validateInput = (event, min, index, onlyNumbers) => {
+        const _isValid = [...isValid]
+        const { value } = event.target
+
+        if (onlyNumbers) {
+            if (getOnlyNumbers(value).length >= min) {
+                _isValid[index] = true
+            } else {
+                _isValid[index] = false
+            }
+        } else {
+            if (value.length >= min) {
+                _isValid[index] = true
+            } else {
+                _isValid[index] = false
+            }
+        }
+
+        setIsValid(_isValid)
+    }
+
+    const validateForm = () => {
+        let sum = 0
+
+        isValid.forEach(item => {
+            if (item) {
+                sum = sum + 1
+            }
+        })
+
+        if (userType === 'company' && sum === 8) {
+            return true
+        } else if (userType === 'person' && sum === 7) {
+            return true
+        } else {
+            return false
+        }
     }
 
     const handleSubmit = async () => {
@@ -225,11 +238,11 @@ const NewUser = ({ history }) => {
                         <input
                             type='checkbox'
                             onClick={() => {
+                                clearForm()
+
                                 if (userType === 'company') {
-                                    clearForm()
                                     setUserType('person')
                                 } else if (userType === 'person') {
-                                    clearForm()
                                     setUserType('company')
                                 }
                             }}
@@ -244,12 +257,12 @@ const NewUser = ({ history }) => {
                                 onChange={ event => {
                                     user.company.cnpj = getOnlyNumbers(event
                                         .target.value)
-                                    event.target.value =  formatCNPJ(
+                                    event.target.value = formatCNPJ(
                                         event.target.value
                                     )
                                 }}
                                 onBlur={event => {
-                                    validateInput(event, 20, 4, true)
+                                    validateInput(event, 14, 4, true)
                                 }}
                             />
                             <label>Nome fantasia</label>
@@ -312,7 +325,7 @@ const NewUser = ({ history }) => {
                                 onChange={ event => {
                                     user.person.cpf = getOnlyNumbers(event
                                         .target.value)
-                                    event.target.value =  formatCPF(
+                                    event.target.value = formatCPF(
                                         event.target.value
                                     )
                                 }}
@@ -339,6 +352,7 @@ const NewUser = ({ history }) => {
                     <button
                         className='classic-button'
                         onClick={ event => {
+                            clearIsValid()
                             event.preventDefault()
                             if (validateForm()) {
                                 setStep(1)

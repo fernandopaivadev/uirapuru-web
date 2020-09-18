@@ -49,7 +49,7 @@ const Dashboard = ({ history }) => {
 
     const webSocketConfig = useCallback(() => {
         try {
-            let _devicesList = []
+            const _devicesList = []
 
             getData('user').consumerUnits.forEach(consumerUnit => {
                 consumerUnit.devices.forEach(device => {
@@ -105,7 +105,7 @@ const Dashboard = ({ history }) => {
         if (isNew) {
             devicesList.forEach((device, index) => {
                 if (device === topic) {
-                    let _buffer = [...buffer]
+                    const _buffer = [...buffer]
                     _buffer[index] = payload
 
                     setNewMessage({
@@ -116,15 +116,15 @@ const Dashboard = ({ history }) => {
 
                     setBuffer(_buffer)
 
-                    let _connected = [...connected]
+                    const _connected = [...connected]
                     _connected[index] = true
                     setConnected(_connected)
 
                     clearTimeout(timeoutId[index])
 
-                    let _timeoutId = [...timeoutId]
+                    const _timeoutId = [...timeoutId]
                     _timeoutId[index] = setTimeout(() => {
-                        let _connected = [...connected]
+                        const _connected = [...connected]
                         _connected[index] = false
                         setConnected(_connected)
                     }, 10000)
