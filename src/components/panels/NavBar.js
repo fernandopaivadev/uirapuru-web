@@ -52,7 +52,7 @@ const NavBar = ({ history }) => {
             className='logo'
             key='logo'
             onClick={() => {
-                history.push('/dashboard')
+                history.push('/login')
             }}
         >
             <img src={ logo } alt='tech amazon logo'/>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react'
 
-import { login, isAuthenticated } from '../../services/auth'
+import { login, isAuthenticated, isAdmin } from '../../services/auth'
 
 import { api } from '../../services/api'
 
@@ -21,7 +21,11 @@ const Login = ({ history }) => {
 
     useEffect(() => {
         if (isAuthenticated()) {
-            history.push('/dashboard')
+            if (isAdmin()) {
+                history.push('/users-list')
+            } else {
+                history.push('/dashboard')
+            }
         }
     }, [history])
 
