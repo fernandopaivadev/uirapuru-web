@@ -37,7 +37,7 @@ const NewUser = ({ history }) => {
         zip: '',
         city: '',
         state: '',
-        country: '',
+        country: 'Brasil',
         address: '',
         name: '',
         devices: []
@@ -48,16 +48,9 @@ const NewUser = ({ history }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
-    const [isValid, setIsValid] = useState([
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        ''
-    ])
+    const [isValid, setIsValid] = useState(
+        new Array(8).fill('')
+    )
 
     const clearIsValid = () => {
         const _isValid = [...isValid]
@@ -465,14 +458,14 @@ const NewUser = ({ history }) => {
                         >
                             Avançar
                         </button>
-
-                        {!success && error?
-                            <p className='error'>
-                                { errorMessage }
-                            </p>
-                            : null
-                        }
                     </div>
+
+                    {!success && error?
+                        <p className='error'>
+                            { errorMessage }
+                        </p>
+                        : null
+                    }
                 </form>
                 :
                 null

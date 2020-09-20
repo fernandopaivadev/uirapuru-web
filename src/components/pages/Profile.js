@@ -386,6 +386,12 @@ const Profile = ({ history }) => {
                     :
                     <div className='empty'>
                         <p>Escolha uma unidade Consumidora</p>
+                        {/* {admin ?
+                            <button className='classic-button'>
+                                Cadastrar U.C.
+                            </button>
+                            : null
+                        } */}
                     </div>
                 }
             </div>
