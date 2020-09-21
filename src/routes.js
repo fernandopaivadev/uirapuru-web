@@ -9,6 +9,7 @@ import Dashboard from './components/pages/Dashboard'
 import Profile from './components/pages/Profile'
 import UsersList from './components/pages/UsersList'
 import NewUser from './components/pages/NewUser'
+import NewUnit from './components/pages/NewUnit'
 
 const Routes = () => <Router>
     <Switch>
@@ -20,6 +21,7 @@ const Routes = () => <Router>
         <Route path='/profile' exact component={Profile} />
         <Route path='/users-list' exact component={UsersList} />
         <Route path='/new-user' exact component={NewUser} />
+        <Route path='/new-unit' exact component={NewUnit} />
         <Redirect to='/login' />
     </Switch>
 </Router>

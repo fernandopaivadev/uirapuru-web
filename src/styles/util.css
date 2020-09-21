@@ -1,4 +1,4 @@
-.pure-material-progress-circular {
+.circular-progress {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -14,12 +14,12 @@
     overflow: hidden;
 }
 
-.pure-material-progress-circular::-webkit-progress-bar {
+.circular-progress::-webkit-progress-bar {
     background-color: transparent;
 }
 
 /* Indeterminate */
-.pure-material-progress-circular:indeterminate {
+.circular-progress:indeterminate {
     -webkit-mask-image: linear-gradient(transparent 50%, black 50%),
         linear-gradient(to right, transparent 50%, black 50%);
     mask-image: linear-gradient(transparent 50%, black 50%),
@@ -29,12 +29,12 @@
 }
 
 :-ms-lang(x),
-.pure-material-progress-circular:indeterminate {
+.circular-progress:indeterminate {
     animation: none;
 }
 
-.pure-material-progress-circular:indeterminate::before,
-.pure-material-progress-circular:indeterminate::-webkit-progress-value {
+.circular-progress:indeterminate::before,
+.circular-progress:indeterminate::-webkit-progress-value {
     content: '';
     display: block;
     box-sizing: border-box;
@@ -49,7 +49,7 @@
         alternate;
 }
 
-.pure-material-progress-circular:indeterminate::-moz-progress-bar {
+.circular-progress:indeterminate::-moz-progress-bar {
     box-sizing: border-box;
     border: solid 0.25em transparent;
     border-top-color: currentColor;
@@ -61,7 +61,7 @@
         alternate;
 }
 
-.pure-material-progress-circular:indeterminate::-ms-fill {
+.circular-progress:indeterminate::-ms-fill {
     animation-name: -ms-ring;
 }
 

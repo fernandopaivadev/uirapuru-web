@@ -43,11 +43,12 @@ const NewUser = ({ history }) => {
         devices: []
     }
 
-    const [step, setStep] = useState(0)
+    const [step, setStep] = useState(1)
     const [userType, setUserType] = useState('company')
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
+    const [loading, setLoading] = useState(false)
     const [isValid, setIsValid] = useState(
         new Array(8).fill('')
     )
@@ -140,9 +141,15 @@ const NewUser = ({ history }) => {
 
     const handleSubmit = async () => {
         try {
+            setLoading(true)
+
             const response = await api.post('/user/add', user)
 
             const status = response?.status
+
+            if (status) {
+                setLoading(false)
+            }
 
             if (status === 201) {
                 setSuccess(true)
@@ -171,10 +178,26 @@ const NewUser = ({ history }) => {
                 setErrorMessage('Usuário já cadastrado')
 
             if (status) {
+                setLoading(false)
                 setError(true)
             }
         }
     }
+
+    const buttonPress = (event, task) => {
+        event.preventDefault()
+        if (validateForm()) {
+            task()
+        } else {
+            setErrorMessage('Preencha todos os campos')
+            setError(true)
+
+            setTimeout(() => {
+                setError(false)
+            }, 3000)
+        }
+    }
+
     return <div className='newuser'>
         <NavBar />
         <DeviceMenu />
@@ -441,19 +464,11 @@ const NewUser = ({ history }) => {
                         </button>
                         <button
                             className='classic-button'
-                            onClick={ event => {
-                                event.preventDefault()
-                                if (validateForm()) {
+                            onClick={event => {
+                                buttonPress(event, () => {
                                     clearIsValid()
                                     setStep(1)
-                                } else {
-                                    setErrorMessage('Preencha todos os campos')
-                                    setError(true)
-
-                                    setTimeout(() => {
-                                        setError(false)
-                                    }, 3000)
-                                }
+                                })
                             }}
                         >
                             Avançar
@@ -594,57 +609,44 @@ const NewUser = ({ history }) => {
                         : null
                     }
 
-                    <div className='buttons'>
-                        <button
-                            className='classic-button'
-                            onClick={event => {
-                                event.preventDefault()
-                                setStep(0)
-                            }}
-                        >
-                            Voltar
-                        </button>
+                    {loading ?
+                        <div className='loading-container'>
+                            <progress className='circular-progress'/>
+                        </div>
+                        :
+                        <div className='buttons'>
+                            <button
+                                className='classic-button'
+                                onClick={event => {
+                                    event.preventDefault()
+                                    setStep(0)
+                                }}
+                            >
+                                Voltar
+                            </button>
 
-                        <button
-                            className='classic-button'
-                            onClick={event => {
-                                event.preventDefault()
-                                if (validateForm()) {
-                                    user.consumerUnits.push(consumerUnit)
-                                    resetForm()
-                                } else {
-                                    setErrorMessage('Preencha todos os campos')
-                                    setError(true)
+                            <button
+                                className='classic-button'
+                                onClick={event => {
+                                    buttonPress(event, () => {
+                                        user.consumerUnits.push(consumerUnit)
+                                        resetForm()
+                                    })
+                                }}
+                            >
+                                Adicionar UC
+                            </button>
 
-                                    setTimeout(() => {
-                                        setError(false)
-                                    }, 3000)
-                                }
-                            }}
-                        >
-                            Adicionar UC
-                        </button>
-
-                        <button
-                            className='classic-button'
-                            onClick={event => {
-                                event.preventDefault()
-                                if (validateForm()) {
-                                    handleSubmit()
-                                } else {
-                                    setErrorMessage('Preencha todos os campos')
-                                    setError(true)
-
-                                    setTimeout(() => {
-                                        setError(false)
-                                    }, 3000)
-                                }
-                            }}
-                        >
-                            Salvar
-                        </button>
-                    </div>
-
+                            <button
+                                className='classic-button'
+                                onClick={event => {
+                                    buttonPress(event, handleSubmit)
+                                }}
+                            >
+                                Salvar
+                            </button>
+                        </div>
+                    }
                     {success && !error?
                         <p className='success'>
                             Salvo com sucesso!

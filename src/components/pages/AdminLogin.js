@@ -93,7 +93,7 @@ const Login = ({ history }) => {
 
             {loading ?
                 <div className='loading-container'>
-                    <progress className='pure-material-progress-circular'/>
+                    <progress className='circular-progress'/>
                 </div>
                 :
                 <button

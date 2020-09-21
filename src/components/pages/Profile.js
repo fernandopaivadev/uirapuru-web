@@ -359,17 +359,30 @@ const Profile = ({ history }) => {
                                     .state = event.target.value
                             }}
                         />
-                        {admin ?
-                            <button
-                                className='classic-button'
-                                onClick={ event => {
-                                    handleSubmit(event, 1)
-                                }}
-                            >
+                        <div className='buttons'>
+                            {admin ?
+                                <button
+                                    className='classic-button'
+                                    onClick={ event => {
+                                        handleSubmit(event, 1)
+                                    }}
+                                >
                                 Salvar
-                            </button>
-                            : null
-                        }
+                                </button>
+                                : null
+                            }
+                            {admin ?
+                                <button
+                                    className='classic-button'
+                                    onClick = { () => {
+                                        history.push('/new-unit')
+                                    }}
+                                >
+                                    Cadastrar U.C.
+                                </button>
+                                : null
+                            }
+                        </div>
                         {success[1] && !error[1]?
                             <p className='success'>
                                 Salvo com sucesso!
@@ -386,15 +399,21 @@ const Profile = ({ history }) => {
                     :
                     <div className='empty'>
                         <p>Escolha uma unidade Consumidora</p>
-                        {/* {admin ?
-                            <button className='classic-button'>
+                        {admin ?
+                            <button
+                                className='classic-button'
+                                onClick = { () => {
+                                    history.push('/new-unit')
+                                }}
+                            >
                                 Cadastrar U.C.
                             </button>
                             : null
-                        } */}
+                        }
                     </div>
                 }
             </div>
+
             <div className='navigation'>
                 <button
                     className='classic-button'

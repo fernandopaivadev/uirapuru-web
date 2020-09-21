@@ -88,7 +88,7 @@ const Login = ({ history, match }) => {
 
                 {loading ?
                     <div className='loading-container'>
-                        <progress className='pure-material-progress-circular'/>
+                        <progress className='circular-progress'/>
                     </div>
                     : passwordChanged ?
                         <button onClick={() => {
