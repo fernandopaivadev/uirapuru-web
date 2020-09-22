@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 
 import NavBar from '../panels/NavBar'
 
-import DeviceMenu from '../panels/DeviceMenu'
-
 import { api } from '../../services/api'
 
 import { logout } from '../../services/auth'
@@ -11,6 +9,8 @@ import { logout } from '../../services/auth'
 import { getData, storeData }  from '../../services/storage'
 
 import fetch from '../../services/fetch'
+
+import Menu from '../panels/Menu'
 
 import {
     formatCEP,
@@ -22,7 +22,7 @@ import '../../styles/newunit.css'
 const NewUnit = ({ history }) => {
     const user = getData('user')
 
-    const consumerUnit = {
+    const [consumerUnit] = useState({
         number: '',
         zip: '',
         city: '',
@@ -31,7 +31,7 @@ const NewUnit = ({ history }) => {
         address: '',
         name: '',
         devices: []
-    }
+    })
 
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
@@ -151,7 +151,9 @@ const NewUnit = ({ history }) => {
 
     return <div className='newunit'>
         <NavBar />
-        <DeviceMenu />
+        <Menu
+            items={getData('user').consumerUnits}
+        />
 
         <div className='main'>
             <form onSubmit={event=>{
@@ -174,7 +176,7 @@ const NewUnit = ({ history }) => {
                 />
                 {isValid[0] === 'not valid' ?
                     <p className='validation-error'>
-                            Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                     </p>
                     : null
                 }
@@ -233,7 +235,7 @@ const NewUnit = ({ history }) => {
                 />
                 {isValid[3] === 'not valid' ?
                     <p className='validation-error'>
-                            CEP inválido
+                        CEP inválido
                     </p>
                     : null
                 }
@@ -252,7 +254,7 @@ const NewUnit = ({ history }) => {
                 />
                 {isValid[4] === 'not valid' ?
                     <p className='validation-error'>
-                            Digite no mínimo 3 caracteres
+                        Digite no mínimo 3 caracteres
                     </p>
                     : null
                 }
@@ -271,7 +273,7 @@ const NewUnit = ({ history }) => {
                 />
                 {isValid[5] === 'not valid' ?
                     <p className='validation-error'>
-                            Digite no mínimo 3 caracteres
+                        Digite no mínimo 3 caracteres
                     </p>
                     : null
                 }
@@ -289,7 +291,7 @@ const NewUnit = ({ history }) => {
                                 history.push('/profile')
                             }}
                         >
-                                Voltar
+                            Voltar
                         </button>
 
                         <button

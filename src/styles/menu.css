@@ -1,0 +1,58 @@
+.menu {
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    height: 100vh;
+    width: 25rem;
+}
+
+.menu .item {
+    width: 100%;
+    cursor: pointer;
+    color: var(--default-green);
+    font-weight: 600;
+}
+
+.menu .item p {
+    font-weight: 600;
+    font-size: 2rem;
+    margin: 1.5rem 0 0.5rem 2rem;
+    color: #333;
+}
+
+.menu .item .sub-items .sub-item-name {
+    margin: 0 1.5rem 0 3rem;
+    display: block;
+    padding: 0.8rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.menu .item .title,
+.menu .item .subtitle {
+    color: #333;
+    margin: 1.5rem;
+}
+
+.menu .item .title {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.menu .item .subtitle {
+    font-size: 1.4rem;
+}
+
+.menu .title {
+    color: var(--default-green);
+    font-size: 2rem;
+}
+
+.menu .subtitle {
+    color: var(--default-light-gray);
+    font-size: 1.4rem;
+}

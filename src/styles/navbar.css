@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.navbar .menu button {
+.navbar .profile-menu button {
     background: #00000000;
     display: flex;
     justify-content: center;
@@ -33,12 +33,12 @@
     transition: all 0.2s ease;
 }
 
-.navbar .menu button .menu-icon {
+.navbar .profile-menu button .menu-icon {
     color: #fff;
     font-size: 2.4rem;
 }
 
-.navbar .menu button:hover {
+.navbar .profile-menu button:hover {
     background: #fff5;
 }
 
@@ -104,12 +104,12 @@
     background: var(--default-light-green);
 }
 
-.navbar .navigation button:focus + .menu {
+.navbar .navigation button:focus + .profile-menu {
     visibility: visible;
     opacity: 1;
 }
 
-.navbar .navigation .menu {
+.navbar .navigation .profile-menu {
     position: absolute;
     bottom: 100;
     transform: translate(-0.5rem, 15%);
@@ -124,35 +124,35 @@
     z-index: 1;
 }
 
-.navbar .navigation .menu .user {
+.navbar .navigation .profile-menu .user {
     display: flex;
     align-items: center;
     margin: 0.5rem 1.5rem 0.5rem 1.5rem;
 }
 
-.navbar .navigation .menu .user .avatar {
+.navbar .navigation .profile-menu .user .avatar {
     background: var(--default-green);
     font-size: 2rem;
 }
 
-.navbar .navigation .menu .user .text {
+.navbar .navigation .profile-menu .user .text {
     display: flex;
     flex-direction: column;
     margin: 1rem;
     font-weight: 300;
 }
 
-.navbar .navigation .menu .user .text .username {
+.navbar .navigation .profile-menu .user .text .username {
     font-size: 2rem;
     color: #555;
 }
 
-.navbar .navigation .menu .user .text .email {
+.navbar .navigation .profile-menu .user .text .email {
     font-size: 1.6rem;
     color: #888;
 }
 
-.navbar .navigation .menu .item {
+.navbar .navigation .profile-menu .item {
     margin: 0.5rem;
     color: #555;
     display: flex;
@@ -163,14 +163,14 @@
     border-radius: 0.5rem;
 }
 
-.navbar .navigation .menu .item .icon {
+.navbar .navigation .profile-menu .item .icon {
     margin: 1rem;
     font-size: 2.4rem;
     color: var(--default-green);
 }
 
-.navbar .navigation .menu .item:hover,
-.navbar .navigation .menu .item .icon:hover {
+.navbar .navigation .profile-menu .item:hover,
+.navbar .navigation .profile-menu .item .icon:hover {
     background: #eee;
 }
 

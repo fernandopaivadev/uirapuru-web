@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import NavBar from '../panels/NavBar'
 
-import DeviceMenu from '../panels/DeviceMenu'
-
 import { api } from '../../services/api'
 
 import { logout } from '../../services/auth'
@@ -200,7 +198,6 @@ const NewUser = ({ history }) => {
 
     return <div className='newuser'>
         <NavBar />
-        <DeviceMenu />
         <div className='main'>
             {step === 0 ?
                 <form>

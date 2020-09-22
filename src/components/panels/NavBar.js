@@ -29,7 +29,7 @@ const NavBar = ({ history }) => {
     }, [history])
 
     return <ul className='navbar'>
-        <li className='menu'>
+        <li className='profile-menu'>
             <button
                 onClick={() => {
                     const deviceMenu = document
@@ -77,7 +77,7 @@ const NavBar = ({ history }) => {
                 : null
             }
 
-            <ul className='menu'>
+            <ul className='profile-menu'>
                 <div className='user'>
                     <div className='avatar'>
                         {getData('user')?.person
