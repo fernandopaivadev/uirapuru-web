@@ -367,7 +367,7 @@ const Profile = ({ history }) => {
                                         handleSubmit(event, 1)
                                     }}
                                 >
-                                Salvar
+                                    Salvar
                                 </button>
                                 : null
                             }

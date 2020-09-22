@@ -8,7 +8,7 @@ import { api } from '../../services/api'
 
 import { logout } from '../../services/auth'
 
-import { getData }  from '../../services/storage'
+import { getData, storeData }  from '../../services/storage'
 
 import fetch from '../../services/fetch'
 
@@ -19,8 +19,7 @@ import {
 
 import '../../styles/newunit.css'
 
-const NewUnit = ( { history }) => {
-
+const NewUnit = ({ history }) => {
     const user = getData('user')
 
     const consumerUnit = {
@@ -89,11 +88,13 @@ const NewUnit = ( { history }) => {
         }
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async event => {
         try {
+            event.preventDefault()
+            storeData('user', user)
             setLoading(true)
 
-            const response = await api.post('/user/add', user)
+            const response = await api.put('/user/update', user)
 
             const status = response?.status
 
@@ -101,11 +102,11 @@ const NewUnit = ( { history }) => {
                 setLoading(false)
             }
 
-            if (status === 201) {
+            if (status === 200) {
                 setSuccess(true)
 
                 if (await fetch()) {
-                    history.push('/users-list')
+                    history.push('/profile')
                 } else {
                     logout()
                     history.push('/login')
@@ -125,7 +126,7 @@ const NewUnit = ( { history }) => {
             if (status === 400) {
                 setErrorMessage('Erro no processamento do formulário')
             } else if (status === 409)
-                setErrorMessage('Unidade consumidora já cadastrado')
+                setErrorMessage('Unidade consumidora já cadastrada')
 
             if (status) {
                 setLoading(false)
@@ -157,7 +158,7 @@ const NewUnit = ( { history }) => {
                 event.preventDefault()
             }}>
                 <h1>
-                        Dados da Unidade Consumidora
+                    Dados da Unidade Consumidora
                 </h1>
                 <label>Número</label>
                 <input
@@ -296,7 +297,7 @@ const NewUnit = ( { history }) => {
                             onClick={event => {
                                 buttonPress(event, () => {
                                     user.consumerUnits.push(consumerUnit)
-                                    handleSubmit()
+                                    handleSubmit(event)
                                 })
                             }}
                         >

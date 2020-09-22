@@ -116,7 +116,7 @@ const Graphic = ({ deviceId, setEnergyValue, datePicker }) => {
         <div className="graphic">
             {loading ?
                 <div className="loading-container">
-                    <progress className="pure-material-progress-circular" />
+                    <progress className="circular-progress" />
                 </div>
                 : values.length > 0 ?
                     <Plot {...plotProps} />
