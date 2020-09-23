@@ -2,39 +2,23 @@ import React from 'react'
 
 import '../../styles/menu.css'
 
-const Menu = ({ items, setItemIndex, setSubItemIndex }) =>
-    <ul className='menu'>
-        {items?.map((item, index) =>
-            <li className='item'
-                key={ index }
-                onClick = {() =>{
-                    if(setItemIndex) {
-                        setItemIndex(index)
-                    }
-                }}
-            >
-                <p>
-                    { item.name }
-                </p>
+const Menu = ({ items, subItemKey }) =>
+    <div className='menu'>
+        <ul className='items'>
+            {items.map((item, index) =>
+                <li key={ index }>
+                    <p>{ item.name } </p>
 
-                <ul className='devices-list'>
-                    {item?.devices.map((subItem, index) =>
-                        <li
-                            className='device-name'
-                            key={ index }
-                            onClick = {() => {
-                                if(subItem) {
-                                    setSubItemIndex(index)
-                                }
-                            }}
-                        >
-                            { subItem.name }
-                        </li>
-                    )}
-                </ul>
-            </li>
-        )}
-    </ul>
+                    <ul className='sub-items'>
+                        {item[subItemKey].map((subItem, index) =>
+                            <li key={ index }>
+                                <p>{ subItem.name }</p>
+                            </li>
+                        )}
+                    </ul>
+                </li>
+            )}
+        </ul>
+    </div>
 
 export default Menu
-

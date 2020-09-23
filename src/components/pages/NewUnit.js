@@ -153,6 +153,7 @@ const NewUnit = ({ history }) => {
         <NavBar />
         <Menu
             items={getData('user').consumerUnits}
+            subItemKey={'devices'}
         />
 
         <div className='main'>
