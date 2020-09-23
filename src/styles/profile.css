@@ -38,7 +38,16 @@
 
 .profile .main .forms {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    justify-content: flex-end;
+    grid-template-columns: 10% 45% 45%;
+}
+
+.profile .main .forms form:nth-child(1) {
+    grid-column: 2/3;
+}
+
+.profile .main .forms form:nth-child(2) {
+    grid-column: 3/4;
 }
 
 .profile .main .navigation {

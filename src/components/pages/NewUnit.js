@@ -10,8 +10,6 @@ import { getData, storeData }  from '../../services/storage'
 
 import fetch from '../../services/fetch'
 
-import Menu from '../panels/Menu'
-
 import {
     formatCEP,
     getOnlyNumbers
@@ -151,11 +149,6 @@ const NewUnit = ({ history }) => {
 
     return <div className='newunit'>
         <NavBar />
-        <Menu
-            items={getData('user').consumerUnits}
-            subItemKey={'devices'}
-        />
-
         <div className='main'>
             <form onSubmit={event=>{
                 event.preventDefault()

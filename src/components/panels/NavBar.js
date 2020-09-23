@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import {
     RecentActors as UsersIcon,
     ExitToApp as LogoutIcon,
-    Menu as MenuIcon,
     Person as ProfileIcon
 } from '@material-ui/icons'
 
@@ -29,25 +28,6 @@ const NavBar = ({ history }) => {
     }, [history])
 
     return <ul className='navbar'>
-        <li className='profile-menu'>
-            <button
-                onClick={() => {
-                    const deviceMenu = document
-                        .querySelector('.devicemenu')
-
-                    if (deviceMenu.style.visibility === 'visible') {
-                        deviceMenu.style.visibility = 'hidden'
-                        deviceMenu.style.opacity = 0
-                    } else {
-                        deviceMenu.style.visibility = 'visible'
-                        deviceMenu.style.opacity = 1
-                    }
-                }}
-            >
-                <MenuIcon className="menu-icon" />
-            </button>
-        </li>
-
         <li
             className='logo'
             key='logo'

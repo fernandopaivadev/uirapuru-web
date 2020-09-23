@@ -8,7 +8,7 @@ import { baseURL } from '../../services/api'
 import io from 'socket.io-client'
 
 import RealTime from '../panels/RealTime'
-import DeviceMenu from '../panels/DeviceMenu'
+import Menu from '../panels/Menu'
 
 import '../../styles/dashboard.css'
 
@@ -136,8 +136,10 @@ const Dashboard = ({ history }) => {
 
     return <div className='dashboard'>
         <NavBar />
-        <DeviceMenu
-            setDeviceIndex={setDeviceIndex}
+        <Menu
+            setSubItemIndex={setDeviceIndex}
+            items={getData('user').consumerUnits}
+            subItemKey={'devices'}
         />
         <div className='main'>
             {devicesList[deviceIndex] ?

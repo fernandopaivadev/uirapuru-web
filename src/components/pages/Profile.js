@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import NavBar from '../panels/NavBar'
 
-import DeviceMenu from '../panels/DeviceMenu'
+import Menu from '../panels/Menu'
 
 import { getData, clearData, storeData } from '../../services/storage'
 
@@ -107,8 +107,9 @@ const Profile = ({ history }) => {
 
     return <div className='profile'>
         <NavBar />
-        <DeviceMenu
-            setConsumerUnitIndex = { setConsumerUnitIndex }
+        <Menu
+            items = {getData('user').consumerUnits}
+            setItemIndex = { setConsumerUnitIndex }
         />
         { modal ?
             <div className='modal-container'>
@@ -398,7 +399,9 @@ const Profile = ({ history }) => {
                     </form>
                     :
                     <div className='empty'>
-                        <p>Escolha uma unidade Consumidora</p>
+                        <p>
+                            Escolha uma unidade Consumidora
+                        </p>
                         {admin ?
                             <button
                                 className='classic-button'
