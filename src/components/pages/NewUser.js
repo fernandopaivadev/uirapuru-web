@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import NavBar from '../panels/NavBar'
 
+import Modal from '../panels/Modal'
+
 import { api } from '../../services/api'
 
 import { logout } from '../../services/auth'
@@ -41,6 +43,7 @@ const NewUser = ({ history }) => {
         devices: []
     }
 
+    const [modal, setModal] = useState(false)
     const [step, setStep] = useState(1)
     const [userType, setUserType] = useState('company')
     const [success, setSuccess] = useState(false)
@@ -182,8 +185,7 @@ const NewUser = ({ history }) => {
         }
     }
 
-    const buttonPress = (event, task) => {
-        event.preventDefault()
+    const buttonPress = task => {
         if (validateForm()) {
             task()
         } else {
@@ -198,11 +200,24 @@ const NewUser = ({ history }) => {
 
     return <div className='newuser'>
         <NavBar />
+        { modal ?
+            <Modal
+                message={'Você tem certeza?'}
+                taskOnYes={() => {
+                    setModal(false)
+                    buttonPress(handleSubmit)
+                }}
+                taskOnNo={() => {
+                    setModal(false)
+                }}
+            />
+            : null
+        }
         <div className='main'>
             {step === 0 ?
                 <form>
                     <h1>
-                        Dados do usuário
+                        Dados do novo usuário
                     </h1>
 
                     <label>Nome de usuário</label>
@@ -462,7 +477,8 @@ const NewUser = ({ history }) => {
                         <button
                             className='classic-button'
                             onClick={event => {
-                                buttonPress(event, () => {
+                                event.preventDefault()
+                                buttonPress(() => {
                                     clearIsValid()
                                     setStep(1)
                                 })
@@ -488,7 +504,7 @@ const NewUser = ({ history }) => {
                     event.preventDefault()
                 }}>
                     <h1>
-                        Dados da Unidade Consumidora
+                        Dados da nova unidade consumidora
                     </h1>
                     <label>Número</label>
                     <input
@@ -625,7 +641,8 @@ const NewUser = ({ history }) => {
                             <button
                                 className='classic-button'
                                 onClick={event => {
-                                    buttonPress(event, () => {
+                                    event.preventDefault()
+                                    buttonPress(() => {
                                         user.consumerUnits.push(consumerUnit)
                                         resetForm()
                                     })
@@ -637,7 +654,8 @@ const NewUser = ({ history }) => {
                             <button
                                 className='classic-button'
                                 onClick={event => {
-                                    buttonPress(event, handleSubmit)
+                                    event.preventDefault()
+                                    setModal(true)
                                 }}
                             >
                                 Salvar

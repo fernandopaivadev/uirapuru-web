@@ -4,6 +4,8 @@ import NavBar from '../panels/NavBar'
 
 import Menu from '../panels/Menu'
 
+import Modal from '../panels/Modal'
+
 import { getData, clearData, storeData } from '../../services/storage'
 
 import { isAdmin, logout } from '../../services/auth'
@@ -112,30 +114,15 @@ const Profile = ({ history }) => {
             setItemIndex = { setConsumerUnitIndex }
         />
         { modal ?
-            <div className='modal-container'>
-                <div className='modal'>
-                    <p>Você tem certeza?</p>
-                    <div className='buttons'>
-                        <button
-                            className='classic-button'
-                            onClick={ () => {
-                                deleteUser()
-                            }}
-                        >
-                            Sim
-                        </button>
-                        <button
-                            id='cancel-button'
-                            className='classic-button'
-                            onClick= { () => {
-                                setModal(false)
-                            }}
-                        >
-                            Não
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <Modal
+                message={'Você tem certeza?'}
+                taskOnYes={() => {
+                    deleteUser()
+                }}
+                taskOnNo={() => {
+                    setModal(false)
+                }}
+            />
             : null
         }
         <div className='main'>
