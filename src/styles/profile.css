@@ -64,6 +64,14 @@
     background: #f56f55;
 }
 
+.profile .main .forms .buttons #delete-button {
+    background: #d00;
+}
+
+.profile .main .forms .buttons #delete-button:hover {
+    background: #f56f55;
+}
+
 .profile .main form h1 {
     color: var(--default-green);
     font-size: 2.4rem;

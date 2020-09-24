@@ -24,5 +24,4 @@ const Modal = ({ message, taskOnYes, taskOnNo }) =>
         </div>
     </div>
 
-
 export default Modal

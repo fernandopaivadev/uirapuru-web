@@ -32,7 +32,7 @@ const Profile = ({ history }) => {
     const admin = isAdmin()
     const user = getData('user')
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
-    const [modal, setModal] = useState(false)
+    const [modal, setModal] = useState([false,false])
     const [success, setSuccess] = useState([false, false])
     const [error, setError] = useState([false, false])
 
@@ -63,10 +63,8 @@ const Profile = ({ history }) => {
         }
     }
 
-    const handleSubmit = async (event, index) => {
+    const handleSubmit = async (index) => {
         try {
-            event.preventDefault()
-
             storeData('user', user)
 
             const response = await api.put('/user/update', user)
@@ -113,7 +111,8 @@ const Profile = ({ history }) => {
             items = {getData('user').consumerUnits}
             setItemIndex = { setConsumerUnitIndex }
         />
-        { modal ?
+
+        { modal[0] ?
             <Modal
                 message={'Você tem certeza?'}
                 taskOnYes={() => {
@@ -125,6 +124,22 @@ const Profile = ({ history }) => {
             />
             : null
         }
+
+        { modal[1] ?
+            <Modal
+                message={'Você tem certeza?'}
+                taskOnYes={() => {
+                    user.consumerUnits.pop(consumerUnitIndex)
+                    handleSubmit(1)
+                    setModal(false)
+                }}
+                taskOnNo={() => {
+                    setModal(false)
+                }}
+            />
+            : null
+        }
+
         <div className='main'>
             <div className='forms'>
                 {getData('user') ?
@@ -245,7 +260,8 @@ const Profile = ({ history }) => {
                             <button
                                 className='classic-button'
                                 onClick={event => {
-                                    handleSubmit(event, 0)
+                                    event.preventDefault()
+                                    handleSubmit(0)
                                 }}
                             >
                                 Salvar
@@ -347,15 +363,18 @@ const Profile = ({ history }) => {
                                     .state = event.target.value
                             }}
                         />
+
                         <div className='buttons'>
                             {admin ?
                                 <button
+                                    id='delete-button'
                                     className='classic-button'
                                     onClick={ event => {
-                                        handleSubmit(event, 1)
+                                        event.preventDefault()
+                                        setModal([false, true])
                                     }}
                                 >
-                                    Salvar
+                                    Excluir U.C.
                                 </button>
                                 : null
                             }
@@ -370,7 +389,20 @@ const Profile = ({ history }) => {
                                 </button>
                                 : null
                             }
+                            {admin ?
+                                <button
+                                    className='classic-button'
+                                    onClick={ event => {
+                                        event.preventDefault()
+                                        handleSubmit(1)
+                                    }}
+                                >
+                                    Salvar
+                                </button>
+                                : null
+                            }
                         </div>
+
                         {success[1] && !error[1]?
                             <p className='success'>
                                 Salvo com sucesso!
@@ -418,7 +450,7 @@ const Profile = ({ history }) => {
                         id='delete-button'
                         className='classic-button'
                         onClick={ () => {
-                            setModal(true)
+                            setModal([true, false])
                         }}
                     >
                         Excluir Usuário
