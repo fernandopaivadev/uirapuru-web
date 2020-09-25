@@ -21,7 +21,8 @@ import {
     formatCEP,
     formatTimeStamp,
     formatDate,
-    getOnlyNumbers
+    getOnlyNumbers,
+    validateForm
 } from '../../services/util'
 
 import '../../styles/profile.css'
@@ -105,6 +106,12 @@ const Profile = ({ history }) => {
         }
     }
 
+    // const validateInput = (formIndex, inputIndex) => {
+    //     const form = document.querySelector(`form:nth-child(${formIndex + 1})`)
+    //     const fields = Object.values(form)
+    //     return fields[inputIndex].checkValidity()
+    // }
+
     return <div className='profile'>
         <NavBar />
         <Menu
@@ -150,15 +157,19 @@ const Profile = ({ history }) => {
                         <label>Nome de usuário</label>
                         <input
                             name='username'
+                            maxLength='20'
+                            minLength='6'
                             defaultValue={getData('user')?.username ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
                                 user.username = event.target.value
                             }}
                         />
+
                         <label>Email</label>
                         <input
                             name='email'
+                            maxLength='40'
                             defaultValue={getData('user')?.email ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
@@ -233,6 +244,7 @@ const Profile = ({ history }) => {
                                 <label>Razão social</label>
                                 <input
                                     name='tradeName'
+                                    maxLength='128'
                                     defaultValue={getData('user')?.company
                                         ?.tradeName ?? ''}
                                     readOnly= {!admin}
@@ -245,6 +257,7 @@ const Profile = ({ history }) => {
                                 <label>Descrição</label>
                                 <input
                                     name='description'
+                                    maxLength='512'
                                     defaultValue={getData('user')?.company
                                         ?.description ?? ''}
                                     readOnly= {!admin}
@@ -261,7 +274,11 @@ const Profile = ({ history }) => {
                                 className='classic-button'
                                 onClick={event => {
                                     event.preventDefault()
-                                    handleSubmit(0)
+                                    if (validateForm(0)) {
+                                        handleSubmit(0)
+                                    } else {
+                                        console.log('FORM 1 FAIL')
+                                    }
                                 }}
                             >
                                 Salvar
@@ -292,6 +309,8 @@ const Profile = ({ history }) => {
                         <label>Número</label>
                         <input
                             name='number'
+                            minLength='3'
+                            maxLength='64'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.number ?? ''}
@@ -301,9 +320,10 @@ const Profile = ({ history }) => {
                                     .number = event.target.value
                             }}
                         />
-                        <label>Nome</label>
+                        <label>Nome da unidade consumidora</label>
                         <input
                             name='name'
+                            maxLength='64'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.name ?? ''}
@@ -316,6 +336,7 @@ const Profile = ({ history }) => {
                         <label>Endereço</label>
                         <input
                             name='address'
+                            maxLength='256'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.address ?? ''}
@@ -328,6 +349,7 @@ const Profile = ({ history }) => {
                         <label>CEP</label>
                         <input
                             name='zip'
+                            maxLength='64'
                             defaultValue={formatCEP(getData('user')
                                 .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
                             readOnly= {!admin}
@@ -342,6 +364,7 @@ const Profile = ({ history }) => {
                         <label>Cidade</label>
                         <input
                             name='city'
+                            maxLength='64'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.city ?? ''}
@@ -354,6 +377,7 @@ const Profile = ({ history }) => {
                         <label>Estado</label>
                         <input
                             name='state'
+                            maxLength='64'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.state ?? ''}
@@ -394,7 +418,11 @@ const Profile = ({ history }) => {
                                     className='classic-button'
                                     onClick={ event => {
                                         event.preventDefault()
-                                        handleSubmit(1)
+                                        if (validateForm(1)) {
+                                            handleSubmit(1)
+                                        } else {
+                                            console.log('FORM 2 FAIL')
+                                        }
                                     }}
                                 >
                                     Salvar

@@ -32,7 +32,7 @@ const Login = ({ history }) => {
                 adminLogin(response.data.token)
 
                 if(await fetch()) {
-                    history.push('/dashboard')
+                    history.push('/users-list')
                 }
             }
         } catch (err) {

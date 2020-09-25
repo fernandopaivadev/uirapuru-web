@@ -50,6 +50,36 @@ const getOnlyNumbers = input =>
     input
         .replace(/\D/g, '')
 
+const validateForm = index => {
+    if (!index) {
+        index = 0
+    }
+
+    const form = document.querySelector(`form:nth-child(${index + 1})`)
+
+    if (!form) {
+        return false
+    }
+
+    let sum = 0
+    let expected = 0
+
+    const inputs = [...Object.values(form).filter(field => {
+        if (field.tagName === 'INPUT') {
+            return field
+        }
+    })]
+
+    inputs.forEach(input => {
+        if (input.checkValidity()) {
+            sum++
+        }
+        expected++
+    })
+
+    return sum === expected
+}
+
 export {
     formatUsername,
     formatPhone,
@@ -58,5 +88,6 @@ export {
     formatCEP,
     formatTimeStamp,
     formatDate,
-    getOnlyNumbers
+    getOnlyNumbers,
+    validateForm
 }

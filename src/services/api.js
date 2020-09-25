@@ -2,7 +2,8 @@ import { create } from 'axios'
 import { isAuthenticated, getToken } from './auth'
 
 //const baseURL = 'http://localhost:8080/'
-const baseURL = 'https://api.techamazon.tech'
+// const baseURL = 'https://api.techamazon.tech'
+const baseURL = 'https://techamazon-uirapuru-api.herokuapp.com'
 
 const api = create({
     baseURL
