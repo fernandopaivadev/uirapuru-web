@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 import NavBar from '../panels/NavBar'
 
@@ -79,19 +79,22 @@ const NewUser = ({ history }) => {
         document.querySelector('form').reset()
     }
 
-    useEffect(() => {
-        const _user = user
+    useEffect(
+        useCallback(() => {
+            const _user = user
 
-        if (userType === 'person') {
-            delete _user.company
-            _user.person = {}
-        } else if (userType === 'company') {
-            delete _user.person
-            _user.company = {}
-        }
+            if (userType === 'person') {
+                delete _user.company
+                _user.person = {}
+            } else if (userType === 'company') {
+                delete _user.person
+                _user.company = {}
+            }
 
-        setUser(_user)
-    }, [userType])
+            setUser(_user)
+        }, [userType, user]
+        ), []
+    )
 
     const validateInput = (event, min, index, onlyNumbers) => {
         const _isValid = [...isValid]
@@ -379,7 +382,6 @@ const NewUser = ({ history }) => {
 
                             <label>Descrição</label>
                             <input
-                                type='textarea'
                                 name='description'
                                 maxLength='512'
                                 onChange={ event => {
@@ -415,7 +417,7 @@ const NewUser = ({ history }) => {
                             />
                             {isValid[4] === 'not valid' ?
                                 <p className='validation-error'>
-                                    Digite no mínimo 6 caracteres
+                                    Digite no mínimo 10 caracteres
                                 </p>
                                 : null
                             }

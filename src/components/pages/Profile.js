@@ -106,12 +106,6 @@ const Profile = ({ history }) => {
         }
     }
 
-    // const validateInput = (formIndex, inputIndex) => {
-    //     const form = document.querySelector(`form:nth-child(${formIndex + 1})`)
-    //     const fields = Object.values(form)
-    //     return fields[inputIndex].checkValidity()
-    // }
-
     return <div className='profile'>
         <NavBar />
         <Menu
@@ -165,17 +159,25 @@ const Profile = ({ history }) => {
                                 user.username = event.target.value
                             }}
                         />
+                        <p className='error-message'>
+                            Digite no mínimo 6 caracteres
+                        </p>
 
                         <label>Email</label>
                         <input
                             name='email'
                             maxLength='40'
+                            minLength='10'
                             defaultValue={getData('user')?.email ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
                                 user.email = event.target.value
                             }}
                         />
+                        <p className='error-message'>
+                            Digite no mínimo 10 caracteres
+                        </p>
+
                         <label>Telefone</label>
                         <input
                             name='phone'
@@ -188,8 +190,28 @@ const Profile = ({ history }) => {
                                 )
                             }}
                         />
+                        <p className='error-message'>
+                            Número de telefone inválido
+                        </p>
+
                         {getData('user')?.person ?
                             <>
+                                <label>Nome completo</label>
+                                <input
+                                    name='name'
+                                    maxLength='128'
+                                    minLength='10'
+                                    defaultValue={formatCPF(getData('user')?.person
+                                        ?.cpf) ?? ''}
+                                    readOnly= {!admin}
+                                    onChange={ event => {
+                                        user.person.name = event.target.value
+                                    }}
+                                />
+                                <p className='error-message'>
+                                    Digite no mínimo 10 caracteres
+                                </p>
+
                                 <label>CPF</label>
                                 <input
                                     name='cpf'
@@ -205,6 +227,10 @@ const Profile = ({ history }) => {
                                         )
                                     }}
                                 />
+                                <p className='error-message'>
+                                    CPF inválido
+                                </p>
+
                                 <label>Data de nascimento</label>
                                 <input
                                     name='birth'
@@ -219,6 +245,9 @@ const Profile = ({ history }) => {
                                         )
                                     }}
                                 />
+                                <p className='error-message'>
+                                    Data inválida
+                                </p>
                             </>
                             :
                             <>
@@ -241,10 +270,33 @@ const Profile = ({ history }) => {
                                         )
                                     }}
                                 />
+                                <p className='error-message'>
+                                    Erro
+                                </p>
+
+                                <label>Nome Fantasia</label>
+                                <input
+                                    name='tradeName'
+                                    maxLength='128'
+                                    minLength='6'
+                                    defaultValue={getData('user')?.company
+                                        ?.name ?? ''}
+                                    readOnly= {!admin}
+                                    onChange={ event => {
+                                        user.company.name = event
+                                            .target
+                                            .value
+                                    }}
+                                />
+                                <p className='error-message'>
+                                    Digite no mínimo 6 caracteres
+                                </p>
+
                                 <label>Razão social</label>
                                 <input
                                     name='tradeName'
                                     maxLength='128'
+                                    minLength='6'
                                     defaultValue={getData('user')?.company
                                         ?.tradeName ?? ''}
                                     readOnly= {!admin}
@@ -254,10 +306,15 @@ const Profile = ({ history }) => {
                                             .value
                                     }}
                                 />
+                                <p className='error-message'>
+                                    Digite no mínimo 6 caracteres
+                                </p>
+
                                 <label>Descrição</label>
                                 <input
                                     name='description'
                                     maxLength='512'
+                                    minLength='50'
                                     defaultValue={getData('user')?.company
                                         ?.description ?? ''}
                                     readOnly= {!admin}
@@ -267,6 +324,9 @@ const Profile = ({ history }) => {
                                             .value
                                     }}
                                 />
+                                <p className='error-message'>
+                                    Digite no mínimo 50 caracteres
+                                </p>
                             </>
                         }
                         {admin ?
@@ -309,7 +369,7 @@ const Profile = ({ history }) => {
                         <label>Número</label>
                         <input
                             name='number'
-                            minLength='3'
+                            minLength='6'
                             maxLength='64'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
@@ -320,10 +380,15 @@ const Profile = ({ history }) => {
                                     .number = event.target.value
                             }}
                         />
+                        <p className='error-message'>
+                            Digite no mínimo 6 caracteres
+                        </p>
+
                         <label>Nome da unidade consumidora</label>
                         <input
                             name='name'
                             maxLength='64'
+                            minLength='8'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.name ?? ''}
@@ -333,10 +398,15 @@ const Profile = ({ history }) => {
                                     .name = event.target.value
                             }}
                         />
+                        <p className='error-message'>
+                            Digite no mínimo 8 caracteres
+                        </p>
+
                         <label>Endereço</label>
                         <input
                             name='address'
                             maxLength='256'
+                            minLength='10'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.address ?? ''}
@@ -346,10 +416,13 @@ const Profile = ({ history }) => {
                                     .address = event.target.value
                             }}
                         />
+                        <p className='error-message'>
+                            Digite no mínimo 10 caracteres
+                        </p>
+
                         <label>CEP</label>
                         <input
                             name='zip'
-                            maxLength='64'
                             defaultValue={formatCEP(getData('user')
                                 .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
                             readOnly= {!admin}
@@ -361,10 +434,15 @@ const Profile = ({ history }) => {
                                     .value)
                             }}
                         />
+                        <p className='error-message'>
+                            CEP inválido
+                        </p>
+
                         <label>Cidade</label>
                         <input
                             name='city'
                             maxLength='64'
+                            minLength='3'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.city ?? ''}
@@ -374,10 +452,15 @@ const Profile = ({ history }) => {
                                     .city = event.target.value
                             }}
                         />
+                        <p className='error-message'>
+                            Digite no mínimo 3 caracteres
+                        </p>
+
                         <label>Estado</label>
                         <input
                             name='state'
                             maxLength='64'
+                            minLength='3'
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.state ?? ''}
@@ -387,6 +470,9 @@ const Profile = ({ history }) => {
                                     .state = event.target.value
                             }}
                         />
+                        <p className='error-message'>
+                            Digite no mínimo 3 caracteres
+                        </p>
 
                         <div className='buttons'>
                             {admin ?

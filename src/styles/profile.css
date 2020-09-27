@@ -17,8 +17,24 @@
     color: #333;
 }
 
+.profile .main input:invalid {
+    border: 0.2rem solid #d00;
+}
+
+.error-message {
+    color: #d00;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: -2rem auto 0rem auto;
+    display: none;
+}
+
+.profile .main input:invalid + .error-message {
+    display: block;
+}
+
 .profile .main label {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 600;
     color: #555;
 }

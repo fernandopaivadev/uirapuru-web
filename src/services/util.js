@@ -64,11 +64,9 @@ const validateForm = index => {
     let sum = 0
     let expected = 0
 
-    const inputs = [...Object.values(form).filter(field => {
-        if (field.tagName === 'INPUT') {
-            return field
-        }
-    })]
+    const inputs = Object.values(form).filter(field =>
+        field.tagName === 'INPUT'
+    )
 
     inputs.forEach(input => {
         if (input.checkValidity()) {
