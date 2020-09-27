@@ -369,6 +369,10 @@ const Profile = ({ history }) => {
                                         const _error = [...error]
                                         _error[0] = true
                                         setError(_error)
+
+                                        setTimeout(() => {
+                                            setError(false)
+                                        }, 3000)
                                     }
                                 }}
                             >
@@ -549,6 +553,10 @@ const Profile = ({ history }) => {
                                             const _error = [...error]
                                             _error[1] = true
                                             setError(_error)
+
+                                            setTimeout(() => {
+                                                setError(false)
+                                            }, 3000)
                                         }
                                     }}
                                 >

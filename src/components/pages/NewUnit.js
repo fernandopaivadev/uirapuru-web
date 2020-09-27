@@ -12,7 +12,8 @@ import fetch from '../../services/fetch'
 
 import {
     formatCEP,
-    getOnlyNumbers
+    getOnlyNumbers,
+    validateForm
 } from '../../services/util'
 
 import '../../styles/newunit.css'
@@ -35,56 +36,6 @@ const NewUnit = ({ history }) => {
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
     const [loading, setLoading] = useState(false)
-    const [isValid, setIsValid] = useState(
-        new Array(6).fill('')
-    )
-
-    const validateInput = (event, min, index, onlyNumbers) => {
-        const _isValid = [...isValid]
-        const { value } = event.target
-
-        if (onlyNumbers) {
-            if (getOnlyNumbers(value).length >= min) {
-                _isValid[index] = 'valid'
-            } else {
-                _isValid[index] = 'not valid'
-            }
-        } else {
-            if (value.length >= min) {
-                _isValid[index] = 'valid'
-            } else {
-                _isValid[index] = 'not valid'
-            }
-        }
-
-        setIsValid(_isValid)
-    }
-
-    const validateForm = () => {
-        let sum = 0
-        let expected = 0
-
-        const form = document.querySelector('form')
-        const fields = Object.values(form)
-
-        fields.forEach(field => {
-            if (field.tagName === 'INPUT' && field.type !== 'checkbox') {
-                expected = expected + 1
-            }
-        })
-
-        isValid.forEach(item => {
-            if (item === 'valid') {
-                sum = sum + 1
-            }
-        })
-
-        if (sum === expected) {
-            return true
-        } else {
-            return false
-        }
-    }
 
     const handleSubmit = async event => {
         try {
@@ -133,20 +84,6 @@ const NewUnit = ({ history }) => {
         }
     }
 
-    const buttonPress = (event, task) => {
-        event.preventDefault()
-        if (validateForm()) {
-            task()
-        } else {
-            setErrorMessage('Preencha todos os campos')
-            setError(true)
-
-            setTimeout(() => {
-                setError(false)
-            }, 3000)
-        }
-    }
-
     return <div className='newunit'>
         <NavBar />
         <div className='main'>
@@ -159,118 +96,93 @@ const NewUnit = ({ history }) => {
                 <label>Número</label>
                 <input
                     name='number'
-                    maxLength='64'
+                    minLength='6'
+                    maxLength='16'
+                    required
                     onChange={ event => {
                         consumerUnit
                             .number = event.target.value
                     }}
-                    onBlur={event => {
-                        validateInput(event, 6, 0, true)
-                    }}
                 />
-                {isValid[0] === 'not valid' ?
-                    <p className='validation-error'>
-                        Digite no mínimo 6 caracteres
-                    </p>
-                    : null
-                }
+                <p className='error-message'>
+                    Digite no mínimo 6 caracteres
+                </p>
 
                 <label>Nome da unidade consumidora</label>
                 <input
                     name='name'
                     maxLength='64'
+                    minLength='8'
+                    required
                     onChange={ event => {
                         consumerUnit
                             .name = event.target.value
                     }}
-                    onBlur={event => {
-                        validateInput(event, 8, 1)
-                    }}
                 />
-                {isValid[1] === 'not valid' ?
-                    <p className='validation-error'>
-                            Digite no mínimo 8 caracteres
-                    </p>
-                    : null
-                }
+                <p className='error-message'>
+                    Digite no mínimo 8 caracteres
+                </p>
 
                 <label>Endereço</label>
                 <input
                     name='address'
                     maxLength='256'
+                    minLength='10'
+                    required
                     onChange={ event => {
                         consumerUnit
                             .address = event.target.value
                     }}
-                    onBlur={event => {
-                        validateInput(event, 10, 2)
-                    }}
                 />
-                {isValid[2] === 'not valid' ?
-                    <p className='validation-error'>
-                            Digite no mínimo 10 caracteres
-                    </p>
-                    : null
-                }
+                <p className='error-message'>
+                    Digite no mínimo 10 caracteres
+                </p>
 
                 <label>CEP</label>
                 <input
                     name='zip'
-                    maxLength='64'
+                    pattern='\d{5}-\d{3}'
+                    required
                     onChange={ event => {
                         consumerUnit
                             .zip = getOnlyNumbers(event.target.value)
                         event.target.value = formatCEP(event.target
                             .value)
                     }}
-                    onBlur={event => {
-                        validateInput(event, 8, 3, true)
-                    }}
                 />
-                {isValid[3] === 'not valid' ?
-                    <p className='validation-error'>
-                        CEP inválido
-                    </p>
-                    : null
-                }
+                <p className='error-message'>
+                    CEP inválido
+                </p>
 
                 <label>Cidade</label>
                 <input
                     name='city'
                     maxLength='64'
+                    minLength='3'
+                    required
                     onChange={ event => {
                         consumerUnit
                             .city = event.target.value
                     }}
-                    onBlur={event => {
-                        validateInput(event, 3, 4)
-                    }}
                 />
-                {isValid[4] === 'not valid' ?
-                    <p className='validation-error'>
-                        Digite no mínimo 3 caracteres
-                    </p>
-                    : null
-                }
+                <p className='error-message'>
+                    Digite no mínimo 3 caracteres
+                </p>
 
                 <label>Estado</label>
                 <input
                     name='state'
                     maxLength='64'
+                    minLength='3'
+                    required
                     onChange={ event => {
                         consumerUnit
                             .state = event.target.value
                     }}
-                    onBlur={event => {
-                        validateInput(event, 3, 5)
-                    }}
                 />
-                {isValid[5] === 'not valid' ?
-                    <p className='validation-error'>
-                        Digite no mínimo 3 caracteres
-                    </p>
-                    : null
-                }
+                <p className='error-message'>
+                    Digite no mínimo 3 caracteres
+                </p>
 
                 {loading ?
                     <div className='loading-container'>
@@ -291,10 +203,18 @@ const NewUnit = ({ history }) => {
                         <button
                             className='classic-button'
                             onClick={event => {
-                                buttonPress(event, () => {
+                                event.preventDefault()
+                                if (validateForm()) {
                                     user.consumerUnits.push(consumerUnit)
                                     handleSubmit(event)
-                                })
+                                } else {
+                                    setErrorMessage('Preencha todos os campos')
+                                    setError(true)
+
+                                    setTimeout(() => {
+                                        setError(false)
+                                    }, 3000)
+                                }
                             }}
                         >
                             Salvar
