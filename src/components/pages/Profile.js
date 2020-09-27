@@ -36,6 +36,7 @@ const Profile = ({ history }) => {
     const [modal, setModal] = useState([false,false])
     const [success, setSuccess] = useState([false, false])
     const [error, setError] = useState([false, false])
+    const [errorMessage, setErrorMessage] = useState('Erro no processamento do formulário')
 
     const deleteUser = async () => {
         try {
@@ -77,12 +78,22 @@ const Profile = ({ history }) => {
                 _success[index] = true
                 setSuccess(_success)
 
+                const _error = [...error]
+                _error[index] = false
+                setError(_error)
+
                 setTimeout(() => {
                     const _success = [...success]
                     _success[index] = false
                     setSuccess(_success)
                 }, 1500)
             } else {
+                setErrorMessage('Erro no processamento do formulário')
+
+                const _success = [...success]
+                _success[index] = false
+                setSuccess(_success)
+
                 const _error = [...error]
                 _error[index] = true
                 setError(_error)
@@ -99,6 +110,8 @@ const Profile = ({ history }) => {
             const status = err?.response?.status
 
             if (status) {
+                setErrorMessage('Erro no processamento do formulário')
+
                 const _error = [...error]
                 _error[index] = true
                 setError(_error)
@@ -109,6 +122,7 @@ const Profile = ({ history }) => {
     return <div className='profile'>
         <NavBar />
         <Menu
+            title='Unidades'
             items = {getData('user').consumerUnits}
             setItemIndex = { setConsumerUnitIndex }
         />
@@ -153,6 +167,7 @@ const Profile = ({ history }) => {
                             name='username'
                             maxLength='20'
                             minLength='6'
+                            required
                             defaultValue={getData('user')?.username ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
@@ -168,6 +183,7 @@ const Profile = ({ history }) => {
                             name='email'
                             maxLength='40'
                             minLength='10'
+                            required
                             defaultValue={getData('user')?.email ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
@@ -181,6 +197,8 @@ const Profile = ({ history }) => {
                         <label>Telefone</label>
                         <input
                             name='phone'
+                            required
+                            pattern='\(\d{2}\) \d{5}-\d{4}$'
                             defaultValue={formatPhone(getData('user')?.phone) ?? ''}
                             readOnly= {!admin}
                             onChange={ event => {
@@ -201,8 +219,9 @@ const Profile = ({ history }) => {
                                     name='name'
                                     maxLength='128'
                                     minLength='10'
-                                    defaultValue={formatCPF(getData('user')?.person
-                                        ?.cpf) ?? ''}
+                                    required
+                                    defaultValue={getData('user')?.person
+                                        ?.name ?? ''}
                                     readOnly= {!admin}
                                     onChange={ event => {
                                         user.person.name = event.target.value
@@ -215,6 +234,8 @@ const Profile = ({ history }) => {
                                 <label>CPF</label>
                                 <input
                                     name='cpf'
+                                    required
+                                    pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
                                     defaultValue={formatCPF(getData('user')?.person
                                         ?.cpf) ?? ''}
                                     readOnly= {!admin}
@@ -234,6 +255,8 @@ const Profile = ({ history }) => {
                                 <label>Data de nascimento</label>
                                 <input
                                     name='birth'
+                                    required
+                                    pattern='\d{2}\/\d{2}\/\d{4}'
                                     defaultValue={formatTimeStamp(
                                         getData('user')?.person?.birth
                                     ) ?? ''}
@@ -254,6 +277,8 @@ const Profile = ({ history }) => {
                                 <label>CNPJ</label>
                                 <input
                                     name='cnpj'
+                                    required
+                                    pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                                     defaultValue={
                                         formatCNPJ(
                                             getData('user')?.company?.cnpj
@@ -271,7 +296,7 @@ const Profile = ({ history }) => {
                                     }}
                                 />
                                 <p className='error-message'>
-                                    Erro
+                                    CNPJ inválido
                                 </p>
 
                                 <label>Nome Fantasia</label>
@@ -279,6 +304,7 @@ const Profile = ({ history }) => {
                                     name='tradeName'
                                     maxLength='128'
                                     minLength='6'
+                                    required
                                     defaultValue={getData('user')?.company
                                         ?.name ?? ''}
                                     readOnly= {!admin}
@@ -297,6 +323,7 @@ const Profile = ({ history }) => {
                                     name='tradeName'
                                     maxLength='128'
                                     minLength='6'
+                                    required
                                     defaultValue={getData('user')?.company
                                         ?.tradeName ?? ''}
                                     readOnly= {!admin}
@@ -315,6 +342,7 @@ const Profile = ({ history }) => {
                                     name='description'
                                     maxLength='512'
                                     minLength='50'
+                                    required
                                     defaultValue={getData('user')?.company
                                         ?.description ?? ''}
                                     readOnly= {!admin}
@@ -337,7 +365,10 @@ const Profile = ({ history }) => {
                                     if (validateForm(0)) {
                                         handleSubmit(0)
                                     } else {
-                                        console.log('FORM 1 FAIL')
+                                        setErrorMessage('Preencha todos os campos')
+                                        const _error = [...error]
+                                        _error[0] = true
+                                        setError(_error)
                                     }
                                 }}
                             >
@@ -353,7 +384,7 @@ const Profile = ({ history }) => {
                         }
                         {!success[0] && error[0]?
                             <p className='error'>
-                                Ocorreu um erro
+                                { errorMessage }
                             </p>
                             : null
                         }
@@ -370,7 +401,8 @@ const Profile = ({ history }) => {
                         <input
                             name='number'
                             minLength='6'
-                            maxLength='64'
+                            maxLength='16'
+                            required
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.number ?? ''}
@@ -389,6 +421,7 @@ const Profile = ({ history }) => {
                             name='name'
                             maxLength='64'
                             minLength='8'
+                            required
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.name ?? ''}
@@ -407,6 +440,7 @@ const Profile = ({ history }) => {
                             name='address'
                             maxLength='256'
                             minLength='10'
+                            required
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.address ?? ''}
@@ -423,6 +457,8 @@ const Profile = ({ history }) => {
                         <label>CEP</label>
                         <input
                             name='zip'
+                            required
+                            pattern='\d{5}-\d{3}'
                             defaultValue={formatCEP(getData('user')
                                 .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
                             readOnly= {!admin}
@@ -443,6 +479,7 @@ const Profile = ({ history }) => {
                             name='city'
                             maxLength='64'
                             minLength='3'
+                            required
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.city ?? ''}
@@ -461,6 +498,7 @@ const Profile = ({ history }) => {
                             name='state'
                             maxLength='64'
                             minLength='3'
+                            required
                             defaultValue={getData('user')
                                 .consumerUnits[ consumerUnitIndex ]
                                 ?.state ?? ''}
@@ -507,7 +545,10 @@ const Profile = ({ history }) => {
                                         if (validateForm(1)) {
                                             handleSubmit(1)
                                         } else {
-                                            console.log('FORM 2 FAIL')
+                                            setErrorMessage('Preencha todos os campos')
+                                            const _error = [...error]
+                                            _error[1] = true
+                                            setError(_error)
                                         }
                                     }}
                                 >
@@ -525,7 +566,7 @@ const Profile = ({ history }) => {
                         }
                         {!success[1] && error[1]?
                             <p className='error'>
-                                Ocorreu um erro
+                                { errorMessage }
                             </p>
                             : null
                         }

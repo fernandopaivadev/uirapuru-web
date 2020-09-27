@@ -2,8 +2,11 @@ import React from 'react'
 
 import '../../styles/menu.css'
 
-const Menu = ({ items, subItemKey, setItemIndex, setSubItemIndex }) =>
+const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
     <div className='menu'>
+        <p className='title'>
+            { title }
+        </p>
         <ul className='items'>
             {items.map((item, itemIndex) =>
                 <li key={ itemIndex }>

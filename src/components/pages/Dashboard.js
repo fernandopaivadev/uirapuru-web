@@ -137,6 +137,7 @@ const Dashboard = ({ history }) => {
     return <div className='dashboard'>
         <NavBar />
         <Menu
+            title='Unidades'
             setSubItemIndex={setDeviceIndex}
             items={getData('user').consumerUnits}
             subItemKey={'devices'}
