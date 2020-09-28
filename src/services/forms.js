@@ -1,39 +1,43 @@
+const noEmptySpace = input =>
+    input
+        ?.replace(/(\s)/, '')
+
 const formatPhone = phone =>
-        phone
-            ?.replace(/\D/g, '')
-            .replace(/(\d{11})(\d)/, '$1')
-            .replace(/(\d{2})(\d)/, '($1) $2')
-            .replace(/(\d{5})(\d)/, '$1-$2')
+    phone
+        ?.replace(/\D/g, '')
+        .replace(/(\d{11})(\d)/, '$1')
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d)/, '$1-$2')
 
 const formatCPF = cpf =>
-        cpf
-            ?.replace(/\D/g, '')
-            .replace(/(\d{11})(\d)/, '$1')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1-$2')
+    cpf
+        ?.replace(/\D/g, '')
+        .replace(/(\d{11})(\d)/, '$1')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1-$2')
 
 const formatCNPJ = cnpj =>
-        cnpj
-            ?.replace(/\D/g, '')
-            .replace(/(\d{14})(\d)/, '$1')
-            .replace(/(\d{2})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{4})(\d)/, '$1-$2')
+    cnpj
+        ?.replace(/\D/g, '')
+        .replace(/(\d{14})(\d)/, '$1')
+        .replace(/(\d{2})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{4})(\d)/, '$1-$2')
 
 const formatCEP = cep =>
-        cep
-            ?.replace(/\D/g, '')
-            .replace(/(\d{8})(\d)/, '$1')
-            .replace(/(\d{5})(\d)/, '$1-$2')
+    cep
+        ?.replace(/\D/g, '')
+        .replace(/(\d{8})(\d)/, '$1')
+        .replace(/(\d{5})(\d)/, '$1-$2')
 
 const formatTimeStamp = timeStamp =>
-        timeStamp
-            ?.replace(/\D/g, '')
-            .replace(/(\d{2})(\d)/, '$1/$2')
-            .replace(/(\d{2})(\d)/, '$1/$2')
-            .replace(/(\d{4})(\d)/, '$1')
+    timeStamp
+        ?.replace(/\D/g, '')
+        .replace(/(\d{2})(\d)/, '$1/$2')
+        .replace(/(\d{2})(\d)/, '$1/$2')
+        .replace(/(\d{4})(\d)/, '$1')
 
 const formatDate = input =>
     input
@@ -43,7 +47,7 @@ const formatDate = input =>
         .replace(/(\d{2})(\d)/, '$1/$2')
 
 const getOnlyNumbers = input =>
-    input.replace(/\D/g, '')
+    input?.replace(/\D/g, '')
 
 const validateForm = index => {
     if (!index) {
@@ -146,5 +150,6 @@ export {
     formatDate,
     getOnlyNumbers,
     validateForm,
-    setFormValidation
+    setFormValidation,
+    noEmptySpace
 }

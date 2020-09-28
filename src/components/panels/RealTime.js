@@ -11,7 +11,7 @@ import {
     //faPlug,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { formatDate } from '../../services/util'
+import { formatDate } from '../../services/forms'
 
 import themes from '../../themes'
 import '../../styles/realtime.css'

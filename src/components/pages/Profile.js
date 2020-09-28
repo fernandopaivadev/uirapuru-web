@@ -23,8 +23,9 @@ import {
     formatDate,
     getOnlyNumbers,
     validateForm,
-    setFormValidation
-} from '../../services/util'
+    setFormValidation,
+    noEmptySpace
+} from '../../services/forms'
 
 import '../../styles/profile.css'
 
@@ -177,6 +178,9 @@ const Profile = ({ history }) => {
                             readOnly= {!admin}
                             onChange={ event => {
                                 user.username = event.target.value
+                                event.target.value = noEmptySpace(
+                                    event.target.value
+                                )
                             }}
                         />
                         <p className='error-message'>

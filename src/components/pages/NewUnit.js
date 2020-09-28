@@ -15,7 +15,7 @@ import {
     getOnlyNumbers,
     validateForm,
     setFormValidation
-} from '../../services/util'
+} from '../../services/forms'
 
 import '../../styles/newunit.css'
 
