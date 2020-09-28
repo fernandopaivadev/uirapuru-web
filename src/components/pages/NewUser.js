@@ -11,6 +11,7 @@ import { logout } from '../../services/auth'
 import fetch from '../../services/fetch'
 
 import {
+    formatUsername,
     formatPhone,
     formatCPF,
     formatCNPJ,
@@ -18,8 +19,7 @@ import {
     formatDate,
     getOnlyNumbers,
     validateForm,
-    setFormValidation,
-    noEmptySpace
+    setFormValidation
 } from '../../services/forms'
 
 import '../../styles/newuser.css'
@@ -177,9 +177,10 @@ const NewUser = ({ history }) => {
                         maxLength='20'
                         minLength='6'
                         required
+                        pattern='[a-zA-Z0-9]{6,20}'
                         onChange={ event => {
                             user.username = event.target.value
-                            event.target.value = noEmptySpace(
+                            event.target.value = formatUsername(
                                 event.target.value
                             )
                         }}

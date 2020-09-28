@@ -1,6 +1,6 @@
-const noEmptySpace = input =>
+const formatUsername = input =>
     input
-        ?.replace(/(\s)/, '')
+        ?.replace(/[\W_]/g, '')
 
 const formatPhone = phone =>
     phone
@@ -126,7 +126,6 @@ const setFormValidation = formIndex => {
 
     const formChildren = [...form.children]
 
-
     const inputs = formChildren.filter(child =>
         child.tagName === 'INPUT'
         &&
@@ -142,6 +141,7 @@ const setFormValidation = formIndex => {
 }
 
 export {
+    formatUsername,
     formatPhone,
     formatCPF,
     formatCNPJ,
@@ -150,6 +150,5 @@ export {
     formatDate,
     getOnlyNumbers,
     validateForm,
-    setFormValidation,
-    noEmptySpace
+    setFormValidation
 }

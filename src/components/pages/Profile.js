@@ -15,6 +15,7 @@ import { api } from '../../services/api'
 import fetch from '../../services/fetch'
 
 import {
+    formatUsername,
     formatPhone,
     formatCPF,
     formatCNPJ,
@@ -23,8 +24,7 @@ import {
     formatDate,
     getOnlyNumbers,
     validateForm,
-    setFormValidation,
-    noEmptySpace
+    setFormValidation
 } from '../../services/forms'
 
 import '../../styles/profile.css'
@@ -41,7 +41,8 @@ const Profile = ({ history }) => {
     const [errorMessage, setErrorMessage] = useState('Erro no processamento do formulário')
 
     useEffect(() => {
-        setFormValidation()
+        setFormValidation(0)
+        setFormValidation(1)
     })
 
     const deleteUser = async () => {
@@ -178,7 +179,7 @@ const Profile = ({ history }) => {
                             readOnly= {!admin}
                             onChange={ event => {
                                 user.username = event.target.value
-                                event.target.value = noEmptySpace(
+                                event.target.value = formatUsername(
                                     event.target.value
                                 )
                             }}
@@ -380,7 +381,9 @@ const Profile = ({ history }) => {
                                         setError(_error)
 
                                         setTimeout(() => {
-                                            setError(false)
+                                            const _error = [...error]
+                                            _error[0] = false
+                                            setError(_error)
                                         }, 3000)
                                     }
                                 }}
@@ -564,7 +567,9 @@ const Profile = ({ history }) => {
                                             setError(_error)
 
                                             setTimeout(() => {
-                                                setError(false)
+                                                const _error = [...error]
+                                                _error[1] = false
+                                                setError(_error)
                                             }, 3000)
                                         }
                                     }}
