@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import NavBar from '../panels/NavBar'
 
@@ -22,7 +22,8 @@ import {
     formatTimeStamp,
     formatDate,
     getOnlyNumbers,
-    validateForm
+    validateForm,
+    setFormValidation
 } from '../../services/util'
 
 import '../../styles/profile.css'
@@ -37,6 +38,10 @@ const Profile = ({ history }) => {
     const [success, setSuccess] = useState([false, false])
     const [error, setError] = useState([false, false])
     const [errorMessage, setErrorMessage] = useState('Erro no processamento do formulário')
+
+    useEffect(() => {
+        setFormValidation()
+    })
 
     const deleteUser = async () => {
         try {
@@ -301,7 +306,7 @@ const Profile = ({ history }) => {
 
                                 <label>Nome Fantasia</label>
                                 <input
-                                    name='tradeName'
+                                    name='name'
                                     maxLength='128'
                                     minLength='6'
                                     required

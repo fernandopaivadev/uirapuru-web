@@ -18,6 +18,20 @@
     color: #333;
 }
 
+.newuser .error-message {
+    color: #d00;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: -2rem auto 1rem auto;
+    display: none;
+}
+
+.newuser .main label {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #555;
+}
+
 .newuser .main label {
     font-size: 1.8rem;
     font-weight: 600;

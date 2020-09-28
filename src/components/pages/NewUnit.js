@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import NavBar from '../panels/NavBar'
 
@@ -13,7 +13,8 @@ import fetch from '../../services/fetch'
 import {
     formatCEP,
     getOnlyNumbers,
-    validateForm
+    validateForm,
+    setFormValidation
 } from '../../services/util'
 
 import '../../styles/newunit.css'
@@ -36,6 +37,10 @@ const NewUnit = ({ history }) => {
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setFormValidation()
+    })
 
     const handleSubmit = async event => {
         try {

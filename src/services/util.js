@@ -1,7 +1,3 @@
-const formatUsername = username =>
-    username
-        ?.replace(/([a-z][0-9]{5})([a-z][0-9])/, '$1')
-
 const formatPhone = phone =>
         phone
             ?.replace(/\D/g, '')
@@ -41,14 +37,13 @@ const formatTimeStamp = timeStamp =>
 
 const formatDate = input =>
     input
-        .replace(/\D/g, '')
+        ?.replace(/\D/g, '')
         .replace(/(\d{8})(\d)/, '$1')
         .replace(/(\d{2})(\d)/, '$1/$2')
         .replace(/(\d{2})(\d)/, '$1/$2')
 
 const getOnlyNumbers = input =>
-    input
-        .replace(/\D/g, '')
+    input.replace(/\D/g, '')
 
 const validateForm = index => {
     if (!index) {
@@ -61,11 +56,15 @@ const validateForm = index => {
         return false
     }
 
+    const formChildren = [...form.children]
+
     let sum = 0
     let expected = 0
 
-    const inputs = Object.values(form).filter(field =>
-        field.tagName === 'INPUT'
+    const inputs = formChildren.filter(child =>
+        child.tagName === 'INPUT'
+        &&
+        child.type !== 'checkbox'
     )
 
     inputs.forEach(input => {
@@ -78,8 +77,67 @@ const validateForm = index => {
     return sum === expected
 }
 
+const validateInput = (formIndex, inputIndex) => {
+    if (!formIndex) {
+        formIndex = 0
+    }
+
+    const form = document.querySelector(`form:nth-child(${formIndex + 1})`)
+
+    if (!form) {
+        return false
+    }
+
+    const formChildren = [...form.children]
+
+    const inputs = formChildren.filter(child =>
+        child.tagName === 'INPUT'
+        &&
+        child.type !== 'checkbox'
+    )
+
+    const errorMessages = formChildren.filter(child =>
+        child.className === 'error-message'
+    )
+
+    if (inputs[inputIndex].checkValidity()) {
+        inputs[inputIndex].style.borderColor = 'var(--default-green)'
+        errorMessages[inputIndex].style.display = 'none'
+    } else {
+        inputs[inputIndex].style.borderColor = '#d00'
+        errorMessages[inputIndex].style.display = 'block'
+    }
+}
+
+const setFormValidation = formIndex => {
+    if (!formIndex) {
+        formIndex = 0
+    }
+
+    const form = document.querySelector(`form:nth-child(${formIndex + 1})`)
+
+    if (!form) {
+        return false
+    }
+
+    const formChildren = [...form.children]
+
+
+    const inputs = formChildren.filter(child =>
+        child.tagName === 'INPUT'
+        &&
+        child.type !== 'checkbox'
+    )
+
+    inputs.forEach((input, inputIndex) => {
+        input.onblur = () => {
+            validateInput(formIndex, inputIndex)
+        }
+    })
+
+}
+
 export {
-    formatUsername,
     formatPhone,
     formatCPF,
     formatCNPJ,
@@ -87,5 +145,6 @@ export {
     formatTimeStamp,
     formatDate,
     getOnlyNumbers,
-    validateForm
+    validateForm,
+    setFormValidation
 }

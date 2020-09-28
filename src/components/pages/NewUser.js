@@ -11,13 +11,14 @@ import { logout } from '../../services/auth'
 import fetch from '../../services/fetch'
 
 import {
-    formatUsername,
     formatPhone,
     formatCPF,
     formatCNPJ,
     formatCEP,
     formatDate,
-    getOnlyNumbers
+    getOnlyNumbers,
+    validateForm,
+    setFormValidation
 } from '../../services/util'
 
 import '../../styles/newuser.css'
@@ -44,40 +45,12 @@ const NewUser = ({ history }) => {
     }
 
     const [modal, setModal] = useState(false)
-    const [step, setStep] = useState(1)
+    const [step, setStep] = useState(0)
     const [userType, setUserType] = useState('company')
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
     const [loading, setLoading] = useState(false)
-    const [isValid, setIsValid] = useState(
-        new Array(8).fill('')
-    )
-
-    const clearIsValid = () => {
-        const _isValid = [...isValid]
-
-        _isValid.forEach((item, index) => {
-            _isValid[index] = false
-        })
-
-        setIsValid([..._isValid])
-    }
-
-    const clearForm = () => {
-        const form = document.querySelector('form')
-        const fields = Object.values(form)
-
-        fields.forEach((field, index) => {
-            if (index > 4 && field.tagName === 'INPUT') {
-                field.value = ''
-            }
-        })
-    }
-
-    const resetForm = () => {
-        document.querySelector('form').reset()
-    }
 
     useEffect(
         useCallback(() => {
@@ -96,51 +69,25 @@ const NewUser = ({ history }) => {
         ), []
     )
 
-    const validateInput = (event, min, index, onlyNumbers) => {
-        const _isValid = [...isValid]
-        const { value } = event.target
+    useEffect(() => {
+        setFormValidation()
+    })
 
-        if (onlyNumbers) {
-            if (getOnlyNumbers(value).length >= min) {
-                _isValid[index] = 'valid'
-            } else {
-                _isValid[index] = 'not valid'
-            }
-        } else {
-            if (value.length >= min) {
-                _isValid[index] = 'valid'
-            } else {
-                _isValid[index] = 'not valid'
-            }
+    const clearForm = mode => {
+        if (mode === 'user-type') {
+            const form = document.querySelector('form')
+            const formChildren = [...form.children]
+
+            formChildren.forEach((field, index) => {
+                if (index > 4 && field.tagName === 'INPUT') {
+                    field.value = ''
+                }
+            })
+
+        } else if (mode === 'all') {
+            document.querySelector('form').reset()
         }
 
-        setIsValid(_isValid)
-    }
-
-    const validateForm = () => {
-        let sum = 0
-        let expected = 0
-
-        const form = document.querySelector('form')
-        const fields = Object.values(form)
-
-        fields.forEach(field => {
-            if (field.tagName === 'INPUT' && field.type !== 'checkbox') {
-                expected = expected + 1
-            }
-        })
-
-        isValid.forEach(item => {
-            if (item === 'valid') {
-                sum = sum + 1
-            }
-        })
-
-        if (sum === expected) {
-            return true
-        } else {
-            return false
-        }
     }
 
     const handleSubmit = async () => {
@@ -227,85 +174,66 @@ const NewUser = ({ history }) => {
                     <input
                         name='username'
                         maxLength='20'
+                        minLength='6'
+                        required
                         onChange={ event => {
-                            event.target.value = formatUsername(
-                                event.target.value
-                            )
                             user.username = event.target.value
                         }}
-                        onBlur={event => {
-                            validateInput(event, 6, 0)
-                        }}
                     />
-                    {isValid[0] === 'not valid' ?
-                        <p className='validation-error'>
-                            Digite no mínimo 6 caracteres
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Digite no mínimo 6 caracteres
+                    </p>
 
                     <label>Senha</label>
                     <input
                         type='password'
                         name='password'
                         maxLength='128'
+                        minLength='8'
+                        required
                         onChange={ event => {
                             user.password = event.target.value
                         }}
-                        onBlur={event => {
-                            validateInput(event, 6, 1)
-                        }}
                     />
-                    {isValid[1] === 'not valid' ?
-                        <p className='validation-error'>
-                            Digite no mínimo 6 caracteres
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Digite no mínimo 8 caracteres
+                    </p>
 
                     <label>Email</label>
                     <input
                         name='email'
                         maxLength='40'
+                        minLength='10'
+                        required
                         onChange={ event => {
                             user.email = event.target.value
                         }}
-                        onBlur={event => {
-                            validateInput(event, 10, 2)
-                        }}
                     />
-                    {isValid[2] === 'not valid' ?
-                        <p className='validation-error'>
-                            Digite no mínimo 10 caracteres
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Digite no mínimo 10 caracteres
+                    </p>
 
                     <label>Telefone</label>
                     <input
                         name='phone'
+                        required
+                        pattern='\(\d{2}\) \d{5}-\d{4}$'
                         onChange={ event => {
                             user.phone = getOnlyNumbers(event.target.value)
                             event.target.value = formatPhone(
                                 event.target.value
                             )
                         }}
-                        onBlur={event => {
-                            validateInput(event, 10, 3, true)
-                        }}
                     />
-                    {isValid[3] === 'not valid' ?
-                        <p className='validation-error'>
-                            Número de telefone inválido
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Número de telefone inválido
+                    </p>
 
                     <div className='checkbox'>
                         <input
                             type='checkbox'
                             onClick={() => {
-                                clearForm()
+                                clearForm('user-type')
 
                                 if (userType === 'company') {
                                     setUserType('person')
@@ -322,6 +250,8 @@ const NewUser = ({ history }) => {
                             <label>CNPJ</label>
                             <input
                                 name='cnpj'
+                                required
+                                pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                                 onChange={ event => {
                                     user.company.cnpj = getOnlyNumbers(event
                                         .target.value)
@@ -329,77 +259,58 @@ const NewUser = ({ history }) => {
                                         event.target.value
                                     )
                                 }}
-                                onBlur={event => {
-                                    validateInput(event, 14, 4, true)
-                                }}
                             />
-                            {isValid[4] === 'not valid' ?
-                                <p className='validation-error'>
-                                    CNPJ inválido
-                                </p>
-                                : null
-                            }
+                            <p className='error-message'>
+                                CNPJ inválido
+                            </p>
 
                             <label>Nome fantasia</label>
                             <input
                                 name='name'
                                 maxLength='128'
+                                minLength='6'
+                                required
                                 onChange={ event => {
                                     user.company.name = event
                                         .target
                                         .value
                                 }}
-                                onBlur={event => {
-                                    validateInput(event, 6, 5)
-                                }}
                             />
-                            {isValid[5] === 'not valid' ?
-                                <p className='validation-error'>
-                                    Digite no mínimo 6 caracteres
-                                </p>
-                                : null
-                            }
+                            <p className='error-message'>
+                                Digite no mínimo 6 caracteres
+                            </p>
 
                             <label>Razão social</label>
                             <input
                                 name='tradeName'
                                 maxLength='128'
+                                minLength='6'
+                                required
                                 onChange={ event => {
                                     user.company.tradeName = event
                                         .target
                                         .value
                                 }}
-                                onBlur={event => {
-                                    validateInput(event, 6, 6)
-                                }}
                             />
-                            {isValid[6] === 'not valid' ?
-                                <p className='validation-error'>
-                                    Digite no mínimo 6 caracteres
-                                </p>
-                                : null
-                            }
+                            <p className='error-message'>
+                                Digite no mínimo 6 caracteres
+                            </p>
 
                             <label>Descrição</label>
                             <input
                                 name='description'
                                 maxLength='512'
+                                minLength='50'
+                                required
                                 onChange={ event => {
                                     user.company.description = event
                                         .target
                                         .value
                                 }}
-                                onBlur={event => {
-                                    validateInput(event, 50, 7)
-                                }}
                             />
-                            {isValid[7] === 'not valid' ?
-                                <p className='validation-error'>
-                                    Digite no mínimo 50 caracteres
-                                </p>
-                                : null
-                            }
-
+                            <p className='error-message'>
+                                Digite no mínimo 50 caracteres
+                            </p>
                         </>
                         :
                         <>
@@ -407,24 +318,22 @@ const NewUser = ({ history }) => {
                             <input
                                 name='name'
                                 maxLength='128'
+                                minLength='10'
+                                required
                                 onChange={ event => {
                                     user.person.name = event
                                         .target.value
                                 }}
-                                onBlur={event => {
-                                    validateInput(event, 10, 4)
-                                }}
                             />
-                            {isValid[4] === 'not valid' ?
-                                <p className='validation-error'>
-                                    Digite no mínimo 10 caracteres
-                                </p>
-                                : null
-                            }
+                            <p className='error-message'>
+                                Digite no mínimo 10 caracteres
+                            </p>
 
                             <label>CPF</label>
                             <input
                                 name='cpf'
+                                required
+                                pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
                                 onChange={ event => {
                                     user.person.cpf = getOnlyNumbers(event
                                         .target.value)
@@ -432,20 +341,16 @@ const NewUser = ({ history }) => {
                                         event.target.value
                                     )
                                 }}
-                                onBlur={event => {
-                                    validateInput(event, 11, 5, true)
-                                }}
                             />
-                            {isValid[5] === 'not valid' ?
-                                <p className='validation-error'>
-                                    CPF inválido
-                                </p>
-                                : null
-                            }
+                            <p className='error-message'>
+                                CPF inválido
+                            </p>
 
                             <label>Data de nascimento</label>
                             <input
                                 name='birth'
+                                required
+                                pattern='\d{2}\/\d{2}\/\d{4}'
                                 onChange={ event => {
                                     user.person.birth = () =>
                                         event.target.value.replace('/', '-')
@@ -453,16 +358,10 @@ const NewUser = ({ history }) => {
                                         event.target.value
                                     )
                                 }}
-                                onBlur={event => {
-                                    validateInput(event, 8, 6, true)
-                                }}
                             />
-                            {isValid[6] === 'not valid' ?
-                                <p className='validation-error'>
-                                    Data inválida
-                                </p>
-                                : null
-                            }
+                            <p className='error-message'>
+                                Data inválida
+                            </p>
                         </>
                     }
 
@@ -481,7 +380,6 @@ const NewUser = ({ history }) => {
                             onClick={event => {
                                 event.preventDefault()
                                 buttonPress(() => {
-                                    clearIsValid()
                                     setStep(1)
                                 })
                             }}
@@ -512,117 +410,93 @@ const NewUser = ({ history }) => {
                     <input
                         name='number'
                         maxLength='64'
+                        minLength='6'
+                        required
                         onChange={ event => {
                             consumerUnit
                                 .number = event.target.value
                         }}
-                        onBlur={event => {
-                            validateInput(event, 6, 0, true)
-                        }}
                     />
-                    {isValid[0] === 'not valid' ?
-                        <p className='validation-error'>
-                            Digite no mínimo 6 caracteres
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Digite no mínimo 6 caracteres
+                    </p>
 
                     <label>Nome da unidade consumidora</label>
                     <input
                         name='name'
                         maxLength='64'
+                        minLength='8'
+                        required
                         onChange={ event => {
                             consumerUnit
                                 .name = event.target.value
                         }}
-                        onBlur={event => {
-                            validateInput(event, 8, 1)
-                        }}
                     />
-                    {isValid[1] === 'not valid' ?
-                        <p className='validation-error'>
-                            Digite no mínimo 8 caracteres
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Digite no mínimo 8 caracteres
+                    </p>
 
                     <label>Endereço</label>
                     <input
                         name='address'
                         maxLength='256'
+                        minLength='10'
+                        required
                         onChange={ event => {
                             consumerUnit
                                 .address = event.target.value
                         }}
-                        onBlur={event => {
-                            validateInput(event, 10, 2)
-                        }}
                     />
-                    {isValid[2] === 'not valid' ?
-                        <p className='validation-error'>
-                            Digite no mínimo 10 caracteres
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Digite no mínimo 10 caracteres
+                    </p>
 
                     <label>CEP</label>
                     <input
                         name='zip'
                         maxLength='64'
+                        required
+                        pattern='\d{5}-\d{3}'
                         onChange={ event => {
                             consumerUnit
                                 .zip = getOnlyNumbers(event.target.value)
                             event.target.value = formatCEP(event.target
                                 .value)
                         }}
-                        onBlur={event => {
-                            validateInput(event, 8, 3, true)
-                        }}
                     />
-                    {isValid[3] === 'not valid' ?
-                        <p className='validation-error'>
-                            CEP inválido
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        CEP inválido
+                    </p>
 
                     <label>Cidade</label>
                     <input
                         name='city'
                         maxLength='64'
+                        minLength='3'
+                        required
                         onChange={ event => {
                             consumerUnit
                                 .city = event.target.value
                         }}
-                        onBlur={event => {
-                            validateInput(event, 3, 4)
-                        }}
                     />
-                    {isValid[4] === 'not valid' ?
-                        <p className='validation-error'>
-                            Digite no mínimo 3 caracteres
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Digite no mínimo 3 caracteres
+                    </p>
 
                     <label>Estado</label>
                     <input
                         name='state'
                         maxLength='64'
+                        minLength='3'
+                        required
                         onChange={ event => {
                             consumerUnit
                                 .state = event.target.value
                         }}
-                        onBlur={event => {
-                            validateInput(event, 3, 5)
-                        }}
                     />
-                    {isValid[5] === 'not valid' ?
-                        <p className='validation-error'>
-                            Digite no mínimo 3 caracteres
-                        </p>
-                        : null
-                    }
+                    <p className='error-message'>
+                        Digite no mínimo 3 caracteres
+                    </p>
 
                     {loading ?
                         <div className='loading-container'>
@@ -646,7 +520,7 @@ const NewUser = ({ history }) => {
                                     event.preventDefault()
                                     buttonPress(() => {
                                         user.consumerUnits.push(consumerUnit)
-                                        resetForm()
+                                        clearForm('all')
                                     })
                                 }}
                             >

@@ -18,20 +18,12 @@
     color: #333;
 }
 
-/* .newunit .main input:invalid {
-    border: 0.2rem solid #d00;
-} */
-
 .newunit .error-message {
     color: #d00;
     font-size: 1.4rem;
     font-weight: 600;
     margin: -2.5rem auto 1.5rem auto;
     display: none;
-}
-
-.newunit .main input:invalid + .error-message {
-    display: block;
 }
 
 .newunit .main label {
