@@ -66,13 +66,14 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
 
     return <div className='newdevice'>
         <div className='window'>
-            <h1>Novo dispositivo</h1>
             <form>
+                <h1>Novo dispositivo</h1>
                 <label>ID do dispositivo</label>
                 <input
                     maxLength='10'
                     minLength='6'
                     required
+                    pattern='[a-zA-Z0-9]{6,20}'
                     onChange={event => {
                         device.id = event.target.value
                         event.target.value = formatDeviceID(

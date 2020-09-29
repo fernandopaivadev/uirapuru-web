@@ -14,15 +14,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem 2rem 1rem 2rem;
+    padding: 2rem;
     border-radius: 0.5rem;
     background: #fff;
 }
 
-.newdevice .window h1 {
+.newdevice .window form h1 {
     color: var(--default-green);
     font-size: 2.4rem;
-    margin: 1.5rem 0 2rem 0;
+    margin: 0 0 2.5rem 0;
 }
 
 .newdevice .window form {
@@ -48,11 +48,11 @@
     color: #333;
 }
 
-.newdevice .error-message {
+.newdevice .window form .error-message {
     color: #d00;
     font-size: 1.4rem;
     font-weight: 600;
-    margin: -2rem auto 0rem auto;
+    margin: -2rem auto 2rem auto;
     display: none;
 }
 
