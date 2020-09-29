@@ -1,0 +1,82 @@
+.newdevice {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background: linear-gradient(#3339, #3339);
+    z-index: 1;
+}
+
+.newdevice .window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 2rem 1rem 2rem;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+
+.newdevice .window h1 {
+    color: var(--default-green);
+    font-size: 2.4rem;
+    margin: 1.5rem 0 2rem 0;
+}
+
+.newdevice .window form {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 2rem 0 2rem;
+    align-items: center;
+}
+
+.newdevice .window form label {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.newdevice .window form input {
+    width: 90%;
+    padding: 0.5rem;
+    border: 0.2rem solid var(--default-green);
+    border-radius: 0.3rem;
+    font-size: 1.8rem;
+    margin: 0.2rem 0 3rem 0;
+    color: #333;
+}
+
+.newdevice .error-message {
+    color: #d00;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: -2rem auto 0rem auto;
+    display: none;
+}
+
+.newdevice .window .buttons {
+    display: flex;
+}
+
+.newdevice .window .buttons #cancel-button {
+    background: #d00;
+}
+
+.newdevice .window .buttons #cancel-button:hover {
+    background: #f56f55;
+}
+
+.newdevice .window form .success {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--default-green);
+}
+
+.newdevice .window form .error {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #d00;
+    margin: 2rem 0 2rem 0;
+}

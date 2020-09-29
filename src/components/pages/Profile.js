@@ -6,6 +6,8 @@ import Menu from '../panels/Menu'
 
 import Modal from '../panels/Modal'
 
+import NewDevice from '../panels/NewDevice'
+
 import { getData, clearData, storeData } from '../../services/storage'
 
 import { isAdmin, logout } from '../../services/auth'
@@ -38,7 +40,10 @@ const Profile = ({ history }) => {
     const [modal, setModal] = useState([false,false])
     const [success, setSuccess] = useState([false, false])
     const [error, setError] = useState([false, false])
-    const [errorMessage, setErrorMessage] = useState('Erro no processamento do formulário')
+    const [errorMessage, setErrorMessage] = useState(
+        'Erro no processamento do formulário'
+    )
+    const [newDevicePopup, setNewDevicePopup] = useState(false)
 
     useEffect(() => {
         setFormValidation(0)
@@ -133,6 +138,16 @@ const Profile = ({ history }) => {
             items = {getData('user').consumerUnits}
             setItemIndex = { setConsumerUnitIndex }
         />
+
+        { newDevicePopup ?
+            <NewDevice
+                consumerUnitIndex={consumerUnitIndex}
+                exit={() => {
+                    setNewDevicePopup(false)
+                }}
+            />
+            : null
+        }
 
         { modal[0] ?
             <Modal
@@ -575,6 +590,18 @@ const Profile = ({ history }) => {
                                     }}
                                 >
                                     Salvar
+                                </button>
+                                : null
+                            }
+                            {admin ?
+                                <button
+                                    className='classic-button'
+                                    onClick={event => {
+                                        event.preventDefault()
+                                        setNewDevicePopup(true)
+                                    }}
+                                >
+                                    Novo dispositivo
                                 </button>
                                 : null
                             }

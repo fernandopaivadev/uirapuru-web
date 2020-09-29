@@ -1,3 +1,7 @@
+const formatDeviceID = input =>
+    input
+        ?.replace(/[\W_]/g, '')
+
 const formatUsername = input =>
     input
         ?.replace(/[\W_]/g, '')
@@ -141,6 +145,7 @@ const setFormValidation = formIndex => {
 }
 
 export {
+    formatDeviceID,
     formatUsername,
     formatPhone,
     formatCPF,
