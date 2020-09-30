@@ -83,7 +83,7 @@ const Login = ({ history }) => {
 
             {loading ?
                 <div className='loading-container'>
-                    <progress className='pure-material-progress-circular'/>
+                    <progress className='circular-progress'/>
                 </div>
                 : emailSent ?
                     <button onClick={() => {
@@ -92,7 +92,10 @@ const Login = ({ history }) => {
                         FAZER LOGIN
                     </button>
                     :
-                    <button type='submit'>
+                    <button
+                        type='submit'
+                        className='classic-button'
+                    >
                         ENVIAR LINK
                     </button>
             }

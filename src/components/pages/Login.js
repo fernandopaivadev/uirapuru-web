@@ -1,14 +1,16 @@
 import React, { useState, useEffect, memo } from 'react'
 
-import { login, isAuthenticated } from '../../services/auth'
+import { adminLogin, login, isAuthenticated, isAdmin } from '../../services/auth'
+
 import { api } from '../../services/api'
+
 import fetch from '../../services/fetch'
 
 import logo from '../../assets/logo.svg'
 
 import '../../styles/login.css'
-import '../../styles/util.css'
 
+import '../../styles/util.css'
 
 const Login = ({ history }) => {
     const [username, setUsername] = useState('')
@@ -16,10 +18,15 @@ const Login = ({ history }) => {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+    const [adminMode, setAdminMode] = useState(false)
 
     useEffect(() => {
         if (isAuthenticated()) {
-            history.push('/dashboard')
+            if (isAdmin()) {
+                history.push('/users-list')
+            } else {
+                history.push('/dashboard')
+            }
         }
     }, [history])
 
@@ -29,17 +36,29 @@ const Login = ({ history }) => {
             setLoading(true)
 
             const response = await api.get(
-                `/user/auth?username=${username}&password=${password}`
+                adminMode ?
+                    `/admin/auth?level=${username}&password=${password}`
+                    :
+                    `/user/auth?username=${username}&password=${password}`
             )
 
             const status = response?.status
 
             if (status === 200) {
                 setLoading(false)
-                login(response?.data?.token)
 
-                if(await fetch()) {
-                    history.push('/dashboard')
+                if (adminMode) {
+                    adminLogin(response.data.token)
+
+                    if(await fetch()) {
+                        history.push('/users-list')
+                    }
+                } else {
+                    login(response.data.token)
+
+                    if(await fetch()) {
+                        history.push('/dashboard')
+                    }
                 }
             }
         } catch (err) {
@@ -84,12 +103,17 @@ const Login = ({ history }) => {
                 <h1>Uirapuru</h1>
             </div>
 
-            <label htmlFor='email'>
-                E-mail ou nome de usuário
-            </label>
+            {adminMode ?
+                <label htmlFor='email'>
+                    Nível de acesso
+                </label>
+                :
+                <label htmlFor='email'>
+                    E-mail ou nome de usuário
+                </label>
+            }
             <input
                 autoFocus
-                placeholder='Nome de usuário ou Email'
                 id='email'
                 required
                 onChange={event => {
@@ -101,19 +125,17 @@ const Login = ({ history }) => {
                 <label htmlFor='password'>
                     Senha
                 </label>
-                <a
-                    href='/#/login'
+                <p
                     id='toggle-password'
                     onClick={event => {
                         togglePassword(event)
                     }}
                 >
                     Exibir
-                </a>
+                </p>
             </div>
 
             <input
-                placeholder='Senha'
                 id='password'
                 type='password'
                 required
@@ -124,33 +146,44 @@ const Login = ({ history }) => {
 
             {loading ?
                 <div className='loading-container'>
-                    <progress className='pure-material-progress-circular'/>
+                    <progress className='circular-progress'/>
                 </div>
                 :
-                <button type='submit'>
+                <button
+                    type='submit'
+                    className='classic-button'
+                >
                     ENTRAR
                 </button>
             }
 
             {loading ? null :
-                <>
-                    <a
-                        href='/#/forgot-password'
+                !adminMode ?
+                    <>
+                        <p
+                            className='link'
+                            onClick={() => {
+                                history.push('/forgot-password')
+                            }}>
+                                Esqueci minha senha
+                        </p>
+                        <p
+                            className='link'
+                            onClick={() => {
+                                setAdminMode(true)
+                            }}>
+                                Sou administrador
+                        </p>
+                    </>
+                    :
+                    <p
                         className='link'
                         onClick={() => {
-                            history.push('/forgot-password')
-                        }}>
-                            Esqueci minha senha
-                    </a>
-                    <a
-                        href='/#/admin/login'
-                        className='link'
-                        onClick={() => {
-                            history.push('/admin/login')
-                        }}>
-                            Sou administrador
-                    </a>
-                </>
+                            setAdminMode(false)
+                        }}
+                    >
+                        Voltar
+                    </p>
             }
 
             {error ?

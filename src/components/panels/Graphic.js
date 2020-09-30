@@ -7,17 +7,8 @@ import Plot from './Plot'
 import '../../styles/graphic.css'
 import '../../styles/util.css'
 
-let mobile = false
 
-window.onload = () => {
-    const { innerHeight, innerWidth } = window
-
-    if (innerHeight > innerWidth) {
-        mobile = true
-    }
-}
-
-const Graphic = ({ device, setEnergyValue, datePicker }) => {
+const Graphic = ({ deviceId, setEnergyValue, datePicker }) => {
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState([])
     const [timestamps, setTimestamps] = useState([])
@@ -77,7 +68,7 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
 
             const response = await api.get(
                 `/device/messages?device=${
-                    device.id
+                    deviceId
                 }&from=${begin.toISOString()
                 }&to=${end.toISOString()}`
             )
@@ -91,9 +82,10 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
                     let _values = []
                     let _timestamps = []
 
-                    messages.forEach(({ payload, timestamp }) => {
-                        _values.push(JSON.parse(payload))
-                        _timestamps.push(timestamp)
+                    messages.forEach(({ payload }) => {
+                        const dataObject = JSON.parse(payload)
+                        _values.push(dataObject)
+                        _timestamps.push(dataObject.rtc)
                     })
 
                     setValues(_values)
@@ -108,7 +100,7 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
         }
-    }, [device, datePicker])
+    }, [deviceId, datePicker])
 
     useEffect(() => {
         getMessages()
@@ -117,7 +109,6 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
     const plotProps = {
         values,
         timestamps,
-        mobile,
         setEnergyValue
     }
 
@@ -125,7 +116,7 @@ const Graphic = ({ device, setEnergyValue, datePicker }) => {
         <div className="graphic">
             {loading ?
                 <div className="loading-container">
-                    <progress className="pure-material-progress-circular" />
+                    <progress className="circular-progress" />
                 </div>
                 : values.length > 0 ?
                     <Plot {...plotProps} />

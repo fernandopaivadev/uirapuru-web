@@ -1,0 +1,40 @@
+.menu {
+    min-width: 20rem;
+    height: 94.5%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 5rem;
+    left: 0;
+    z-index: 1;
+    border-right: 1px solid #ccc;
+}
+
+.menu .title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--default-green);
+    margin: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.menu .items .item-name {
+    color: #333;
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 1.5rem 1.5rem 1.5rem 3rem;
+}
+
+.menu .items .sub-items .sub-item-name {
+    color: #666;
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding: 1rem 3rem 1rem 5rem;
+}
+
+.menu .items p:hover {
+    background: #ddd;
+}
+
+.menu .items p {
+    cursor: pointer;
+}

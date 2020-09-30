@@ -4,23 +4,28 @@ import themes from '../../themes'
 
 const Plotly = lazy(() => import('react-plotly.js'))
 
-const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => {
+const Plot = ({ values, timestamps, /*setEnergyValue*/ }) => {
     let temperature1 = []
     let humidity1 = []
     let voltage1 = []
     let current1 = []
     let voltage2 = []
     let current2 = []
+    let timeline = []
 
     values.forEach(values => {
-        const { t, h, t1, h1, v1, i1, v2, i2  } = values ?? {}
+        const { t1, h1, v1, i1, v2, i2  } = values ?? {}
 
-        temperature1.push(t1 ?? t)
-        humidity1.push(h1 ?? h)
+        temperature1.push(t1)
+        humidity1.push(h1)
         voltage1.push(v1)
         current1.push(i1)
         voltage2.push(v2)
         current2.push(i2)
+    })
+
+    timestamps.forEach(timestamp => {
+        timeline.push(new Date(timestamp))
     })
 
     const traces = [
@@ -31,7 +36,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[0],
                 width: 2
             },
-            x: [...timestamps],
+            x: [...timeline],
             y: [...temperature1],
             hovertemplate: '%{y} °C'
         },
@@ -42,7 +47,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[1],
                 width: 2
             },
-            x: [...timestamps],
+            x: [...timeline],
             y: [...humidity1],
             hovertemplate: '%{y} %'
         },
@@ -53,7 +58,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[2],
                 width: 2
             },
-            x: [...timestamps],
+            x: [...timeline],
             y: [...voltage1],
             hovertemplate: '%{y} V'
         },
@@ -64,7 +69,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[3],
                 width: 2
             },
-            x: [...timestamps],
+            x: [...timeline],
             y: [...current1],
             hovertemplate: '%{y} A'
         },
@@ -75,7 +80,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[4],
                 width: 2
             },
-            x: [...timestamps],
+            x: [...timeline],
             y: [...voltage2],
             hovertemplate: '%{y} V'
         },
@@ -86,7 +91,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 color: themes.default.traceColors[5],
                 width: 2
             },
-            x: [...timestamps],
+            x: [...timeline],
             y: [...current2],
             hovertemplate: '%{y} A'
         }
@@ -105,12 +110,12 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                         x: 0.0,
                         y: 10,
                         font: {
-                            size: mobile ? 12 : doubleScreen ? 16 : 20
+                            size: 20
                         }
                     },
                     hoverlabel: {
                         font: {
-                            size: mobile ? 18 : 24,
+                            size: 24,
                             color: themes.default.white
                         }
                     },
@@ -173,10 +178,10 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                 }}
                 style={{
                     height: '90vh',
-                    width: '95%'
+                    width: '100%'
                 }}
-                onSelected={event => {
-                    try {
+                onSelected={(/*event*/) => {
+                    /*try {
                         const beginDate = new Date(event.range.x[0])
                         const endDate = new Date(event.range.x[1])
 
@@ -219,7 +224,7 @@ const Plot = ({ values, timestamps,  doubleScreen, mobile, setEnergyValue }) => 
                         })
                     } catch (err) {
                         console.log(err.message)
-                    }
+                    }*/
                 }}
             />
         </Suspense>

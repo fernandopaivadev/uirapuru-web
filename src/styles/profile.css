@@ -1,43 +1,97 @@
 .profile .main {
     background: #fff;
     width: 100vw;
-    height: 100vh;
+    height: 96vh;
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr;
     justify-content: center;
+}
+
+.profile .buttons {
+    display: flex;
 }
 
 .profile .main input {
     padding: 0.5rem;
-    min-width: 30rem;
     border: 0.2rem solid var(--default-green);
     border-radius: 0.3rem;
     font-size: 1.8rem;
-    margin: 0.2rem 0 1.5rem 0;
+    margin: 0.2rem 0 3rem 0;
     color: #333;
 }
 
+.profile .error-message {
+    color: #d00;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: -2rem auto 0rem auto;
+    display: none;
+}
+
 .profile .main label {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 600;
     color: #555;
 }
 
 .profile .main input,
 .profile .main label {
-    width: 50%;
+    width: 70%;
 }
 
 .profile .main form {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: left;
     margin: 1rem 2rem 3rem 2rem;
+}
+
+.profile .main .forms {
+    display: grid;
+    justify-content: flex-end;
+    grid-template-columns: 10% 35% 35% 20%;
+}
+
+.profile .main .forms form:nth-child(1) {
+    grid-column: 2/3;
+}
+
+.profile .main .forms form:nth-child(2) {
+    grid-column: 3/4;
+}
+
+.profile .main .navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 50vw;
+    transform: translateX(-50%);
+}
+
+.profile .main .navigation #delete-button {
+    background: #d00;
+}
+
+.profile .main .navigation #delete-button:hover {
+    background: #f56f55;
+}
+
+.profile .main .forms .buttons #delete-button {
+    background: #d00;
+}
+
+.profile .main .forms .buttons #delete-button:hover {
+    background: #f56f55;
 }
 
 .profile .main form h1 {
     color: var(--default-green);
     font-size: 2.4rem;
-    margin: 1.5rem 0 1rem 0;
+    margin: 1.5rem 0 2rem 0;
 }
 
 .profile .button-container {
@@ -46,19 +100,69 @@
     justify-content: center;
 }
 
-.profile .button-container button {
-    border-radius: 0.5rem;
-    border: none;
-    width: 18rem;
-    height: 5rem;
-    background: #309d20;
-    color: #fff;
-    font-size: 2rem;
+.profile .main .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    font-size: 3rem;
     font-weight: 600;
-    cursor: pointer;
-    margin: 2rem 0 5rem 0;
+    color: #777;
 }
 
-.profile .button-container button:hover {
-    background: #41ca2b;
+.profile form .loading-container {
+    width: 5rem;
+    height: 5.5rem;
+    margin: 2rem auto 0 auto;
+}
+
+.profile .main form .success {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--default-green);
+}
+
+.profile .main form .error {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #d00;
+}
+
+.profile .main .forms .devices-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    padding: 1rem;
+}
+
+.profile .main .forms .devices-list li form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+}
+
+.profile .main .forms .devices-list h1 {
+    margin: 1rem;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--default-green);
+    margin: 1.5rem 0 2rem 0;
+}
+
+.profile .main .forms .devices-list li form input {
+    margin: 1rem;
+    width: 90%;
+}
+
+.profile .main .forms .devices-list li form label {
+    margin: 1rem 1rem 0 1rem;
+    width: 90%;
 }

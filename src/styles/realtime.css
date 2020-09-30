@@ -47,7 +47,6 @@
 }
 
 .realtime .navigation {
-    position: absolute;
     height: 9rem;
     width: 30rem;
     top: 0;
@@ -58,7 +57,7 @@
 }
 
 .realtime .navigation .date-picker-input {
-    border: 0.1rem solid #309d20;
+    border: 0.1rem solid var(--default-green);
     border-radius: 0.5rem;
     padding: 0.5rem;
     font-size: 1.6rem;
@@ -75,7 +74,7 @@
 .realtime .navigation .date-picker-btn {
     border: none;
     border-radius: 0.5rem;
-    background: #309d20;
+    background: var(--default-green);
     padding: 0.8rem;
     color: #fff;
     font-size: 1.6rem;
@@ -86,12 +85,12 @@
 }
 
 .realtime .navigation .date-picker-btn:hover {
-    background: #4ecc3b;
+    background: var(--default-light-green);
 }
 
 .realtime .navigation .prev-day,
 .realtime .navigation .next-day {
-    background: #309d20;
+    background: var(--default-green);
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 50%;
@@ -107,5 +106,37 @@
 
 .realtime .navigation .prev-day:hover,
 .realtime .navigation .next-day:hover {
-    background: #4ecc3b;
+    background: var(--default-light-green);
+}
+
+@media only screen and (max-width: 760px) {
+    .realtime .navigation {
+        display: none;
+    }
+
+    .realtime .display {
+        flex-direction: column;
+        height: 70vh;
+    }
+
+    .realtime .display .value {
+        min-width: 22rem;
+    }
+
+    .realtime .display .value .icon {
+        font-size: 3rem;
+    }
+
+    .realtime .display .value .text {
+        font-size: 2.4rem;
+        font-weight: 500;
+        color: #555;
+        margin: 0 0.8rem 0 0.8rem;
+    }
+
+    .realtime .display .value .payload {
+        color: #333;
+        font-weight: 600;
+        font-size: 2.4rem;
+    }
 }

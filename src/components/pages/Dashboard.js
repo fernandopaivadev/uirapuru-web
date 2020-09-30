@@ -2,21 +2,27 @@ import React, { useEffect, useState, useCallback, memo } from 'react'
 
 import NavBar from '../panels/NavBar'
 import Graphic from '../panels/Graphic'
-import { isAuthenticated, getToken } from '../../services/auth'
+import { getData } from '../../services/storage'
+import { isAuthenticated, getToken, isAdmin } from '../../services/auth'
 import { baseURL } from '../../services/api'
-import { getConsumerUnit } from '../../services/storage'
 import io from 'socket.io-client'
 
 import RealTime from '../panels/RealTime'
-import DeviceMenu from '../panels/DeviceMenu'
+import Menu from '../panels/Menu'
 
 import '../../styles/dashboard.css'
 
-const Dashboard = () => {
-    const [consumerUnit, setConsumerUnit] = useState({
-        devices: []
-    })
+let mobile = false
 
+window.onload = () => {
+    const { innerHeight, innerWidth } = window
+
+    if (innerHeight > innerWidth || innerWidth <= 760) {
+        mobile = true
+    }
+}
+
+const Dashboard = ({ history }) => {
     const [newMessage, setNewMessage] = useState({
         isNew: false,
         topic: '',
@@ -24,9 +30,7 @@ const Dashboard = () => {
     })
 
     const [buffer, setBuffer] = useState([])
-
-    const [currentDevice, setCurrentDevice] = useState(null)
-    const [index, setIndex] = useState(null)
+    const [deviceIndex, setDeviceIndex] = useState(null)
     const [connected, setConnected] = useState([])
     const [timeoutId, setTimeoutId] = useState([])
     const [datePicker, setDatePicker] = useState(`${
@@ -40,14 +44,20 @@ const Dashboard = () => {
         ac: null,
         dc: null
     })
+    const [devicesList, setDevicesList] = useState([])
+
 
     const webSocketConfig = useCallback(() => {
         try {
-            let devicesList = []
+            const _devicesList = []
 
-            consumerUnit.devices.forEach(device => {
-                devicesList.push(device.id)
+            getData('user').consumerUnits.forEach(consumerUnit => {
+                consumerUnit.devices.forEach(device => {
+                    _devicesList.push(device.id)
+                })
             })
+
+            setDevicesList(_devicesList)
 
             const socket = io(baseURL)
 
@@ -58,7 +68,7 @@ const Dashboard = () => {
             socket.on('auth', ({ ok }) => {
                 if (ok) {
                     socket.emit('listen', {
-                        devicesList
+                        devicesList: _devicesList
                     })
                 }
             })
@@ -77,27 +87,25 @@ const Dashboard = () => {
         } catch (err) {
             console.log(err.message)
         }
-    }, [consumerUnit])
-
-    useEffect(() => {
-        if (isAuthenticated()) {
-            setConsumerUnit(getConsumerUnit() ?? { devices: [] })
-        }
     }, [])
 
     useEffect(() => {
         if (isAuthenticated()) {
-            webSocketConfig()
+            if(isAdmin() && !getData('user')) {
+                history.push('/users-list')
+            } else {
+                webSocketConfig()
+            }
         }
-    }, [webSocketConfig])
+    }, [webSocketConfig, history])
 
     useEffect(() => {
         const { isNew, topic, payload } = newMessage
 
         if (isNew) {
-            consumerUnit.devices.forEach((device, index) => {
-                if (device.id === topic) {
-                    let _buffer = [...buffer]
+            devicesList.forEach((device, index) => {
+                if (device === topic) {
+                    const _buffer = [...buffer]
                     _buffer[index] = payload
 
                     setNewMessage({
@@ -108,15 +116,15 @@ const Dashboard = () => {
 
                     setBuffer(_buffer)
 
-                    let _connected = [...connected]
+                    const _connected = [...connected]
                     _connected[index] = true
                     setConnected(_connected)
 
                     clearTimeout(timeoutId[index])
 
-                    let _timeoutId = [...timeoutId]
+                    const _timeoutId = [...timeoutId]
                     _timeoutId[index] = setTimeout(() => {
-                        let _connected = [...connected]
+                        const _connected = [...connected]
                         _connected[index] = false
                         setConnected(_connected)
                     }, 10000)
@@ -124,30 +132,34 @@ const Dashboard = () => {
                 }
             })
         }
-    }, [buffer, connected, consumerUnit, newMessage, timeoutId])
+    }, [buffer, connected, devicesList, newMessage, timeoutId])
 
     return <div className='dashboard'>
         <NavBar />
-        <DeviceMenu
-            devices={consumerUnit?.devices}
-            setCurrentDevice={setCurrentDevice}
-            setIndex={setIndex}
+        <Menu
+            title='Unidades'
+            setSubItemIndex={setDeviceIndex}
+            items={getData('user').consumerUnits}
+            subItemKey={'devices'}
         />
         <div className='main'>
-            {currentDevice ?
+            {devicesList[deviceIndex] ?
                 <div className='container'>
                     <RealTime
-                        payload={buffer[index]}
-                        connected={connected[index]}
+                        payload={buffer[deviceIndex]}
+                        connected={connected[deviceIndex]}
                         energyValue={energyValue}
                         datePicker={datePicker}
                         setDatePicker={setDatePicker}
                     />
-                    <Graphic
-                        device={currentDevice}
-                        setEnergyValue={setEnergyValue}
-                        datePicker={datePicker}
-                    />
+                    {!mobile ?
+                        <Graphic
+                            deviceId={devicesList[deviceIndex]}
+                            setEnergyValue={setEnergyValue}
+                            datePicker={datePicker}
+                        />
+                        : null
+                    }
                 </div>
                 :
                 <div className='empty'>

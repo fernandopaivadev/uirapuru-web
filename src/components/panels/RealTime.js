@@ -11,6 +11,8 @@ import {
     //faPlug,
 } from '@fortawesome/free-solid-svg-icons'
 
+import { formatDate } from '../../services/forms'
+
 import themes from '../../themes'
 import '../../styles/realtime.css'
 
@@ -84,7 +86,9 @@ const RealTime = ({
                 <input
                     type='text'
                     className='date-picker-input'
-                    defaultValue={datePicker}
+                    onInput={event => {
+                        event.target.value = formatDate(event.target.value)
+                    }}
                 />
                 <button
                     className='date-picker-btn'
@@ -98,7 +102,7 @@ const RealTime = ({
                         setDatePicker(datePickerInput.value)
                     }}
                 >
-                OK
+                    OK
                 </button>
             </form>
         </div>
