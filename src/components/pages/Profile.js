@@ -105,7 +105,6 @@ const Profile = ({ history }) => {
 
     const handleSubmit = async (index) => {
         try {
-            console.log(user.consumerUnits[ consumerUnitIndex].devices)
             storeData('user', user)
 
             const response = await api.put('/user/update', user)
