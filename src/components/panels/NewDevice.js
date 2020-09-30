@@ -18,7 +18,6 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
     const [errorMessage, setErrorMessage] = useState(
         'Erro no processamento do formulário'
     )
-
     const user = getData('user')
     const device = {
         id: '',
@@ -26,7 +25,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
     }
 
     useEffect(() => {
-        setFormValidation(3)
+        setFormValidation()
     })
 
     const handleSubmit = async () => {
@@ -41,7 +40,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                 setSuccess(true)
                 setError(false)
 
-                setTimeout(exit, 1500)
+                exit()
             } else {
                 setSuccess(false)
                 setError(true)
@@ -73,7 +72,6 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                     maxLength='10'
                     minLength='6'
                     required
-                    pattern='[a-zA-Z0-9]{6,20}'
                     onChange={event => {
                         device.id = event.target.value
                         event.target.value = formatDeviceID(
@@ -103,7 +101,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                         className='classic-button'
                         onClick={event => {
                             event.preventDefault()
-                            if (validateForm(3)) {
+                            if (validateForm()) {
                                 user
                                     .consumerUnits[consumerUnitIndex]
                                     .devices.push(device)
@@ -117,7 +115,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
 
                                 setTimeout(() => {
                                     setError(false)
-                                }, 3000)
+                                }, 1500)
                             }
                         }}
                     >
@@ -134,12 +132,6 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                 {error && !success ?
                     <p className='error'>
                         { errorMessage }
-                    </p>
-                    : null
-                }
-                {!error && success ?
-                    <p className='success'>
-                        Salvo com sucesso!
                     </p>
                     : null
                 }

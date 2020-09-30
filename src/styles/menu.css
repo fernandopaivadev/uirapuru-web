@@ -1,12 +1,13 @@
 .menu {
     min-width: 20rem;
-    min-height: 50vh;
+    height: 94.5%;
     position: absolute;
     display: flex;
     flex-direction: column;
     top: 5rem;
     left: 0;
     z-index: 1;
+    border-right: 1px solid #ccc;
 }
 
 .menu .title {
@@ -27,7 +28,7 @@
     color: #666;
     font-size: 1.8rem;
     font-weight: 600;
-    padding: 1rem 1rem 1rem 5rem;
+    padding: 1rem 3rem 1rem 5rem;
 }
 
 .menu .items p:hover {

@@ -37,18 +37,44 @@ const Profile = ({ history }) => {
     const admin = isAdmin()
     const user = getData('user')
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
+    const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState([false,false])
-    const [success, setSuccess] = useState([false, false])
-    const [error, setError] = useState([false, false])
+    const [success, setSuccess] = useState(false)
+    const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(
         'Erro no processamento do formulário'
     )
     const [newDevicePopup, setNewDevicePopup] = useState(false)
 
     useEffect(() => {
-        setFormValidation(0)
-        setFormValidation(1)
-    })
+        if (consumerUnitIndex) {
+            const len = getData('user')
+                .consumerUnits[consumerUnitIndex]
+                .devices
+                .length + 2
+
+            for (let k = 0; k < len; k++) {
+                setFormValidation(k)
+            }
+        } else {
+            setFormValidation()
+        }
+    }, [consumerUnitIndex])
+
+    useEffect(() => {
+        if (consumerUnitIndex >= 0) {
+            const len = getData('user')
+                .consumerUnits[consumerUnitIndex]
+                .devices
+                .length + 2
+            setSuccess(
+                new Array(len).fill(false)
+            )
+            setError(
+                new Array(len).fill(false)
+            )
+        }
+    }, [consumerUnitIndex])
 
     const deleteUser = async () => {
         try {
@@ -79,6 +105,7 @@ const Profile = ({ history }) => {
 
     const handleSubmit = async (index) => {
         try {
+            console.log(user.consumerUnits[ consumerUnitIndex].devices)
             storeData('user', user)
 
             const response = await api.put('/user/update', user)
@@ -137,6 +164,7 @@ const Profile = ({ history }) => {
             title='Unidades'
             items = {getData('user').consumerUnits}
             setItemIndex = { setConsumerUnitIndex }
+            subItemKey='devices'
         />
 
         { newDevicePopup ?
@@ -168,10 +196,27 @@ const Profile = ({ history }) => {
                 taskOnYes={() => {
                     user.consumerUnits.pop(consumerUnitIndex)
                     handleSubmit(1)
-                    setModal(false)
+                    setModal([false, false, false])
                 }}
                 taskOnNo={() => {
-                    setModal(false)
+                    setModal([false, false, false])
+                }}
+            />
+            : null
+        }
+
+        { modal[2] ?
+            <Modal
+                message={'Você tem certeza?'}
+                taskOnYes={() => {
+                    user
+                        .consumerUnits[consumerUnitIndex]
+                        .devices.pop(deviceIndex)
+                    handleSubmit(1)
+                    setModal([false, false, false])
+                }}
+                taskOnNo={() => {
+                    setModal([false, false, false])
                 }}
             />
             : null
@@ -550,7 +595,7 @@ const Profile = ({ history }) => {
                                     className='classic-button'
                                     onClick={ event => {
                                         event.preventDefault()
-                                        setModal([false, true])
+                                        setModal([false, true, false])
                                     }}
                                 >
                                     Excluir U.C.
@@ -593,18 +638,6 @@ const Profile = ({ history }) => {
                                 </button>
                                 : null
                             }
-                            {admin ?
-                                <button
-                                    className='classic-button'
-                                    onClick={event => {
-                                        event.preventDefault()
-                                        setNewDevicePopup(true)
-                                    }}
-                                >
-                                    Novo dispositivo
-                                </button>
-                                : null
-                            }
                         </div>
 
                         {success[1] && !error[1]?
@@ -638,6 +671,120 @@ const Profile = ({ history }) => {
                         }
                     </div>
                 }
+                {getData('user').consumerUnits[ consumerUnitIndex ] ?
+                    <ul className='devices-list'>
+                        <h1>Dispositivos</h1>
+                        {admin ?
+                            <button
+                                className='classic-button'
+                                onClick={event => {
+                                    event.preventDefault()
+                                    setNewDevicePopup(true)
+                                }}
+                            >
+                                Novo dispositivo
+                            </button>
+                            : null
+                        }
+                        {getData('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            .devices.map((device, index) =>
+                                <li key={index}>
+                                    <form>
+                                        <label>
+                                            ID
+                                        </label>
+                                        <input
+                                            defaultValue={device.id}
+                                            readOnly={!admin}
+                                            maxLength='8'
+                                            minLength='8'
+                                            onChange={ event => {
+                                                user
+                                                    .consumerUnits[
+                                                        consumerUnitIndex
+                                                    ]
+                                                    .devices[index].id
+                                                    =
+                                                    event.target.value
+                                            }}
+                                        />
+                                        <p className='error-message'>
+                                            ID inválido
+                                        </p>
+                                        <label>
+                                            Nome
+                                        </label>
+                                        <input
+                                            defaultValue={device.name}
+                                            readOnly={!admin}
+                                            maxLength='20'
+                                            minLength='6'
+                                            onChange={ event => {
+                                                user
+                                                    .consumerUnits[
+                                                        consumerUnitIndex
+                                                    ]
+                                                    .devices[index].name
+                                                    =
+                                                    event.target.value
+                                            }}
+                                        />
+                                        <p className='error-message'>
+                                            Digite no mínimo 6 caracteres
+                                        </p>
+                                        {admin ?
+                                            <div className='buttons'>
+                                                <button
+                                                    className='classic-button'
+                                                    onClick={event => {
+                                                        event.preventDefault()
+                                                        setDeviceIndex(index)
+                                                        handleSubmit(index + 2)
+                                                    }}
+                                                >
+                                                Salvar
+                                                </button>
+                                                <button
+                                                    className='classic-button'
+                                                    id='delete-button'
+                                                    onClick={event => {
+                                                        event.preventDefault()
+                                                        setDeviceIndex(index)
+                                                        setModal(
+                                                            [false, false, true]
+                                                        )
+                                                    }}
+                                                >
+                                                Excluir
+                                                </button>
+                                            </div>
+                                            : null
+                                        }
+                                        {success[index + 2] && !error[index + 2]?
+                                            <p className='success'>
+                                                Salvo com sucesso!
+                                            </p>
+                                            : null
+                                        }
+                                        {!success[index + 2] && error[index + 2]?
+                                            <p className='error'>
+                                                { errorMessage }
+                                            </p>
+                                            : null
+                                        }
+                                    </form>
+                                </li>
+                            )
+                        }
+                    </ul>
+                    :
+                    <div className='empty'>
+                        <p>
+                            Sem dispositivos
+                        </p>
+                    </div>
+                }
             </div>
 
             <div className='navigation'>
@@ -654,7 +801,7 @@ const Profile = ({ history }) => {
                         id='delete-button'
                         className='classic-button'
                         onClick={ () => {
-                            setModal([true, false])
+                            setModal([true, false, false])
                         }}
                     >
                         Excluir Usuário

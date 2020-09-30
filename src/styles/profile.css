@@ -8,6 +8,10 @@
     justify-content: center;
 }
 
+.profile .buttons {
+    display: flex;
+}
+
 .profile .main input {
     padding: 0.5rem;
     border: 0.2rem solid var(--default-green);
@@ -47,7 +51,7 @@
 .profile .main .forms {
     display: grid;
     justify-content: flex-end;
-    grid-template-columns: 10% 45% 45%;
+    grid-template-columns: 10% 35% 35% 20%;
 }
 
 .profile .main .forms form:nth-child(1) {
@@ -62,6 +66,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 50vw;
+    transform: translateX(-50%);
 }
 
 .profile .main .navigation #delete-button {
@@ -120,4 +128,41 @@
     font-size: 2rem;
     font-weight: 600;
     color: #d00;
+}
+
+.profile .main .forms .devices-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    padding: 1rem;
+}
+
+.profile .main .forms .devices-list li form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+}
+
+.profile .main .forms .devices-list h1 {
+    margin: 1rem;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--default-green);
+    margin: 1.5rem 0 2rem 0;
+}
+
+.profile .main .forms .devices-list li form input {
+    margin: 1rem;
+    width: 90%;
+}
+
+.profile .main .forms .devices-list li form label {
+    margin: 1rem 1rem 0 1rem;
+    width: 90%;
 }
