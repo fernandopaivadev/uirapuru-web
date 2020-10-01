@@ -10,6 +10,8 @@ import io from 'socket.io-client'
 import RealTime from '../panels/RealTime'
 import Menu from '../panels/Menu'
 
+import Chart from '../panels/Chart'
+
 import '../../styles/dashboard.css'
 
 let mobile = false
@@ -142,6 +144,7 @@ const Dashboard = ({ history }) => {
             items={getData('user').consumerUnits}
             subItemKey={'devices'}
         />
+        <Chart/>
         <div className='main'>
             {devicesList[deviceIndex] ?
                 <div className='container'>

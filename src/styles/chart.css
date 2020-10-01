@@ -1,0 +1,26 @@
+.chart {
+    min-width: 50rem;
+    min-height: 30rem;
+    background: #fff;
+    position: fixed;
+    top: 22%;
+    left: 87.5%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border: 1px solid var(--default-green);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.chart .real-time {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin: 2rem;
+}
+
+.chart .real-time p {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--default-green);
+}
