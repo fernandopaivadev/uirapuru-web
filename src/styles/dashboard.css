@@ -1,58 +1,75 @@
 .dashboard .main {
-    background: #fff;
     width: 100vw;
     height: 100vh;
     position: fixed;
-    overflow: hidden;
+    background: #fff;
     display: grid;
-    grid-template-columns: 10% 90%;
+    grid-template-columns: 12% 68% 20%;
 }
 
-.dashboard .main .container {
+.dashboard .main .params {
+    display: flex;
+    justify-content: space-around;
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
     grid-column: 2/3;
+}
+
+.dashboard .main .params .display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    border: 0.1rem solid #aaa;
+    border-radius: 0.5rem;
+    width: 25%;
+    margin: 2rem;
+    height: 10rem;
+}
+
+.dashboard .main .params .display .value {
+    margin: 0;
+    width: 13rem;
+    display: flex;
+    left: 0;
+    padding: 1rem;
+    align-items: center;
+}
+
+.dashboard .main .params .display .value .icon {
+    font-size: 2rem;
+    color: var(--default-green);
+}
+
+.dashboard .main .params .display .value .text {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #555;
+    margin: 0 0.8rem 0 0.8rem;
+}
+
+.dashboard .main .params .display .value .payload {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+
+.dashboard .main .params .valuePanel {
+    margin: 0;
+    width: 14rem;
+    height: 10rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    padding: 1rem;
 }
 
-.dashboard .devices {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-}
-
-.dashboard .empty {
-    height: 100vh;
-    width: 90vw;
+.dashboard .main .params .valuePanel .iconPanel {
+    font-size: 5rem;
     display: flex;
-    align-items: center;
     justify-content: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 25rem;
-    height: 10rem;
-    border-radius: 0.5rem;
-}
-
-.dashboard .empty .text {
-    font-size: 2.4rem;
-    font-weight: 600;
-    color: #777;
-    text-align: center;
-}
-
-@media screen and (max-width: 1200px) {
-    .dashboard .devices {
-        display: flex;
-        flex-direction: column;
-    }
+    align-items: center;
+    color: var(--default-green);
 }
