@@ -4,102 +4,83 @@ import { Chart as ChartJS } from 'chart.js'
 
 import '../../styles/chart.css'
 
-const Chart = () => {
-    document.addEventListener('DOMContentLoaded',() => {
-        const context = document.getElementById('chart').getContext('2d')
-        new ChartJS(context, {
-            type: 'line',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes for A',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(153, 102, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
+const Chart = ({ collection }) => {
+    const chartStyle = [
+        'rgba(54, 162, 235)',
+        'rgba(255, 99, 132)'
+    ]
+
+    document.addEventListener('DOMContentLoaded', () => {
+        collection.forEach(({ datasets, timestamps }, index) => {
+            datasets.forEach((dataset, index) => {
+                dataset.borderColor = new Array(dataset.length).fill(chartStyle[index])
+                dataset.backgroundColor = '#00000000'
+                dataset.borderWidth = 2
+            })
+
+            const context = document.querySelector(
+                `#chart-${index}`
+            ).getContext('2d')
+
+            new ChartJS(context, {
+                responsive: true,
+                devicePixelRatio: '2',
+                type: 'line',
+                data: {
+                    labels: timestamps,
+                    datasets
                 },
-                {
-                    label: '# of Votes for B',
-                    data: [5, 7, 1, 9, 4, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
                 }
-            }
+            })
         })
     })
 
     return <div className='chart'>
-        <canvas id='chart'/>
-        <ul className='real-time'>
-            <li>
-                <p>
+        {collection.map((dataset, index) =>
+            <div className='chart-view' key={index}>
+                <canvas id={`chart-${index}`}/>
+                <ul className='real-time'>
+                    <li>
+                        <p>
                     T: 27 º C
-                </p>
-            </li>
-            <li>
-                <p>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
                     H: 298 % H.R.
-                </p>
-            </li>
-            <li>
-                <p>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
                     T: 27 º C
-                </p>
-            </li>
-            <li>
-                <p>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
                     H: 298 % H.R.
-                </p>
-            </li>
-            <li>
-                <p>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
                     T: 27 º C
-                </p>
-            </li>
-            <li>
-                <p>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
                     H: 298 % H.R.
-                </p>
-            </li>
-        </ul>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        )}
     </div>
 }
 

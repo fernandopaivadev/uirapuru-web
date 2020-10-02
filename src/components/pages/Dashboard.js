@@ -136,6 +136,27 @@ const Dashboard = ({ history }) => {
         }
     }, [buffer, connected, devicesList, newMessage, timeoutId])
 
+    const collection = [{
+        timestamps:[12, 19, 3, 5, 2, 3],
+        datasets: [{
+            label: '# of Votes for A',
+            data: [12, 19, 3, 5, 2, 3],
+        },
+        {
+            label: '# of Votes for B',
+            data: [5, 7, 1, 9, 4, 3],
+        }],
+    }, {
+        timestamps:[12, 19, 3, 5, 2, 3],
+        datasets: [{
+            label: '# of Votes for A',
+            data: [12, 19, 3, 5, 2, 3],
+        },
+        {
+            label: '# of Votes for B',
+            data: [5, 7, 1, 9, 4, 3],
+        }]
+    }]
     return <div className='dashboard'>
         <NavBar />
         <Menu
@@ -144,7 +165,7 @@ const Dashboard = ({ history }) => {
             items={getData('user').consumerUnits}
             subItemKey={'devices'}
         />
-        <Chart/>
+        <Chart collection={collection} />
         <div className='main'>
             {devicesList[deviceIndex] ?
                 <div className='container'>
