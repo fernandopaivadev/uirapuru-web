@@ -1,75 +1,114 @@
 .dashboard .main {
+    display: grid;
+    grid-template-columns: 12% 63% 25%;
     width: 100vw;
     height: 100vh;
     position: fixed;
     background: #fff;
-    display: grid;
-    grid-template-columns: 12% 68% 20%;
 }
 
-.dashboard .main .params {
+.dashboard .main .overview {
     display: flex;
-    justify-content: space-around;
-    padding: 2.5rem;
-    border-radius: 0.5rem;
-    justify-content: center;
+    flex-direction: column;
     width: 100%;
-    height: 100%;
     grid-column: 2/3;
 }
 
-.dashboard .main .params .display {
+.dashboard .main .overview .displays {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 25rem;
+    padding: 2.5rem;
+    border-radius: 0.5rem;
+    grid-column: 2/3;
+}
+
+.dashboard .main .overview .displays .display {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    min-width: 30%;
+    height: 14rem;
+    margin: 2rem;
     border: 0.1rem solid #aaa;
     border-radius: 0.5rem;
-    width: 25%;
-    margin: 2rem;
-    height: 10rem;
 }
 
-.dashboard .main .params .display .value {
-    margin: 0;
-    width: 13rem;
+.dashboard .main .overview .displays .display .value {
     display: flex;
-    left: 0;
-    padding: 1rem;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 1rem;
+    left: 0;
 }
 
-.dashboard .main .params .display .value .icon {
-    font-size: 2rem;
+.dashboard .main .overview .displays .display .value .icon {
+    margin-right: 1rem;
+    font-size: 3rem;
     color: var(--default-green);
 }
 
-.dashboard .main .params .display .value .text {
+.dashboard .main .overview .displays .display .value .text {
+    margin: 0 0.8rem 0 0.8rem;
     font-size: 1.6rem;
     font-weight: 500;
     color: #555;
-    margin: 0 0.8rem 0 0.8rem;
 }
 
-.dashboard .main .params .display .value .payload {
-    color: #333;
-    font-weight: 600;
+.dashboard .main .overview .displays .display .value .payload {
     font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
 }
 
-.dashboard .main .params .valuePanel {
-    margin: 0;
-    width: 14rem;
-    height: 10rem;
+.dashboard .main .overview .devices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    width: 100%;
+}
+
+.dashboard .main .overview .devices .device {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
 }
 
-.dashboard .main .params .valuePanel .iconPanel {
-    font-size: 5rem;
+.dashboard .main .overview .devices .device .iconPanel {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    font-size: 7rem;
     color: var(--default-green);
+}
+
+.dashboard .main .overview .devices .device .text{
+    margin: 0 0.8rem 0 0.8rem;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.dashboard .main .graphics {
+    border-left: 1px solid #ccc;
+    grid-column: 3/4;
+}
+
+.dashboard .main .graphics .graphic img {
+    height: 25rem;
+    width: 100%;
+}
+
+.dashboard .main .graphics h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    color: #555;
 }
