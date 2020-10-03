@@ -1,0 +1,27 @@
+.chart {
+    position: fixed;
+    z-index: 1;
+    padding: 1rem;
+}
+
+.chart .chart-view {
+    width: 50rem;
+    height: 34.5rem;
+    border: 1px solid var(--default-green);
+    border-radius: 0.5rem;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.chart .chart-view .real-time {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin: 2rem;
+}
+
+.chart .chart-view .real-time p {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--default-green);
+}
