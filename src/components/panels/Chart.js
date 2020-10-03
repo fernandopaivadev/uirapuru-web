@@ -2,18 +2,30 @@ import React from 'react'
 
 import { Chart as ChartJS } from 'chart.js'
 
+import themes from '../../themes'
+
 import '../../styles/chart.css'
 
-const Chart = ({ collection }) => {
-    const chartStyle = [
-        'rgba(54, 162, 235)',
-        'rgba(255, 99, 132)'
-    ]
+const Chart = ({ collection, realTime }) => {
+    if (!realTime) {
+        realTime = {
+            t1: '29.84',
+            h1: '98',
+            v1: '200',
+            i1: '9',
+            v2: '127',
+            i2: '5'
+        }
+    }
+
+    const { default: { traceColors } } = themes
 
     document.addEventListener('DOMContentLoaded', () => {
         collection.forEach(({ datasets, timestamps }, index) => {
             datasets.forEach((dataset, index) => {
-                dataset.borderColor = new Array(dataset.length).fill(chartStyle[index])
+                dataset.borderColor = new Array(
+                    dataset.length
+                ).fill(traceColors[index])
                 dataset.backgroundColor = '#00000000'
                 dataset.borderWidth = 2
             })
@@ -49,33 +61,45 @@ const Chart = ({ collection }) => {
                 <canvas id={`chart-${index}`}/>
                 <ul className='real-time'>
                     <li>
-                        <p>
-                    T: 27 º C
+                        <p style={{
+                            color: traceColors[0]
+                        }}>
+                            T: { realTime.t1 } °C
                         </p>
                     </li>
                     <li>
-                        <p>
-                    H: 298 % H.R.
+                        <p style={{
+                            color: traceColors[1]
+                        }}>
+                            H: { realTime.h1 } % H.R.A
                         </p>
                     </li>
                     <li>
-                        <p>
-                    T: 27 º C
+                        <p style={{
+                            color: traceColors[2]
+                        }}>
+                            Vca: { realTime.v1 } V
                         </p>
                     </li>
                     <li>
-                        <p>
-                    H: 298 % H.R.
+                        <p style={{
+                            color: traceColors[3]
+                        }}>
+                            Ica: { realTime.i1 } A
                         </p>
                     </li>
                     <li>
-                        <p>
-                    T: 27 º C
+                        <p style={{
+                            color: traceColors[4]
+                        }}>
+                            Vcc: { realTime.v1 } V
                         </p>
                     </li>
                     <li>
-                        <p>
-                    H: 298 % H.R.
+                        <p style={{
+                            color: traceColors[5]
+                        }}>
+                            Icc: { realTime.i2 } A
                         </p>
                     </li>
                 </ul>
