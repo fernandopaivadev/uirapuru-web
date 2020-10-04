@@ -1,6 +1,6 @@
 .dashboard .main {
     display: grid;
-    grid-template-columns: 12% 63% 25%;
+    grid-template-columns: 12% 56% 32%;
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -20,8 +20,8 @@
     width: 100%;
     min-height: 25rem;
     padding: 2.5rem;
-    border-radius: 0.5rem;
     grid-column: 2/3;
+    border-bottom: 0.1rem solid #ccc;
 }
 
 .dashboard .main .overview .displays .display {
@@ -66,9 +66,10 @@
 
 .dashboard .main .overview .devices {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     width: 100%;
+    padding: 2rem;
 }
 
 .dashboard .main .overview .devices .device {
@@ -81,7 +82,7 @@
     padding: 1.5rem;
 }
 
-.dashboard .main .overview .devices .device .iconPanel {
+.dashboard .main .overview .devices .device .panelIcon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,26 +90,17 @@
     color: var(--default-green);
 }
 
-.dashboard .main .overview .devices .device .text{
+.dashboard .main .overview .devices .device .text {
     margin: 0 0.8rem 0 0.8rem;
     font-size: 2rem;
     font-weight: 600;
     color: #555;
 }
 
-.dashboard .main .graphics {
-    border-left: 1px solid #ccc;
+.dashboard .main .charts {
+    border-left: 0.1rem solid #ccc;
     grid-column: 3/4;
-}
-
-.dashboard .main .graphics .graphic img {
-    height: 25rem;
-    width: 100%;
-}
-
-.dashboard .main .graphics h1 {
-    font-size: 2rem;
-    font-weight: 600;
-    text-align: center;
-    color: #555;
+    display: flex;
+    flex-direction: column;
+    height: 95.5%;
 }

@@ -8,7 +8,7 @@ const themes = {
         lightGray: '#aaa',
         white: '#fff',
         traceColors: [
-            '#F7D002',
+            '#EFA00B',
             '#1e88e5',
             '#BF1A2F',
             '#454E9E',

@@ -8,7 +8,7 @@ const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
             { title }
         </p>
         <ul className='items'>
-            ]{items.map((item, itemIndex) =>
+            {items.map((item, itemIndex) =>
                 <li key={ itemIndex }>
                     <p
                         className='item-name'
