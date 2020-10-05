@@ -65,8 +65,14 @@ button {
     }
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 1000px) {
     html {
         font-size: 45%;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    html {
+        font-size: 35%;
     }
 }

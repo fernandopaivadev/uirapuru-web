@@ -16,7 +16,7 @@
     margin: auto;
     display: flex;
     left: 0;
-    border: 0.1rem solid var(--default-green);
+    border: 1px solid var(--default-green);
     border-radius: 0.5rem;
     padding: 1rem;
     align-items: center;
@@ -57,7 +57,7 @@
 }
 
 .realtime .navigation .date-picker-input {
-    border: 0.1rem solid var(--default-green);
+    border: 1px solid var(--default-green);
     border-radius: 0.5rem;
     padding: 0.5rem;
     font-size: 1.6rem;

@@ -1,7 +1,7 @@
 .chart .chart-view {
     width: 100%;
     min-height: 32rem;
-    border-bottom: 0.1rem solid #ccc;
+    border-bottom: 1px solid #ccc;
     display: flex;
     flex-direction: column;
     align-items: center;

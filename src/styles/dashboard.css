@@ -21,7 +21,7 @@
     min-height: 25rem;
     padding: 2.5rem;
     grid-column: 2/3;
-    border-bottom: 0.1rem solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .dashboard .main .overview .displays .display {
@@ -31,7 +31,7 @@
     min-width: 30%;
     height: 14rem;
     margin: 2rem;
-    border: 0.1rem solid #aaa;
+    border: 1px solid #aaa;
     border-radius: 0.5rem;
 }
 
@@ -66,8 +66,8 @@
 
 .dashboard .main .overview .devices {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     width: 100%;
     padding: 2rem;
 }
@@ -98,7 +98,7 @@
 }
 
 .dashboard .main .charts {
-    border-left: 0.1rem solid #ccc;
+    border-left: 1px solid #ccc;
     grid-column: 3/4;
     display: flex;
     flex-direction: column;
