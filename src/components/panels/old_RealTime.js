@@ -14,7 +14,7 @@ import {
 import { formatDate } from '../../services/forms'
 
 import themes from '../../themes'
-import '../../styles/realtime.css'
+import '../../styles/old_realtime.css'
 
 const RealTime = ({
     payload,

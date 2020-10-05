@@ -7,10 +7,10 @@ import { isAuthenticated, getToken, isAdmin } from '../../services/auth'
 import { baseURL } from '../../services/api'
 import io from 'socket.io-client'
 
-import RealTime from '../panels/RealTime'
+import RealTime from '../panels/old_RealTime'
 import Menu from '../panels/Menu'
 
-import '../../styles/dashboard.css'
+import '../../styles/old_dashboard.css'
 
 let mobile = false
 

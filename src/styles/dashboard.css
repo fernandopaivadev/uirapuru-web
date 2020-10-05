@@ -7,14 +7,14 @@
     background: #fff;
 }
 
-.dashboard .main .overview {
+.dashboard .main .main-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     grid-column: 2/3;
 }
 
-.dashboard .main .overview .displays {
+.dashboard .main .main-container .displays {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -24,7 +24,7 @@
     border-bottom: 1px solid #ccc;
 }
 
-.dashboard .main .overview .displays .display {
+.dashboard .main .main-container .displays .display {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -35,7 +35,7 @@
     border-radius: 0.5rem;
 }
 
-.dashboard .main .overview .displays .display .value {
+.dashboard .main .main-container .displays .display .value {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,26 +45,26 @@
     left: 0;
 }
 
-.dashboard .main .overview .displays .display .value .icon {
+.dashboard .main .main-container .displays .display .value .icon {
     margin-right: 1rem;
     font-size: 3rem;
     color: var(--default-green);
 }
 
-.dashboard .main .overview .displays .display .value .text {
+.dashboard .main .main-container .displays .display .value .text {
     margin: 0 0.8rem 0 0.8rem;
     font-size: 1.6rem;
     font-weight: 500;
     color: #555;
 }
 
-.dashboard .main .overview .displays .display .value .payload {
+.dashboard .main .main-container .displays .display .value .payload {
     font-size: 1.6rem;
     font-weight: 600;
     color: #333;
 }
 
-.dashboard .main .overview .devices {
+.dashboard .main .main-container .devices {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
@@ -72,7 +72,7 @@
     padding: 2rem;
 }
 
-.dashboard .main .overview .devices .device {
+.dashboard .main .main-container .devices .device {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,7 +82,7 @@
     padding: 1.5rem;
 }
 
-.dashboard .main .overview .devices .device .panelIcon {
+.dashboard .main .main-container .devices .device .panelIcon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +90,7 @@
     color: var(--default-green);
 }
 
-.dashboard .main .overview .devices .device .text {
+.dashboard .main .main-container .devices .device .text {
     margin: 0 0.8rem 0 0.8rem;
     font-size: 2rem;
     font-weight: 600;

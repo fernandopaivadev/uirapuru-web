@@ -12,11 +12,14 @@ const Chart = ({ collection, realTime }) => {
     useEffect(() => {
         collection.forEach(({ datasets, timestamps }, index) => {
             datasets.forEach((dataset, index) => {
-                dataset.borderColor = new Array(
-                    dataset.length
-                ).fill(traceColors[index])
-                dataset.backgroundColor = '#00000000'
-                dataset.borderWidth = 2
+                dataset.borderColor = traceColors[index]
+                dataset.backgroundColor = traceColors[index]
+                dataset.pointBorderColor = traceColors[index]
+                dataset.pointBackgroundColor = traceColors[index]
+                dataset.borderWidth = 1
+                dataset.pointRadius = 2
+                dataset.fill = false
+                dataset.cubicInterpolationMode = 'linear'
             })
 
             const context = document.querySelector(
@@ -24,7 +27,6 @@ const Chart = ({ collection, realTime }) => {
             ).getContext('2d')
 
             new ChartJS(context, {
-                responsive: true,
                 devicePixelRatio: '2',
                 type: 'line',
                 data: {
@@ -32,6 +34,25 @@ const Chart = ({ collection, realTime }) => {
                     datasets
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
+                    pan: {
+                        enabled: true,
+                        mode: 'xy'
+                    },
+                    legend: {
+                        labels: {
+                            boxWidth: 10,
+
+                        }
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        axis: 'y',
+                        intersect: false,
+                        backgroundColor: '#333'
+                    },
                     scales: {
                         yAxes: [{
                             ticks: {
