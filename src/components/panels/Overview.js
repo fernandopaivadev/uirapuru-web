@@ -12,9 +12,9 @@ import {
 
 import '../../styles/overview.css'
 
-const Overview = () =>
+const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
     <div className='overview'>
-        <div className='display'>
+        {t1 ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[0]
@@ -28,12 +28,15 @@ const Overview = () =>
                     }}
                 />
                 <p className='text'>
-                                T:
+                    T:
                 </p>
                 <p className='payload'>
-                                26 °C
+                    {t1} °C
                 </p>
             </div>
+            : null
+        }
+        {h1 ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[1]
@@ -47,12 +50,15 @@ const Overview = () =>
                     }}
                 />
                 <p className='text'>
-                                HRA:
+                     HRA:
                 </p>
                 <p className='payload'>
-                            50  %
+                    {h1} %
                 </p>
             </div>
+            : null
+        }
+        {v1 ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[2]
@@ -66,12 +72,37 @@ const Overview = () =>
                     }}
                 />
                 <p className='text'>
-                            Vca:
+                    Vca:
                 </p>
                 <p className='payload'>
-                            220 V
+                    {v1} V
                 </p>
             </div>
+            : null
+        }
+        {i1 ?
+            <div className='value'
+                style={{
+                    borderColor: themes.default.traceColors[3]
+                }}
+            >
+                <FontAwesomeIcon
+                    className='icon'
+                    icon={faEllipsisH}
+                    style={{
+                        color: themes.default.traceColors[3]
+                    }}
+                />
+                <h1 className='text'>
+                    Ica:
+                </h1>
+                <h1 className='payload'>
+                    {i1} A
+                </h1>
+            </div>
+            : null
+        }
+        {v2 ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[4]
@@ -79,7 +110,7 @@ const Overview = () =>
             >
                 <FontAwesomeIcon
                     className='icon'
-                    icon={faEllipsisH}
+                    icon={faBolt}
                     style={{
                         color: themes.default.traceColors[4]
                     }}
@@ -88,10 +119,33 @@ const Overview = () =>
                             Vcc:
                 </p>
                 <p className='payload'>
-                                110 V
+                    {v2} V
                 </p>
             </div>
-        </div>
+            :null
+        }
+        {i2 ?
+            <div className='value'
+                style={{
+                    borderColor: themes.default.traceColors[5]
+                }}
+            >
+                <FontAwesomeIcon
+                    className='icon'
+                    icon={faEllipsisH}
+                    style={{
+                        color: themes.default.traceColors[5]
+                    }}
+                />
+                <h1 className='text'>
+                    Icc:
+                </h1>
+                <h1 className='payload'>
+                    {i2} A
+                </h1>
+            </div>
+            : null
+        }
     </div>
 
 export default Overview

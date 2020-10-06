@@ -70,7 +70,7 @@ const Dashboard = () => {
                 setItemIndex={setConsumerUnitIndex}
             />
             <div className='main-container'>
-                <Overview />
+                <Overview  {...realTime}/>
                 <ul className='devices'>
                     {getData('user')
                         ?.consumerUnits[ consumerUnitIndex ]
