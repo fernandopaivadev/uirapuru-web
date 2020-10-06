@@ -1,0 +1,13 @@
+.plot .main {
+    display: grid;
+    grid-template-columns: 12% 88%;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: #fff;
+}
+
+.plot .main .chart-container {
+    height: 90%;
+    padding: 2rem;
+}
