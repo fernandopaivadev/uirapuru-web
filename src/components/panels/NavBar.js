@@ -21,7 +21,7 @@ const NavBar = ({ history }) => {
         if (!isAuthenticated()) {
             history.push('/login')
         } else {
-            if (!fetch()) {
+            if (!fetch('user', getData('user')._id)) {
                 history.push('/login')
             }
         }

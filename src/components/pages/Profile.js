@@ -89,7 +89,7 @@ const Profile = ({ history }) => {
                 clearData('user')
                 clearData('users-list')
 
-                if (await fetch()) {
+                if (await fetch('users-list')) {
                     history.push('/users-list')
                 } else {
                     logout()

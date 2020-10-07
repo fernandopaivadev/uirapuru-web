@@ -106,7 +106,7 @@ const NewUser = ({ history }) => {
             if (status === 201) {
                 setSuccess(true)
 
-                if (await fetch()) {
+                if (await fetch('user')) {
                     history.push('/users-list')
                 } else {
                     logout()

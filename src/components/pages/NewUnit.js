@@ -59,7 +59,7 @@ const NewUnit = ({ history }) => {
             if (status === 200) {
                 setSuccess(true)
 
-                if (await fetch()) {
+                if (await fetch('user', getData('user')._id)) {
                     history.push('/profile')
                 } else {
                     logout()
