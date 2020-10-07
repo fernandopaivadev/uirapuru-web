@@ -40,8 +40,8 @@ const dataCollection = [{
     }]
 }]
 
-
 const Plot = () => {
+
     return <div className='plot'>
         <NavBar />
         <div className='main'>
