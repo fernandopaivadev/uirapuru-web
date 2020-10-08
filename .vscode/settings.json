@@ -2,7 +2,7 @@
     "editor.fontFamily": "Fira Code",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "modifications",
+    "editor.formatOnSaveMode": "file",
     "editor.renderWhitespace": "boundary",
     "editor.renameOnType": true,
     "workbench.editor.highlightModifiedTabs": true,

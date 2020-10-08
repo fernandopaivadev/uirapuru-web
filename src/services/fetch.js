@@ -1,65 +1,97 @@
 import { getData, storeData } from './storage'
-import { isAuthenticated, isAdmin, logout } from './auth'
+import { isAuthenticated, isAdmin } from './auth'
 import { api } from './api'
 
-const fetch = async (_id, consumerUnitIndex, deviceIndex) => {
-    try {
-        if (_id && consumerUnitIndex && deviceIndex) {
-            const begin = new Date()
-            const end = new Date()
+const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
+    if (!(begin && end)) {
+        begin = new Date()
+        end = new Date()
+        begin.setMinutes(begin.getMinutes() - 1)
+    }
 
-            begin.setMinutes(begin.getMinutes() - 1)
-            const device = getData('user')
-                .consumerUnits[consumerUnitIndex]
-                .devices[deviceIndex]
+    const device = getData('user')
+        .consumerUnits[consumerUnitIndex]
+        .devices[deviceIndex]
 
-            const response = await api.get(
-                `/device/messages?device=${
-                    device.id
-                }&from=${begin.toISOString()
-                }&to=${end.toISOString()}`
+    const response = await api.get(
+        `/device/messages?device=${
+            device.id
+        }&from=${begin.toISOString()
+        }&to=${end.toISOString()}`
+    )
+
+    const { status } = response
+
+    if (status === 200) {
+        const { messages } = response.data
+        const params = []
+        const timestamps = []
+
+        messages.forEach(({ payload }) => {
+            const parsedPayload = JSON.parse(payload)
+            const dateRTC = new Date(parsedPayload.rtc)
+            const timestamp = `${
+                dateRTC.getHours()
+            }:${
+                dateRTC.getMinutes()
+            }:${
+                dateRTC.getSeconds()
+            }`
+
+            delete parsedPayload.rtc
+            delete parsedPayload.store
+            params.push(parsedPayload)
+            timestamps.push(timestamp)
+        })
+
+        const keys = Object.keys(params[0])
+        const datasets = keys.map(key => ({
+            label: key,
+            data: params.map(param =>
+                param[key]
             )
+        }))
 
-            const { status } = response
+        const title = device.name
 
-            if (status === 200) {
-                const { messages } = response.data
-                const params = []
-                const timestamps = []
+        const chart = {
+            title,
+            timestamps,
+            datasets
+        }
 
-                messages.forEach(({ payload }) => {
-                    const parsedPayload = JSON.parse(payload)
+        return chart
+    }
+}
 
-                    params.push(parsedPayload)
-                    timestamps.push(parsedPayload.rtc)
-                })
+const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
+    try {
+        if (_id && consumerUnitIndex >= 0 && deviceIndex >= 0) {
+            const collection = [
+                await getMessages(
+                    consumerUnitIndex,
+                    deviceIndex,
+                    begin,
+                    end
+                )
+            ]
 
-                const keys = Object.keys(params)
-                const datasets = []
+            storeData('collection', collection)
+            return true
+        } else if (_id && consumerUnitIndex >= 0) {
+            const collection = await Promise.all(getData('user')
+                .consumerUnits[consumerUnitIndex]
+                .devices.map(async (device, deviceIndex) =>
+                    await getMessages(
+                        consumerUnitIndex,
+                        deviceIndex,
+                        begin,
+                        end
+                    )
+                ))
 
-                keys.forEach(key => {
-                    datasets.push({
-                        label: key,
-                        data: params.map(param =>
-                            param[key]
-                        )
-                    })
-                })
-
-                const title = device.name
-
-                const collection = {
-                    title,
-                    timestamps,
-                    datasets
-                }
-
-                return collection
-            }
-        } else if (_id && consumerUnitIndex && deviceIndex) {
-            return false
-        } else if (_id && consumerUnitIndex) {
-            return false
+            storeData('collection', collection)
+            return true
         } else if (_id) {
             if (isAdmin()) {
                 const { status, data } = await api.get(
@@ -88,7 +120,6 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex) => {
         }
     } catch (err) {
         console.log(err?.message ?? err?.response?.data?.message)
-        logout()
         return false
     }
 }
