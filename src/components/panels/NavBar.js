@@ -12,7 +12,6 @@ import logo from '../../assets/logo.svg'
 import { getData } from '../../services/storage'
 
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
-import fetch from '../../services/fetch'
 
 import '../../styles/navbar.css'
 
@@ -20,10 +19,6 @@ const NavBar = ({ history }) => {
     useEffect(() => {
         if (!isAuthenticated()) {
             history.push('/login')
-        } else {
-            if (!fetch()) {
-                history.push('/login')
-            }
         }
     }, [history])
 
