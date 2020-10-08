@@ -50,7 +50,7 @@ const UsersList = ({ history }) => {
                             key={user?.username}
                             className='item'
                             onClick={async () => {
-                                if (await fetch('user', user._id)) {
+                                if (await fetch(user._id)) {
                                     history.push('/dashboard')
                                 }
                             }}>

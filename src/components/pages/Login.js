@@ -50,13 +50,13 @@ const Login = ({ history }) => {
                 if (adminMode) {
                     adminLogin(response.data.token)
 
-                    if(await fetch('users-list')) {
+                    if(await fetch()) {
                         history.push('/users-list')
                     }
                 } else {
                     login(response.data.token)
 
-                    if(await fetch('user')) {
+                    if(await fetch()) {
                         history.push('/dashboard')
                     }
                 }
