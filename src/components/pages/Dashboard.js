@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NavBar from '../panels/NavBar'
 import Menu from '../panels/Menu'
 import Chart from '../panels/Chart'
 import Overview from '../panels/Overview'
 
 import { getData } from '../../services/storage'
+import fetch from '../../services/fetch'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -14,37 +15,37 @@ import {
 
 import '../../styles/dashboard.css'
 
-const simulateData = () => {
-    const data = new Array(10).fill(0)
-    data.forEach((item, index) => {
-        data[index] = Math.floor(Math.random() * 10)
-    })
-    return data
-}
+// const simulateData = () => {
+//     const data = new Array(10).fill(0)
+//     data.forEach((item, index) => {
+//         data[index] = Math.floor(Math.random() * 10)
+//     })
+//     return data
+// }
 
-const dataCollection = [{
-    title: 'Dispositivo 1',
-    timestamps: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    datasets: [{
-        label: 'Temperatura',
-        data: simulateData()
-    },{
-        label: 'Umidade',
-        data: simulateData()
-    },{
-        label: 'Vac',
-        data: simulateData()
-    },{
-        label: 'Iac',
-        data: simulateData()
-    },{
-        label: 'Vcc',
-        data: simulateData()
-    },{
-        label: 'Icc',
-        data: simulateData()
-    }]
-}]
+// const dataCollection = [{
+//     title: 'Dispositivo 1',
+//     timestamps: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+//     datasets: [{
+//         label: 'Temperatura',
+//         data: simulateData()
+//     },{
+//         label: 'Umidade',
+//         data: simulateData()
+//     },{
+//         label: 'Vac',
+//         data: simulateData()
+//     },{
+//         label: 'Iac',
+//         data: simulateData()
+//     },{
+//         label: 'Vcc',
+//         data: simulateData()
+//     },{
+//         label: 'Icc',
+//         data: simulateData()
+//     }]
+// }]
 
 const realTime = {
     t1: '42.9',
@@ -57,7 +58,19 @@ const realTime = {
 
 const Dashboard = ({ history}) => { 
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
-    
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        (async () => {
+            if (await fetch(
+                getData('user')._id,
+                consumerUnitIndex
+            )) {
+                setLoading(false)
+            }
+        })()
+    }, [consumerUnitIndex])
+
     return <div className='dashboard'>
         <NavBar />
         <div className='main'>
@@ -94,12 +107,15 @@ const Dashboard = ({ history}) => {
                     }
                 </ul>
             </div>
-            <div className='charts'>
-                <Chart
-                    collection={dataCollection}
-                    realTime={realTime}
-                />
-            </div>
+            {!loading ?
+                <div className='charts'>
+                    <Chart
+                        collection={getData('collection')}
+                        realTime={realTime}
+                    />
+                </div>
+                : null
+            }
         </div>
     </div>
 }

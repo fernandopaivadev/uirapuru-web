@@ -16,7 +16,7 @@ const Login = ({ history }) => {
 
     useEffect(() => {
         if (isAuthenticated()) {
-            history.push('/consumer-units')
+            history.push('/dashboard')
         }
     }, [history])
 
