@@ -2,9 +2,9 @@ import React, { useEffect, useState, memo, useCallback } from 'react'
 
 import { api } from '../../services/api'
 
-import Plot from './Plot'
+import Plot from './old_Plot'
 
-import '../../styles/graphic.css'
+import '../../styles/old_graphic.css'
 import '../../styles/util.css'
 
 

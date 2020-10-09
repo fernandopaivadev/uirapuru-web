@@ -9,6 +9,11 @@
         "plugin:import/errors",
         "plugin:import/warnings"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -24,7 +29,8 @@
     "rules": {
         "no-trailing-spaces": "error",
         "no-extra-parens": "error",
-        "indent": ["error", 4],
+        // "indent": ["error", 4],
+        "indent": "off",
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single"],
         "semi": ["error", "never"],
@@ -34,6 +40,7 @@
                 "extensions": [".js", ".jsx"]
             }
         ],
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "template-curly-spacing": "off"
     }
 }

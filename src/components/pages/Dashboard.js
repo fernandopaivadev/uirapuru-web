@@ -5,6 +5,7 @@ import Chart from '../panels/Chart'
 import Overview from '../panels/Overview'
 
 import { getData } from '../../services/storage'
+import { /*realTimeConfig,*/ realTimeBuffer } from '../../services/websocket'
 import fetch from '../../services/fetch'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -47,7 +48,7 @@ import '../../styles/dashboard.css'
 //     }]
 // }]
 
-const realTime = {
+const overviewProps = {
     t1: '42.9',
     h1: '98',
     v1: '231',
@@ -56,11 +57,12 @@ const realTime = {
     i2: '5'
 }
 
-const Dashboard = ({ history}) => { 
+const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        // realTimeConfig(consumerUnitIndex)
         (async () => {
             if (await fetch(
                 getData('user')._id,
@@ -83,7 +85,7 @@ const Dashboard = ({ history}) => {
                 setItemIndex={setConsumerUnitIndex}
             />
             <div className='main-container'>
-                <Overview  {...realTime}/>
+                <Overview  {...overviewProps}/>
                 <ul className='devices'>
                     {getData('user')
                         ?.consumerUnits[ consumerUnitIndex ]
@@ -111,7 +113,7 @@ const Dashboard = ({ history}) => {
                 <div className='charts'>
                     <Chart
                         collection={getData('collection')}
-                        realTime={realTime}
+                        realTime={realTimeBuffer}
                     />
                 </div>
                 : null
