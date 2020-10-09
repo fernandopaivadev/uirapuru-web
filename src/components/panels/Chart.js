@@ -27,20 +27,15 @@ const Chart = ({ collection, realTime }) => {
             ).getContext('2d')
 
             new ChartJS(context, {
-                devicePixelRatio: '2',
                 type: 'line',
                 data: {
                     labels: timestamps,
                     datasets
                 },
                 options: {
+                    devicePixelRatio: 2,
                     responsive: true,
                     maintainAspectRatio: true,
-                    aspectRatio: 2,
-                    pan: {
-                        enabled: true,
-                        mode: 'xy'
-                    },
                     legend: {
                         labels: {
                             boxWidth: 10,

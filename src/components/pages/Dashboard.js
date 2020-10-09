@@ -56,7 +56,7 @@ const realTime = {
     i2: '5'
 }
 
-const Dashboard = () => {
+const Dashboard = ({ history}) => { 
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [loading, setLoading] = useState(true)
 
@@ -83,12 +83,18 @@ const Dashboard = () => {
                 setItemIndex={setConsumerUnitIndex}
             />
             <div className='main-container'>
-                <Overview />
+                <Overview  {...realTime}/>
                 <ul className='devices'>
                     {getData('user')
                         ?.consumerUnits[ consumerUnitIndex ]
                         ?.devices.map((device, index) =>
-                            <li className='device' key={ index }>
+                            <li
+                                className='device'
+                                key={ index }
+                                onClick={() => {
+                                    history.push(`/plot?id=${device.id}`)
+                                }}
+                            >
                                 <FontAwesomeIcon
                                     className='panelIcon'
                                     icon={faSolarPanel}
