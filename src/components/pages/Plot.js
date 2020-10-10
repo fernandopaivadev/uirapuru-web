@@ -1,46 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import NavBar from '../panels/NavBar'
 import Menu from '../panels/Menu'
 import Chart from '../panels/Chart'
 
 import { getData } from '../../services/storage'
-
+import fetch from '../../services/fetch'
 
 import '../../styles/plot.css'
-
-const simulateData = () => {
-    const data = new Array(10).fill(0)
-    data.forEach((item, index) => {
-        data[index] = Math.floor(Math.random() * 10)
-    })
-    return data
-}
-
-const dataCollection = [{
-    title: 'Dispositivo 1',
-    timestamps: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    datasets: [{
-        label: 'Temperatura',
-        data: simulateData()
-    },{
-        label: 'Umidade',
-        data: simulateData()
-    },{
-        label: 'Vac',
-        data: simulateData()
-    },{
-        label: 'Iac',
-        data: simulateData()
-    },{
-        label: 'Vcc',
-        data: simulateData()
-    },{
-        label: 'Icc',
-        data: simulateData()
-    }]
-}]
+import '../../styles/util.css'
 
 const Plot = () => {
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState()
+    const [deviceIndex, setDeviceIndex] = useState()
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        (async () => {
+            if (await fetch(
+                getData('user')._id,
+                consumerUnitIndex,
+                deviceIndex
+            )) {
+                setLoading(false)
+            }
+        })()
+    }, [consumerUnitIndex, deviceIndex])
 
     return <div className='plot'>
         <NavBar />
@@ -51,10 +35,18 @@ const Plot = () => {
                     getData('user').consumerUnits
                 }
                 subItemKey='devices'
+                setItemIndex={setConsumerUnitIndex}
+                setSubItemIndex={setDeviceIndex}
             />
-            <div className='chart-container'>
-                <Chart collection={dataCollection} />
-            </div>
+            {loading ?
+                <div className='chart-container'>
+                    <Chart collection={getData('collection')} />
+                </div>
+                :
+                <div className='loading-container'>
+                    <progress className='circular-progress'/>
+                </div>
+            }
         </div>
 
     </div>

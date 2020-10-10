@@ -65,48 +65,48 @@ const Chart = ({ collection, realTime }) => {
             <div className='chart-view' key={index}>
                 <h1>{ title } </h1>
                 <canvas id={`chart-${index}`}/>
-                {realTime ?
+                {realTime?.length > 0 ?
                     <ul className='real-time'>
                         <li>
                             <p style={{
                                 color: traceColors[0]
                             }}>
-                            T: { realTime.t1 } °C
+                            T: { realTime[index].t1 } °C
                             </p>
                         </li>
                         <li>
                             <p style={{
                                 color: traceColors[1]
                             }}>
-                            H: { realTime.h1 } % H.R.A
+                                H.R.A: { realTime[index].h1 } %
                             </p>
                         </li>
                         <li>
                             <p style={{
                                 color: traceColors[2]
                             }}>
-                            Vca: { realTime.v1 } V
+                                Vca: { realTime[index].v1 } V
                             </p>
                         </li>
                         <li>
                             <p style={{
                                 color: traceColors[3]
                             }}>
-                            Ica: { realTime.i1 } A
+                                Ica: { realTime[index].i1 } A
                             </p>
                         </li>
                         <li>
                             <p style={{
                                 color: traceColors[4]
                             }}>
-                            Vcc: { realTime.v1 } V
+                                Vcc: { realTime[index].v1 } V
                             </p>
                         </li>
                         <li>
                             <p style={{
                                 color: traceColors[5]
                             }}>
-                            Icc: { realTime.i2 } A
+                                Icc: { realTime[index].i2 } A
                             </p>
                         </li>
                     </ul>

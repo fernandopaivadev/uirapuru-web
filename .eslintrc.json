@@ -40,7 +40,6 @@
                 "extensions": [".js", ".jsx"]
             }
         ],
-        "react/prop-types": 0,
-        "template-curly-spacing": "off"
+        "react/prop-types": 0
     }
 }

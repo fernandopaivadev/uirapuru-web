@@ -9,7 +9,7 @@ const realTimeConfig = consumerUnitIndex => {
     try {
         const devicesList = getData('user')
             .consumerUnits[consumerUnitIndex]
-            .devices.map(device => device)
+            .devices.map(device => device.id)
 
         devicesList.forEach(() => {
             realTimeBuffer.push({})
@@ -31,8 +31,8 @@ const realTimeConfig = consumerUnitIndex => {
 
         socket.on('data', ({ topic, payload }) => {
             try {
-                devicesList.forEach((device, index) => {
-                    if (device.id === topic) {
+                devicesList.forEach((id, index) => {
+                    if (id === topic) {
                         realTimeBuffer[index] = JSON.parse(payload)
                     }
                 })
