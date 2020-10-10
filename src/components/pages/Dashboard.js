@@ -5,6 +5,7 @@ import Chart from '../panels/Chart'
 import Overview from '../panels/Overview'
 
 import { getData } from '../../services/storage'
+import { realTimeConfig, realTimeBuffer } from '../../services/websocket'
 import fetch from '../../services/fetch'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -14,40 +15,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import '../../styles/dashboard.css'
+import '../../styles/util.css'
 
-// const simulateData = () => {
-//     const data = new Array(10).fill(0)
-//     data.forEach((item, index) => {
-//         data[index] = Math.floor(Math.random() * 10)
-//     })
-//     return data
-// }
-
-// const dataCollection = [{
-//     title: 'Dispositivo 1',
-//     timestamps: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-//     datasets: [{
-//         label: 'Temperatura',
-//         data: simulateData()
-//     },{
-//         label: 'Umidade',
-//         data: simulateData()
-//     },{
-//         label: 'Vac',
-//         data: simulateData()
-//     },{
-//         label: 'Iac',
-//         data: simulateData()
-//     },{
-//         label: 'Vcc',
-//         data: simulateData()
-//     },{
-//         label: 'Icc',
-//         data: simulateData()
-//     }]
-// }]
-
-const realTime = {
+const overviewProps = {
     t1: '42.9',
     h1: '98',
     v1: '231',
@@ -56,12 +26,13 @@ const realTime = {
     i2: '5'
 }
 
-const Dashboard = ({ history}) => { 
+const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         (async () => {
+            realTimeConfig(consumerUnitIndex)
             if (await fetch(
                 getData('user')._id,
                 consumerUnitIndex
@@ -83,7 +54,7 @@ const Dashboard = ({ history}) => {
                 setItemIndex={setConsumerUnitIndex}
             />
             <div className='main-container'>
-                <Overview  {...realTime}/>
+                <Overview  {...overviewProps}/>
                 <ul className='devices'>
                     {getData('user')
                         ?.consumerUnits[ consumerUnitIndex ]
@@ -111,10 +82,13 @@ const Dashboard = ({ history}) => {
                 <div className='charts'>
                     <Chart
                         collection={getData('collection')}
-                        realTime={realTime}
+                        realTime={realTimeBuffer}
                     />
                 </div>
-                : null
+                :
+                <div className='loading-container'>
+                    <progress className='circular-progress'/>
+                </div>
             }
         </div>
     </div>

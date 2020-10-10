@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, memo } from 'react'
 
 import NavBar from '../panels/NavBar'
-import Graphic from '../panels/Graphic'
+import Graphic from '../panels/old_Graphic'
 import { getData } from '../../services/storage'
 import { isAuthenticated, getToken, isAdmin } from '../../services/auth'
 import { baseURL } from '../../services/api'
