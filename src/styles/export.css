@@ -1,0 +1,23 @@
+.export {
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+}
+.export .csv-link {
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--default-green);
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all ease 0.2s;
+}
+
+.export .csv-link:hover {
+    background: var(--default-light-green);
+}
