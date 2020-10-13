@@ -25,19 +25,37 @@
         },
         "sourceType": "module"
     },
-    "plugins": ["react", "import"],
+    "plugins": [
+        "react",
+        "import"
+    ],
     "rules": {
         "no-trailing-spaces": "error",
         "no-extra-parens": "error",
-        // "indent": ["error", 4],
+        // "indent": [
+        //     "error",
+        //     4
+        // ],
         "indent": "off",
-        "linebreak-style": ["error", "unix"],
-        "quotes": ["error", "single"],
-        "semi": ["error", "never"],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
         "react/jsx-filename-extension": [
             "error",
             {
-                "extensions": [".js", ".jsx"]
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
             }
         ],
         "react/prop-types": 0

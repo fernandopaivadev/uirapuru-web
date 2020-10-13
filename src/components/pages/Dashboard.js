@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import NavBar from '../panels/NavBar'
 import Menu from '../panels/Menu'
 import Chart from '../panels/Chart'
@@ -28,13 +28,19 @@ const overviewProps = {
 
 const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
-    const [realTimeBuffer] = useState([])
+    const [realTimeBuffer, setRealTimeBuffer] = useState([])
+    const [newMessage, setNewMessage] = useState(false)
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
 
     useEffect(() => {
         (async () => {
-            websocketConfig(consumerUnitIndex)
+            websocketConfig(
+                consumerUnitIndex,
+                realTimeBuffer,
+                setRealTimeBuffer,
+                setNewMessage
+            )
 
             if (await fetch(
                 getData('user')._id,
@@ -47,7 +53,13 @@ const Dashboard = ({ history }) => {
                 setLoading(false)
             }
         })()
-    }, [consumerUnitIndex])
+    }, [consumerUnitIndex, realTimeBuffer])
+
+    useEffect(
+        useCallback(() => {
+            setNewMessage(false)
+        }, [newMessage])
+    )
 
     return <div className='dashboard'>
         <NavBar />
