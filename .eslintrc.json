@@ -9,6 +9,11 @@
         "plugin:import/errors",
         "plugin:import/warnings"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
