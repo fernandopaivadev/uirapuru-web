@@ -7,7 +7,7 @@ import logo from '../../assets/logo.svg'
 import '../../styles/login.css'
 import '../../styles/util.css'
 
-const Login = ({ history }) => {
+const ForgotPassword = ({ history }) => {
     const [username, setUsername] = useState('')
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -110,4 +110,4 @@ const Login = ({ history }) => {
     </div>
 }
 
-export default Login
+export default ForgotPassword

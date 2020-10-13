@@ -9,18 +9,29 @@ import fetch from '../../services/fetch'
 import '../../styles/plot.css'
 import '../../styles/util.css'
 
-const Plot = () => {
-    const [consumerUnitIndex, setConsumerUnitIndex] = useState()
-    const [deviceIndex, setDeviceIndex] = useState()
+const Plot = ({ history }) => {
+    const params = history
+        .location
+        .search
+        .split('?')[1]
+        .split('&')
+
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState(params[0])
+    const [deviceIndex, setDeviceIndex] = useState(params[1])
     const [loading, setLoading] = useState(true)
+    const [success, setSuccess] = useState(false)
 
     useEffect(() => {
         (async () => {
-            if (await fetch(
+            if(await fetch(
                 getData('user')._id,
                 consumerUnitIndex,
                 deviceIndex
             )) {
+                setSuccess(true)
+                setLoading(false)
+            } else {
+                setSuccess(false)
                 setLoading(false)
             }
         })()
@@ -38,10 +49,15 @@ const Plot = () => {
                 setItemIndex={setConsumerUnitIndex}
                 setSubItemIndex={setDeviceIndex}
             />
-            {loading ?
-                <div className='chart-container'>
-                    <Chart collection={getData('collection')} />
-                </div>
+            {!loading ?
+                success ?
+                    <div className='chart-container'>
+                        <Chart collection={getData('collection')} />
+                    </div>
+                    :
+                    <div className='empty'>
+                        <p>Não há dados deste dispositivo</p>
+                    </div>
                 :
                 <div className='loading-container'>
                     <progress className='circular-progress'/>

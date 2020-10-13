@@ -1,19 +1,18 @@
 import { getToken } from './auth'
-import { getData } from './storage'
+import { getData, storeData } from './storage'
 import { baseURL } from './api'
 import io from 'socket.io-client'
 
-const realTimeBuffer = []
-
-const realTimeConfig = consumerUnitIndex => {
+const websocketConfig = consumerUnitIndex => {
     try {
         const devicesList = getData('user')
             .consumerUnits[consumerUnitIndex]
             .devices.map(device => device.id)
 
-        devicesList.forEach(() => {
-            realTimeBuffer.push({})
-        })
+        storeData(
+            'real-time-buffer',
+            new Array(devicesList.length).fill({})
+        )
 
         const socket = io(baseURL)
 
@@ -33,7 +32,9 @@ const realTimeConfig = consumerUnitIndex => {
             try {
                 devicesList.forEach((id, index) => {
                     if (id === topic) {
-                        realTimeBuffer[index] = JSON.parse(payload)
+                        const _buffer = getData('real-time-buffer')
+                        _buffer[index] = JSON.parse(payload)
+                        storeData('real-time-buffer', _buffer)
                     }
                 })
             } catch (err) {
@@ -43,10 +44,8 @@ const realTimeConfig = consumerUnitIndex => {
     } catch (err) {
         console.log(err.message)
     }
-
 }
 
 export {
-    realTimeConfig,
-    realTimeBuffer
+    websocketConfig
 }

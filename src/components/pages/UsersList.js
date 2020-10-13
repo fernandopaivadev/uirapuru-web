@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { isAuthenticated, logout } from '../../services/auth'
@@ -13,6 +13,8 @@ import '../../styles/userslist.css'
 import '../../styles/util.css'
 
 const UsersList = ({ history }) => {
+    const [loading, setLoading] = useState(false)
+
     if (!isAuthenticated()) {
         history.push('/login')
     }
@@ -44,30 +46,38 @@ const UsersList = ({ history }) => {
                     Não há usuários cadastrados
                 </h1>
                 :
-                <ul>
-                    {getData('users-list')?.map(user =>
-                        <li
-                            key={user?.username}
-                            className='item'
-                            onClick={async () => {
-                                if (await fetch(user._id)) {
-                                    history.push('/dashboard')
-                                }
-                            }}>
-                            <UserIcon className='icon' />
+                !loading ?
+                    <ul>
+                        {getData('users-list')?.map(user =>
+                            <li
+                                key={user?.username}
+                                className='item'
+                                onClick={async () => {
+                                    setLoading(true)
+                                    if (await fetch(user._id)) {
+                                        history.push('/dashboard')
+                                    } else {
+                                        setLoading(false)
+                                    }
+                                }}>
+                                <UserIcon className='icon' />
 
-                            <div className='text'>
-                                <h1 className='username'>
-                                    {user?.username}
-                                </h1>
+                                <div className='text'>
+                                    <h1 className='username'>
+                                        {user?.username}
+                                    </h1>
 
-                                <h1 className='email'>
-                                    {user?.email}
-                                </h1>
-                            </div>
-                        </li>
-                    )}
-                </ul>
+                                    <h1 className='email'>
+                                        {user?.email}
+                                    </h1>
+                                </div>
+                            </li>
+                        )}
+                    </ul>
+                    :
+                    <div className='loading-container'>
+                        <progress className='circular-progress'/>
+                    </div>
             }
         </div>
     </div>

@@ -1,4 +1,4 @@
-import { getData, storeData } from './storage'
+import { getData, storeData, clearData } from './storage'
 import { isAuthenticated, isAdmin } from './auth'
 import { api } from './api'
 
@@ -76,7 +76,10 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
                 )
             ]
 
-            storeData('collection', collection)
+            if (collection?.length > 0) {
+                storeData('collection', collection)
+            }
+
             return true
         } else if (_id && consumerUnitIndex >= 0) {
             const collection = await Promise.all(getData('user')
@@ -90,7 +93,10 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
                     )
                 ))
 
-            storeData('collection', collection)
+            if (collection?.length > 0) {
+                storeData('collection', collection)
+            }
+
             return true
         } else if (_id) {
             if (isAdmin()) {
@@ -100,6 +106,7 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
 
                 if (status === 200) {
                     storeData('user', data.user)
+                    clearData('collection')
                     return true
                 }
             }

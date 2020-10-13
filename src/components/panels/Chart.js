@@ -7,6 +7,7 @@ import themes from '../../themes'
 import '../../styles/chart.css'
 
 const Chart = ({ collection, realTime }) => {
+    console.log(realTime)
     const { default: { traceColors } } = themes
 
     useEffect(() => {

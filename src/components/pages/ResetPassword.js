@@ -7,7 +7,7 @@ import logo from '../../assets/logo.svg'
 import '../../styles/login.css'
 import '../../styles/util.css'
 
-const Login = ({ history, match }) => {
+const ResetPassword = ({ history, match }) => {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
@@ -116,4 +116,4 @@ const Login = ({ history, match }) => {
     )
 }
 
-export default Login
+export default ResetPassword
