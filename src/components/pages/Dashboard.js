@@ -17,15 +17,6 @@ import {
 import '../../styles/dashboard.css'
 import '../../styles/util.css'
 
-const overviewProps = {
-    t1: '42.9',
-    h1: '98',
-    v1: '231',
-    i1: '9',
-    v2: '127',
-    i2: '5'
-}
-
 const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [realTimeBuffer, setRealTimeBuffer] = useState([])
@@ -33,8 +24,12 @@ const Dashboard = ({ history }) => {
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
 
+    let overviewProps = realTimeBuffer[0]
+
     useEffect(() => {
         (async () => {
+            overviewProps = realTimeBuffer[0]
+
             websocketConfig(
                 consumerUnitIndex,
                 realTimeBuffer,
@@ -53,7 +48,7 @@ const Dashboard = ({ history }) => {
                 setLoading(false)
             }
         })()
-    }, [consumerUnitIndex, realTimeBuffer])
+    }, [consumerUnitIndex])
 
     useEffect(
         useCallback(() => {

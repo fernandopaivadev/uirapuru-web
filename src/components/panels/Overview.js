@@ -14,7 +14,7 @@ import '../../styles/overview.css'
 
 const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
     <div className='overview'>
-        {t1 ?
+        {t1 !== undefined ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[0]
@@ -36,7 +36,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
             </div>
             : null
         }
-        {h1 ?
+        {h1 !== undefined ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[1]
@@ -58,7 +58,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
             </div>
             : null
         }
-        {v1 ?
+        {v1 !== undefined ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[2]
@@ -80,7 +80,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
             </div>
             : null
         }
-        {i1 ?
+        {i1 !== undefined ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[3]
@@ -102,7 +102,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
             </div>
             : null
         }
-        {v2 ?
+        {v2 !== undefined ?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[4]
@@ -124,7 +124,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
             </div>
             :null
         }
-        {i2 ?
+        {i2 !== undefined?
             <div className='value'
                 style={{
                     borderColor: themes.default.traceColors[5]

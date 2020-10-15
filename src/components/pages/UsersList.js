@@ -21,25 +21,31 @@ const UsersList = ({ history }) => {
 
     return <div className='userslist'>
         <div className='list'>
+
             <div className='header'>
                 <p className='title'>Escolha o Usuário</p>
-                <button
-                    className='classic-button'
-                    onClick={() => {
-                        history.push('/new-user')
-                    }}
-                >
-                    Criar Usuário
-                </button>
-                <button
-                    className='classic-button'
-                    onClick={() => {
-                        logout()
-                        history.push('/login')
-                    }}
-                >
-                    Sair
-                </button>
+                {!loading ?
+                    <>
+                        <button
+                            className='classic-button'
+                            onClick={() => {
+                                history.push('/new-user')
+                            }}
+                        >
+                            Criar Usuário
+                        </button>
+                        <button
+                            className='classic-button'
+                            onClick={() => {
+                                logout()
+                                history.push('/login')
+                            }}
+                        >
+                            Sair
+                        </button>
+                    </>
+                    : null
+                }
             </div>
             {getData('users-list')?.length <= 0 ?
                 <h1 className='empty'>
