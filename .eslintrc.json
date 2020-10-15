@@ -32,11 +32,10 @@
     "rules": {
         "no-trailing-spaces": "error",
         "no-extra-parens": "error",
-        // "indent": [
-        //     "error",
-        //     4
-        // ],
-        "indent": "off",
+        "indent": [
+            "error",
+            4
+        ],
         "linebreak-style": [
             "error",
             "unix"
