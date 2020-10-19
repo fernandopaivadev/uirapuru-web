@@ -2,12 +2,31 @@ import React, { useState, useEffect } from 'react'
 import NavBar from '../panels/NavBar'
 import Menu from '../panels/Menu'
 import Chart from '../panels/Chart'
+import Export from '../panels/Export'
 
 import { getData } from '../../services/storage'
 import fetch from '../../services/fetch'
 
 import '../../styles/plot.css'
 import '../../styles/util.css'
+
+const data = [
+    ['firstname', 'lastname', 'email'],
+    ['Ahmed', 'Tomi', 'ah@smthing.co.com'],
+    ['Raed', 'Labes', 'rl@smthing.co.com'],
+    ['Yezzi', 'Min l3b', 'ymin@cocococo.com']
+]
+
+// const tempCollection = [{
+//     title: 'Dispositivo 1',
+//     timestamps: new Array(50).fill('2:00'),
+//     datasets: [
+//         {
+//             label: 'teste1',
+//             data: new Array(50).fill('5')
+//         }
+//     ]
+// }]
 
 const Plot = ({ history }) => {
     const params = history
@@ -20,21 +39,48 @@ const Plot = ({ history }) => {
     const [deviceIndex, setDeviceIndex] = useState(params[1])
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
+    const [currentDate, setCurrentDate] = useState(
+        `${
+            new Date().getFullYear()
+        }-${
+            new Date().getMonth() < 10 ?
+                '0' + new Date().getMonth()
+                :
+                new Date().getMonth()
+        }-${
+            new Date().getDate()
+        }`
+    )
+
+    const getPeriod = dateString => {
+        const begin = new Date(dateString).toISOString()
+        let end = new Date(dateString)
+        end.setDate(end.getDate() + 1)
+        end = end.toISOString()
+
+        return [begin, end]
+    }
+
+    const getMessages = async () => {
+        const [begin, end] = getPeriod(currentDate)
+
+        if(await fetch(
+            getData('user')._id,
+            consumerUnitIndex,
+            deviceIndex,
+            begin,
+            end
+        )) {
+            setSuccess(true)
+            setLoading(false)
+        } else {
+            setSuccess(false)
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
-        (async () => {
-            if(await fetch(
-                getData('user')._id,
-                consumerUnitIndex,
-                deviceIndex
-            )) {
-                setSuccess(true)
-                setLoading(false)
-            } else {
-                setSuccess(false)
-                setLoading(false)
-            }
-        })()
+        getMessages()
     }, [consumerUnitIndex, deviceIndex])
 
     return <div className='plot'>
@@ -49,22 +95,60 @@ const Plot = ({ history }) => {
                 setItemIndex={setConsumerUnitIndex}
                 setSubItemIndex={setDeviceIndex}
             />
-            {!loading ?
-                success ?
-                    <div className='chart-container'>
-                        <Chart collection={getData('collection')} />
-                    </div>
-                    :
-                    <div className='empty'>
-                        <p>Não há dados deste dispositivo</p>
-                    </div>
-                :
-                <div className='loading-container'>
-                    <progress className='circular-progress'/>
-                </div>
-            }
-        </div>
+            <div className='content-container'>
+                <div className='date-picker'>
+                    <input
+                        type='date'
+                        defaultValue={currentDate}
+                        onChange={event => {
+                            setCurrentDate(event.target.value)
+                        }}
+                    />
 
+                    <button
+                        className='classic-button'
+                        onClick ={() => {
+                            getMessages()
+                        }}
+                    >
+                        OK
+                    </button>
+                </div>
+                {!loading ?
+                    success ?
+                        getData('collection')?.length ?
+                            <div className='chart-container'>
+                                <Chart collection={getData('collection')} />
+                            </div>
+                            :
+                            <div className='empty'>
+                                <p>Não há dados deste dispositivo</p>
+                            </div>
+                        :
+                        <div className='error'>
+                            <p>Não foi possível obter os dados</p>
+                        </div>
+                    :
+                    <div className='loading-container'>
+                        <progress className='circular-progress'/>
+                    </div>
+                }
+                <div className='buttons'>
+                    <button
+                        className='classic-button'
+                        onClick={() => {
+                            history.push('/dashboard')
+                        }}
+                    >
+                        Voltar
+                    </button>
+                    {!loading && getData('collection')?.length ?
+                        <Export data={data}/>
+                        : null
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 }
 
