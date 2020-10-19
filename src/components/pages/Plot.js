@@ -17,16 +17,16 @@ const data = [
     ['Yezzi', 'Min l3b', 'ymin@cocococo.com']
 ]
 
-const tempCollection = [{
-    title: 'Dispositivo 1',
-    timestamps: new Array(50).fill('2:00'),
-    datasets: [
-        {
-            label: 'teste1',
-            data: new Array(50).fill('5')
-        }
-    ]
-}]
+// const tempCollection = [{
+//     title: 'Dispositivo 1',
+//     timestamps: new Array(50).fill('2:00'),
+//     datasets: [
+//         {
+//             label: 'teste1',
+//             data: new Array(50).fill('5')
+//         }
+//     ]
+// }]
 
 const Plot = ({ history }) => {
     const params = history
@@ -39,7 +39,6 @@ const Plot = ({ history }) => {
     const [deviceIndex, setDeviceIndex] = useState(params[1])
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
-    // eslint-disable-next-line
     const [currentDate, setCurrentDate] = useState(
         `${
             new Date().getFullYear()
@@ -53,21 +52,35 @@ const Plot = ({ history }) => {
         }`
     )
 
-    console.log(currentDate)
+    const getPeriod = dateString => {
+        const begin = new Date(dateString).toISOString()
+        let end = new Date(dateString)
+        end.setDate(end.getDate() + 1)
+        end = end.toISOString()
+
+        return [begin, end]
+    }
+
+    const getMessages = async () => {
+        const [begin, end] = getPeriod(currentDate)
+
+        if(await fetch(
+            getData('user')._id,
+            consumerUnitIndex,
+            deviceIndex,
+            begin,
+            end
+        )) {
+            setSuccess(true)
+            setLoading(false)
+        } else {
+            setSuccess(false)
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
-        (async () => {
-            if(await fetch(
-                getData('user')._id,
-                consumerUnitIndex,
-                deviceIndex
-            )) {
-                setSuccess(true)
-                setLoading(false)
-            } else {
-                setSuccess(false)
-                setLoading(false)
-            }
-        })()
+        getMessages()
     }, [consumerUnitIndex, deviceIndex])
 
     return <div className='plot'>
@@ -87,20 +100,33 @@ const Plot = ({ history }) => {
                     <input
                         type='date'
                         defaultValue={currentDate}
+                        onChange={event => {
+                            setCurrentDate(event.target.value)
+                        }}
                     />
 
-                    <button className='classic-button'>
+                    <button
+                        className='classic-button'
+                        onClick ={() => {
+                            getMessages()
+                        }}
+                    >
                         OK
                     </button>
                 </div>
-                {loading ?
-                    !success ?
-                        <div className='chart-container'>
-                            <Chart collection={tempCollection} />
-                        </div>
+                {!loading ?
+                    success ?
+                        getData('collection')?.length ?
+                            <div className='chart-container'>
+                                <Chart collection={getData('collection')} />
+                            </div>
+                            :
+                            <div className='empty'>
+                                <p>Não há dados deste dispositivo</p>
+                            </div>
                         :
-                        <div className='empty'>
-                            <p>Não há dados deste dispositivo</p>
+                        <div className='error'>
+                            <p>Não foi possível obter os dados</p>
                         </div>
                     :
                     <div className='loading-container'>
@@ -116,14 +142,13 @@ const Plot = ({ history }) => {
                     >
                         Voltar
                     </button>
-                    {!loading ?
+                    {!loading && getData('collection')?.length ?
                         <Export data={data}/>
                         : null
                     }
                 </div>
             </div>
         </div>
-
     </div>
 }
 

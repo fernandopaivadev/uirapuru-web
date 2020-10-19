@@ -100,15 +100,20 @@ const Dashboard = ({ history }) => {
             </div>
             {!loading ?
                 success ?
-                    <div className='charts'>
-                        <Chart
-                            collection={getData('collection')}
-                            realTime={realTimeBuffer}
-                        />
-                    </div>
+                    getData('collection')?.length ?
+                        <div className='charts'>
+                            <Chart
+                                collection={getData('collection')}
+                                realTime={realTimeBuffer}
+                            />
+                        </div>
+                        :
+                        <div className='empty'>
+                            <p>Não há dados destes dispositivos</p>
+                        </div>
                     :
-                    <div className='empty'>
-                        <p>Não há dados destes dispositivos</p>
+                    <div className='error'>
+                        <p>Não foi possível obter os dados</p>
                     </div>
                 :
                 <div className='loading-container'>

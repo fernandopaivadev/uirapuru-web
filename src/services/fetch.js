@@ -5,8 +5,9 @@ import { api } from './api'
 const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
     if (!(begin && end)) {
         begin = new Date()
-        end = new Date()
-        begin.setMinutes(begin.getMinutes() - 1)
+        begin.setMinutes(begin.getMinutes() - 60)
+        begin = begin.toISOString()
+        end = new Date().toISOString()
     }
 
     const device = getData('user')
@@ -16,8 +17,11 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
     const response = await api.get(
         `/device/messages?device=${
             device.id
-        }&from=${begin.toISOString()
-        }&to=${end.toISOString()}`
+        }&from=${
+            begin
+        }&to=${
+            end
+        }`
     )
 
     const { status } = response
