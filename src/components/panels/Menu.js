@@ -30,6 +30,9 @@ const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
                                         if (setSubItemIndex) {
                                             setSubItemIndex(subItemIndex)
                                         }
+                                        if (setItemIndex) {
+                                            setItemIndex(itemIndex)
+                                        }
                                     }}
                                 >
                                     { subItem.name }

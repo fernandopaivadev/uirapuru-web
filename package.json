@@ -1,11 +1,11 @@
 {
     "name": "uirapuru-web",
-    "version": "2.0.0",
+    "version": "0.0.0",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged",
+            "pre-commit": "git add . && lint-staged",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
             "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
         }
@@ -16,19 +16,21 @@
         ]
     },
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.30",
-        "@fortawesome/free-solid-svg-icons": "^5.14.0",
+        "@fortawesome/fontawesome-svg-core": "^1.2.32",
+        "@fortawesome/free-solid-svg-icons": "^5.15.1",
         "@fortawesome/react-fontawesome": "^0.1.11",
         "@material-ui/core": "^4.11.0",
         "@material-ui/icons": "^4.9.1",
-        "axios": "^0.19.2",
-        "plotly.js": "^1.54.7",
+        "axios": "^0.20.0",
+        "chart.js": "^2.9.3",
+        "plotly.js": "^1.56.0",
         "react": "^16.13.1",
+        "react-csv": "^2.0.3",
         "react-dom": "^16.13.1",
-        "react-plotly.js": "^2.4.0",
+        "react-plotly.js": "^2.5.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "^3.4.3",
-        "socket.io-client": "^2.3.0"
+        "socket.io-client": "^2.3.1"
     },
     "scripts": {
         "dev": "react-scripts start",
@@ -36,7 +38,8 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "update": "ncu -u -x eslint && npm install",
-        "lint": "eslint --fix src/"
+        "lint": "eslint --fix src/",
+        "commit": "git add . && git commit"
     },
     "browserslist": {
         "production": [
@@ -51,15 +54,15 @@
         ]
     },
     "devDependencies": {
-        "@commitlint/cli": "^9.1.1",
-        "@commitlint/config-conventional": "^9.1.1",
+        "@commitlint/cli": "^11.0.0",
+        "@commitlint/config-conventional": "^11.0.0",
         "commitizen": "^4.2.1",
-        "cz-conventional-changelog": "^3.2.0",
+        "cz-conventional-changelog": "^3.3.0",
         "eslint": "^6.6.0",
-        "eslint-plugin-import": "^2.22.0",
-        "husky": "^4.2.5",
-        "lint-staged": "^10.2.11",
-        "npm-check-updates": "^7.0.2"
+        "eslint-plugin-import": "^2.22.1",
+        "husky": "^4.3.0",
+        "lint-staged": "^10.4.0",
+        "npm-check-updates": "^9.0.4"
     },
     "config": {
         "commitizen": {

@@ -50,12 +50,13 @@ button {
 
 ::-webkit-scrollbar-thumb:vertical {
     height: 0.5rem;
-    background-color: #555;
+    background-color: #ccc;
+    border-radius: 0.5rem;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
     width: 0.5rem;
-    background-color: #555;
+    background-color: #ccc;
 }
 
 @media screen and (min-width: 2000px) {
@@ -64,8 +65,14 @@ button {
     }
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 1000px) {
     html {
         font-size: 45%;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    html {
+        font-size: 35%;
     }
 }

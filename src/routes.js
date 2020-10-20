@@ -5,6 +5,7 @@ import Login from './components/pages/Login'
 import ForgotPassword from './components/pages/ForgotPassword'
 import ResetPassword from './components/pages/ResetPassword'
 import Dashboard from './components/pages/Dashboard'
+import Plot from './components/pages/Plot'
 import Profile from './components/pages/Profile'
 import UsersList from './components/pages/UsersList'
 import NewUser from './components/pages/NewUser'
@@ -16,6 +17,7 @@ const Routes = () => <Router>
         <Route path='/forgot-password' exact component={ForgotPassword} />
         <Route path='/reset-password' component={ResetPassword} />
         <Route path='/dashboard' exact component={Dashboard} />
+        <Route path='/plot' exact component={Plot} />
         <Route path='/profile' exact component={Profile} />
         <Route path='/users-list' exact component={UsersList} />
         <Route path='/new-user' exact component={NewUser} />
@@ -23,6 +25,5 @@ const Routes = () => <Router>
         <Redirect to='/login' />
     </Switch>
 </Router>
-
 
 export default Routes

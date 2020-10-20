@@ -9,6 +9,11 @@
         "plugin:import/errors",
         "plugin:import/warnings"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -20,18 +25,36 @@
         },
         "sourceType": "module"
     },
-    "plugins": ["react", "import"],
+    "plugins": [
+        "react",
+        "import"
+    ],
     "rules": {
         "no-trailing-spaces": "error",
         "no-extra-parens": "error",
-        "indent": ["error", 4],
-        "linebreak-style": ["error", "unix"],
-        "quotes": ["error", "single"],
-        "semi": ["error", "never"],
+        // "indent": [
+        //     "error",
+        //     4
+        // ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
         "react/jsx-filename-extension": [
             "error",
             {
-                "extensions": [".js", ".jsx"]
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
             }
         ],
         "react/prop-types": 0

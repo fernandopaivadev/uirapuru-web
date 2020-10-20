@@ -1,58 +1,146 @@
 .dashboard .main {
-    background: #fff;
+    display: grid;
+    grid-template-columns: 12% 56% 32%;
     width: 100vw;
     height: 100vh;
     position: fixed;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 10% 90%;
+    background: #fff;
 }
 
-.dashboard .main .container {
+.dashboard .main .main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     grid-column: 2/3;
+}
+
+.dashboard .main .main-container .displays {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 25rem;
+    padding: 2.5rem;
+    grid-column: 2/3;
+    border-bottom: 1px solid #ccc;
+}
+
+.dashboard .main .main-container .displays .display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    min-width: 30%;
+    height: 14rem;
+    margin: 2rem;
+    border: 1px solid #aaa;
+    border-radius: 0.5rem;
+}
+
+.dashboard .main .main-container .displays .display .value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 1rem;
+    left: 0;
+}
+
+.dashboard .main .main-container .displays .display .value .icon {
+    margin-right: 1rem;
+    font-size: 3rem;
+    color: var(--default-green);
+}
+
+.dashboard .main .main-container .displays .display .value .text {
+    margin: 0 0.8rem 0 0.8rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.dashboard .main .main-container .displays .display .value .payload {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.dashboard .main .main-container .devices {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 100%;
+    padding: 2rem;
+}
+
+.dashboard .main .main-container .devices .device {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    cursor: pointer;
 }
 
-.dashboard .devices {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-}
-
-.dashboard .empty {
-    height: 100vh;
-    width: 90vw;
+.dashboard .main .main-container .devices .device .panelIcon {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 25rem;
-    height: 10rem;
-    border-radius: 0.5rem;
+    font-size: 7rem;
+    color: var(--default-green);
 }
 
-.dashboard .empty .text {
-    font-size: 2.4rem;
+.dashboard .main .main-container .devices .device .text {
+    margin: 0 0.8rem 0 0.8rem;
+    font-size: 2rem;
     font-weight: 600;
-    color: #777;
-    text-align: center;
+    color: #555;
 }
 
-@media screen and (max-width: 1200px) {
-    .dashboard .devices {
-        display: flex;
-        flex-direction: column;
-    }
+.dashboard .main .charts {
+    border-left: 1px solid #ccc;
+    grid-column: 3/4;
+    display: flex;
+    flex-direction: column;
+    height: 95.5%;
+}
+
+.dashboard .main .loading-container {
+    border-left: 1px solid #ccc;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard .main .empty {
+    border-left: 1px solid #ccc;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard .main .empty p {
+    color: #999;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.dashboard .main .error {
+    border-left: 1px solid #ccc;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard .main .error p {
+    color: #dd0000;
+    font-size: 2rem;
+    font-weight: 600;
 }

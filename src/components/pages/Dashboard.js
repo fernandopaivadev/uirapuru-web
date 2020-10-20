@@ -1,175 +1,127 @@
-import React, { useEffect, useState, useCallback, memo } from 'react'
-
+import React, { useState, useEffect, useCallback } from 'react'
 import NavBar from '../panels/NavBar'
-import Graphic from '../panels/Graphic'
-import { getData } from '../../services/storage'
-import { isAuthenticated, getToken, isAdmin } from '../../services/auth'
-import { baseURL } from '../../services/api'
-import io from 'socket.io-client'
-
-import RealTime from '../panels/RealTime'
 import Menu from '../panels/Menu'
+import Chart from '../panels/Chart'
+import Overview from '../panels/Overview'
+
+import { getData } from '../../services/storage'
+import { websocketConfig } from '../../services/websocket'
+import fetch from '../../services/fetch'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import {
+    faSolarPanel
+} from '@fortawesome/free-solid-svg-icons'
 
 import '../../styles/dashboard.css'
-
-let mobile = false
-
-window.onload = () => {
-    const { innerHeight, innerWidth } = window
-
-    if (innerHeight > innerWidth || innerWidth <= 760) {
-        mobile = true
-    }
-}
+import '../../styles/util.css'
 
 const Dashboard = ({ history }) => {
-    const [newMessage, setNewMessage] = useState({
-        isNew: false,
-        topic: '',
-        payload: ''
-    })
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
+    const [realTimeBuffer, setRealTimeBuffer] = useState([])
+    const [newMessage, setNewMessage] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [success, setSuccess] = useState(false)
 
-    const [buffer, setBuffer] = useState([])
-    const [deviceIndex, setDeviceIndex] = useState(null)
-    const [connected, setConnected] = useState([])
-    const [timeoutId, setTimeoutId] = useState([])
-    const [datePicker, setDatePicker] = useState(`${
-        new Date().getDate()
-    }/${
-        new Date().getMonth() + 1
-    }/${
-        new Date().getFullYear()
-    }`)
-    const [energyValue, setEnergyValue] = useState({
-        ac: null,
-        dc: null
-    })
-    const [devicesList, setDevicesList] = useState([])
-
-
-    const webSocketConfig = useCallback(() => {
-        try {
-            const _devicesList = []
-
-            getData('user').consumerUnits.forEach(consumerUnit => {
-                consumerUnit.devices.forEach(device => {
-                    _devicesList.push(device.id)
-                })
-            })
-
-            setDevicesList(_devicesList)
-
-            const socket = io(baseURL)
-
-            socket.emit('auth', {
-                token: getToken()
-            })
-
-            socket.on('auth', ({ ok }) => {
-                if (ok) {
-                    socket.emit('listen', {
-                        devicesList: _devicesList
-                    })
-                }
-            })
-
-            socket.on('data', ({ topic, payload }) => {
-                try {
-                    setNewMessage({
-                        isNew: true,
-                        topic,
-                        payload
-                    })
-                } catch (err) {
-                    console.log(err.message)
-                }
-            })
-        } catch (err) {
-            console.log(err.message)
-        }
-    }, [])
+    let overviewProps = realTimeBuffer[0]
 
     useEffect(() => {
-        if (isAuthenticated()) {
-            if(isAdmin() && !getData('user')) {
-                history.push('/users-list')
+        (async () => {
+            overviewProps = realTimeBuffer[0]
+
+            websocketConfig(
+                consumerUnitIndex,
+                realTimeBuffer,
+                setRealTimeBuffer,
+                setNewMessage
+            )
+
+            if (await fetch(
+                getData('user')._id,
+                consumerUnitIndex
+            )) {
+                setSuccess(true)
+                setLoading(false)
             } else {
-                webSocketConfig()
+                setSuccess(false)
+                setLoading(false)
             }
-        }
-    }, [webSocketConfig, history])
+        })()
+    }, [consumerUnitIndex])
 
-    useEffect(() => {
-        const { isNew, topic, payload } = newMessage
-
-        if (isNew) {
-            devicesList.forEach((device, index) => {
-                if (device === topic) {
-                    const _buffer = [...buffer]
-                    _buffer[index] = payload
-
-                    setNewMessage({
-                        isNew: false,
-                        topic: '',
-                        payload: ''
-                    })
-
-                    setBuffer(_buffer)
-
-                    const _connected = [...connected]
-                    _connected[index] = true
-                    setConnected(_connected)
-
-                    clearTimeout(timeoutId[index])
-
-                    const _timeoutId = [...timeoutId]
-                    _timeoutId[index] = setTimeout(() => {
-                        const _connected = [...connected]
-                        _connected[index] = false
-                        setConnected(_connected)
-                    }, 10000)
-                    setTimeoutId(_timeoutId)
-                }
-            })
-        }
-    }, [buffer, connected, devicesList, newMessage, timeoutId])
+    useEffect(
+        useCallback(() => {
+            setNewMessage(false)
+        }, [newMessage])
+    )
 
     return <div className='dashboard'>
         <NavBar />
-        <Menu
-            title='Unidades'
-            setSubItemIndex={setDeviceIndex}
-            items={getData('user').consumerUnits}
-            subItemKey={'devices'}
-        />
         <div className='main'>
-            {devicesList[deviceIndex] ?
-                <div className='container'>
-                    <RealTime
-                        payload={buffer[deviceIndex]}
-                        connected={connected[deviceIndex]}
-                        energyValue={energyValue}
-                        datePicker={datePicker}
-                        setDatePicker={setDatePicker}
-                    />
-                    {!mobile ?
-                        <Graphic
-                            deviceId={devicesList[deviceIndex]}
-                            setEnergyValue={setEnergyValue}
-                            datePicker={datePicker}
-                        />
-                        : null
+            <Menu
+                title='Unidades'
+                items={
+                    getData('user').consumerUnits
+                }
+                subItemKey='devices'
+                setItemIndex={setConsumerUnitIndex}
+            />
+            <div className='main-container'>
+                <Overview  {...overviewProps}/>
+                <ul className='devices'>
+                    {getData('user')
+                        ?.consumerUnits[ consumerUnitIndex ]
+                        ?.devices.map((device, deviceIndex) =>
+                            <li
+                                className='device'
+                                key={ deviceIndex }
+                                onClick={() => {
+                                    history.push(
+                                        `/plot?${
+                                            consumerUnitIndex
+                                        }&${
+                                            deviceIndex
+                                        }`
+                                    )
+                                }}
+                            >
+                                <FontAwesomeIcon
+                                    className='panelIcon'
+                                    icon={faSolarPanel}
+                                />
+                                <p className='text'>
+                                    { device.name }
+                                </p>
+                            </li>
+                        )
                     }
-                </div>
+                </ul>
+            </div>
+            {!loading ?
+                success ?
+                    getData('collection')?.length ?
+                        <div className='charts'>
+                            <Chart
+                                collection={getData('collection')}
+                                realTime={realTimeBuffer}
+                            />
+                        </div>
+                        :
+                        <div className='empty'>
+                            <p>Não há dados destes dispositivos</p>
+                        </div>
+                    :
+                    <div className='error'>
+                        <p>Não foi possível obter os dados</p>
+                    </div>
                 :
-                <div className='empty'>
-                    <h1 className='text'>
-                        Escolha um dispositivo
-                    </h1>
+                <div className='loading-container'>
+                    <progress className='circular-progress'/>
                 </div>
             }
         </div>
     </div>
 }
 
-export default memo(Dashboard)
+export default Dashboard

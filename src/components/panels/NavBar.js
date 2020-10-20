@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
@@ -12,20 +12,13 @@ import logo from '../../assets/logo.svg'
 import { getData } from '../../services/storage'
 
 import { isAuthenticated, isAdmin, logout } from '../../services/auth'
-import fetch from '../../services/fetch'
 
 import '../../styles/navbar.css'
 
 const NavBar = ({ history }) => {
-    useEffect(() => {
-        if (!isAuthenticated()) {
-            history.push('/login')
-        } else {
-            if (!fetch()) {
-                history.push('/login')
-            }
-        }
-    }, [history])
+    if (!isAuthenticated()) {
+        history.push('/login')
+    }
 
     return <ul className='navbar'>
         <li
@@ -116,4 +109,4 @@ const NavBar = ({ history }) => {
     </ul>
 }
 
-export default withRouter(memo(NavBar))
+export default withRouter(NavBar)

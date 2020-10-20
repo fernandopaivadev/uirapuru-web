@@ -54,7 +54,7 @@
     width: 28rem;
     height: 4rem;
     border-radius: 0.3rem;
-    border: 0.1rem solid var(--default-green);
+    border: 1px solid var(--default-green);
     font-size: 1.8rem;
     padding: 1rem;
 }

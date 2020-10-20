@@ -1,0 +1,43 @@
+.chart .chart-view {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart .chart-view canvas {
+    padding: 0 2rem 2rem 2rem;
+}
+
+.chart .chart-view .real-time {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+}
+
+.chart .chart-view .real-time li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+}
+
+.chart .chart-view .real-time p {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--default-green);
+}
+
+.chart .chart-view h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--default-green);
+    margin: 1.5rem;
+}

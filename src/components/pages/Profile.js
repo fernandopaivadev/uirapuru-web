@@ -16,6 +16,7 @@ import { api } from '../../services/api'
 
 import fetch from '../../services/fetch'
 
+
 import {
     formatUsername,
     formatPhone,
@@ -97,9 +98,7 @@ const Profile = ({ history }) => {
             }
 
         } catch (err) {
-            console.log(
-                err?.message ?? err?.response?.data?.message
-            )
+            console.log(err?.message ?? err?.response?.data?.message)
         }
     }
 
@@ -159,12 +158,6 @@ const Profile = ({ history }) => {
 
     return <div className='profile'>
         <NavBar />
-        <Menu
-            title='Unidades'
-            items = {getData('user').consumerUnits}
-            setItemIndex = { setConsumerUnitIndex }
-            subItemKey='devices'
-        />
 
         { newDevicePopup ?
             <NewDevice
@@ -222,441 +215,390 @@ const Profile = ({ history }) => {
         }
 
         <div className='main'>
-            <div className='forms'>
-                {getData('user') ?
-                    <form>
-                        <h1>
+            <Menu
+                title='Unidades'
+                items = {getData('user').consumerUnits}
+                setItemIndex = { setConsumerUnitIndex }
+                subItemKey='devices'
+            />
+            {getData('user') ?
+                <form className='user-data'>
+                    <h1>
                             Dados do Usuário
-                        </h1>
-                        <label>Nome de usuário</label>
-                        <input
-                            name='username'
-                            maxLength='20'
-                            minLength='6'
-                            required
-                            defaultValue={getData('user')?.username ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user.username = event.target.value
-                                event.target.value = formatUsername(
-                                    event.target.value
-                                )
-                            }}
-                        />
-                        <p className='error-message'>
+                    </h1>
+                    <label>Nome de usuário</label>
+                    <input
+                        name='username'
+                        maxLength='20'
+                        minLength='6'
+                        required
+                        defaultValue={getData('user')?.username ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.username = event.target.value
+                            event.target.value = formatUsername(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
                             Digite no mínimo 6 caracteres
-                        </p>
+                    </p>
 
-                        <label>Email</label>
-                        <input
-                            name='email'
-                            maxLength='40'
-                            minLength='10'
-                            required
-                            defaultValue={getData('user')?.email ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user.email = event.target.value
-                            }}
-                        />
-                        <p className='error-message'>
+                    <label>Email</label>
+                    <input
+                        name='email'
+                        maxLength='40'
+                        minLength='10'
+                        required
+                        defaultValue={getData('user')?.email ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.email = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
                             Digite no mínimo 10 caracteres
-                        </p>
+                    </p>
 
-                        <label>Telefone</label>
-                        <input
-                            name='phone'
-                            required
-                            pattern='\(\d{2}\) \d{5}-\d{4}$'
-                            defaultValue={formatPhone(getData('user')?.phone) ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user.phone = getOnlyNumbers(event.target.value)
-                                event.target.value =  formatPhone(
-                                    event.target.value
-                                )
-                            }}
-                        />
-                        <p className='error-message'>
+                    <label>Telefone</label>
+                    <input
+                        name='phone'
+                        required
+                        pattern='\(\d{2}\) \d{5}-\d{4}$'
+                        defaultValue={formatPhone(getData('user')?.phone) ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.phone = getOnlyNumbers(event.target.value)
+                            event.target.value =  formatPhone(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
                             Número de telefone inválido
-                        </p>
+                    </p>
 
-                        {getData('user')?.person ?
-                            <>
-                                <label>Nome completo</label>
-                                <input
-                                    name='name'
-                                    maxLength='128'
-                                    minLength='10'
-                                    required
-                                    defaultValue={getData('user')?.person
-                                        ?.name ?? ''}
-                                    readOnly= {!admin}
-                                    onChange={ event => {
-                                        user.person.name = event.target.value
-                                    }}
-                                />
-                                <p className='error-message'>
+                    {getData('user')?.person ?
+                        <>
+                            <label>Nome completo</label>
+                            <input
+                                name='name'
+                                maxLength='128'
+                                minLength='10'
+                                required
+                                defaultValue={getData('user')?.person
+                                    ?.name ?? ''}
+                                readOnly= {!admin}
+                                onChange={ event => {
+                                    user.person.name = event.target.value
+                                }}
+                            />
+                            <p className='error-message'>
                                     Digite no mínimo 10 caracteres
-                                </p>
+                            </p>
 
-                                <label>CPF</label>
-                                <input
-                                    name='cpf'
-                                    required
-                                    pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
-                                    defaultValue={formatCPF(getData('user')?.person
-                                        ?.cpf) ?? ''}
-                                    readOnly= {!admin}
-                                    onChange={ event => {
-                                        user.person.cpf = getOnlyNumbers(
-                                            event.target.value
-                                        )
-                                        event.target.value =  formatCPF(
-                                            event.target.value
-                                        )
-                                    }}
-                                />
-                                <p className='error-message'>
+                            <label>CPF</label>
+                            <input
+                                name='cpf'
+                                required
+                                pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
+                                defaultValue={formatCPF(getData('user')?.person
+                                    ?.cpf) ?? ''}
+                                readOnly= {!admin}
+                                onChange={ event => {
+                                    user.person.cpf = getOnlyNumbers(
+                                        event.target.value
+                                    )
+                                    event.target.value =  formatCPF(
+                                        event.target.value
+                                    )
+                                }}
+                            />
+                            <p className='error-message'>
                                     CPF inválido
-                                </p>
+                            </p>
 
-                                <label>Data de nascimento</label>
-                                <input
-                                    name='birth'
-                                    required
-                                    pattern='\d{2}\/\d{2}\/\d{4}'
-                                    defaultValue={formatTimeStamp(
+                            <label>Data de nascimento</label>
+                            <input
+                                name='birth'
+                                required
+                                pattern='\d{2}\/\d{2}\/\d{4}'
+                                defaultValue={formatTimeStamp(
                                         getData('user')?.person?.birth
-                                    ) ?? ''}
-                                    readOnly= {!admin}
-                                    onChange={ event => {
-                                        user.person.birth = event.target.value
-                                        event.target.value = formatDate(
-                                            event.target.value
-                                        )
-                                    }}
-                                />
-                                <p className='error-message'>
+                                ) ?? ''}
+                                readOnly= {!admin}
+                                onChange={ event => {
+                                    user.person.birth = event.target.value
+                                    event.target.value = formatDate(
+                                        event.target.value
+                                    )
+                                }}
+                            />
+                            <p className='error-message'>
                                     Data inválida
-                                </p>
-                            </>
-                            :
-                            <>
-                                <label>CNPJ</label>
-                                <input
-                                    name='cnpj'
-                                    required
-                                    pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
-                                    defaultValue={
-                                        formatCNPJ(
+                            </p>
+                        </>
+                        :
+                        <>
+                            <label>CNPJ</label>
+                            <input
+                                name='cnpj'
+                                required
+                                pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
+                                defaultValue={
+                                    formatCNPJ(
                                             getData('user')?.company?.cnpj
-                                        ) ?? '--'
-                                    }
-                                    readOnly= {!admin}
-                                    onChange={ event => {
-                                        user.company.cnpj = getOnlyNumbers(
-                                            event.target.value
-                                        )
-                                        user.phone = event.target.value
-                                        event.target.value =  formatCNPJ(
-                                            event.target.value
-                                        )
-                                    }}
-                                />
-                                <p className='error-message'>
+                                    ) ?? '--'
+                                }
+                                readOnly= {!admin}
+                                onChange={ event => {
+                                    user.company.cnpj = getOnlyNumbers(
+                                        event.target.value
+                                    )
+                                    user.phone = event.target.value
+                                    event.target.value =  formatCNPJ(
+                                        event.target.value
+                                    )
+                                }}
+                            />
+                            <p className='error-message'>
                                     CNPJ inválido
-                                </p>
+                            </p>
 
-                                <label>Nome Fantasia</label>
-                                <input
-                                    name='name'
-                                    maxLength='128'
-                                    minLength='6'
-                                    required
-                                    defaultValue={getData('user')?.company
-                                        ?.name ?? ''}
-                                    readOnly= {!admin}
-                                    onChange={ event => {
-                                        user.company.name = event
-                                            .target
-                                            .value
-                                    }}
-                                />
-                                <p className='error-message'>
+                            <label>Nome Fantasia</label>
+                            <input
+                                name='name'
+                                maxLength='128'
+                                minLength='6'
+                                required
+                                defaultValue={getData('user')?.company
+                                    ?.name ?? ''}
+                                readOnly= {!admin}
+                                onChange={ event => {
+                                    user.company.name = event
+                                        .target
+                                        .value
+                                }}
+                            />
+                            <p className='error-message'>
                                     Digite no mínimo 6 caracteres
-                                </p>
+                            </p>
 
-                                <label>Razão social</label>
-                                <input
-                                    name='tradeName'
-                                    maxLength='128'
-                                    minLength='6'
-                                    required
-                                    defaultValue={getData('user')?.company
-                                        ?.tradeName ?? ''}
-                                    readOnly= {!admin}
-                                    onChange={ event => {
-                                        user.company.tradeName = event
-                                            .target
-                                            .value
-                                    }}
-                                />
-                                <p className='error-message'>
+                            <label>Razão social</label>
+                            <input
+                                name='tradeName'
+                                maxLength='128'
+                                minLength='6'
+                                required
+                                defaultValue={getData('user')?.company
+                                    ?.tradeName ?? ''}
+                                readOnly= {!admin}
+                                onChange={ event => {
+                                    user.company.tradeName = event
+                                        .target
+                                        .value
+                                }}
+                            />
+                            <p className='error-message'>
                                     Digite no mínimo 6 caracteres
-                                </p>
+                            </p>
 
-                                <label>Descrição</label>
-                                <input
-                                    name='description'
-                                    maxLength='512'
-                                    minLength='50'
-                                    required
-                                    defaultValue={getData('user')?.company
-                                        ?.description ?? ''}
-                                    readOnly= {!admin}
-                                    onChange={ event => {
-                                        user.company.description = event
-                                            .target
-                                            .value
-                                    }}
-                                />
-                                <p className='error-message'>
+                            <label>Descrição</label>
+                            <input
+                                name='description'
+                                maxLength='512'
+                                minLength='50'
+                                required
+                                defaultValue={getData('user')?.company
+                                    ?.description ?? ''}
+                                readOnly= {!admin}
+                                onChange={ event => {
+                                    user.company.description = event
+                                        .target
+                                        .value
+                                }}
+                            />
+                            <p className='error-message'>
                                     Digite no mínimo 50 caracteres
-                                </p>
-                            </>
-                        }
+                            </p>
+                        </>
+                    }
+                    {admin ?
+                        <button
+                            className='classic-button'
+                            onClick={event => {
+                                event.preventDefault()
+                                if (validateForm(0)) {
+                                    handleSubmit(0)
+                                } else {
+                                    setErrorMessage('Preencha todos os campos')
+                                    const _error = [...error]
+                                    _error[0] = true
+                                    setError(_error)
+
+                                    setTimeout(() => {
+                                        const _error = [...error]
+                                        _error[0] = false
+                                        setError(_error)
+                                    }, 3000)
+                                }
+                            }}
+                        >
+                                Salvar
+                        </button>
+                        : null
+                    }
+                    {success[0] && !error[0]?
+                        <p className='success'>
+                                Salvo com sucesso!
+                        </p>
+                        : null
+                    }
+                    {!success[0] && error[0]?
+                        <p className='error'>
+                            { errorMessage }
+                        </p>
+                        : null
+                    }
+                </form>
+                : null
+            }
+
+            {getData('user').consumerUnits[ consumerUnitIndex ] ?
+                <form className='consumer-unit-data'>
+                    <h1>
+                            Dados da Unidade Consumidora
+                    </h1>
+                    <label>Número</label>
+                    <input
+                        name='number'
+                        minLength='6'
+                        maxLength='16'
+                        required
+                        defaultValue={getData('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.number ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .number = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 6 caracteres
+                    </p>
+
+                    <label>Nome da unidade consumidora</label>
+                    <input
+                        name='name'
+                        maxLength='64'
+                        minLength='8'
+                        required
+                        defaultValue={getData('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.name ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .name = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 8 caracteres
+                    </p>
+
+                    <label>Endereço</label>
+                    <input
+                        name='address'
+                        maxLength='256'
+                        minLength='10'
+                        required
+                        defaultValue={getData('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.address ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .address = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 10 caracteres
+                    </p>
+
+                    <label>CEP</label>
+                    <input
+                        name='zip'
+                        required
+                        pattern='\d{5}-\d{3}'
+                        defaultValue={formatCEP(getData('user')
+                            .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user
+                                .consumerUnits[ consumerUnitIndex]
+                                .zip = getOnlyNumbers(event.target.value)
+                            event.target.value =  formatCEP(event.target
+                                .value)
+                        }}
+                    />
+                    <p className='error-message'>
+                            CEP inválido
+                    </p>
+
+                    <label>Cidade</label>
+                    <input
+                        name='city'
+                        maxLength='64'
+                        minLength='3'
+                        required
+                        defaultValue={getData('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.city ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .city = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 3 caracteres
+                    </p>
+
+                    <label>Estado</label>
+                    <input
+                        name='state'
+                        maxLength='64'
+                        minLength='3'
+                        required
+                        defaultValue={getData('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.state ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .state = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 3 caracteres
+                    </p>
+
+                    <div className='buttons'>
                         {admin ?
                             <button
+                                id='delete-button'
                                 className='classic-button'
-                                onClick={event => {
+                                onClick={ event => {
                                     event.preventDefault()
-                                    if (validateForm(0)) {
-                                        handleSubmit(0)
-                                    } else {
-                                        setErrorMessage('Preencha todos os campos')
-                                        const _error = [...error]
-                                        _error[0] = true
-                                        setError(_error)
-
-                                        setTimeout(() => {
-                                            const _error = [...error]
-                                            _error[0] = false
-                                            setError(_error)
-                                        }, 3000)
-                                    }
+                                    setModal([false, true, false])
                                 }}
                             >
-                                Salvar
+                                    Excluir U.C.
                             </button>
                             : null
                         }
-                        {success[0] && !error[0]?
-                            <p className='success'>
-                                Salvo com sucesso!
-                            </p>
-                            : null
-                        }
-                        {!success[0] && error[0]?
-                            <p className='error'>
-                                { errorMessage }
-                            </p>
-                            : null
-                        }
-                    </form>
-                    : null
-                }
-
-                {getData('user').consumerUnits[ consumerUnitIndex ] ?
-                    <form>
-                        <h1>
-                            Dados da Unidade Consumidora
-                        </h1>
-                        <label>Número</label>
-                        <input
-                            name='number'
-                            minLength='6'
-                            maxLength='16'
-                            required
-                            defaultValue={getData('user')
-                                .consumerUnits[ consumerUnitIndex ]
-                                ?.number ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user.consumerUnits[ consumerUnitIndex]
-                                    .number = event.target.value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 6 caracteres
-                        </p>
-
-                        <label>Nome da unidade consumidora</label>
-                        <input
-                            name='name'
-                            maxLength='64'
-                            minLength='8'
-                            required
-                            defaultValue={getData('user')
-                                .consumerUnits[ consumerUnitIndex ]
-                                ?.name ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user.consumerUnits[ consumerUnitIndex]
-                                    .name = event.target.value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 8 caracteres
-                        </p>
-
-                        <label>Endereço</label>
-                        <input
-                            name='address'
-                            maxLength='256'
-                            minLength='10'
-                            required
-                            defaultValue={getData('user')
-                                .consumerUnits[ consumerUnitIndex ]
-                                ?.address ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user.consumerUnits[ consumerUnitIndex]
-                                    .address = event.target.value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 10 caracteres
-                        </p>
-
-                        <label>CEP</label>
-                        <input
-                            name='zip'
-                            required
-                            pattern='\d{5}-\d{3}'
-                            defaultValue={formatCEP(getData('user')
-                                .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user
-                                    .consumerUnits[ consumerUnitIndex]
-                                    .zip = getOnlyNumbers(event.target.value)
-                                event.target.value =  formatCEP(event.target
-                                    .value)
-                            }}
-                        />
-                        <p className='error-message'>
-                            CEP inválido
-                        </p>
-
-                        <label>Cidade</label>
-                        <input
-                            name='city'
-                            maxLength='64'
-                            minLength='3'
-                            required
-                            defaultValue={getData('user')
-                                .consumerUnits[ consumerUnitIndex ]
-                                ?.city ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user.consumerUnits[ consumerUnitIndex]
-                                    .city = event.target.value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 3 caracteres
-                        </p>
-
-                        <label>Estado</label>
-                        <input
-                            name='state'
-                            maxLength='64'
-                            minLength='3'
-                            required
-                            defaultValue={getData('user')
-                                .consumerUnits[ consumerUnitIndex ]
-                                ?.state ?? ''}
-                            readOnly= {!admin}
-                            onChange={ event => {
-                                user.consumerUnits[ consumerUnitIndex]
-                                    .state = event.target.value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 3 caracteres
-                        </p>
-
-                        <div className='buttons'>
-                            {admin ?
-                                <button
-                                    id='delete-button'
-                                    className='classic-button'
-                                    onClick={ event => {
-                                        event.preventDefault()
-                                        setModal([false, true, false])
-                                    }}
-                                >
-                                    Excluir U.C.
-                                </button>
-                                : null
-                            }
-                            {admin ?
-                                <button
-                                    className='classic-button'
-                                    onClick = { () => {
-                                        history.push('/new-unit')
-                                    }}
-                                >
-                                    Cadastrar U.C.
-                                </button>
-                                : null
-                            }
-                            {admin ?
-                                <button
-                                    className='classic-button'
-                                    onClick={ event => {
-                                        event.preventDefault()
-                                        if (validateForm(1)) {
-                                            handleSubmit(1)
-                                        } else {
-                                            setErrorMessage('Preencha todos os campos')
-                                            const _error = [...error]
-                                            _error[1] = true
-                                            setError(_error)
-
-                                            setTimeout(() => {
-                                                const _error = [...error]
-                                                _error[1] = false
-                                                setError(_error)
-                                            }, 3000)
-                                        }
-                                    }}
-                                >
-                                    Salvar
-                                </button>
-                                : null
-                            }
-                        </div>
-
-                        {success[1] && !error[1]?
-                            <p className='success'>
-                                Salvo com sucesso!
-                            </p>
-                            : null
-                        }
-                        {!success[1] && error[1]?
-                            <p className='error'>
-                                { errorMessage }
-                            </p>
-                            : null
-                        }
-                    </form>
-                    :
-                    <div className='empty'>
-                        <p>
-                            Escolha uma unidade Consumidora
-                        </p>
                         {admin ?
                             <button
                                 className='classic-button'
@@ -664,14 +606,71 @@ const Profile = ({ history }) => {
                                     history.push('/new-unit')
                                 }}
                             >
-                                Cadastrar U.C.
+                                    Cadastrar U.C.
+                            </button>
+                            : null
+                        }
+                        {admin ?
+                            <button
+                                className='classic-button'
+                                onClick={ event => {
+                                    event.preventDefault()
+                                    if (validateForm(1)) {
+                                        handleSubmit(1)
+                                    } else {
+                                        setErrorMessage('Preencha todos os campos')
+                                        const _error = [...error]
+                                        _error[1] = true
+                                        setError(_error)
+
+                                        setTimeout(() => {
+                                            const _error = [...error]
+                                            _error[1] = false
+                                            setError(_error)
+                                        }, 3000)
+                                    }
+                                }}
+                            >
+                                    Salvar
                             </button>
                             : null
                         }
                     </div>
-                }
-                {getData('user').consumerUnits[ consumerUnitIndex ] ?
-                    <ul className='devices-list'>
+
+                    {success[1] && !error[1]?
+                        <p className='success'>
+                                Salvo com sucesso!
+                        </p>
+                        : null
+                    }
+                    {!success[1] && error[1]?
+                        <p className='error'>
+                            { errorMessage }
+                        </p>
+                        : null
+                    }
+                </form>
+                :
+                <div className='empty'>
+                    <p>
+                            Escolha uma unidade Consumidora
+                    </p>
+                    {admin ?
+                        <button
+                            className='classic-button'
+                            onClick = { () => {
+                                history.push('/new-unit')
+                            }}
+                        >
+                                Cadastrar U.C.
+                        </button>
+                        : null
+                    }
+                </div>
+            }
+            {getData('user').consumerUnits[ consumerUnitIndex ] ?
+                <div className='devices-list'>
+                    <div className='header'>
                         <h1>Dispositivos</h1>
                         {admin ?
                             <button
@@ -685,6 +684,8 @@ const Profile = ({ history }) => {
                             </button>
                             : null
                         }
+                    </div>
+                    <ul>
                         {getData('user')
                             .consumerUnits[ consumerUnitIndex ]
                             .devices.map((device, index) =>
@@ -777,37 +778,37 @@ const Profile = ({ history }) => {
                             )
                         }
                     </ul>
-                    :
-                    <div className='empty'>
-                        <p>
-                            Sem dispositivos
-                        </p>
-                    </div>
-                }
-            </div>
+                </div>
+                :
+                <div className='empty'>
+                    <p>
+                        Sem dispositivos
+                    </p>
+                </div>
+            }
+        </div>
 
-            <div className='navigation'>
+        <div className='nav-buttons'>
+            <button
+                className='classic-button'
+                onClick={() =>{
+                    history.push('/dashboard')
+                }}
+            >
+                    Dashboard
+            </button>
+            {admin ?
                 <button
+                    id='delete-button'
                     className='classic-button'
-                    onClick={() =>{
-                        history.push('/dashboard')
+                    onClick={ () => {
+                        setModal([true, false, false])
                     }}
                 >
-                    Dashboard
-                </button>
-                {admin ?
-                    <button
-                        id='delete-button'
-                        className='classic-button'
-                        onClick={ () => {
-                            setModal([true, false, false])
-                        }}
-                    >
                         Excluir Usuário
-                    </button>
-                    : null
-                }
-            </div>
+                </button>
+                : null
+            }
         </div>
     </div>
 }
