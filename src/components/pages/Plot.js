@@ -10,24 +10,6 @@ import fetch from '../../services/fetch'
 import '../../styles/plot.css'
 import '../../styles/util.css'
 
-const data = [
-    ['firstname', 'lastname', 'email'],
-    ['Ahmed', 'Tomi', 'ah@smthing.co.com'],
-    ['Raed', 'Labes', 'rl@smthing.co.com'],
-    ['Yezzi', 'Min l3b', 'ymin@cocococo.com']
-]
-
-// const tempCollection = [{
-//     title: 'Dispositivo 1',
-//     timestamps: new Array(50).fill('2:00'),
-//     datasets: [
-//         {
-//             label: 'teste1',
-//             data: new Array(50).fill('5')
-//         }
-//     ]
-// }]
-
 const Plot = ({ history }) => {
     const params = history
         .location
@@ -143,7 +125,7 @@ const Plot = ({ history }) => {
                         Voltar
                     </button>
                     {!loading && getData('collection')?.length ?
-                        <Export data={data}/>
+                        <Export data={getData('messages')}/>
                         : null
                     }
                 </div>

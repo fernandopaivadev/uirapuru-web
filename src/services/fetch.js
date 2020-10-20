@@ -5,7 +5,7 @@ import { api } from './api'
 const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
     if (!(begin && end)) {
         begin = new Date()
-        begin.setMinutes(begin.getMinutes() - 60)
+        begin.setMinutes(begin.getMinutes() - 1)
         begin = begin.toISOString()
         end = new Date().toISOString()
     }
@@ -30,6 +30,8 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
         const { messages } = response.data
         const params = []
         const timestamps = []
+
+        storeData('messages', messages)
 
         messages.forEach(({ payload }) => {
             const parsedPayload = JSON.parse(payload)
