@@ -30,14 +30,20 @@ const Plot = ({ history }) => {
                 :
                 new Date().getMonth()
         }-${
-            new Date().getDate()
+            new Date().getDate() < 10 ?
+                '0' + new Date().getDate()
+                :
+                new Date().getDate()
         }`
     )
 
     const getPeriod = dateString => {
-        const begin = new Date(dateString).toISOString()
+        let begin = new Date(dateString)
         let end = new Date(dateString)
-        end.setDate(end.getDate() + 1)
+
+        end.setMinutes(end.getMinutes() + 10)
+
+        begin = begin.toISOString()
         end = end.toISOString()
 
         return [begin, end]
@@ -98,7 +104,7 @@ const Plot = ({ history }) => {
                 </div>
                 {!loading ?
                     success ?
-                        getData('collection')?.length ?
+                        getData('messages')?.length ?
                             <div className='chart-container'>
                                 <Chart collection={getData('collection')} />
                             </div>

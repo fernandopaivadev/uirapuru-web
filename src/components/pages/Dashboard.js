@@ -24,12 +24,53 @@ const Dashboard = ({ history }) => {
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
 
+    const getPeriod = dateString => {
+        let begin = new Date(dateString)
+        let end = new Date(dateString)
+
+        end.setSeconds(end.getSeconds() + 30)
+
+        begin = begin.toISOString()
+        end = end.toISOString()
+
+        return [begin, end]
+    }
+
+    const fetchCollection = async () => {
+        const [begin, end] = getPeriod(
+            `${
+                new Date().getFullYear()
+            }-${
+                new Date().getMonth() < 10 ?
+                    '0' + new Date().getMonth()
+                    :
+                    new Date().getMonth()
+            }-${
+                new Date().getDate() < 10 ?
+                    '0' + new Date().getDate()
+                    :
+                    new Date().getDate()
+            }`
+        )
+
+        if(await fetch(
+            getData('user')._id,
+            consumerUnitIndex,
+            null,
+            begin,
+            end
+        )) {
+            setSuccess(true)
+            setLoading(false)
+        } else {
+            setSuccess(false)
+            setLoading(false)
+        }
+    }
+
     let overviewProps = realTimeBuffer[0]
 
     useEffect(() => {
-        (async () => {
-            overviewProps = realTimeBuffer[0]
-
             websocketConfig(
                 consumerUnitIndex,
                 realTimeBuffer,
@@ -37,18 +78,8 @@ const Dashboard = ({ history }) => {
                 setNewMessage
             )
 
-            if (await fetch(
-                getData('user')._id,
-                consumerUnitIndex
-            )) {
-                setSuccess(true)
-                setLoading(false)
-            } else {
-                setSuccess(false)
-                setLoading(false)
-            }
-        })()
-    }, [consumerUnitIndex])
+            fetchCollection()
+        }, [consumerUnitIndex])
 
     useEffect(
         useCallback(() => {
@@ -100,7 +131,7 @@ const Dashboard = ({ history }) => {
             </div>
             {!loading ?
                 success ?
-                    getData('collection')?.length ?
+                    getData('messages')?.length ?
                         <div className='charts'>
                             <Chart
                                 collection={getData('collection')}

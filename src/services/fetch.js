@@ -3,13 +3,6 @@ import { isAuthenticated, isAdmin } from './auth'
 import { api } from './api'
 
 const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
-    if (!(begin && end)) {
-        begin = new Date()
-        begin.setMinutes(begin.getMinutes() - 1)
-        begin = begin.toISOString()
-        end = new Date().toISOString()
-    }
-
     const device = getData('user')
         .consumerUnits[consumerUnitIndex]
         .devices[deviceIndex]
@@ -31,17 +24,20 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
         const params = []
         const timestamps = []
 
+        if (!messages.length) {
+            return null
+        }
+
         storeData('messages', messages)
 
         messages.forEach(({ payload }) => {
             const parsedPayload = JSON.parse(payload)
             const dateRTC = new Date(parsedPayload.rtc)
+
             const timestamp = `${
                 dateRTC.getHours()
             }:${
                 dateRTC.getMinutes()
-            }:${
-                dateRTC.getSeconds()
             }`
 
             delete parsedPayload.rtc
@@ -72,6 +68,18 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
 
 const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
     try {
+        if (!(begin && end)) {
+            return false
+        }
+
+        if (typeof consumerUnitIndex != 'number') {
+            consumerUnitIndex = -1
+        }
+
+        if (typeof deviceIndex != 'number') {
+            deviceIndex = -1
+        }
+
         if (_id && consumerUnitIndex >= 0 && deviceIndex >= 0) {
             const collection = [
                 await getMessages(
@@ -82,9 +90,7 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
                 )
             ]
 
-            if (collection?.length > 0) {
-                storeData('collection', collection)
-            }
+            storeData('collection', collection)
 
             return true
         } else if (_id && consumerUnitIndex >= 0) {
@@ -99,9 +105,7 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
                     )
                 ))
 
-            if (collection?.length > 0) {
-                storeData('collection', collection)
-            }
+            storeData('collection', collection)
 
             return true
         } else if (_id) {
