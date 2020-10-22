@@ -49,7 +49,7 @@ const Plot = ({ history }) => {
         return [begin, end]
     }
 
-    const getMessages = async () => {
+    const fetchCollection = async () => {
         const [begin, end] = getPeriod(currentDate)
 
         if(await fetch(
@@ -68,7 +68,7 @@ const Plot = ({ history }) => {
     }
 
     useEffect(() => {
-        getMessages()
+        fetchCollection()
     }, [consumerUnitIndex, deviceIndex])
 
     return <div className='plot'>
@@ -96,7 +96,7 @@ const Plot = ({ history }) => {
                     <button
                         className='classic-button'
                         onClick ={() => {
-                            getMessages()
+                            fetchCollection()
                         }}
                     >
                         OK

@@ -68,15 +68,11 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
 
 const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
     try {
-        if (!(begin && end)) {
-            return false
-        }
-
-        if (typeof consumerUnitIndex != 'number') {
+        if (typeof consumerUnitIndex !== 'number') {
             consumerUnitIndex = -1
         }
 
-        if (typeof deviceIndex != 'number') {
+        if (typeof deviceIndex !== 'number') {
             deviceIndex = -1
         }
 
