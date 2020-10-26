@@ -33,6 +33,7 @@ const Chart = ({ collection, realTime }) => {
                     datasets
                 },
                 options: {
+                    animation: false,
                     devicePixelRatio: 2,
                     responsive: true,
                     aspectRatio: 2.6,
