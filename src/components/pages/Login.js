@@ -76,6 +76,10 @@ const Login = ({ history }) => {
 
             setLoading(false)
             setError(true)
+
+            setTimeout(() => {
+                setError(false)
+            }, 5000)
         }
     }
 

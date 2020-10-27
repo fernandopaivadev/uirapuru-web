@@ -39,18 +39,18 @@ const Dashboard = ({ history }) => {
     const fetchCollection = async () => {
         const [begin, end] = getPeriod(
             `${
-                new Date().getFullYear()
-            }-${
-                new Date().getMonth() < 10 ?
-                    '0' + new Date().getMonth()
-                    :
-                    new Date().getMonth()
-            }-${
-                new Date().getDate() < 10 ?
-                    '0' + new Date().getDate()
-                    :
-                    new Date().getDate()
-            }`
+            new Date().getFullYear()
+        }-${
+            new Date().getMonth() < 10 ?
+                `0${new Date().getMonth() + 1}`
+                :
+                new Date().getMonth()
+        }-${
+            new Date().getDate() < 10 ?
+                `0${new Date().getDate()}`
+                :
+                new Date().getDate()
+        }`
         )
 
         if(await fetch(
