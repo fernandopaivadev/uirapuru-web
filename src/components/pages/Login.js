@@ -34,6 +34,7 @@ const Login = ({ history }) => {
         try {
             event.preventDefault()
             setLoading(true)
+            setError(false)
 
             const response = await api.get(
                 adminMode ?
@@ -76,10 +77,6 @@ const Login = ({ history }) => {
 
             setLoading(false)
             setError(true)
-
-            setTimeout(() => {
-                setError(false)
-            }, 5000)
         }
     }
 

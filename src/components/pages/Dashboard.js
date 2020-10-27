@@ -24,41 +24,12 @@ const Dashboard = ({ history }) => {
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
 
-    const getPeriod = dateString => {
-        let begin = new Date(dateString)
-        let end = new Date(dateString)
-
-        end.setSeconds(end.getSeconds() + 30)
-
-        begin = begin.toISOString()
-        end = end.toISOString()
-
-        return [begin, end]
-    }
+    let overviewProps = realTimeBuffer[0]
 
     const fetchCollection = async () => {
-        const [begin, end] = getPeriod(
-            `${
-            new Date().getFullYear()
-        }-${
-            new Date().getMonth() < 10 ?
-                `0${new Date().getMonth() + 1}`
-                :
-                new Date().getMonth()
-        }-${
-            new Date().getDate() < 10 ?
-                `0${new Date().getDate()}`
-                :
-                new Date().getDate()
-        }`
-        )
-
         if(await fetch(
             getData('user')._id,
-            consumerUnitIndex,
-            null,
-            begin,
-            end
+            consumerUnitIndex
         )) {
             setSuccess(true)
             setLoading(false)
@@ -68,18 +39,16 @@ const Dashboard = ({ history }) => {
         }
     }
 
-    let overviewProps = realTimeBuffer[0]
-
     useEffect(() => {
-            websocketConfig(
-                consumerUnitIndex,
-                realTimeBuffer,
-                setRealTimeBuffer,
-                setNewMessage
-            )
+        websocketConfig(
+            consumerUnitIndex,
+            realTimeBuffer,
+            setRealTimeBuffer,
+            setNewMessage
+        )
 
-            fetchCollection()
-        }, [consumerUnitIndex])
+        fetchCollection()
+    }, [consumerUnitIndex])
 
     useEffect(
         useCallback(() => {

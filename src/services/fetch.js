@@ -2,7 +2,23 @@ import { getData, storeData, clearData } from './storage'
 import { isAuthenticated, isAdmin } from './auth'
 import { api } from './api'
 
-const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
+const fetchDeviceData = async (
+    consumerUnitIndex,
+    deviceIndex,
+    begin,
+    end,
+    storeMessages
+) => {
+    if(!(begin && end)) {
+        begin = new Date()
+        end = new Date()
+
+        end.setSeconds(end.getSeconds() + 30)
+
+        begin = begin.toISOString()
+        end = end.toISOString()
+    }
+
     const device = getData('user')
         .consumerUnits[consumerUnitIndex]
         .devices[deviceIndex]
@@ -28,7 +44,9 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
             return null
         }
 
-        storeData('messages', messages)
+        if (storeMessages) {
+            storeData('messages', messages)
+        }
 
         messages.forEach(({ payload }) => {
             const parsedPayload = JSON.parse(payload)
@@ -68,6 +86,9 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
 
 const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
     try {
+        clearData('collection')
+        clearData('messages')
+
         if (typeof consumerUnitIndex !== 'number') {
             consumerUnitIndex = -1
         }
@@ -78,11 +99,12 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
 
         if (_id && consumerUnitIndex >= 0 && deviceIndex >= 0) {
             const collection = [
-                await getMessages(
+                await fetchDeviceData(
                     consumerUnitIndex,
                     deviceIndex,
                     begin,
-                    end
+                    end,
+                    true
                 )
             ]
 
@@ -93,11 +115,12 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
             const collection = await Promise.all(getData('user')
                 .consumerUnits[consumerUnitIndex]
                 .devices.map(async (device, deviceIndex) =>
-                    await getMessages(
+                    await fetchDeviceData(
                         consumerUnitIndex,
                         deviceIndex,
                         begin,
-                        end
+                        end,
+                        false
                     )
                 ))
 
@@ -120,7 +143,7 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
             const { status, data } = await api.get('/users')
 
             if (status === 200) {
-                storeData('users-list',data.usersList)
+                storeData('users-list', data.usersList)
                 return true
             }
         } else if (isAuthenticated()) {

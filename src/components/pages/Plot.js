@@ -25,10 +25,10 @@ const Plot = ({ history }) => {
         `${
             new Date().getFullYear()
         }-${
-            new Date().getMonth() < 10 ?
+            new Date().getMonth() + 1 < 10 ?
                 `0${new Date().getMonth() + 1}`
                 :
-                new Date().getMonth()
+                new Date().getMonth() + 1
         }-${
             new Date().getDate() < 10 ?
                 `0${new Date().getDate()}`
