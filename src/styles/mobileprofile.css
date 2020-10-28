@@ -1,0 +1,135 @@
+.mobileprofile .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    min-height: 96%;
+    background: #fff;
+}
+
+.mobileprofile .main .button-menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    margin: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border: none;
+    background: #fff;
+}
+
+.mobileprofile .main .button-menu-icon .menu-icon {
+    font-size: 3.5rem;
+    color: #555;
+}
+
+.mobileprofile .main .menu {
+    position: absolute;
+    left: 0;
+    top: 5%;
+    visibility: hidden;
+    width: 40%;
+    background: #fff;
+    z-index: 1;
+}
+
+.mobileprofile .main form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.mobileprofile .main h1 {
+    color: var(--default-green);
+    font-size: 2.4rem;
+    margin: 1.5rem 0 2rem 0;
+}
+
+.mobileprofile .main form label {
+    text-align: left;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.mobileprofile .main form label,
+.mobileprofile .main form input {
+    width: 85%;
+}
+
+.mobileprofile .main form input {
+    padding: 0.5rem;
+    border: 0.2rem solid var(--default-green);
+    border-radius: 0.3rem;
+    font-size: 1.8rem;
+    margin: 0.2rem 0 3rem 0;
+    color: #333;
+}
+
+.mobileprofile .main form p {
+    color: #d00;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: -2rem auto 0rem auto;
+    display: none;
+}
+
+.mobileprofile .main form .buttons {
+    display: flex;
+}
+
+.mobileprofile .main form .buttons .classic-button {
+    height: 5rem;
+}
+
+.mobileprofile .main form .buttons #delete-button,
+.mobileprofile .main .nav-buttons #delete-button {
+    background: #dd0000;
+}
+
+.mobileprofile .main .devices-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mobileprofile .main .devices-list ul li {
+    margin-bottom: 2rem;
+}
+
+.mobileprofile .main .devices-list ul li form {
+    height: 29rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+}
+
+.mobileprofile .main .nav-buttons {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: #333c;
+    z-index: 2;
+}
+
+.mobileprofile .main .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #777;
+}
+
+.mobileprofile .main .empty p {
+    text-align: center;
+}
