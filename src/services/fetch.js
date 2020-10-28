@@ -6,14 +6,13 @@ const fetchDeviceData = async (
     consumerUnitIndex,
     deviceIndex,
     begin,
-    end,
-    storeMessages
+    end
 ) => {
     if(!(begin && end)) {
         begin = new Date()
         end = new Date()
 
-        end.setSeconds(end.getSeconds() + 30)
+        end.setSeconds(end.getSeconds() + 300)
 
         begin = begin.toISOString()
         end = end.toISOString()
@@ -44,19 +43,49 @@ const fetchDeviceData = async (
             return null
         }
 
-        if (storeMessages) {
-            storeData('messages', messages)
-        }
+        storeData('messages', messages)
 
         messages.forEach(({ payload }) => {
             const parsedPayload = JSON.parse(payload)
             const dateRTC = new Date(parsedPayload.rtc)
 
             const timestamp = `${
-                dateRTC.getHours()
+                dateRTC.getHours() < 10 ?
+                    `0${dateRTC.getHours()}`
+                    :
+                    dateRTC.getHours()
             }:${
-                dateRTC.getMinutes()
+                dateRTC.getMinutes() < 10 ?
+                    `0${dateRTC.getMinutes()}`
+                    :
+                    dateRTC.getMinutes()
             }`
+
+            // CONFIGURA O TIMESTAMP PARA EXIBIR DIA E MÊS
+            // ALÉM DE DATA E HORA
+            // ===========================================
+            // const timestamp = `${
+            //     dateRTC.getDate() < 10 ?
+            //         `0${dateRTC.getDate()}`
+            //         :
+            //         dateRTC.getDate()
+            // }/${
+            //     dateRTC.getMonth() + 1 < 10 ?
+            //         `0${dateRTC.getMonth() + 1}`
+            //         :
+            //         dateRTC.getMonth() + 1
+            // } ${
+            //     dateRTC.getHours() < 10 ?
+            //         `0${dateRTC.getHours()}`
+            //         :
+            //         dateRTC.getHours()
+            // }:${
+            //     dateRTC.getMinutes() < 10 ?
+            //         `0${dateRTC.getMinutes()}`
+            //         :
+            //         dateRTC.getMinutes()
+            // }`
+            // ===========================================
 
             delete parsedPayload.rtc
             delete parsedPayload.store
@@ -103,8 +132,7 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
                     consumerUnitIndex,
                     deviceIndex,
                     begin,
-                    end,
-                    true
+                    end
                 )
             ]
 
@@ -119,8 +147,7 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
                         consumerUnitIndex,
                         deviceIndex,
                         begin,
-                        end,
-                        false
+                        end
                     )
                 ))
 

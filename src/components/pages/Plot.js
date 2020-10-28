@@ -17,8 +17,8 @@ const Plot = ({ history }) => {
         .split('?')[1]
         .split('&')
 
-    const [consumerUnitIndex, setConsumerUnitIndex] = useState(params[0])
-    const [deviceIndex, setDeviceIndex] = useState(params[1])
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState(Number(params[0]))
+    const [deviceIndex, setDeviceIndex] = useState(Number(params[1]))
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
     const [currentDate, setCurrentDate] = useState(
@@ -41,7 +41,7 @@ const Plot = ({ history }) => {
         let begin = new Date(dateString)
         let end = new Date(dateString)
 
-        end.setMinutes(end.getMinutes() + 10)
+        end.setDate(end.getDate() + 1)
 
         begin = begin.toISOString()
         end = end.toISOString()
@@ -50,6 +50,8 @@ const Plot = ({ history }) => {
     }
 
     const fetchCollection = async () => {
+        setLoading(true)
+
         const [begin, end] = getPeriod(currentDate)
 
         if(await fetch(
@@ -95,6 +97,7 @@ const Plot = ({ history }) => {
 
                     <button
                         className='classic-button'
+                        id='ok-button'
                         onClick ={() => {
                             fetchCollection()
                         }}
@@ -128,9 +131,9 @@ const Plot = ({ history }) => {
                             history.push('/dashboard')
                         }}
                     >
-                        Voltar
+                        Dashboard
                     </button>
-                    {!loading && getData('collection')?.length ?
+                    {!loading && getData('messages')?.length ?
                         <Export data={getData('messages')}/>
                         : null
                     }

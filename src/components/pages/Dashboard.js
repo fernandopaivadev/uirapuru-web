@@ -21,12 +21,14 @@ const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [realTimeBuffer, setRealTimeBuffer] = useState([])
     const [newMessage, setNewMessage] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
 
     let overviewProps = realTimeBuffer[0]
 
     const fetchCollection = async () => {
+        setLoading(true)
+
         if(await fetch(
             getData('user')._id,
             consumerUnitIndex
