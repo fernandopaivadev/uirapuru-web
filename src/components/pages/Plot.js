@@ -7,6 +7,11 @@ import Export from '../panels/Export'
 import { getData } from '../../services/storage'
 import fetch from '../../services/fetch'
 
+import {
+    ArrowLeft as ArrowBackIcon,
+    ArrowRight as ArrowForwardIcon
+} from '@material-ui/icons'
+
 import '../../styles/plot.css'
 import '../../styles/util.css'
 
@@ -73,6 +78,25 @@ const Plot = ({ history }) => {
         fetchCollection()
     }, [consumerUnitIndex, deviceIndex])
 
+    const changeDate = (change) => {
+        const date = new Date(currentDate)
+
+        if (change === 'foward') {
+            date.setDate(date.getDate() + 1)
+        } else if (change === 'backward') {
+            date.setDate(date.getDate() - 1)
+        }
+
+        setCurrentDate(`${
+            date.getFullYear()
+        }-${
+            date.getMonth() + 1
+        }-${
+            date.getDate()
+        }`)
+        fetchCollection()
+    }
+
     return <div className='plot'>
         <NavBar />
         <div className='main'>
@@ -87,6 +111,19 @@ const Plot = ({ history }) => {
             />
             <div className='content-container'>
                 <div className='date-picker'>
+                    <ArrowBackIcon
+                        className='icon'
+                        onClick={() => {
+                            changeDate('backward')
+                        }}
+                    />
+                    <ArrowForwardIcon
+                        className='icon'
+                        onClick={() => {
+                            changeDate('forward')
+                        }}
+                    />
+
                     <input
                         type='date'
                         defaultValue={currentDate}

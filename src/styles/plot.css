@@ -89,3 +89,16 @@
     min-width: 1rem;
     border-radius: 1rem;
 }
+
+.plot .main .date-picker .icon {
+    font-size: 3.5rem;
+    color: #fff;
+    border-radius: 50%;
+    margin: 0.8rem;
+    background: var(--default-green);
+    cursor: pointer;
+}
+
+.plot .main .date-picker .icon:hover {
+    background: var(--default-light-green)
+}
