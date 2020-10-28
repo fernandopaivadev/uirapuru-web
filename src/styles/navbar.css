@@ -52,7 +52,7 @@
 .navbar .navigation button {
     border: none;
     border-radius: 50%;
-    margin: 1rem;
+    margin: 0 1rem 0 0;
     cursor: pointer;
     background: var(--default-green);
     width: 4rem;
