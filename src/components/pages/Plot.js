@@ -54,48 +54,40 @@ const Plot = ({ history }) => {
         return [begin, end]
     }
 
-    const fetchCollection = async () => {
-        setLoading(true)
+    const changeDate = (change, dateString) => {
+        const dateSplit = dateString.split('-')
 
-        const [begin, end] = getPeriod(currentDate)
-
-        if(await fetch(
-            getData('user')._id,
-            consumerUnitIndex,
-            deviceIndex,
-            begin,
-            end
-        )) {
-            setSuccess(true)
-            setLoading(false)
-        } else {
-            setSuccess(false)
-            setLoading(false)
+        if (change === 'forward') {
+            dateSplit[2] = String(Number(dateSplit[2]) + 1)
+        } else if (change === 'backward') {
+            dateSplit[2] = String(Number(dateSplit[2]) - 1)
         }
+
+        dateString = dateSplit.join('-')
+        setCurrentDate(dateString)
     }
 
     useEffect(() => {
-        fetchCollection()
-    }, [consumerUnitIndex, deviceIndex])
+        (async () => {
+            setLoading(true)
 
-    const changeDate = (change) => {
-        const date = new Date(currentDate)
+            const [begin, end] = getPeriod(currentDate)
 
-        if (change === 'foward') {
-            date.setDate(date.getDate() + 1)
-        } else if (change === 'backward') {
-            date.setDate(date.getDate() - 1)
-        }
-
-        setCurrentDate(`${
-            date.getFullYear()
-        }-${
-            date.getMonth() + 1
-        }-${
-            date.getDate()
-        }`)
-        fetchCollection()
-    }
+            if (await fetch(
+                getData('user')._id,
+                consumerUnitIndex,
+                deviceIndex,
+                begin,
+                end
+            )) {
+                setSuccess(true)
+                setLoading(false)
+            } else {
+                setSuccess(false)
+                setLoading(false)
+            }
+        })()
+    }, [consumerUnitIndex, deviceIndex, currentDate])
 
     return <div className='plot'>
         <NavBar />
@@ -114,33 +106,24 @@ const Plot = ({ history }) => {
                     <ArrowBackIcon
                         className='icon'
                         onClick={() => {
-                            changeDate('backward')
+                            changeDate('backward', currentDate)
                         }}
                     />
                     <ArrowForwardIcon
                         className='icon'
                         onClick={() => {
-                            changeDate('forward')
+                            changeDate('forward', currentDate)
                         }}
                     />
 
                     <input
                         type='date'
                         defaultValue={currentDate}
+                        value={currentDate}
                         onChange={event => {
                             setCurrentDate(event.target.value)
                         }}
                     />
-
-                    <button
-                        className='classic-button'
-                        id='ok-button'
-                        onClick ={() => {
-                            fetchCollection()
-                        }}
-                    >
-                        OK
-                    </button>
                 </div>
                 {!loading ?
                     success ?

@@ -26,30 +26,28 @@ const Dashboard = ({ history }) => {
 
     let overviewProps = realTimeBuffer[0]
 
-    const fetchCollection = async () => {
-        setLoading(true)
-
-        if(await fetch(
-            getData('user')._id,
-            consumerUnitIndex
-        )) {
-            setSuccess(true)
-            setLoading(false)
-        } else {
-            setSuccess(false)
-            setLoading(false)
-        }
-    }
-
     useEffect(() => {
+        (async () => {
+            setLoading(true)
+
+            if (await fetch(
+                getData('user')._id,
+                consumerUnitIndex
+            )) {
+                setSuccess(true)
+                setLoading(false)
+            } else {
+                setSuccess(false)
+                setLoading(false)
+            }
+        })()
+
         websocketConfig(
             consumerUnitIndex,
             realTimeBuffer,
             setRealTimeBuffer,
             setNewMessage
         )
-
-        fetchCollection()
     }, [consumerUnitIndex])
 
     useEffect(

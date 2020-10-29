@@ -85,7 +85,7 @@ const Profile = ({ history }) => {
 
             const status = response?.status
 
-            if(status === 200) {
+            if (status === 200) {
                 clearData('user')
                 clearData('users-list')
 

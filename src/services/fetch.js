@@ -8,7 +8,7 @@ const fetchDeviceData = async (
     begin,
     end
 ) => {
-    if(!(begin && end)) {
+    if (!(begin && end)) {
         begin = new Date()
         end = new Date()
 
@@ -49,32 +49,7 @@ const fetchDeviceData = async (
             const parsedPayload = JSON.parse(payload)
             const dateRTC = new Date(parsedPayload.rtc)
 
-            const timestamp = `${
-                dateRTC.getHours() < 10 ?
-                    `0${dateRTC.getHours()}`
-                    :
-                    dateRTC.getHours()
-            }:${
-                dateRTC.getMinutes() < 10 ?
-                    `0${dateRTC.getMinutes()}`
-                    :
-                    dateRTC.getMinutes()
-            }`
-
-            // CONFIGURA O TIMESTAMP PARA EXIBIR DIA E MÊS
-            // ALÉM DE DATA E HORA
-            // ===========================================
             // const timestamp = `${
-            //     dateRTC.getDate() < 10 ?
-            //         `0${dateRTC.getDate()}`
-            //         :
-            //         dateRTC.getDate()
-            // }/${
-            //     dateRTC.getMonth() + 1 < 10 ?
-            //         `0${dateRTC.getMonth() + 1}`
-            //         :
-            //         dateRTC.getMonth() + 1
-            // } ${
             //     dateRTC.getHours() < 10 ?
             //         `0${dateRTC.getHours()}`
             //         :
@@ -85,6 +60,31 @@ const fetchDeviceData = async (
             //         :
             //         dateRTC.getMinutes()
             // }`
+
+            // CONFIGURA O TIMESTAMP PARA EXIBIR DIA E MÊS
+            // ALÉM DE DATA E HORA
+            // ===========================================
+            const timestamp = `${
+                dateRTC.getDate() < 10 ?
+                    `0${dateRTC.getDate()}`
+                    :
+                    dateRTC.getDate()
+            }/${
+                dateRTC.getMonth() + 1 < 10 ?
+                    `0${dateRTC.getMonth() + 1}`
+                    :
+                    dateRTC.getMonth() + 1
+            } ${
+                dateRTC.getHours() < 10 ?
+                    `0${dateRTC.getHours()}`
+                    :
+                    dateRTC.getHours()
+            }:${
+                dateRTC.getMinutes() < 10 ?
+                    `0${dateRTC.getMinutes()}`
+                    :
+                    dateRTC.getMinutes()
+            }`
             // ===========================================
 
             delete parsedPayload.rtc
