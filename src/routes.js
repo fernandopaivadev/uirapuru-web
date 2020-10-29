@@ -22,6 +22,9 @@ const Routes = () => <Router>
             <>
                 <Route path='/dashboard' exact component={MobileDashboard} />
                 <Route path='/profile' exact component={MobileProfile} />
+                <Route path='/new-user' exact component={NewUser} />
+                <Route path='/new-unit' exact component={NewUnit} />
+                <Route path='/users-list' exact component={UsersList} />
             </>
             :
             <>

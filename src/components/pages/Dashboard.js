@@ -10,9 +10,7 @@ import fetch from '../../services/fetch'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import {
-    faSolarPanel
-} from '@fortawesome/free-solid-svg-icons'
+import { faSolarPanel } from '@fortawesome/free-solid-svg-icons'
 
 import '../../styles/dashboard.css'
 import '../../styles/util.css'

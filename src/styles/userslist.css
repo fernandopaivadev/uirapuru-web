@@ -81,3 +81,9 @@
     justify-content: center;
     overflow: hidden;
 }
+
+@media screen and (max-height: 900px) {
+    .userslist .list .header button {
+        height: 5rem;
+    }
+}

@@ -4,7 +4,7 @@
     align-items: center;
     position: absolute;
     width: 100%;
-    min-height: 96%;
+    min-height: 100%;
     background: #fff;
 }
 
@@ -24,16 +24,20 @@
 .mobileprofile .main .button-menu-icon .menu-icon {
     font-size: 3.5rem;
     color: #555;
+    z-index: 2;
 }
 
 .mobileprofile .main .menu {
     position: absolute;
     left: 0;
-    top: 5%;
     visibility: hidden;
     width: 40%;
     background: #fff;
     z-index: 1;
+}
+
+.mobileprofile .main .menu .title {
+    margin-top: 6rem;
 }
 
 .mobileprofile .main form {
@@ -95,6 +99,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.mobileprofile .main .devices-list ul {
+    margin-bottom: 8rem;
 }
 
 .mobileprofile .main .devices-list ul li {

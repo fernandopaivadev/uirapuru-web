@@ -47,7 +47,6 @@ const MobileProfile = ({ history }) => {
         'Erro no processamento do formulário'
     )
     const [newDevicePopup, setNewDevicePopup] = useState(false)
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     useEffect(() => {
         if (consumerUnitIndex) {
@@ -158,19 +157,19 @@ const MobileProfile = ({ history }) => {
         }
     }
 
-    const openMenu = () => {
+    const toggleMenu = () => {
         const menu = document.querySelector('.mobileprofile .main .menu')
-        menu.style.visibility = 'visible'
-    }
 
-    const closeMenu = () => {
-        const menu = document.querySelector('.mobileprofile .main .menu')
-        menu.style.visibility = 'hidden'
+        if (
+            menu.style.visibility === 'hidden'
+            ||
+            menu.style.visibility === ''
+        ) {
+            menu.style.visibility = 'visible'
+        } else if (menu.style.visibility === 'visible') {
+            menu.style.visibility = 'hidden'
+        }
     }
-
-    useEffect(() => {
-        closeMenu()
-    }, [consumerUnitIndex])
 
     return <div className='mobileprofile'>
         <NavBar />
@@ -233,14 +232,8 @@ const MobileProfile = ({ history }) => {
         <div className='main'>
             <button
                 className='button-menu-icon'
-                onClick={ () => {
-                    if (isMenuOpen) {
-                        closeMenu()
-                        setIsMenuOpen(false)
-                    } else {
-                        openMenu()
-                        setIsMenuOpen(true)
-                    }
+                onClick={() => {
+                    toggleMenu()
                 }}
             >
                 <MenuIcon className='menu-icon' />
@@ -249,7 +242,10 @@ const MobileProfile = ({ history }) => {
                 className='menu'
                 title='Unidades'
                 items = {getData('user').consumerUnits}
-                setItemIndex = { setConsumerUnitIndex }
+                setItemIndex = {consumerUnitIndex => {
+                    toggleMenu()
+                    setConsumerUnitIndex(consumerUnitIndex)
+                }}
                 subItemKey='devices'
             />
             {getData('user') ?
