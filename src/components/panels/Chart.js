@@ -6,7 +6,7 @@ import themes from '../../themes'
 
 import '../../styles/chart.css'
 
-const Chart = ({ collection, realTime }) => {
+const Chart = ({ collection, realTime, aspectRatio }) => {
     const { default: { traceColors } } = themes
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const Chart = ({ collection, realTime }) => {
                     animation: false,
                     devicePixelRatio: 2,
                     responsive: true,
-                    aspectRatio: 2.6,
+                    aspectRatio: aspectRatio ?? 2.6,
                     maintainAspectRatio: true,
                     legend: {
                         labels: {
@@ -48,7 +48,8 @@ const Chart = ({ collection, realTime }) => {
                         mode: 'index',
                         axis: 'y',
                         intersect: false,
-                        backgroundColor: '#333'
+                        backgroundColor: '#333',
+
                     },
                     scales: {
                         yAxes: [{

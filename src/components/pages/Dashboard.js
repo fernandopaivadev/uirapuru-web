@@ -105,6 +105,7 @@ const Dashboard = ({ history }) => {
                             <Chart
                                 collection={getData('collection')}
                                 realTime={realTimeBuffer}
+                                aspectRatio={2}
                             />
                         </div>
                         :

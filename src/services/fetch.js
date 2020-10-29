@@ -6,13 +6,14 @@ const fetchDeviceData = async (
     consumerUnitIndex,
     deviceIndex,
     begin,
-    end
+    end,
+    fullTimestamp
 ) => {
     if (!(begin && end)) {
         begin = new Date()
         end = new Date()
 
-        end.setSeconds(end.getSeconds() + 300)
+        begin.setMinutes(begin.getMinutes() - 1)
 
         begin = begin.toISOString()
         end = end.toISOString()
@@ -49,22 +50,8 @@ const fetchDeviceData = async (
             const parsedPayload = JSON.parse(payload)
             const dateRTC = new Date(parsedPayload.rtc)
 
-            // const timestamp = `${
-            //     dateRTC.getHours() < 10 ?
-            //         `0${dateRTC.getHours()}`
-            //         :
-            //         dateRTC.getHours()
-            // }:${
-            //     dateRTC.getMinutes() < 10 ?
-            //         `0${dateRTC.getMinutes()}`
-            //         :
-            //         dateRTC.getMinutes()
-            // }`
-
-            // CONFIGURA O TIMESTAMP PARA EXIBIR DIA E MÊS
-            // ALÉM DE DATA E HORA
-            // ===========================================
-            const timestamp = `${
+            const timestamp = fullTimestamp ?
+            `${
                 dateRTC.getDate() < 10 ?
                     `0${dateRTC.getDate()}`
                     :
@@ -85,7 +72,18 @@ const fetchDeviceData = async (
                     :
                     dateRTC.getMinutes()
             }`
-            // ===========================================
+            :
+            `${
+                dateRTC.getHours() < 10 ?
+                    `0${dateRTC.getHours()}`
+                    :
+                    dateRTC.getHours()
+            }:${
+                dateRTC.getMinutes() < 10 ?
+                    `0${dateRTC.getMinutes()}`
+                    :
+                    dateRTC.getMinutes()
+            }`
 
             delete parsedPayload.rtc
             delete parsedPayload.store
@@ -132,7 +130,8 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
                     consumerUnitIndex,
                     deviceIndex,
                     begin,
-                    end
+                    end,
+                    true
                 )
             ]
 
@@ -147,7 +146,8 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
                         consumerUnitIndex,
                         deviceIndex,
                         begin,
-                        end
+                        end,
+                        false
                     )
                 ))
 
