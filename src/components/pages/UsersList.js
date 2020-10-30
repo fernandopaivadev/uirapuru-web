@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom'
 
 import { isAuthenticated, logout } from '../../services/auth'
 
@@ -88,4 +87,5 @@ const UsersList = ({ history }) => {
         </div>
     </div>
 }
-export default withRouter(UsersList)
+
+export default UsersList

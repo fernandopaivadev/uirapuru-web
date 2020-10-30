@@ -95,5 +95,14 @@
 }
 
 .plot .main .date-picker .icon:hover {
-    background: var(--default-light-green)
+    background: var(--default-light-green);
+}
+
+@media (orientation: portrait) {
+    .plot .main {
+        grid-template-columns: 1fr;
+    }
+    .plot .main .menu {
+        display: none;
+    }
 }
