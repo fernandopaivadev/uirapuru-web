@@ -15,6 +15,12 @@ import {
 import '../../styles/plot.css'
 import '../../styles/util.css'
 
+const mobile = window.innerHeight > window.innerWidth
+
+window.onorientationchange = () => {
+    window.location.reload()
+}
+
 const Plot = ({ history }) => {
     const params = history
         .location
@@ -93,6 +99,7 @@ const Plot = ({ history }) => {
         <NavBar />
         <div className='main'>
             <Menu
+                className='menu'
                 title='Unidades'
                 items={
                     getData('user').consumerUnits
@@ -129,7 +136,12 @@ const Plot = ({ history }) => {
                     success ?
                         getData('messages')?.length ?
                             <div className='chart-container'>
-                                <Chart collection={getData('collection')} />
+                                <Chart
+                                    collection={getData('collection')}
+                                    aspectRatio={
+                                        mobile ? 1.5 : null
+                                    }
+                                />
                             </div>
                             :
                             <div className='empty'>
