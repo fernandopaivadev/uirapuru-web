@@ -21,6 +21,11 @@
     background: #fff;
 }
 
+.mobileprofile .main .button-menu-icon:focus + .menu {
+    opacity: 1;
+    visibility: visible;
+}
+
 .mobileprofile .main .button-menu-icon .menu-icon {
     font-size: 3.5rem;
     color: #555;

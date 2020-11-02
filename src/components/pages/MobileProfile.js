@@ -157,20 +157,6 @@ const MobileProfile = ({ history }) => {
         }
     }
 
-    const toggleMenu = () => {
-        const menu = document.querySelector('.mobileprofile .main .menu')
-
-        if (
-            menu.style.visibility === 'hidden'
-            ||
-            menu.style.visibility === ''
-        ) {
-            menu.style.visibility = 'visible'
-        } else if (menu.style.visibility === 'visible') {
-            menu.style.visibility = 'hidden'
-        }
-    }
-
     return <div className='mobileprofile'>
         <NavBar />
 
@@ -230,22 +216,14 @@ const MobileProfile = ({ history }) => {
         }
 
         <div className='main'>
-            <button
-                className='button-menu-icon'
-                onClick={() => {
-                    toggleMenu()
-                }}
-            >
+            <button className='button-menu-icon'>
                 <MenuIcon className='menu-icon' />
             </button>
             <Menu
                 className='menu'
                 title='Unidades'
-                items = {getData('user').consumerUnits}
-                setItemIndex = {consumerUnitIndex => {
-                    toggleMenu()
-                    setConsumerUnitIndex(consumerUnitIndex)
-                }}
+                items={getData('user').consumerUnits}
+                setItemIndex={setConsumerUnitIndex}
                 subItemKey='devices'
             />
             {getData('user') ?

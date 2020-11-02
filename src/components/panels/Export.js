@@ -9,7 +9,7 @@ const Export = ({ data }) =>
         data={data}
         filename={'uirapuru-chart.csv'}
     >
-        Download
+        Download CSV
     </CSVLink>
 
 export default Export

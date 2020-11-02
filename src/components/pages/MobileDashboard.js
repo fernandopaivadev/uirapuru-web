@@ -42,38 +42,17 @@ const MobileDashboard = ({ history }) => {
         }, [newMessage])
     )
 
-    const toggleMenu = () => {
-        const menu = document.querySelector('.mobiledashboard .main .menu')
-
-        if (
-            menu.style.visibility === 'hidden' ||
-            menu.style.visibility === ''
-        ) {
-            menu.style.visibility = 'visible'
-        } else if (menu.style.visibility === 'visible') {
-            menu.style.visibility = 'hidden'
-        }
-    }
-
     return <div className="mobiledashboard">
             <NavBar />
             <div className="main">
-                <button
-                    className='button-menu-icon'
-                    onClick={() => {
-                    toggleMenu()
-                }}
-                >
+                <button className='button-menu-icon'>
                     <MenuIcon className='menu-icon' />
                 </button>
                 <Menu
                     className='menu'
                     title='Unidades'
                     items = {getData('user').consumerUnits}
-                    setItemIndex = {consumerUnitIndex => {
-                        toggleMenu()
-                        setConsumerUnitIndex(consumerUnitIndex)
-                }}
+                    setItemIndex = {setConsumerUnitIndex}
                     subItemKey='devices'
                 />
                 <Overview
