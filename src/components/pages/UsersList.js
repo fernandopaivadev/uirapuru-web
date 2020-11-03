@@ -59,7 +59,7 @@ const UsersList = ({ history }) => {
                                 className='item'
                                 onClick={async () => {
                                     setLoading(true)
-                                    if (await fetch(user._id)) {
+                                    if (await fetch.userData(user._id)) {
                                         history.push('/dashboard')
                                     } else {
                                         setLoading(false)

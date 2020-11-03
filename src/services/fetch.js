@@ -111,79 +111,104 @@ const fetchDeviceData = async (
     }
 }
 
-const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
-    try {
+const fetch = {
+    usersList: async () => {
         clearData('collection')
         clearData('messages')
 
-        if (typeof consumerUnitIndex !== 'number') {
-            consumerUnitIndex = -1
-        }
-
-        if (typeof deviceIndex !== 'number') {
-            deviceIndex = -1
-        }
-
-        if (_id && consumerUnitIndex >= 0 && deviceIndex >= 0) {
-            const collection = [
-                await fetchDeviceData(
-                    consumerUnitIndex,
-                    deviceIndex,
-                    begin,
-                    end,
-                    true
-                )
-            ]
-
-            storeData('collection', collection)
-
-            return true
-        } else if (_id && consumerUnitIndex >= 0) {
-            const collection = await Promise.all(getData('user')
-                .consumerUnits[consumerUnitIndex]
-                .devices.map(async (device, deviceIndex) =>
-                    await fetchDeviceData(
-                        consumerUnitIndex,
-                        deviceIndex,
-                        begin,
-                        end,
-                        false
-                    )
-                ))
-
-            storeData('collection', collection)
-
-            return true
-        } else if (_id) {
+        try {
             if (isAdmin()) {
+                const { status, data } = await api.get('/users')
+
+                if (status === 200) {
+                    storeData('users-list', data.usersList)
+                    return true
+                }
+            }
+        } catch (err) {
+            console.log(err?.message ?? err?.response?.data?.message)
+            return false
+        }
+    },
+    userData: async (_id) => {
+        clearData('collection')
+        clearData('messages')
+
+        try {
+            if (isAdmin() && _id) {
                 const { status, data } = await api.get(
                     `/user/data?_id=${_id}`
                 )
 
                 if (status === 200) {
                     storeData('user', data.user)
-                    clearData('collection')
+
+                    return true
+                }
+            } else if (isAuthenticated()) {
+                const { status, data } = await api.get('/user/data')
+
+                if (status === 200) {
+                    storeData('user', data.user)
                     return true
                 }
             }
-        } else if (isAdmin()) {
-            const { status, data } = await api.get('/users')
-
-            if (status === 200) {
-                storeData('users-list', data.usersList)
-                return true
-            }
-        } else if (isAuthenticated()) {
-            const { status, data } = await api.get('/user/data')
-
-            if (status === 200) {
-                storeData('user', data?.user)
-                return true
-            }
+        } catch (err) {
+            console.log(err?.message ?? err?.response?.data?.message)
+            return false
         }
-    } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
-        return false
+    },
+    deviceData: async (consumerUnitIndex, deviceIndex, begin, end) => {
+        clearData('collection')
+        clearData('messages')
+
+        try {
+            if (deviceIndex >= 0) {
+                const collection = [
+                    await fetchDeviceData(
+                        consumerUnitIndex,
+                        deviceIndex,
+                        begin,
+                        end,
+                        true
+                    )
+                ]
+
+                storeData('collection', collection)
+
+                return true
+            }
+        } catch (err) {
+            console.log(err?.message ?? err?.response?.data?.message)
+            return false
+        }
+    },
+    devicesData: async (consumerUnitIndex, begin, end) => {
+        clearData('collection')
+        clearData('messages')
+
+        try {
+            if (consumerUnitIndex >= 0) {
+                const collection = await Promise.all(getData('user')
+                    .consumerUnits[consumerUnitIndex]
+                    .devices.map(async (device, deviceIndex) =>
+                        await fetchDeviceData(
+                            consumerUnitIndex,
+                            deviceIndex,
+                            begin,
+                            end,
+                            false
+                        )
+                    ))
+
+                storeData('collection', collection)
+
+                return true
+            }
+        } catch (err) {
+            console.log(err?.message ?? err?.response?.data?.message)
+            return false
+        }
     }
 }
 

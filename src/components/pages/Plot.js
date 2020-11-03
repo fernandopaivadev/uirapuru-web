@@ -79,8 +79,7 @@ const Plot = ({ history }) => {
 
             const [begin, end] = getPeriod(currentDate)
 
-            if (await fetch(
-                getData('user')._id,
+            if (await fetch.deviceData(
                 consumerUnitIndex,
                 deviceIndex,
                 begin,

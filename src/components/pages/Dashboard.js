@@ -28,8 +28,7 @@ const Dashboard = ({ history }) => {
         (async () => {
             setLoading(true)
 
-            if (await fetch(
-                getData('user')._id,
+            if (await fetch.devicesData(
                 consumerUnitIndex
             )) {
                 setSuccess(true)
