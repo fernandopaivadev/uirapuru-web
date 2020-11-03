@@ -8,14 +8,15 @@ import Modal from '../panels/Modal'
 
 import NewDevice from '../panels/NewDevice'
 
-import { getData, clearData, storeData } from '../../services/storage'
+import { getData , clearData, storeData } from '../../services/storage'
+
+import MenuIcon from '@material-ui/icons/Menu'
 
 import { isAdmin, logout } from '../../services/auth'
 
 import { api } from '../../services/api'
 
 import fetch from '../../services/fetch'
-
 
 import {
     formatUsername,
@@ -30,11 +31,11 @@ import {
     setFormValidation
 } from '../../services/forms'
 
-import '../../styles/profile.css'
+import '../../styles/mobileprofile.css'
 
 import '../../styles/util.css'
 
-const Profile = ({ history }) => {
+const MobileProfile = ({ history }) => {
     const admin = isAdmin()
     const user = getData('user')
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
@@ -85,7 +86,7 @@ const Profile = ({ history }) => {
 
             const status = response?.status
 
-            if (status === 200) {
+            if(status === 200) {
                 clearData('user')
                 clearData('users-list')
 
@@ -156,7 +157,7 @@ const Profile = ({ history }) => {
         }
     }
 
-    return <div className='profile'>
+    return <div className='mobileprofile'>
         <NavBar />
 
         { newDevicePopup ?
@@ -215,18 +216,22 @@ const Profile = ({ history }) => {
         }
 
         <div className='main'>
+            <button className='button-menu-icon'>
+                <MenuIcon className='menu-icon' />
+            </button>
             <Menu
+                className='menu'
                 title='Unidades'
-                items = {getData('user').consumerUnits}
-                setItemIndex = { setConsumerUnitIndex }
+                items={getData('user').consumerUnits}
+                setItemIndex={setConsumerUnitIndex}
                 subItemKey='devices'
             />
             {getData('user') ?
-                <form className='user-data'>
+                <form>
                     <h1>
-                            Dados do Usuário
+                        Dados do Usuário
                     </h1>
-                    <label>Nome de usuário</label>
+                    <label>Nome de Usuário</label>
                     <input
                         name='username'
                         maxLength='20'
@@ -242,10 +247,12 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                     </p>
 
-                    <label>Email</label>
+                    <label>
+                        Email
+                    </label>
                     <input
                         name='email'
                         maxLength='40'
@@ -258,7 +265,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 10 caracteres
+                        Digite no mínimo 10 caracteres
                     </p>
 
                     <label>Telefone</label>
@@ -276,9 +283,8 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Número de telefone inválido
+                        Número de telefone inválido
                     </p>
-
                     {getData('user')?.person ?
                         <>
                             <label>Nome completo</label>
@@ -295,7 +301,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Digite no mínimo 10 caracteres
+                            Digite no mínimo 10 caracteres
                             </p>
 
                             <label>CPF</label>
@@ -325,7 +331,7 @@ const Profile = ({ history }) => {
                                 required
                                 pattern='\d{2}\/\d{2}\/\d{4}'
                                 defaultValue={formatTimeStamp(
-                                        getData('user')?.person?.birth
+                                    getData('user')?.person?.birth
                                 ) ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -348,7 +354,7 @@ const Profile = ({ history }) => {
                                 pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                                 defaultValue={
                                     formatCNPJ(
-                                            getData('user')?.company?.cnpj
+                                        getData('user')?.company?.cnpj
                                     ) ?? '--'
                                 }
                                 readOnly= {!admin}
@@ -363,7 +369,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    CNPJ inválido
+                        CNPJ inválido
                             </p>
 
                             <label>Nome Fantasia</label>
@@ -382,10 +388,10 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                             </p>
 
-                            <label>Razão social</label>
+                            <label>Razão Social</label>
                             <input
                                 name='tradeName'
                                 maxLength='128'
@@ -401,7 +407,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                             </p>
 
                             <label>Descrição</label>
@@ -420,7 +426,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Digite no mínimo 50 caracteres
+                        Digite no mínimo 50 caracteres
                             </p>
                         </>
                     }
@@ -445,13 +451,13 @@ const Profile = ({ history }) => {
                                 }
                             }}
                         >
-                                Salvar
+                            Salvar
                         </button>
                         : null
                     }
                     {success[0] && !error[0]?
                         <p className='success'>
-                                Salvo com sucesso!
+                                    Salvo com sucesso!
                         </p>
                         : null
                     }
@@ -466,9 +472,9 @@ const Profile = ({ history }) => {
             }
 
             {getData('user').consumerUnits[ consumerUnitIndex ] ?
-                <form className='consumer-unit-data'>
+                <form>
                     <h1>
-                            Dados da Unidade Consumidora
+                        Dados da Unidade Consumidora
                     </h1>
                     <label>Número</label>
                     <input
@@ -486,7 +492,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                     </p>
 
                     <label>Nome da unidade consumidora</label>
@@ -505,7 +511,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 8 caracteres
+                        Digite no mínimo 8 caracteres
                     </p>
 
                     <label>Endereço</label>
@@ -524,7 +530,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 10 caracteres
+                        Digite no mínimo 10 caracteres
                     </p>
 
                     <label>CEP</label>
@@ -544,7 +550,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            CEP inválido
+                        CEP inválido
                     </p>
 
                     <label>Cidade</label>
@@ -563,7 +569,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 3 caracteres
+                        Digite no mínimo 3 caracteres
                     </p>
 
                     <label>Estado</label>
@@ -582,7 +588,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 3 caracteres
+                        Digite no mínimo 3 caracteres
                     </p>
 
                     <div className='buttons'>
@@ -595,10 +601,11 @@ const Profile = ({ history }) => {
                                     setModal([false, true, false])
                                 }}
                             >
-                                    Excluir U.C.
+                                Excluir U.C.
                             </button>
                             : null
                         }
+
                         {admin ?
                             <button
                                 className='classic-button'
@@ -636,7 +643,6 @@ const Profile = ({ history }) => {
                             : null
                         }
                     </div>
-
                     {success[1] && !error[1]?
                         <p className='success'>
                                 Salvo com sucesso!
@@ -670,21 +676,21 @@ const Profile = ({ history }) => {
             }
             {getData('user').consumerUnits[ consumerUnitIndex ] ?
                 <div className='devices-list'>
-                    <div className='header'>
-                        <h1>Dispositivos</h1>
-                        {admin ?
-                            <button
-                                className='classic-button'
-                                onClick={event => {
-                                    event.preventDefault()
-                                    setNewDevicePopup(true)
-                                }}
-                            >
-                                Novo dispositivo
-                            </button>
-                            : null
-                        }
-                    </div>
+                    <h1>
+                            Dispositivos
+                    </h1>
+                    {admin ?
+                        <button
+                            className='classic-button'
+                            onClick={event => {
+                                event.preventDefault()
+                                setNewDevicePopup(true)
+                            }}
+                        >
+                                    Novo dispositivo
+                        </button>
+                        : null
+                    }
                     <ul>
                         {getData('user')
                             .consumerUnits[ consumerUnitIndex ]
@@ -692,7 +698,7 @@ const Profile = ({ history }) => {
                                 <li key={index}>
                                     <form>
                                         <label>
-                                            ID
+                                                ID
                                         </label>
                                         <input
                                             defaultValue={device.id}
@@ -710,10 +716,10 @@ const Profile = ({ history }) => {
                                             }}
                                         />
                                         <p className='error-message'>
-                                            ID inválido
+                                                ID inválido
                                         </p>
                                         <label>
-                                            Nome
+                                                Nome
                                         </label>
                                         <input
                                             defaultValue={device.name}
@@ -726,13 +732,14 @@ const Profile = ({ history }) => {
                                                         consumerUnitIndex
                                                     ]
                                                     .devices[index].name
-                                                    =
-                                                    event.target.value
+                                                        =
+                                                        event.target.value
                                             }}
                                         />
                                         <p className='error-message'>
-                                            Digite no mínimo 6 caracteres
+                                                Digite no mínimo 6 caracteres
                                         </p>
+
                                         {admin ?
                                             <div className='buttons'>
                                                 <button
@@ -743,7 +750,7 @@ const Profile = ({ history }) => {
                                                         handleSubmit(index + 2)
                                                     }}
                                                 >
-                                                Salvar
+                                                        Salvar
                                                 </button>
                                                 <button
                                                     className='classic-button'
@@ -756,7 +763,7 @@ const Profile = ({ history }) => {
                                                         )
                                                     }}
                                                 >
-                                                Excluir
+                                                        Excluir
                                                 </button>
                                             </div>
                                             : null
@@ -786,31 +793,32 @@ const Profile = ({ history }) => {
                     </p>
                 </div>
             }
-        </div>
 
-        <div className='nav-buttons'>
-            <button
-                className='classic-button'
-                onClick={() =>{
-                    history.push('/dashboard')
-                }}
-            >
-                    Dashboard
-            </button>
-            {admin ?
+
+            <div className='nav-buttons'>
                 <button
-                    id='delete-button'
                     className='classic-button'
-                    onClick={ () => {
-                        setModal([true, false, false])
+                    onClick={() =>{
+                        history.push('/dashboard')
                     }}
                 >
-                        Excluir Usuário
+                    Dashboard
                 </button>
-                : null
-            }
+                {admin ?
+                    <button
+                        id='delete-button'
+                        className='classic-button'
+                        onClick={ () => {
+                            setModal([true, false, false])
+                        }}
+                    >
+                            Excluir Usuário
+                    </button>
+                    : null
+                }
+            </div>
         </div>
     </div>
 }
 
-export default Profile
+export default MobileProfile

@@ -13,10 +13,6 @@
 html {
     --default-green: #309d20;
     --default-light-green: #3fc82a;
-    --default-white: #fff;
-    --default-black: #333;
-    --default-gray: #555;
-    --default-light-gray: #aaa;
     font-size: 65.5%;
 }
 

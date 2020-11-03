@@ -6,19 +6,19 @@ import themes from '../../themes'
 
 import '../../styles/chart.css'
 
-const Chart = ({ collection, realTime }) => {
+const Chart = ({ collection, realTime, aspectRatio }) => {
     const { default: { traceColors } } = themes
 
     useEffect(() => {
         collection.forEach(({ datasets, timestamps }, index) => {
             datasets.forEach((dataset, index) => {
                 dataset.borderColor = traceColors[index]
-                dataset.backgroundColor = traceColors[index]
+                dataset.backgroundColor = `${traceColors[index]}1f`
                 dataset.pointBorderColor = traceColors[index]
                 dataset.pointBackgroundColor = traceColors[index]
-                dataset.borderWidth = 1
-                dataset.pointRadius = 2
-                dataset.fill = false
+                dataset.borderWidth = 1.5
+                dataset.pointRadius = 0
+                dataset.fill = true
                 dataset.cubicInterpolationMode = 'linear'
             })
 
@@ -33,9 +33,10 @@ const Chart = ({ collection, realTime }) => {
                     datasets
                 },
                 options: {
+                    animation: false,
                     devicePixelRatio: 2,
                     responsive: true,
-                    aspectRatio: 2.6,
+                    aspectRatio: aspectRatio ?? 2.6,
                     maintainAspectRatio: true,
                     legend: {
                         labels: {
@@ -47,7 +48,8 @@ const Chart = ({ collection, realTime }) => {
                         mode: 'index',
                         axis: 'y',
                         intersect: false,
-                        backgroundColor: '#333'
+                        backgroundColor: '#333',
+
                     },
                     scales: {
                         yAxes: [{

@@ -34,6 +34,7 @@ const Login = ({ history }) => {
         try {
             event.preventDefault()
             setLoading(true)
+            setError(false)
 
             const response = await api.get(
                 adminMode ?
@@ -50,13 +51,13 @@ const Login = ({ history }) => {
                 if (adminMode) {
                     adminLogin(response.data.token)
 
-                    if(await fetch()) {
+                    if (await fetch()) {
                         history.push('/users-list')
                     }
                 } else {
                     login(response.data.token)
 
-                    if(await fetch()) {
+                    if (await fetch()) {
                         history.push('/dashboard')
                     }
                 }

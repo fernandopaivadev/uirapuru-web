@@ -81,6 +81,30 @@
 .plot .main .content-container .date-picker input {
     width: 20rem;
     padding: 0.3rem;
+    margin: 0 0 0 1rem;
     border: 1px solid #ccc;
     border-radius: 0.3rem;
+    font-size: 2rem;
+}
+
+.plot .main .date-picker .icon {
+    font-size: 3.5rem;
+    color: #fff;
+    border-radius: 50%;
+    margin: 0.5rem;
+    background: var(--default-green);
+    cursor: pointer;
+}
+
+.plot .main .date-picker .icon:hover {
+    background: var(--default-light-green);
+}
+
+@media (orientation: portrait) {
+    .plot .main {
+        grid-template-columns: 1fr;
+    }
+    .plot .main .menu {
+        display: none;
+    }
 }

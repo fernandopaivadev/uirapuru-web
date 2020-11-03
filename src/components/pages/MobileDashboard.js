@@ -1,45 +1,33 @@
 import React, { useState, useEffect, useCallback } from 'react'
+
 import NavBar from '../panels/NavBar'
-import Menu from '../panels/Menu'
-import Chart from '../panels/Chart'
+
 import Overview from '../panels/Overview'
 
 import { getData } from '../../services/storage'
+
 import { websocketConfig } from '../../services/websocket'
-import fetch from '../../services/fetch'
+
+import MenuIcon from '@material-ui/icons/Menu'
+
+import Menu from '../panels/Menu'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { faSolarPanel } from '@fortawesome/free-solid-svg-icons'
 
-import '../../styles/dashboard.css'
+import '../../styles/mobiledashboard.css'
+
 import '../../styles/util.css'
 
-const Dashboard = ({ history }) => {
+const MobileDashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [realTimeBuffer, setRealTimeBuffer] = useState([])
     const [newMessage, setNewMessage] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const [success, setSuccess] = useState(false)
 
     let overviewProps = realTimeBuffer[0]
 
     useEffect(() => {
-        (async () => {
-            setLoading(true)
-
-            if (await fetch(
-                getData('user')._id,
-                consumerUnitIndex
-            )) {
-                setSuccess(true)
-                setLoading(false)
-            } else {
-                setSuccess(false)
-                setLoading(false)
-            }
-        })()
-
         websocketConfig(
             consumerUnitIndex,
             realTimeBuffer,
@@ -54,20 +42,23 @@ const Dashboard = ({ history }) => {
         }, [newMessage])
     )
 
-    return <div className='dashboard'>
-        <NavBar />
-        <div className='main'>
-            <Menu
-                title='Unidades'
-                items={
-                    getData('user').consumerUnits
-                }
-                subItemKey='devices'
-                setItemIndex={setConsumerUnitIndex}
-            />
-            <div className='main-container'>
-                <Overview  {...overviewProps}/>
-                <ul className='devices'>
+    return <div className="mobiledashboard">
+            <NavBar />
+            <div className="main">
+                <button className='button-menu-icon'>
+                    <MenuIcon className='menu-icon' />
+                </button>
+                <Menu
+                    className='menu'
+                    title='Unidades'
+                    items = {getData('user').consumerUnits}
+                    setItemIndex = {setConsumerUnitIndex}
+                    subItemKey='devices'
+                />
+                <Overview
+                    className='overview'
+                    {...overviewProps} />
+                <ul className="devices">
                     {getData('user')
                         ?.consumerUnits[ consumerUnitIndex ]
                         ?.devices.map((device, deviceIndex) =>
@@ -96,31 +87,7 @@ const Dashboard = ({ history }) => {
                     }
                 </ul>
             </div>
-            {!loading ?
-                success ?
-                    getData('messages')?.length ?
-                        <div className='charts'>
-                            <Chart
-                                collection={getData('collection')}
-                                realTime={realTimeBuffer}
-                                aspectRatio={2}
-                            />
-                        </div>
-                        :
-                        <div className='empty'>
-                            <p>Não há dados destes dispositivos</p>
-                        </div>
-                    :
-                    <div className='error'>
-                        <p>Não foi possível obter os dados</p>
-                    </div>
-                :
-                <div className='loading-container'>
-                    <progress className='circular-progress'/>
-                </div>
-            }
         </div>
-    </div>
 }
 
-export default Dashboard
+export default MobileDashboard

@@ -2,12 +2,21 @@ import { getData, storeData, clearData } from './storage'
 import { isAuthenticated, isAdmin } from './auth'
 import { api } from './api'
 
-const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
+const fetchDeviceData = async (
+    consumerUnitIndex,
+    deviceIndex,
+    begin,
+    end,
+    fullTimestamp
+) => {
     if (!(begin && end)) {
         begin = new Date()
+        end = new Date()
+
         begin.setMinutes(begin.getMinutes() - 1)
+
         begin = begin.toISOString()
-        end = new Date().toISOString()
+        end = end.toISOString()
     }
 
     const device = getData('user')
@@ -31,17 +40,50 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
         const params = []
         const timestamps = []
 
+
+        if (!messages.length) {
+            return null
+        }
+
         storeData('messages', messages)
 
         messages.forEach(({ payload }) => {
             const parsedPayload = JSON.parse(payload)
             const dateRTC = new Date(parsedPayload.rtc)
-            const timestamp = `${
-                dateRTC.getHours()
+
+            const timestamp = fullTimestamp ?
+            `${
+                dateRTC.getDate() < 10 ?
+                    `0${dateRTC.getDate()}`
+                    :
+                    dateRTC.getDate()
+            }/${
+                dateRTC.getMonth() + 1 < 10 ?
+                    `0${dateRTC.getMonth() + 1}`
+                    :
+                    dateRTC.getMonth() + 1
+            } ${
+                dateRTC.getHours() < 10 ?
+                    `0${dateRTC.getHours()}`
+                    :
+                    dateRTC.getHours()
             }:${
-                dateRTC.getMinutes()
+                dateRTC.getMinutes() < 10 ?
+                    `0${dateRTC.getMinutes()}`
+                    :
+                    dateRTC.getMinutes()
+            }`
+            :
+            `${
+                dateRTC.getHours() < 10 ?
+                    `0${dateRTC.getHours()}`
+                    :
+                    dateRTC.getHours()
             }:${
-                dateRTC.getSeconds()
+                dateRTC.getMinutes() < 10 ?
+                    `0${dateRTC.getMinutes()}`
+                    :
+                    dateRTC.getMinutes()
             }`
 
             delete parsedPayload.rtc
@@ -72,36 +114,45 @@ const getMessages = async (consumerUnitIndex, deviceIndex, begin, end) => {
 
 const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
     try {
+        clearData('collection')
+        clearData('messages')
+
+        if (typeof consumerUnitIndex !== 'number') {
+            consumerUnitIndex = -1
+        }
+
+        if (typeof deviceIndex !== 'number') {
+            deviceIndex = -1
+        }
+
         if (_id && consumerUnitIndex >= 0 && deviceIndex >= 0) {
             const collection = [
-                await getMessages(
+                await fetchDeviceData(
                     consumerUnitIndex,
                     deviceIndex,
                     begin,
-                    end
+                    end,
+                    true
                 )
             ]
 
-            if (collection?.length > 0) {
-                storeData('collection', collection)
-            }
+            storeData('collection', collection)
 
             return true
         } else if (_id && consumerUnitIndex >= 0) {
             const collection = await Promise.all(getData('user')
                 .consumerUnits[consumerUnitIndex]
                 .devices.map(async (device, deviceIndex) =>
-                    await getMessages(
+                    await fetchDeviceData(
                         consumerUnitIndex,
                         deviceIndex,
                         begin,
-                        end
+                        end,
+                        false
                     )
                 ))
 
-            if (collection?.length > 0) {
-                storeData('collection', collection)
-            }
+            storeData('collection', collection)
 
             return true
         } else if (_id) {
@@ -120,7 +171,7 @@ const fetch = async (_id, consumerUnitIndex, deviceIndex, begin, end) => {
             const { status, data } = await api.get('/users')
 
             if (status === 200) {
-                storeData('users-list',data.usersList)
+                storeData('users-list', data.usersList)
                 return true
             }
         } else if (isAuthenticated()) {
