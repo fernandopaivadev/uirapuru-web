@@ -61,16 +61,16 @@ const Plot = ({ history }) => {
     }
 
     const changeDate = (change, dateString) => {
-        const dateSplit = dateString.split('-')
+        const date = new Date(dateString)
 
         if (change === 'forward') {
-            dateSplit[2] = String(Number(dateSplit[2]) + 1)
+            date.setDate(date.getDate() + 1)
         } else if (change === 'backward') {
-            dateSplit[2] = String(Number(dateSplit[2]) - 1)
+            date.setDate(date.getDate() - 1)
         }
 
-        dateString = dateSplit.join('-')
-        setCurrentDate(dateString)
+        const newDateString = date.toISOString().split('T')[0]
+        setCurrentDate(newDateString)
     }
 
     useEffect(() => {
@@ -85,6 +85,7 @@ const Plot = ({ history }) => {
                 begin,
                 end
             )) {
+                console.log(getData('collection'))
                 setSuccess(true)
                 setLoading(false)
             } else {
@@ -124,7 +125,6 @@ const Plot = ({ history }) => {
 
                     <input
                         type='date'
-                        defaultValue={currentDate}
                         value={currentDate}
                         onChange={event => {
                             setCurrentDate(event.target.value)
@@ -133,7 +133,7 @@ const Plot = ({ history }) => {
                 </div>
                 {!loading ?
                     success ?
-                        getData('messages')?.length ?
+                        getData('collection')?.length ?
                             <div className='chart-container'>
                                 <Chart
                                     collection={getData('collection')}

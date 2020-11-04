@@ -7,7 +7,8 @@ const fetchDeviceData = async (
     deviceIndex,
     begin,
     end,
-    fullTimestamp
+    fullTimestamp,
+    storeMessages
 ) => {
     if (!(begin && end)) {
         begin = new Date()
@@ -44,7 +45,9 @@ const fetchDeviceData = async (
             return null
         }
 
-        storeData('messages', messages)
+        if (storeMessages) {
+            storeData('messages', messages)
+        }
 
         messages.forEach(({ payload }) => {
             const parsedPayload = JSON.parse(payload)
@@ -164,19 +167,22 @@ const fetch = {
 
         try {
             if (deviceIndex >= 0) {
-                const collection = [
-                    await fetchDeviceData(
-                        consumerUnitIndex,
-                        deviceIndex,
-                        begin,
-                        end,
-                        true
-                    )
-                ]
+                const deviceData = await fetchDeviceData(
+                    consumerUnitIndex,
+                    deviceIndex,
+                    begin,
+                    end,
+                    true,
+                    true
+                )
 
-                storeData('collection', collection)
-
-                return true
+                if (deviceData) {
+                    const collection = [deviceData]
+                    storeData('collection', collection)
+                    return true
+                } else {
+                    return false
+                }
             }
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
@@ -197,13 +203,23 @@ const fetch = {
                             deviceIndex,
                             begin,
                             end,
+                            false,
                             false
                         )
                     ))
 
-                storeData('collection', collection)
+                const successful = collection.map(chart => {
+                    if (chart) {
+                        return true
+                    }
+                })
 
-                return true
+                if (successful) {
+                    storeData('collection', collection)
+                    return true
+                } else {
+                    return false
+                }
             }
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)

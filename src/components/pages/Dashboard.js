@@ -97,7 +97,7 @@ const Dashboard = ({ history }) => {
             </div>
             {!loading ?
                 success ?
-                    getData('messages')?.length ?
+                    getData('collection')?.length ?
                         <div className='charts'>
                             <Chart
                                 collection={getData('collection')}

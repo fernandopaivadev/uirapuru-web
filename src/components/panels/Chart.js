@@ -17,7 +17,7 @@ const Chart = ({ collection, realTime, aspectRatio }) => {
                 dataset.pointBorderColor = traceColors[index]
                 dataset.pointBackgroundColor = traceColors[index]
                 dataset.borderWidth = 1.5
-                dataset.pointRadius = 0
+                dataset.pointRadius = 2
                 dataset.fill = true
                 dataset.cubicInterpolationMode = 'linear'
             })
@@ -64,58 +64,66 @@ const Chart = ({ collection, realTime, aspectRatio }) => {
     })
 
     return <div className='chart'>
-        {collection.map(({ title }, index) =>
-            <div className='chart-view' key={index}>
-                <h1>{ title } </h1>
-                <canvas id={`chart-${index}`}/>
-                {realTime?.length > 0 ?
-                    <ul className='real-time'>
-                        <li>
-                            <p style={{
-                                color: traceColors[0]
-                            }}>
-                            T: { realTime[index].t1 } °C
-                            </p>
-                        </li>
-                        <li>
-                            <p style={{
-                                color: traceColors[1]
-                            }}>
-                                H.R.A: { realTime[index].h1 } %
-                            </p>
-                        </li>
-                        <li>
-                            <p style={{
-                                color: traceColors[2]
-                            }}>
-                                Vca: { realTime[index].v1 } V
-                            </p>
-                        </li>
-                        <li>
-                            <p style={{
-                                color: traceColors[3]
-                            }}>
-                                Ica: { realTime[index].i1 } A
-                            </p>
-                        </li>
-                        <li>
-                            <p style={{
-                                color: traceColors[4]
-                            }}>
-                                Vcc: { realTime[index].v1 } V
-                            </p>
-                        </li>
-                        <li>
-                            <p style={{
-                                color: traceColors[5]
-                            }}>
-                                Icc: { realTime[index].i2 } A
-                            </p>
-                        </li>
-                    </ul>
-                    : null
-                }
-            </div>
+        {collection.map((chart, index) => {
+            if (chart) {
+                const { title } = chart
+                return <div className='chart-view' key={index}>
+                    <h1>{ title } </h1>
+                    <canvas id={`chart-${index}`}/>
+                    {realTime?.length > 0 ?
+                        <ul className='real-time'>
+                            <li>
+                                <p style={{
+                                    color: traceColors[0]
+                                }}>
+                                T: { realTime[index].t1 } °C
+                                </p>
+                            </li>
+                            <li>
+                                <p style={{
+                                    color: traceColors[1]
+                                }}>
+                                    H.R.A: { realTime[index].h1 } %
+                                </p>
+                            </li>
+                            <li>
+                                <p style={{
+                                    color: traceColors[2]
+                                }}>
+                                    Vca: { realTime[index].v1 } V
+                                </p>
+                            </li>
+                            <li>
+                                <p style={{
+                                    color: traceColors[3]
+                                }}>
+                                    Ica: { realTime[index].i1 } A
+                                </p>
+                            </li>
+                            <li>
+                                <p style={{
+                                    color: traceColors[4]
+                                }}>
+                                    Vcc: { realTime[index].v1 } V
+                                </p>
+                            </li>
+                            <li>
+                                <p style={{
+                                    color: traceColors[5]
+                                }}>
+                                    Icc: { realTime[index].i2 } A
+                                </p>
+                            </li>
+                        </ul>
+                        : null
+                    }
+                </div>
+            } else {
+                return <div className='chart-error'>
+                    <p>Não foi possível obter os dados</p>
+                </div>
+            }
+        }
         )}
     </div>
 }
