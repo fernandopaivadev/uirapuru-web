@@ -43,51 +43,52 @@ const MobileDashboard = ({ history }) => {
     )
 
     return <div className="mobiledashboard">
-            <NavBar />
-            <div className="main">
-                <button className='button-menu-icon'>
-                    <MenuIcon className='menu-icon' />
-                </button>
-                <Menu
-                    className='menu'
-                    title='Unidades'
-                    items = {getData('user').consumerUnits}
-                    setItemIndex = {setConsumerUnitIndex}
-                    subItemKey='devices'
-                />
-                <Overview
-                    className='overview'
-                    {...overviewProps} />
-                <ul className="devices">
-                    {getData('user')
-                        ?.consumerUnits[ consumerUnitIndex ]
-                        ?.devices.map((device, deviceIndex) =>
-                            <li
-                                className='device'
-                                key={ deviceIndex }
-                                onClick={() => {
-                                    history.push(
+        <NavBar />
+        <div className="main">
+            <button className='button-menu-icon'>
+                <MenuIcon className='menu-icon' />
+            </button>
+            <Menu
+                className='menu'
+                title='Unidades'
+                items = {getData('user').consumerUnits}
+                setItemIndex = {setConsumerUnitIndex}
+                subItemKey='devices'
+            />
+            <Overview
+                className='overview'
+                {...overviewProps}
+            />
+            <ul className="devices">
+                {getData('user')
+                    ?.consumerUnits[ consumerUnitIndex ]
+                    ?.devices.map((device, deviceIndex) =>
+                        <li
+                            className='device'
+                            key={ deviceIndex }
+                            onClick={() => {
+                                history.push(
                                         `/plot?${
                                             consumerUnitIndex
                                         }&${
                                             deviceIndex
                                         }`
-                                    )
-                                }}
-                            >
-                                <FontAwesomeIcon
-                                    className='panelIcon'
-                                    icon={faSolarPanel}
-                                />
-                                <p className='text'>
-                                    { device.name }
-                                </p>
-                            </li>
-                        )
-                    }
-                </ul>
-            </div>
+                                )
+                            }}
+                        >
+                            <FontAwesomeIcon
+                                className='panelIcon'
+                                icon={faSolarPanel}
+                            />
+                            <p className='text'>
+                                { device.name }
+                            </p>
+                        </li>
+                    )
+                }
+            </ul>
         </div>
+    </div>
 }
 
 export default MobileDashboard

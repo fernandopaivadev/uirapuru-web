@@ -325,7 +325,7 @@ const Profile = ({ history }) => {
                                 required
                                 pattern='\d{2}\/\d{2}\/\d{4}'
                                 defaultValue={formatTimeStamp(
-                                        getData('user')?.person?.birth
+                                    getData('user')?.person?.birth
                                 ) ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -348,7 +348,7 @@ const Profile = ({ history }) => {
                                 pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                                 defaultValue={
                                     formatCNPJ(
-                                            getData('user')?.company?.cnpj
+                                        getData('user')?.company?.cnpj
                                     ) ?? '--'
                                 }
                                 readOnly= {!admin}

@@ -32,10 +32,16 @@
     "rules": {
         "no-trailing-spaces": "error",
         "no-extra-parens": "error",
-        // "indent": [
-        //     "error",
-        //     4
-        // ],
+        "template-curly-spacing": "off",
+        "indent": [
+            "error",
+            4,
+            {
+                "ignoredNodes": [
+                    "TemplateLiteral"
+                ]
+            }
+        ],
         "linebreak-style": [
             "error",
             "unix"

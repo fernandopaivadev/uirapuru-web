@@ -64,11 +64,10 @@ const Chart = ({ collection, realTime, aspectRatio }) => {
     })
 
     return <div className='chart'>
-        {collection.map((chart, index) => {
-            if (chart) {
-                const { title } = chart
-                return <div className='chart-view' key={index}>
-                    <h1>{ title } </h1>
+        {collection.map((chart, index) =>
+            chart ?
+                <div className='chart-view' key={index}>
+                    <h1>{ chart.title } </h1>
                     <canvas id={`chart-${index}`}/>
                     {realTime?.length > 0 ?
                         <ul className='real-time'>
@@ -118,12 +117,10 @@ const Chart = ({ collection, realTime, aspectRatio }) => {
                         : null
                     }
                 </div>
-            } else {
-                return <div className='chart-error'>
+                :
+                <div className='chart-error'>
                     <p>Não foi possível obter os dados</p>
                 </div>
-            }
-        }
         )}
     </div>
 }

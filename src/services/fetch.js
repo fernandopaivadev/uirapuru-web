@@ -75,7 +75,7 @@ const fetchDeviceData = async (
                     :
                     dateRTC.getMinutes()
             }`
-            :
+                :
             `${
                 dateRTC.getHours() < 10 ?
                     `0${dateRTC.getHours()}`
@@ -145,7 +145,6 @@ const fetch = {
 
                 if (status === 200) {
                     storeData('user', data.user)
-
                     return true
                 }
             } else if (isAuthenticated()) {
@@ -161,13 +160,13 @@ const fetch = {
             return false
         }
     },
-    deviceData: async (consumerUnitIndex, deviceIndex, begin, end) => {
+    chart: async (consumerUnitIndex, deviceIndex, begin, end) => {
         clearData('collection')
         clearData('messages')
 
         try {
             if (deviceIndex >= 0) {
-                const deviceData = await fetchDeviceData(
+                const chart = await fetchDeviceData(
                     consumerUnitIndex,
                     deviceIndex,
                     begin,
@@ -176,26 +175,26 @@ const fetch = {
                     true
                 )
 
-                if (deviceData) {
-                    const collection = [deviceData]
-                    storeData('collection', collection)
-                    return true
+                if (chart) {
+                    storeData('collection', [chart])
                 } else {
-                    return false
+                    storeData('collection', [])
                 }
+
+                return true
             }
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
             return false
         }
     },
-    devicesData: async (consumerUnitIndex, begin, end) => {
+    collection: async (consumerUnitIndex, begin, end) => {
         clearData('collection')
         clearData('messages')
 
         try {
             if (consumerUnitIndex >= 0) {
-                const collection = await Promise.all(getData('user')
+                let collection = await Promise.all(getData('user')
                     .consumerUnits[consumerUnitIndex]
                     .devices.map(async (device, deviceIndex) =>
                         await fetchDeviceData(
@@ -208,18 +207,10 @@ const fetch = {
                         )
                     ))
 
-                const successful = collection.map(chart => {
-                    if (chart) {
-                        return true
-                    }
-                })
+                collection = collection.filter(chart => chart)
 
-                if (successful) {
-                    storeData('collection', collection)
-                    return true
-                } else {
-                    return false
-                }
+                storeData('collection', collection)
+                return true
             }
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)

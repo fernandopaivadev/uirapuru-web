@@ -28,9 +28,7 @@ const Dashboard = ({ history }) => {
         (async () => {
             setLoading(true)
 
-            if (await fetch.devicesData(
-                consumerUnitIndex
-            )) {
+            if (await fetch.collection(consumerUnitIndex)) {
                 setSuccess(true)
                 setLoading(false)
             } else {
