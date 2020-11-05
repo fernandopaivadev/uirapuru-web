@@ -45,7 +45,7 @@ const NewUser = ({ history }) => {
         devices: []
     }
 
-    const [modal, setModal] = useState(false)
+    const [modal, setModal] = useState([false, false])
     const [step, setStep] = useState(0)
     const [userType, setUserType] = useState('company')
     const [success, setSuccess] = useState(false)
@@ -151,19 +151,38 @@ const NewUser = ({ history }) => {
 
     return <div className='newuser'>
         <NavBar />
-        { modal ?
+        { modal[0] ?
             <Modal
-                message={'Você tem certeza?'}
+                message={'Adicionar outra unidade?'}
                 taskOnYes={() => {
-                    setModal(false)
-                    buttonPress(handleSubmit)
+                    setModal([false, false])
+
+                    buttonPress(() => {
+                        user.consumerUnits.push(consumerUnit)
+                        clearForm('all')
+                    })
                 }}
                 taskOnNo={() => {
-                    setModal(false)
+                    setModal([false, true])
                 }}
             />
             : null
         }
+
+        { modal[1] ?
+            <Modal
+                message={'Finalizar cadastro?'}
+                taskOnYes={() => {
+                    setModal([false, false])
+                    buttonPress(handleSubmit)
+                }}
+                taskOnNo={() => {
+                    setModal([false, false])
+                }}
+            />
+            : null
+        }
+
         <div className='main'>
             {step === 0 ?
                 <form>
@@ -523,20 +542,7 @@ const NewUser = ({ history }) => {
                                 className='classic-button'
                                 onClick={event => {
                                     event.preventDefault()
-                                    buttonPress(() => {
-                                        user.consumerUnits.push(consumerUnit)
-                                        clearForm('all')
-                                    })
-                                }}
-                            >
-                                Adicionar UC
-                            </button>
-
-                            <button
-                                className='classic-button'
-                                onClick={event => {
-                                    event.preventDefault()
-                                    setModal(true)
+                                    setModal([true, false])
                                 }}
                             >
                                 Salvar
