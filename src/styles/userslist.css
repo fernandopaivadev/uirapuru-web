@@ -15,7 +15,6 @@
     background: #fff;
     min-width: 40rem;
     min-height: 18rem;
-    z-index: 1;
     border-radius: 0.5rem;
 }
 
@@ -71,19 +70,26 @@
 .userslist .list .header {
     display: flex;
     width: 100%;
+    align-items: center;
 }
 
 .userslist .list .loading-container {
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
 }
 
-@media screen and (max-height: 900px) {
+@media screen and (orientation: portrait) {
+    .userslist .list .header .title {
+        font-size: 2rem;
+        margin: 0 1rem 0 2rem;
+    }
     .userslist .list .header button {
-        height: 5rem;
+        font-size: 2rem;
     }
 }

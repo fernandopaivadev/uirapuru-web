@@ -96,7 +96,7 @@ const NewUnit = ({ history }) => {
                 event.preventDefault()
             }}>
                 <h1>
-                    Dados da Unidade Consumidora
+                    Dados da nova unidade
                 </h1>
                 <label>Número</label>
                 <input

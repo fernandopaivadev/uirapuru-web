@@ -82,7 +82,7 @@
     margin: 0 auto 0 auto;
 }
 
-@media screen and (max-height: 900px) {
+@media screen and (orientation: portrait) {
     .newunit .main input,
     .newunit .main label {
         width: 90%;

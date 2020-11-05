@@ -37,7 +37,6 @@
         "eject": "react-scripts eject",
         "update": "ncu -u && npm install",
         "lint": "eslint --fix src/",
-        "commit": "git add . && git commit",
         "start": "code . && npm run dev"
     },
     "browserslist": {

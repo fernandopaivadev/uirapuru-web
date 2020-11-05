@@ -6,7 +6,7 @@ import themes from '../../themes'
 
 import '../../styles/chart.css'
 
-const Chart = ({ collection, realTime, aspectRatio }) => {
+const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
     const { default: { traceColors } } = themes
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const Chart = ({ collection, realTime, aspectRatio }) => {
                 dataset.pointBorderColor = traceColors[index]
                 dataset.pointBackgroundColor = traceColors[index]
                 dataset.borderWidth = 1.5
-                dataset.pointRadius = 2
+                dataset.pointRadius = showDots ? 2 : 0
                 dataset.fill = true
                 dataset.cubicInterpolationMode = 'linear'
             })
@@ -63,56 +63,60 @@ const Chart = ({ collection, realTime, aspectRatio }) => {
         })
     })
 
+    const keyToUnity = key => {
+        switch (key) {
+        case 't1':
+            return ' °C'
+        case 'h1':
+            return ' %'
+        case 'v1':
+            return ' V'
+        case 'v2':
+            return ' V'
+        case 'i1':
+            return ' A'
+        case 'i2':
+            return ' A'
+        }
+    }
+
+    const keyToIdentifier = key => {
+        switch (key) {
+        case 't1':
+            return 'T: '
+        case 'h1':
+            return 'U.R.A: '
+        case 'v1':
+            return 'Vac: '
+        case 'v2':
+            return 'Vcc: '
+        case 'i1':
+            return 'Iac: '
+        case 'i2':
+            return 'Icc: '
+        }
+    }
+
     return <div className='chart'>
-        {collection.map((chart, index) =>
+        {collection.map((chart, chartIndex) =>
             chart ?
-                <div className='chart-view' key={index}>
+                <div className='chart-view' key={chartIndex}>
                     <h1>{ chart.title } </h1>
-                    <canvas id={`chart-${index}`}/>
+                    <canvas id={`chart-${chartIndex}`}/>
                     {realTime?.length > 0 ?
                         <ul className='real-time'>
-                            <li>
-                                <p style={{
-                                    color: traceColors[0]
-                                }}>
-                                T: { realTime[index].t1 } °C
-                                </p>
-                            </li>
-                            <li>
-                                <p style={{
-                                    color: traceColors[1]
-                                }}>
-                                    H.R.A: { realTime[index].h1 } %
-                                </p>
-                            </li>
-                            <li>
-                                <p style={{
-                                    color: traceColors[2]
-                                }}>
-                                    Vca: { realTime[index].v1 } V
-                                </p>
-                            </li>
-                            <li>
-                                <p style={{
-                                    color: traceColors[3]
-                                }}>
-                                    Ica: { realTime[index].i1 } A
-                                </p>
-                            </li>
-                            <li>
-                                <p style={{
-                                    color: traceColors[4]
-                                }}>
-                                    Vcc: { realTime[index].v1 } V
-                                </p>
-                            </li>
-                            <li>
-                                <p style={{
-                                    color: traceColors[5]
-                                }}>
-                                    Icc: { realTime[index].i2 } A
-                                </p>
-                            </li>
+                            {Object.keys(realTime[chartIndex])
+                                .map((key, keyIndex) =>
+                                    <li key={keyIndex}>
+                                        <p style={{
+                                            color: traceColors[keyIndex]
+                                        }}>
+                                            {keyToIdentifier(key)}
+                                            {realTime[chartIndex][key]}
+                                            {keyToUnity(key)}
+                                        </p>
+                                    </li>
+                                )}
                         </ul>
                         : null
                     }

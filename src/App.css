@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 * {
     margin: 0;
@@ -6,7 +6,7 @@
     outline: 0;
     list-style: none;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     overflow-x: hidden;
 }
 
@@ -25,7 +25,7 @@ body,
 
 body {
     background: linear-gradient(#3339, #3339),
-        url('./assets/background.webp') no-repeat;
+        url("./assets/background.webp") no-repeat;
     background-size: cover;
     -webkit-font-smoothing: antialiased !important;
 }
@@ -33,7 +33,7 @@ body {
 body,
 input,
 button {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -61,14 +61,20 @@ button {
     }
 }
 
-@media screen and (max-height: 1000px) {
+@media screen and (max-width: 1900px) {
     html {
         font-size: 45%;
     }
 }
 
-@media screen and (max-height: 600px) {
+@media screen and (max-width: 1200px) {
     html {
         font-size: 35%;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    html {
+        font-size: 45%;
     }
 }

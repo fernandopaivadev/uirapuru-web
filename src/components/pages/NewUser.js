@@ -409,7 +409,7 @@ const NewUser = ({ history }) => {
                     event.preventDefault()
                 }}>
                     <h1>
-                        Dados da nova unidade consumidora
+                        Dados da nova unidade
                     </h1>
                     <label>Número</label>
                     <input

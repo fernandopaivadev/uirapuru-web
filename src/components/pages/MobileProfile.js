@@ -601,7 +601,7 @@ const MobileProfile = ({ history }) => {
                                     setModal([false, true, false])
                                 }}
                             >
-                                Excluir U.C.
+                                Excluir Unidade
                             </button>
                             : null
                         }
@@ -613,7 +613,7 @@ const MobileProfile = ({ history }) => {
                                     history.push('/new-unit')
                                 }}
                             >
-                                    Cadastrar U.C.
+                                Nova Unidade
                             </button>
                             : null
                         }
@@ -638,14 +638,14 @@ const MobileProfile = ({ history }) => {
                                     }
                                 }}
                             >
-                                    Salvar
+                                Salvar
                             </button>
                             : null
                         }
                     </div>
                     {success[1] && !error[1]?
                         <p className='success'>
-                                Salvo com sucesso!
+                            Salvo com sucesso!
                         </p>
                         : null
                     }
@@ -668,7 +668,7 @@ const MobileProfile = ({ history }) => {
                                 history.push('/new-unit')
                             }}
                         >
-                                Cadastrar U.C.
+                                Nova Unidade
                         </button>
                         : null
                     }

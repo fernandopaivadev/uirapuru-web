@@ -59,7 +59,7 @@
     width: 40rem;
 }
 
-.newuser .main form .checkbox input[type='checkbox'] {
+.newuser .main form .checkbox input[type="checkbox"] {
     margin: 1rem;
     width: 1.8rem;
 }
@@ -104,7 +104,7 @@
     margin: 0 auto 0 auto;
 }
 
-@media screen and (max-height: 900px) {
+@media screen and (orientation: portrait) {
     .newuser .main input,
     .newuser .main label {
         width: 90%;

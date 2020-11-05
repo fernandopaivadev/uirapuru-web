@@ -101,6 +101,7 @@ const Dashboard = ({ history }) => {
                                 collection={getData('collection')}
                                 realTime={realTimeBuffer}
                                 aspectRatio={2}
+                                showDots
                             />
                         </div>
                         :

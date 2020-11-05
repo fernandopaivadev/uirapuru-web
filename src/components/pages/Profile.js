@@ -224,7 +224,7 @@ const Profile = ({ history }) => {
             {getData('user') ?
                 <form className='user-data'>
                     <h1>
-                            Dados do Usuário
+                        Dados do Usuário
                     </h1>
                     <label>Nome de usuário</label>
                     <input
@@ -242,7 +242,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                     </p>
 
                     <label>Email</label>
@@ -276,7 +276,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Número de telefone inválido
+                        Número de telefone inválido
                     </p>
 
                     {getData('user')?.person ?
@@ -295,7 +295,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Digite no mínimo 10 caracteres
+                                Digite no mínimo 10 caracteres
                             </p>
 
                             <label>CPF</label>
@@ -316,7 +316,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    CPF inválido
+                                CPF inválido
                             </p>
 
                             <label>Data de nascimento</label>
@@ -336,7 +336,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Data inválida
+                                Data inválida
                             </p>
                         </>
                         :
@@ -363,7 +363,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    CNPJ inválido
+                                CNPJ inválido
                             </p>
 
                             <label>Nome Fantasia</label>
@@ -382,7 +382,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Digite no mínimo 6 caracteres
+                                Digite no mínimo 6 caracteres
                             </p>
 
                             <label>Razão social</label>
@@ -445,13 +445,13 @@ const Profile = ({ history }) => {
                                 }
                             }}
                         >
-                                Salvar
+                            Salvar
                         </button>
                         : null
                     }
                     {success[0] && !error[0]?
                         <p className='success'>
-                                Salvo com sucesso!
+                            Salvo com sucesso!
                         </p>
                         : null
                     }
@@ -468,7 +468,7 @@ const Profile = ({ history }) => {
             {getData('user').consumerUnits[ consumerUnitIndex ] ?
                 <form className='consumer-unit-data'>
                     <h1>
-                            Dados da Unidade Consumidora
+                        Dados da Unidade Consumidora
                     </h1>
                     <label>Número</label>
                     <input
@@ -486,7 +486,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                     </p>
 
                     <label>Nome da unidade consumidora</label>
@@ -524,7 +524,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 10 caracteres
+                        Digite no mínimo 10 caracteres
                     </p>
 
                     <label>CEP</label>
@@ -544,7 +544,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            CEP inválido
+                        CEP inválido
                     </p>
 
                     <label>Cidade</label>
@@ -563,7 +563,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 3 caracteres
+                        Digite no mínimo 3 caracteres
                     </p>
 
                     <label>Estado</label>
@@ -582,7 +582,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 3 caracteres
+                        Digite no mínimo 3 caracteres
                     </p>
 
                     <div className='buttons'>
@@ -595,7 +595,7 @@ const Profile = ({ history }) => {
                                     setModal([false, true, false])
                                 }}
                             >
-                                    Excluir U.C.
+                                Excluir Unidade
                             </button>
                             : null
                         }
@@ -606,7 +606,7 @@ const Profile = ({ history }) => {
                                     history.push('/new-unit')
                                 }}
                             >
-                                    Cadastrar U.C.
+                                Nova Unidade
                             </button>
                             : null
                         }
@@ -631,7 +631,7 @@ const Profile = ({ history }) => {
                                     }
                                 }}
                             >
-                                    Salvar
+                                Salvar
                             </button>
                             : null
                         }
@@ -639,7 +639,7 @@ const Profile = ({ history }) => {
 
                     {success[1] && !error[1]?
                         <p className='success'>
-                                Salvo com sucesso!
+                            Salvo com sucesso!
                         </p>
                         : null
                     }
@@ -653,7 +653,7 @@ const Profile = ({ history }) => {
                 :
                 <div className='empty'>
                     <p>
-                            Escolha uma unidade Consumidora
+                        Escolha uma unidade Consumidora
                     </p>
                     {admin ?
                         <button
@@ -662,7 +662,7 @@ const Profile = ({ history }) => {
                                 history.push('/new-unit')
                             }}
                         >
-                                Cadastrar U.C.
+                            Nova Unidade
                         </button>
                         : null
                     }
@@ -805,7 +805,7 @@ const Profile = ({ history }) => {
                         setModal([true, false, false])
                     }}
                 >
-                        Excluir Usuário
+                    Excluir Usuário
                 </button>
                 : null
             }

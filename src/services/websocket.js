@@ -36,7 +36,10 @@ const websocketConfig = (
                 devicesList.forEach((id, index) => {
                     if (id === topic) {
                         const _buffer = realTimeBuffer
-                        _buffer[index] = JSON.parse(payload)
+                        const parsedPayload = JSON.parse(payload)
+                        delete parsedPayload.rtc
+                        delete parsedPayload.store
+                        _buffer[index] = parsedPayload
                         setRealTimeBuffer(_buffer)
                         setNewMessage(true)
                     }

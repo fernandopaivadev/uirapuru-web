@@ -20,18 +20,17 @@ const UsersList = ({ history }) => {
 
     return <div className='userslist'>
         <div className='list'>
-
             <div className='header'>
-                <p className='title'>Escolha o Usuário</p>
                 {!loading ?
                     <>
+                        <p className='title'>Escolha o Usuário</p>
                         <button
                             className='classic-button'
                             onClick={() => {
                                 history.push('/new-user')
                             }}
                         >
-                            Criar Usuário
+                            Novo Usuário
                         </button>
                         <button
                             className='classic-button'
@@ -65,6 +64,7 @@ const UsersList = ({ history }) => {
                                         setLoading(false)
                                     }
                                 }}>
+
                                 <UserIcon className='icon' />
 
                                 <div className='text'>

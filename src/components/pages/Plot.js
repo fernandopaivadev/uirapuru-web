@@ -85,7 +85,6 @@ const Plot = ({ history }) => {
                 begin,
                 end
             )) {
-                console.log(getData('collection'))
                 setSuccess(true)
                 setLoading(false)
             } else {
