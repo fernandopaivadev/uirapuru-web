@@ -10,7 +10,7 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
     const { default: { traceColors } } = themes
 
     useEffect(() => {
-        collection.forEach(({ datasets, timestamps }, index) => {
+        collection.forEach(({ datasets, labels }, index) => {
             datasets.forEach((dataset, index) => {
                 dataset.borderColor = traceColors[index]
                 dataset.backgroundColor = `${traceColors[index]}1f`
@@ -29,7 +29,7 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
             new ChartJS(context, {
                 type: 'line',
                 data: {
-                    labels: timestamps,
+                    labels,
                     datasets
                 },
                 options: {

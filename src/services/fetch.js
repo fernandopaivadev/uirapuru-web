@@ -106,7 +106,7 @@ const fetchDeviceData = async (
 
         const chart = {
             title,
-            timestamps,
+            labels: timestamps,
             datasets
         }
 
