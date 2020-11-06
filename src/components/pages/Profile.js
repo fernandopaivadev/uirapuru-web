@@ -16,7 +16,6 @@ import { api } from '../../services/api'
 
 import fetch from '../../services/fetch'
 
-
 import {
     formatUsername,
     formatPhone,

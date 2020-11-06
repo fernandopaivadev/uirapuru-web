@@ -52,7 +52,7 @@ const Plot = ({ history }) => {
         let begin = new Date(dateString)
         let end = new Date(dateString)
 
-        end.setDate(end.getDate() + 1)
+        begin.setHours(begin.getHours() - 1)
 
         begin = begin.toISOString()
         end = end.toISOString()
@@ -139,6 +139,7 @@ const Plot = ({ history }) => {
                                     aspectRatio={
                                         mobile ? 1.5 : null
                                     }
+                                    showDots
                                 />
                             </div>
                             :
