@@ -3,7 +3,6 @@
     grid-template-columns: 12% 56% 32%;
     width: 100vw;
     height: 100vh;
-    position: fixed;
     background: #fff;
 }
 
@@ -99,7 +98,6 @@
 }
 
 .dashboard .main .charts {
-    border-left: 1px solid #ccc;
     grid-column: 3/4;
     display: flex;
     flex-direction: column;
@@ -107,7 +105,6 @@
 }
 
 .dashboard .main .loading-container {
-    border-left: 1px solid #ccc;
     width: 100%;
     height: 100%;
     display: flex;
@@ -116,7 +113,6 @@
 }
 
 .dashboard .main .empty {
-    border-left: 1px solid #ccc;
     width: 100%;
     height: 100%;
     display: flex;

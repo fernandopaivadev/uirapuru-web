@@ -52,7 +52,7 @@ const Plot = ({ history }) => {
         let begin = new Date(dateString)
         let end = new Date(dateString)
 
-        begin.setHours(begin.getHours() - 1)
+        end.setDate(end.getDate() + 1)
 
         begin = begin.toISOString()
         end = end.toISOString()
@@ -129,6 +129,10 @@ const Plot = ({ history }) => {
                             setCurrentDate(event.target.value)
                         }}
                     />
+
+                    <input type='select'>
+
+                    </input>
                 </div>
                 {!loading ?
                     success ?

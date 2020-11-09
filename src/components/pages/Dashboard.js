@@ -21,7 +21,9 @@ const Dashboard = ({ history }) => {
     const [newMessage, setNewMessage] = useState(false)
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
+    const [connected, setConnected] = useState(false)
 
+    let connectionTimeout = null
     let overviewProps = realTimeBuffer[0]
 
     useEffect(() => {
@@ -47,7 +49,16 @@ const Dashboard = ({ history }) => {
 
     useEffect(
         useCallback(() => {
-            setNewMessage(false)
+            if (newMessage) {
+                setConnected(true)
+                setNewMessage(false)
+
+                clearTimeout(connectionTimeout)
+
+                connectionTimeout = setTimeout(() => {
+                    setConnected(false)
+                }, 10000)
+            }
         }, [newMessage])
     )
 
@@ -63,7 +74,10 @@ const Dashboard = ({ history }) => {
                 setItemIndex={setConsumerUnitIndex}
             />
             <div className='main-container'>
-                <Overview  {...overviewProps}/>
+                {connected ?
+                    <Overview  {...overviewProps}/>
+                    : null
+                }
                 <ul className='devices'>
                     {getData('user')
                         ?.consumerUnits[ consumerUnitIndex ]
