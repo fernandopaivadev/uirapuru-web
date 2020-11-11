@@ -52,13 +52,21 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
         } catch (err) {
             console.log(err?.message ?? err?.response?.data?.message)
 
-            const status = err?.response?.status
+            const { response } = err
 
-            if (status) {
-                setErrorMessage('Erro no processamento do formulário')
-
-                setSuccess(false)
-                setError(true)
+            if (response) {
+                const { status } = response
+                if (status) {
+                    if (status === 409) {
+                        setErrorMessage('Dispositivo já cadastrado')
+                    } else {
+                        setErrorMessage('Erro no processamento')
+                    }
+                    setSuccess(false)
+                    setError(true)
+                }
+            } else {
+                //offline first
             }
         }
     }
