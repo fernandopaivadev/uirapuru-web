@@ -129,10 +129,6 @@ const Plot = ({ history }) => {
                             setCurrentDate(event.target.value)
                         }}
                     />
-
-                    <input type='select'>
-
-                    </input>
                 </div>
                 {!loading ?
                     success ?

@@ -24,7 +24,9 @@ const MobileDashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [realTimeBuffer, setRealTimeBuffer] = useState([])
     const [newMessage, setNewMessage] = useState(false)
+    const [connected, setConnected] = useState(false)
 
+    let connectionTimeout = null
     let overviewProps = realTimeBuffer[0]
 
     useEffect(() => {
@@ -38,7 +40,16 @@ const MobileDashboard = ({ history }) => {
 
     useEffect(
         useCallback(() => {
-            setNewMessage(false)
+            if (newMessage) {
+                setConnected(true)
+                setNewMessage(false)
+
+                clearTimeout(connectionTimeout)
+
+                connectionTimeout = setTimeout(() => {
+                    setConnected(false)
+                }, 10000)
+            }
         }, [newMessage])
     )
 
@@ -55,10 +66,12 @@ const MobileDashboard = ({ history }) => {
                 setItemIndex = {setConsumerUnitIndex}
                 subItemKey='devices'
             />
-            <Overview
-                className='overview'
-                {...overviewProps}
-            />
+            {connected ?
+                <Overview
+                    className='overview'
+                    {...overviewProps}
+                />                    : null
+            }
             <ul className="devices">
                 {getData('user')
                     ?.consumerUnits[ consumerUnitIndex ]

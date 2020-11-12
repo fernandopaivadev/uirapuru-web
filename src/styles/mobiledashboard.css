@@ -16,10 +16,12 @@
     position: absolute;
     left: 0;
     margin: 1rem;
-    width: 4rem;
-    height: 4rem;
+    padding: 0.5rem;
+    width: 5rem;
+    height: 5rem;
     border: none;
-    background: #fff;
+    border-radius: 50%;
+    background: #ddd;
 }
 
 .mobiledashboard .main .button-menu-icon:focus + .menu {
