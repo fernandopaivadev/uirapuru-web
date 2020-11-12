@@ -4,6 +4,8 @@ import { getData, storeData } from '../../services/storage'
 
 import { api } from '../../services/api'
 
+import schedule from '../../services/schedule'
+
 import {
     formatDeviceID,
     validateForm,
@@ -39,8 +41,6 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
             if (status === 200) {
                 setSuccess(true)
                 setError(false)
-
-                exit()
             } else {
                 setSuccess(false)
                 setError(true)
@@ -66,9 +66,10 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                     setError(true)
                 }
             } else {
-                //offline first
+                schedule.updateUser()
             }
         }
+        exit()
     }
 
     return <div className='newdevice'>
