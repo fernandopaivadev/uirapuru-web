@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom'
 import {
     RecentActors as UsersIcon,
     ExitToApp as LogoutIcon,
-    Person as ProfileIcon
+    Person as ProfileIcon,
+    Dashboard as DashboardIcon
 } from '@material-ui/icons'
 
 import logo from '../../assets/logo.svg'
@@ -80,6 +81,18 @@ const NavBar = ({ history }) => {
                                 Usuários
                         </li>
                     </>
+                    : null
+                }
+
+                {getData('user') ?
+                    <li
+                        className='item'
+                        onClick={() => {
+                            history.push('/dashboard')
+                        }}>
+                        <DashboardIcon className='icon' />
+                            Dashboard
+                    </li>
                     : null
                 }
 

@@ -4,7 +4,7 @@
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background: #fff;
+    background: #eee;
 }
 
 .profile .buttons {
@@ -37,6 +37,7 @@
 .profile .main input,
 .profile .main label {
     width: 85%;
+    background: #eee;
 }
 
 .profile .main form {

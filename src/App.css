@@ -13,6 +13,8 @@
 html {
     --default-green: #309d20;
     --default-light-green: #3fc82a;
+    --default-purple: #d900b7;
+    --default-light-purple: #712b74;
     font-size: 65.5%;
 }
 
@@ -24,7 +26,7 @@ body,
 }
 
 body {
-    background: linear-gradient(#3339, #3339),
+    background: linear-gradient(#0005, #0005),
         url("./assets/background.webp") no-repeat;
     background-size: cover;
     -webkit-font-smoothing: antialiased !important;

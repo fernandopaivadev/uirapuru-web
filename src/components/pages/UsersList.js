@@ -6,8 +6,6 @@ import { getData } from '../../services/storage'
 
 import fetch from '../../services/fetch'
 
-import { Person as UserIcon } from '@material-ui/icons'
-
 import '../../styles/userslist.css'
 import '../../styles/util.css'
 
@@ -20,10 +18,14 @@ const UsersList = ({ history }) => {
 
     return <div className='userslist'>
         <div className='list'>
+            {!loading ?
+                <p className='title'>Usuários</p>
+                :
+                <p className='title'>Buscando dados</p>
+            }
             <div className='header'>
                 {!loading ?
                     <>
-                        <p className='title'>Escolha o Usuário</p>
                         <button
                             className='classic-button'
                             onClick={() => {
@@ -65,7 +67,9 @@ const UsersList = ({ history }) => {
                                     }
                                 }}>
 
-                                <UserIcon className='icon' />
+                                <button className='icon'>
+                                    { user?.username?.split('')[0] }
+                                </button>
 
                                 <div className='text'>
                                     <h1 className='username'>
