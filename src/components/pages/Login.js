@@ -1,10 +1,6 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState } from 'react'
 
-import { adminLogin, login, isAuthenticated, isAdmin } from '../../services/auth'
-
-import { api } from '../../services/api'
-
-import fetch from '../../services/fetch'
+import api from '../../services/api'
 
 import logo from '../../assets/logo.svg'
 
@@ -20,62 +16,30 @@ const Login = ({ history }) => {
     const [errorMessage, setErrorMessage] = useState('')
     const [adminMode, setAdminMode] = useState(false)
 
-    useEffect(() => {
-        if (isAuthenticated()) {
-            if (isAdmin()) {
+    const submit = async event => {
+        event.preventDefault()
+
+        setLoading(true)
+
+        const result = await api.login(username, password, adminMode)
+
+        if (result === 'OK') {
+            if (adminMode) {
                 history.push('/users-list')
             } else {
                 history.push('/dashboard')
             }
-        }
-    }, [history])
-
-    const handleSubmit = async event => {
-        try {
-            event.preventDefault()
-            setLoading(true)
-            setError(false)
-
-            const response = await api.get(
-                adminMode ?
-                    `/admin/auth?level=${username}&password=${password}`
-                    :
-                    `/user/auth?username=${username}&password=${password}`
-            )
-
-            const status = response?.status
-
-            if (status === 200) {
-                setLoading(false)
-
-                if (adminMode) {
-                    adminLogin(response.data.token)
-
-                    if (await fetch.usersList()) {
-                        history.push('/users-list')
-                    }
-                } else {
-                    login(response.data.token)
-
-                    if (await fetch.userData()) {
-                        history.push('/dashboard')
-                    }
-                }
-            }
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
-
-            const status = err?.response?.status
-
-            if (status === 404) {
-                setErrorMessage('Usuário não encontrado')
-            } else if (status === 401) {
-                setErrorMessage('Senha incorreta')
-            } else {
-                setErrorMessage('Ocorreu um erro')
-            }
-
+        } else if (result === 'NOT AUTHORIZED') {
             setLoading(false)
+            setErrorMessage('Senha incorreta')
+            setError(true)
+        } else if (result === 'NOT FOUND') {
+            setLoading(false)
+            setErrorMessage('Usuário não encontrado')
+            setError(true)
+        } else if (result === 'ERROR') {
+            setLoading(false)
+            setErrorMessage('Ocorreu um erro')
             setError(true)
         }
     }
@@ -95,7 +59,7 @@ const Login = ({ history }) => {
     }
 
     return <div className='login'>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submit}>
             <div className='logo'>
                 <img
                     src={logo}
@@ -197,4 +161,4 @@ const Login = ({ history }) => {
     </div>
 }
 
-export default memo(Login)
+export default Login

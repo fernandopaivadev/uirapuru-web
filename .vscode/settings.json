@@ -37,5 +37,13 @@
         }
     ],
     "editor.fontLigatures": true,
-    "editor.fontSize": 16
+    "editor.fontSize": 16,
+    "cSpell.ignoreWords": [
+        "browserslist",
+        "commitlint",
+        "fontawesome",
+        "fortawesome",
+        "fortawesome react fontawesome",
+        "react"
+    ]
 }

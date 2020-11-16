@@ -5,7 +5,7 @@ import Chart from '../panels/Chart'
 import Export from '../panels/Export'
 
 import { getData } from '../../services/storage'
-import fetch from '../../services/fetch'
+import api from '../../services/api'
 
 import {
     ArrowLeft as ArrowBackIcon,
@@ -79,12 +79,12 @@ const Plot = ({ history }) => {
 
             const [begin, end] = getPeriod(currentDate)
 
-            if (await fetch.chart(
+            if (await api.getChart(
                 consumerUnitIndex,
                 deviceIndex,
                 begin,
                 end
-            )) {
+            ) === 'OK') {
                 setSuccess(true)
                 setLoading(false)
             } else {

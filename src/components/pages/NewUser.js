@@ -4,11 +4,9 @@ import NavBar from '../panels/NavBar'
 
 import Modal from '../panels/Modal'
 
-import { api } from '../../services/api'
+import api from '../../services/api'
 
-import { logout } from '../../services/auth'
-
-import fetch from '../../services/fetch'
+import { clearData } from '../../services/storage'
 
 import {
     formatUsername,
@@ -91,49 +89,34 @@ const NewUser = ({ history }) => {
 
     }
 
-    const handleSubmit = async () => {
-        try {
-            setLoading(true)
+    const submit = async () => {
+        setLoading(true)
 
-            const response = await api.post('/user/add', user)
+        const result = await api.createUser(user)
 
-            const status = response?.status
+        if (result === 'OK') {
+            setSuccess(true)
+            history.push('/users-list')
+        } else if (result === 'ERROR') {
+            setError(true)
 
-            if (status) {
-                setLoading(false)
-            }
+            setTimeout(() => {
+                setError(false)
+            }, 2000)
+        } else if (result === 'ALREADY EXISTS') {
+            setErrorMessage('Usuário já cadastrado')
 
-            if (status === 201) {
-                setSuccess(true)
+            setError(true)
 
-                if (await fetch.usersList()) {
-                    history.push('/users-list')
-                } else {
-                    logout()
-                    history.push('/login')
-                }
-            } else {
-                setError(true)
-
-                setTimeout(() => {
-                    setError(false)
-                }, 1500)
-            }
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
-
-            const status = err?.response?.status
-
-            if (status === 400) {
-                setErrorMessage('Erro no processamento do formulário')
-            } else if (status === 409)
-                setErrorMessage('Usuário já cadastrado')
-
-            if (status) {
-                setLoading(false)
-                setError(true)
-            }
+            setTimeout(() => {
+                setError(false)
+            }, 2000)
+        } else if (result === 'LOGOUT REQUIRED') {
+            clearData('all')
+            history.push('/login')
         }
+
+        setLoading(false)
     }
 
     const buttonPress = task => {
@@ -174,7 +157,7 @@ const NewUser = ({ history }) => {
                 message={'Finalizar cadastro?'}
                 taskOnYes={() => {
                     setModal([false, false])
-                    buttonPress(handleSubmit)
+                    buttonPress(submit)
                 }}
                 taskOnNo={() => {
                     setModal([false, false])

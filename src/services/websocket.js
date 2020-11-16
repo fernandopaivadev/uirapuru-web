@@ -1,7 +1,6 @@
 
-import { getToken } from './auth'
 import { getData } from './storage'
-import { baseURL } from './api'
+import api from './api'
 import io from 'socket.io-client'
 
 const websocketConfig = (
@@ -17,10 +16,10 @@ const websocketConfig = (
 
         setRealTimeBuffer(new Array(devicesList.length).fill({}))
 
-        const socket = io(baseURL)
+        const socket = io(api.baseURL)
 
         socket.emit('auth', {
-            token: getToken()
+            token: getData('JWT')
         })
 
         socket.on('auth', ({ ok }) => {

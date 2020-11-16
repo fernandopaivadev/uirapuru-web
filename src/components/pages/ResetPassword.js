@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-import { isAuthenticated } from '../../services/auth'
-import { api } from '../../services/api'
+import api from '../../services/api'
 import logo from '../../assets/logo.svg'
 
 import '../../styles/login.css'
@@ -13,12 +12,6 @@ const ResetPassword = ({ history, match }) => {
     const [errorMessage, setErrorMessage] = useState('')
     const [password, setPassword] = useState('')
     const [passwordChanged, setPasswordChanged] = useState(false)
-
-    useEffect(() => {
-        if (isAuthenticated()) {
-            history.push('/dashboard')
-        }
-    }, [history])
 
     const handleSubmit = async event => {
         try {

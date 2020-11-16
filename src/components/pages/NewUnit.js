@@ -2,13 +2,9 @@ import React, { useState, useEffect } from 'react'
 
 import NavBar from '../panels/NavBar'
 
-import { api } from '../../services/api'
+import api from '../../services/api'
 
-import { logout } from '../../services/auth'
-
-import { getData, storeData }  from '../../services/storage'
-
-import fetch from '../../services/fetch'
+import { getData, clearData } from '../../services/storage'
 
 import {
     formatCEP,
@@ -42,50 +38,27 @@ const NewUnit = ({ history }) => {
         setFormValidation()
     })
 
-    const handleSubmit = async event => {
-        try {
-            event.preventDefault()
-            storeData('user', user)
-            setLoading(true)
+    const submit = async event => {
+        event.preventDefault()
 
-            const response = await api.put('/user/update', user)
+        const result = api.updateUser(user)
 
-            const status = response?.status
+        if (result === 'OK') {
+            setSuccess(true)
+            history.push('/profile')
+        } else {
+            clearData('all')
+            history.push('/login')
+        }
 
-            if (status) {
-                setLoading(false)
-            }
+        if (status === 'ERROR') {
+            setErrorMessage('Erro no processamento do formulário')
+        } else if (status === 'DU')
+            setErrorMessage('Unidade consumidora já cadastrada')
 
-            if (status === 200) {
-                setSuccess(true)
-
-                if (await fetch.userData(getData('user')._id)) {
-                    history.push('/profile')
-                } else {
-                    logout()
-                    history.push('/login')
-                }
-            } else {
-                setError(true)
-
-                setTimeout(() => {
-                    setError(false)
-                }, 1500)
-            }
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
-
-            const status = err?.response?.status
-
-            if (status === 400) {
-                setErrorMessage('Erro no processamento do formulário')
-            } else if (status === 409)
-                setErrorMessage('Unidade consumidora já cadastrada')
-
-            if (status) {
-                setLoading(false)
-                setError(true)
-            }
+        if (status) {
+            setLoading(false)
+            setError(true)
         }
     }
 
@@ -211,7 +184,7 @@ const NewUnit = ({ history }) => {
                                 event.preventDefault()
                                 if (validateForm()) {
                                     user.consumerUnits.push(consumerUnit)
-                                    handleSubmit(event)
+                                    submit(event)
                                 } else {
                                     setErrorMessage('Preencha todos os campos')
                                     setError(true)

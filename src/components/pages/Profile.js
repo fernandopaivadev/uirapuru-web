@@ -8,13 +8,9 @@ import Modal from '../panels/Modal'
 
 import NewDevice from '../panels/NewDevice'
 
-import { getData, clearData, storeData } from '../../services/storage'
+import { getData, clearData } from '../../services/storage'
 
-import { isAdmin, logout } from '../../services/auth'
-
-import { api } from '../../services/api'
-
-import fetch from '../../services/fetch'
+import api from '../../services/api'
 
 import {
     formatUsername,
@@ -34,7 +30,7 @@ import '../../styles/profile.css'
 import '../../styles/util.css'
 
 const Profile = ({ history }) => {
-    const admin = isAdmin()
+    const admin = getData('is-admin')
     const user = getData('user')
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [deviceIndex, setDeviceIndex] = useState()
@@ -77,81 +73,47 @@ const Profile = ({ history }) => {
     }, [consumerUnitIndex])
 
     const deleteUser = async () => {
-        try {
-            const response = await api.delete(
-                `/user/remove?_id=${getData('user')._id}`
-            )
+        const result = await api.deleteUser(getData('user')._id)
 
-            const status = response?.status
-
-            if (status === 200) {
-                clearData('user')
-                clearData('users-list')
-
-                if (await fetch.usersList()) {
-                    history.push('/users-list')
-                } else {
-                    logout()
-                    history.push('/login')
-                }
-            }
-
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
+        if (result === 'OK') {
+            history.push('/users-list')
+        } else {
+            clearData('all')
+            history.push('/login')
         }
     }
 
-    const handleSubmit = async (index) => {
-        try {
-            storeData('user', user)
+    const submit = async index => {
+        const result = api.updateUser(user)
 
-            const response = await api.put('/user/update', user)
+        if (result === 'OK') {
+            const _success = [...success]
+            _success[index] = true
+            setSuccess(_success)
 
-            const status = response?.status
+            const _error = [...error]
+            _error[index] = false
+            setError(_error)
 
-            if (status === 200) {
-                const _success = [...success]
-                _success[index] = true
-                setSuccess(_success)
-
-                const _error = [...error]
-                _error[index] = false
-                setError(_error)
-
-                setTimeout(() => {
-                    const _success = [...success]
-                    _success[index] = false
-                    setSuccess(_success)
-                }, 1500)
-            } else {
-                setErrorMessage('Erro no processamento do formulário')
-
+            setTimeout(() => {
                 const _success = [...success]
                 _success[index] = false
                 setSuccess(_success)
+            }, 1500)
+        } else if (result === 'ERROR') {
+            const _success = [...success]
+            _success[index] = false
+            setSuccess(_success)
 
+            const _error = [...error]
+            _error[index] = true
+            setError(_error)
+
+            setTimeout(() => {
                 const _error = [...error]
-                _error[index] = true
+                _error[index] = false
                 setError(_error)
-
-                setTimeout(() => {
-                    const _error = [...error]
-                    _error[index] = false
-                    setError(_error)
-                }, 1500)
-            }
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
-
-            const status = err?.response?.status
-
-            if (status) {
-                setErrorMessage('Erro no processamento do formulário')
-
-                const _error = [...error]
-                _error[index] = true
-                setError(_error)
-            }
+            }, 1500)
         }
     }
 
@@ -186,7 +148,7 @@ const Profile = ({ history }) => {
                 message={'Você tem certeza?'}
                 taskOnYes={() => {
                     user.consumerUnits.pop(consumerUnitIndex)
-                    handleSubmit(1)
+                    submit(1)
                     setModal([false, false, false])
                 }}
                 taskOnNo={() => {
@@ -203,7 +165,7 @@ const Profile = ({ history }) => {
                     user
                         .consumerUnits[consumerUnitIndex]
                         .devices.pop(deviceIndex)
-                    handleSubmit(1)
+                    submit(1)
                     setModal([false, false, false])
                 }}
                 taskOnNo={() => {
@@ -429,7 +391,7 @@ const Profile = ({ history }) => {
                             onClick={event => {
                                 event.preventDefault()
                                 if (validateForm(0)) {
-                                    handleSubmit(0)
+                                    submit(0)
                                 } else {
                                     setErrorMessage('Preencha todos os campos')
                                     const _error = [...error]
@@ -615,7 +577,7 @@ const Profile = ({ history }) => {
                                 onClick={ event => {
                                     event.preventDefault()
                                     if (validateForm(1)) {
-                                        handleSubmit(1)
+                                        submit(1)
                                     } else {
                                         setErrorMessage('Preencha todos os campos')
                                         const _error = [...error]
@@ -739,7 +701,7 @@ const Profile = ({ history }) => {
                                                     onClick={event => {
                                                         event.preventDefault()
                                                         setDeviceIndex(index)
-                                                        handleSubmit(index + 2)
+                                                        submit(index + 2)
                                                     }}
                                                 >
                                                 Salvar

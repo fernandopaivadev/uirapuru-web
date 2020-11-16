@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 
-import { isAuthenticated, logout } from '../../services/auth'
+import { getData, clearData } from '../../services/storage'
 
-import { getData } from '../../services/storage'
-
-import fetch from '../../services/fetch'
+import api from '../../services/api'
 
 import '../../styles/userslist.css'
 import '../../styles/util.css'
 
 const UsersList = ({ history }) => {
     const [loading, setLoading] = useState(false)
-
-    if (!isAuthenticated()) {
-        history.push('/login')
-    }
 
     return <div className='userslist'>
         <div className='list'>
@@ -37,7 +31,7 @@ const UsersList = ({ history }) => {
                         <button
                             className='classic-button'
                             onClick={() => {
-                                logout()
+                                clearData('all')
                                 history.push('/login')
                             }}
                         >
@@ -60,7 +54,7 @@ const UsersList = ({ history }) => {
                                 className='item'
                                 onClick={async () => {
                                     setLoading(true)
-                                    if (await fetch.userData(user._id)) {
+                                    if (await api.getUserData(user._id) === 'OK') {
                                         history.push('/dashboard')
                                     } else {
                                         setLoading(false)

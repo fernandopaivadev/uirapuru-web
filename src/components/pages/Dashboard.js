@@ -6,7 +6,7 @@ import Overview from '../panels/Overview'
 
 import { getData } from '../../services/storage'
 import { websocketConfig } from '../../services/websocket'
-import fetch from '../../services/fetch'
+import api from '../../services/api'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -30,7 +30,7 @@ const Dashboard = ({ history }) => {
         (async () => {
             setLoading(true)
 
-            if (await fetch.collection(consumerUnitIndex)) {
+            if (await api.getCollection(consumerUnitIndex) === 'OK') {
                 setSuccess(true)
                 setLoading(false)
             } else {

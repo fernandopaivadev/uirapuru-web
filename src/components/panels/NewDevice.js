@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
-import { getData, storeData } from '../../services/storage'
+import { getData } from '../../services/storage'
 
-import { api } from '../../services/api'
+import api from '../../services/api'
 
 import {
     formatDeviceID,
@@ -28,38 +28,21 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
         setFormValidation()
     })
 
-    const handleSubmit = async () => {
-        try {
-            storeData('user', user)
+    const submit = async () => {
+        const result = api.updateUser(user)
 
-            const response = await api.put('/user/update', user)
+        if (result === 'OK') {
+            setSuccess(true)
+            setError(false)
+            exit()
+        } else if (result === 'ERROR') {
+            setSuccess(false)
+            setErrorMessage('Ocorreu um erro')
+            setError(true)
 
-            const status = response?.status
-
-            if (status === 200) {
-                setSuccess(true)
+            setTimeout(() => {
                 setError(false)
-
-                exit()
-            } else {
-                setSuccess(false)
-                setError(true)
-
-                setTimeout(() => {
-                    setError(false)
-                }, 3000)
-            }
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
-
-            const status = err?.response?.status
-
-            if (status) {
-                setErrorMessage('Erro no processamento do formulário')
-
-                setSuccess(false)
-                setError(true)
-            }
+            }, 3000)
         }
     }
 
@@ -105,7 +88,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                                 user
                                     .consumerUnits[consumerUnitIndex]
                                     .devices.push(device)
-                                handleSubmit()
+                                submit()
                             } else {
                                 setErrorMessage(
                                     'Preencha os campos corretamente'
