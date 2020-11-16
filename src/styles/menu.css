@@ -10,6 +10,7 @@
     font-weight: 600;
     color: var(--default-green);
     margin: 1.5rem 1.5rem 0.5rem 1.5rem;
+    height: 3.5rem;
 }
 
 .menu .items .item-name {

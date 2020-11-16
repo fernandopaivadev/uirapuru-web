@@ -1,0 +1,16 @@
+{
+    "name": "Uirapuru",
+    "short_name": "Uirapuru",
+    "theme_color": "#333",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "shortcut-icon.png",
+            "sizes": "286x286",
+            "type": "image/png"
+        }
+    ]
+}

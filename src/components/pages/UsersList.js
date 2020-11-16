@@ -57,7 +57,11 @@ const UsersList = ({ history }) => {
                                     if (await api.getUserData(user._id) === 'OK') {
                                         history.push('/dashboard')
                                     } else {
-                                        setLoading(false)
+                                        if (getData('user')?._id === user._id) {
+                                            history.push('/dashboard')
+                                        } else {
+                                            setLoading(false)
+                                        }
                                     }
                                 }}>
 

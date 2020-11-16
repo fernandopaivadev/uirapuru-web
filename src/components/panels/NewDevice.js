@@ -4,6 +4,8 @@ import { getData } from '../../services/storage'
 
 import api from '../../services/api'
 
+// import schedule from '../../services/schedule'
+
 import {
     formatDeviceID,
     validateForm,
@@ -44,6 +46,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                 setError(false)
             }, 3000)
         }
+        exit()
     }
 
     return <div className='newdevice'>
