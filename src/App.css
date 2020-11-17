@@ -43,7 +43,7 @@ button {
 }
 
 ::-webkit-scrollbar-track-piece {
-    background-color: #fff;
+    background-color: #eee;
 }
 
 ::-webkit-scrollbar-thumb:vertical {

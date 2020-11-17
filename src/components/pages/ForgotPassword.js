@@ -13,41 +13,24 @@ const ForgotPassword = ({ history }) => {
     const [errorMessage, setErrorMessage] = useState('')
     const [emailSent, setEmailSent] = useState(false)
 
-    const handleSubmit = async event => {
-        try {
-            event.preventDefault()
-            setLoading(true)
+    const submit = async event => {
+        event.preventDefault()
+        setLoading(true)
 
-            const response = await api.get(
-                `/user/forgot-password?username=${username}`
-            )
+        const result = await api.forgotPassword(username)
 
-            const status = response?.status
-
-            if (status === 200) {
-                setLoading(false)
-                setEmailSent(true)
-            }
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
-
-            const status = err?.response?.status
-
-            if (status === 404) {
-                setErrorMessage('Usuário não encontrado')
-            } else if (status === 401) {
-                setErrorMessage('Senha incorreta')
-            } else {
-                setErrorMessage('Ocorreu um erro')
-            }
-
+        if (result === 'OK') {
+            setLoading(false)
+            setEmailSent(true)
+        } else {
+            setErrorMessage(result)
             setLoading(false)
             setError(true)
         }
     }
 
     return <div className='login'>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submit}>
             <div className='logo'>
                 <img
                     src={logo}
@@ -57,14 +40,14 @@ const ForgotPassword = ({ history }) => {
             </div>
 
             {emailSent ?
-                <h1 className='message'>
+                <p className='message'>
                     Enviamos um link para o seu email
-                </h1>
+                </p>
                 :
                 <>
-                    <h1 className='label'>
+                    <label>
                         E-mail ou nome de usuário
-                    </h1>
+                    </label>
                     <input
                         required
                         onChange={event => {
@@ -79,9 +62,12 @@ const ForgotPassword = ({ history }) => {
                     <progress className='circular-progress'/>
                 </div>
                 : emailSent ?
-                    <button onClick={() => {
-                        history.push('/login')
-                    }}>
+                    <button
+                        className='classic-button'
+                        onClick={() => {
+                            history.push('/login')
+                        }}
+                    >
                         FAZER LOGIN
                     </button>
                     :
@@ -94,9 +80,9 @@ const ForgotPassword = ({ history }) => {
             }
 
             {error ?
-                <h1 className='message'>
+                <p className='message'>
                     {errorMessage}
-                </h1>
+                </p>
                 :null
             }
         </form>

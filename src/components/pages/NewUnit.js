@@ -4,7 +4,7 @@ import NavBar from '../panels/NavBar'
 
 import api from '../../services/api'
 
-import { getData, clearData } from '../../services/storage'
+import { getData } from '../../services/storage'
 
 import {
     formatCEP,
@@ -41,25 +41,17 @@ const NewUnit = ({ history }) => {
     const submit = async event => {
         event.preventDefault()
 
-        const result = api.updateUser(user)
+        const result = await api.updateUser(user)
 
         if (result === 'OK') {
             setSuccess(true)
             history.push('/profile')
         } else {
-            clearData('all')
-            history.push('/login')
-        }
-
-        if (status === 'ERROR') {
-            setErrorMessage('Erro no processamento do formulário')
-        } else if (status === 'DU')
-            setErrorMessage('Unidade consumidora já cadastrada')
-
-        if (status) {
-            setLoading(false)
+            setErrorMessage(result)
             setError(true)
         }
+
+        setLoading(false)
     }
 
     return <div className='newunit'>

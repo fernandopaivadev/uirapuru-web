@@ -3,8 +3,8 @@
     grid-template-columns: 12% 33% 33% 22%;
     width: 100vw;
     height: 100vh;
-    position: fixed;
     background: #eee;
+    position: fixed;
 }
 
 .profile .buttons {

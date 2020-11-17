@@ -5,7 +5,7 @@ const schedule = {
     updateUser: () => {
         const retry = async () => {
             console.log('Updating')
-            if (!await api.updateUser(getData('user') === 'OK')) {
+            if (!(await api.updateUser(getData('user')) === 'OK')) {
                 setTimeout(retry, 5000)
             }
         }

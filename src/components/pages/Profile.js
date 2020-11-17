@@ -30,15 +30,15 @@ import '../../styles/profile.css'
 import '../../styles/util.css'
 
 const Profile = ({ history }) => {
-    const admin = getData('is-admin')
+    const admin = getData('admin')
     const user = getData('user')
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState([false,false])
-    const [success, setSuccess] = useState(false)
-    const [error, setError] = useState(false)
+    const [success, setSuccess] = useState([false,false])
+    const [error, setError] = useState([false,false])
     const [errorMessage, setErrorMessage] = useState(
-        'Erro no processamento do formulário'
+        'Ocorreu um erro'
     )
     const [newDevicePopup, setNewDevicePopup] = useState(false)
 
@@ -84,7 +84,7 @@ const Profile = ({ history }) => {
     }
 
     const submit = async index => {
-        const result = api.updateUser(user)
+        const result = await api.updateUser(user)
 
         if (result === 'OK') {
             const _success = [...success]
@@ -99,8 +99,10 @@ const Profile = ({ history }) => {
                 const _success = [...success]
                 _success[index] = false
                 setSuccess(_success)
-            }, 1500)
-        } else if (result === 'ERROR') {
+            }, 2000)
+        } else {
+            setErrorMessage(result)
+
             const _success = [...success]
             _success[index] = false
             setSuccess(_success)
@@ -113,7 +115,7 @@ const Profile = ({ history }) => {
                 const _error = [...error]
                 _error[index] = false
                 setError(_error)
-            }, 1500)
+            }, 2000)
         }
     }
 

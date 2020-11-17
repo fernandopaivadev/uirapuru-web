@@ -132,7 +132,7 @@ const getUsersList = async () => {
     clearData('messages')
 
     try {
-        if (getData('is-admin')) {
+        if (getData('admin')) {
             const response = await axios.get('/users')
 
             const status = response?.status
@@ -143,8 +143,8 @@ const getUsersList = async () => {
             }
         }
     } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
-        return 'ERROR'
+        console.log(err?.response?.data?.message ?? err?.message)
+        return 'Ocorreu um erro'
     }
 }
 
@@ -153,7 +153,7 @@ const getUserData = async (_id) => {
     clearData('messages')
 
     try {
-        if (getData('is-admin') && _id) {
+        if (getData('admin') && _id) {
             const { status, data } = await axios.get(
                 `/user/data?_id=${_id}`
             )
@@ -171,8 +171,8 @@ const getUserData = async (_id) => {
             }
         }
     } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
-        return 'ERROR'
+        console.log(err?.response?.data?.message ?? err?.message)
+        return 'Ocorreu um erro'
     }
 }
 
@@ -200,8 +200,8 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
             return 'OK'
         }
     } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
-        return 'ERROR'
+        console.log(err?.response?.data?.message ?? err?.message)
+        return 'Ocorreu um erro'
     }
 }
 
@@ -230,8 +230,8 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
             return 'OK'
         }
     } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
-        return 'ERROR'
+        console.log(err?.response?.data?.message ?? err?.message)
+        return 'Ocorreu um erro'
     }
 }
 
@@ -251,12 +251,13 @@ const login = async (username, password, adminMode) => {
         if (status === 200) {
             if (adminMode) {
                 storeData('JWT', response.data.token)
-                storeData('is-admin')
+                storeData('admin', true)
 
                 if (await getUsersList() === 'OK') {
                     return 'OK'
                 } else {
-                    return 'ERROR'
+                    clearData('all')
+                    return 'Ocorreu um erro'
                 }
             } else {
                 storeData('JWT', response.data.token)
@@ -264,23 +265,81 @@ const login = async (username, password, adminMode) => {
                 if (await getUserData()) {
                     return 'OK'
                 } else {
-                    return 'ERROR'
+                    clearData('all')
+                    return 'Ocorreu um erro'
                 }
             }
         } else {
-            return 'ERROR'
+            return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
+        console.log(err?.response?.data?.message ?? err?.message)
 
         const status = err?.response?.status
 
         if (status === 404) {
-            return 'NOT FOUND'
+            return 'Usuário não encontrado'
         } else if (status === 401) {
-            return 'NOT AUTHORIZED'
+            return 'Senha incorreta'
         } else {
-            return 'ERROR'
+            return 'Ocorreu um erro'
+        }
+    }
+}
+
+const forgotPassword = async username => {
+    try {
+        const response = await axios.get(
+            `/user/forgot-password?username=${username}`
+        )
+
+        const status = response?.status
+
+        if (status === 200) {
+            return 'OK'
+        } else {
+            return 'Ocorreu um erro'
+        }
+    } catch (err) {
+        console.log(err?.response?.data?.message ?? err?.message)
+
+        const status = err?.response?.status
+
+        if (status === 404) {
+            return 'Usuário não encontrado'
+        } else if (status === 401) {
+            return 'Senha incorreta'
+        } else {
+            return 'Ocorreu um erro'
+        }
+    }
+}
+
+const resetPassword = async (token, password) => {
+    try {
+        const response = await axios.patch('/user/reset-password', {
+            token,
+            password
+        })
+
+        const status = response?.status
+
+        if (status === 200) {
+            return 'OK'
+        } else {
+            return 'Ocorreu um erro'
+        }
+    } catch (err) {
+        console.log(err?.response?.data?.message ?? err?.message)
+
+        const status = err?.response?.status
+
+        if (status === 404) {
+            return 'Usuário não encontrado'
+        } else if (status === 401) {
+            return 'Senha incorreta'
+        } else {
+            return 'Ocorreu um erro'
         }
     }
 }
@@ -295,22 +354,23 @@ const createUser = async user => {
             if (await getUsersList() === 'OK') {
                 return 'OK'
             } else {
-                return 'LOGOUT REQUIRED'
+                clearData('all')
+                return 'Saia e faça login novamente'
             }
         } else {
-            return 'ERROR'
+            return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
+        console.log(err?.response?.data?.message ?? err?.message)
 
         const status = err?.response?.status
 
         if (status === 400) {
-            return 'BAD REQUEST'
+            return 'Erro na requisição'
         } else if (status === 409) {
-            return 'ALREADY EXISTS'
+            return 'Usuário já cadastrado'
         } else {
-            return 'ERROR'
+            return 'Ocorreu um erro'
         }
     }
 }
@@ -326,11 +386,11 @@ const updateUser = async user => {
         if (status === 200) {
             return 'OK'
         } else {
-            return 'ERROR'
+            return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
-        return 'ERROR'
+        console.log(err?.response?.data?.message ?? err?.message)
+        return 'Ocorreu um erro'
     }
 }
 
@@ -345,23 +405,25 @@ const deleteUser = async _id => {
         if (status === 200) {
             clearData('user')
 
-            if (await axios.getUsersList() === 'OK') {
+            if (await getUsersList() === 'OK') {
                 return 'OK'
             } else {
-                'LOGOUT REQUIRED'
+                return 'Saia e faça login novamente'
             }
         } else {
-            return 'ERROR'
+            return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.message ?? err?.response?.data?.message)
-        return 'ERROR'
+        console.log(err?.response?.data?.message ?? err?.message)
+        return 'Ocorreu um erro'
     }
 }
 
 export default {
     baseURL,
     login,
+    forgotPassword,
+    resetPassword,
     createUser,
     updateUser,
     deleteUser,

@@ -41,6 +41,7 @@
 .newuser .main input,
 .newuser .main label {
     width: 40%;
+    background: #eee;
 }
 
 .newuser .main form {

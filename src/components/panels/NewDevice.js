@@ -31,7 +31,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
     })
 
     const submit = async () => {
-        const result = api.updateUser(user)
+        const result = await api.updateUser(user)
 
         if (result === 'OK') {
             setSuccess(true)

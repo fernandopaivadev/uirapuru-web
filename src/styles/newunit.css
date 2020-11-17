@@ -35,6 +35,7 @@
 .newunit .main input,
 .newunit .main label {
     width: 40%;
+    background: #eee;
 }
 
 .newunit .main form {

@@ -31,7 +31,7 @@ const NavBar = ({ history }) => <ul className='navbar'>
 
     <li className='navigation' key='navigation'>
         <h1 className='username'>
-            {getData('is-admin') ? '[Administrador] ': null}
+            {getData('admin') ? '[Administrador] ': null}
             {getData('user')?.username ?? ''}
 
 
@@ -63,7 +63,7 @@ const NavBar = ({ history }) => <ul className='navbar'>
                 </div>
             </div>
 
-            {getData('is-admin') ?
+            {getData('admin') ?
                 <>
                     <li
                         className='item'

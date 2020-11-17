@@ -6,8 +6,6 @@ import Modal from '../panels/Modal'
 
 import api from '../../services/api'
 
-import { clearData } from '../../services/storage'
-
 import {
     formatUsername,
     formatPhone,
@@ -97,23 +95,13 @@ const NewUser = ({ history }) => {
         if (result === 'OK') {
             setSuccess(true)
             history.push('/users-list')
-        } else if (result === 'ERROR') {
+        } else {
+            setErrorMessage(result)
             setError(true)
 
             setTimeout(() => {
                 setError(false)
             }, 2000)
-        } else if (result === 'ALREADY EXISTS') {
-            setErrorMessage('Usuário já cadastrado')
-
-            setError(true)
-
-            setTimeout(() => {
-                setError(false)
-            }, 2000)
-        } else if (result === 'LOGOUT REQUIRED') {
-            clearData('all')
-            history.push('/login')
         }
 
         setLoading(false)

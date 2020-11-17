@@ -29,18 +29,14 @@ const Login = ({ history }) => {
             } else {
                 history.push('/dashboard')
             }
-        } else if (result === 'NOT AUTHORIZED') {
+        } else  {
             setLoading(false)
-            setErrorMessage('Senha incorreta')
+            setErrorMessage(result)
             setError(true)
-        } else if (result === 'NOT FOUND') {
-            setLoading(false)
-            setErrorMessage('Usuário não encontrado')
-            setError(true)
-        } else if (result === 'ERROR') {
-            setLoading(false)
-            setErrorMessage('Ocorreu um erro')
-            setError(true)
+
+            setTimeout(() => {
+                setError(false)
+            }, 3000)
         }
     }
 
@@ -96,7 +92,7 @@ const Login = ({ history }) => {
                         togglePassword(event)
                     }}
                 >
-                    Exibir
+                    Mostrar
                 </p>
             </div>
 
@@ -152,7 +148,7 @@ const Login = ({ history }) => {
             }
 
             {error ?
-                <h1 className='message'>
+                <h1 className='error'>
                     {errorMessage}
                 </h1>
                 :null
