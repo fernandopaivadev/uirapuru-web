@@ -11,6 +11,12 @@
             "src": "shortcut-icon.png",
             "sizes": "286x286",
             "type": "image/png"
+        },
+        {
+            "src": "maskable-icon.png",
+            "sizes": "336x336",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ]
 }
