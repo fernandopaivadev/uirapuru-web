@@ -1,7 +1,6 @@
 {
     "name": "Uirapuru",
     "short_name": "Uirapuru",
-    "theme_color": "#333",
     "background_color": "#ffffff",
     "display": "standalone",
     "scope": "/",

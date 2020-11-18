@@ -127,9 +127,6 @@ const fetchDeviceData = async (
 }
 
 const getUsersList = async () => {
-    clearData('collection')
-    clearData('messages')
-
     try {
         if (getData('admin')) {
             const response = await axios.get('/users')
@@ -137,9 +134,15 @@ const getUsersList = async () => {
             const status = response?.status
 
             if (status === 200) {
+                clearData('user')
+                clearData('collection')
+                clearData('messages')
+
                 storeData('users-list', response.data.usersList)
                 return 'OK'
             }
+        } else {
+            return 'Somente para administradores'
         }
     } catch (err) {
         if (err?.response?.data?.message) {
@@ -158,9 +161,6 @@ const getUsersList = async () => {
 }
 
 const getUserData = async (_id) => {
-    clearData('collection')
-    clearData('messages')
-
     try {
         if (getData('admin') && _id) {
             const { status, data } = await axios.get(
@@ -168,8 +168,14 @@ const getUserData = async (_id) => {
             )
 
             if (status === 200) {
+                clearData('user')
+                clearData('collection')
+                clearData('messages')
+
                 storeData('user', data.user)
                 return 'OK'
+            } else {
+                return 'Ocorreu um erro'
             }
         } else if (getData('JWT')) {
             const { status, data } = await axios.get('/user/data')
@@ -275,8 +281,6 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
 }
 
 const login = async (username, password, adminMode) => {
-    clearData('all')
-
     try {
         const response = await axios.get(
             adminMode ?
@@ -288,6 +292,8 @@ const login = async (username, password, adminMode) => {
         const status = response?.status
 
         if (status === 200) {
+            clearData('all')
+
             if (adminMode) {
                 storeData('JWT', response.data.token)
                 storeData('admin', true)
