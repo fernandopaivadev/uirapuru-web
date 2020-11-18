@@ -12,10 +12,10 @@
 }
 
 .userslist .list {
-    background: #fff;
+    background: #eee;
+    /* background: #eee; */
     min-width: 40rem;
     min-height: 18rem;
-    z-index: 1;
     border-radius: 0.5rem;
 }
 
@@ -24,18 +24,25 @@
     align-items: center;
     cursor: pointer;
     border-radius: 0.5rem;
-    padding: 0 2rem 0 2rem;
+    padding: 1rem 2rem 1rem 2rem;
+    width: 100%;
 }
 
 .userslist .list .item:hover {
-    background: #eee;
+    background: #ccc;
 }
 
-.userslist .list .header .title {
+.userslist .list .title {
     color: var(--default-green);
     font-size: 2.4rem;
-    margin: 2.5rem 2rem 2rem 3rem;
+    margin: 2rem auto 0 auto;
     font-weight: 600;
+    text-align: center;
+}
+
+.userslist .list .header {
+    display: flex;
+    justify-content: center;
 }
 
 .userslist .list .item {
@@ -44,11 +51,16 @@
 }
 
 .userslist .list .item .icon {
-    font-size: 4rem;
+    border: none;
     border-radius: 50%;
-    padding: 0.8rem;
-    margin: 1rem 1.5rem 1rem 1.5rem;
+    margin: 0 1rem 0 0;
+    cursor: pointer;
     background: var(--default-green);
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
 }
 
 .userslist .list .item .text .name,
@@ -71,19 +83,26 @@
 .userslist .list .header {
     display: flex;
     width: 100%;
+    align-items: center;
 }
 
 .userslist .list .loading-container {
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
 }
 
-@media screen and (max-height: 900px) {
+@media screen and (orientation: portrait) {
+    .userslist .list .header .title {
+        font-size: 2rem;
+        margin: 0 1rem 0 2rem;
+    }
     .userslist .list .header button {
-        height: 5rem;
+        font-size: 2rem;
     }
 }

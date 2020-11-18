@@ -8,14 +8,9 @@ import Modal from '../panels/Modal'
 
 import NewDevice from '../panels/NewDevice'
 
-import { getData, clearData, storeData } from '../../services/storage'
+import { getData, clearData } from '../../services/storage'
 
-import { isAdmin, logout } from '../../services/auth'
-
-import { api } from '../../services/api'
-
-import fetch from '../../services/fetch'
-
+import api from '../../services/api'
 
 import {
     formatUsername,
@@ -35,15 +30,15 @@ import '../../styles/profile.css'
 import '../../styles/util.css'
 
 const Profile = ({ history }) => {
-    const admin = isAdmin()
+    const admin = getData('admin')
     const user = getData('user')
-    const [consumerUnitIndex, setConsumerUnitIndex] = useState()
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState([false,false])
-    const [success, setSuccess] = useState(false)
-    const [error, setError] = useState(false)
+    const [success, setSuccess] = useState([false,false])
+    const [error, setError] = useState([false,false])
     const [errorMessage, setErrorMessage] = useState(
-        'Erro no processamento do formulário'
+        'Ocorreu um erro'
     )
     const [newDevicePopup, setNewDevicePopup] = useState(false)
 
@@ -78,81 +73,49 @@ const Profile = ({ history }) => {
     }, [consumerUnitIndex])
 
     const deleteUser = async () => {
-        try {
-            const response = await api.delete(
-                `/user/remove?_id=${getData('user')._id}`
-            )
+        const result = await api.deleteUser(getData('user')._id)
 
-            const status = response?.status
-
-            if (status === 200) {
-                clearData('user')
-                clearData('users-list')
-
-                if (await fetch()) {
-                    history.push('/users-list')
-                } else {
-                    logout()
-                    history.push('/login')
-                }
-            }
-
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
+        if (result === 'OK') {
+            history.push('/users-list')
+        } else {
+            clearData('all')
+            history.push('/login')
         }
     }
 
-    const handleSubmit = async (index) => {
-        try {
-            storeData('user', user)
+    const submit = async index => {
+        const result = await api.updateUser(user)
 
-            const response = await api.put('/user/update', user)
+        if (result === 'OK') {
+            const _success = [...success]
+            _success[index] = true
+            setSuccess(_success)
 
-            const status = response?.status
+            const _error = [...error]
+            _error[index] = false
+            setError(_error)
 
-            if (status === 200) {
-                const _success = [...success]
-                _success[index] = true
-                setSuccess(_success)
-
-                const _error = [...error]
-                _error[index] = false
-                setError(_error)
-
-                setTimeout(() => {
-                    const _success = [...success]
-                    _success[index] = false
-                    setSuccess(_success)
-                }, 1500)
-            } else {
-                setErrorMessage('Erro no processamento do formulário')
-
+            setTimeout(() => {
                 const _success = [...success]
                 _success[index] = false
                 setSuccess(_success)
+            }, 2000)
+        } else {
+            setErrorMessage(result)
 
+            const _success = [...success]
+            _success[index] = false
+            setSuccess(_success)
+
+            const _error = [...error]
+            _error[index] = true
+            setError(_error)
+
+            setTimeout(() => {
                 const _error = [...error]
-                _error[index] = true
+                _error[index] = false
                 setError(_error)
-
-                setTimeout(() => {
-                    const _error = [...error]
-                    _error[index] = false
-                    setError(_error)
-                }, 1500)
-            }
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
-
-            const status = err?.response?.status
-
-            if (status) {
-                setErrorMessage('Erro no processamento do formulário')
-
-                const _error = [...error]
-                _error[index] = true
-                setError(_error)
-            }
+            }, 2000)
         }
     }
 
@@ -187,7 +150,7 @@ const Profile = ({ history }) => {
                 message={'Você tem certeza?'}
                 taskOnYes={() => {
                     user.consumerUnits.pop(consumerUnitIndex)
-                    handleSubmit(1)
+                    submit(1)
                     setModal([false, false, false])
                 }}
                 taskOnNo={() => {
@@ -204,7 +167,7 @@ const Profile = ({ history }) => {
                     user
                         .consumerUnits[consumerUnitIndex]
                         .devices.pop(deviceIndex)
-                    handleSubmit(1)
+                    submit(1)
                     setModal([false, false, false])
                 }}
                 taskOnNo={() => {
@@ -224,7 +187,7 @@ const Profile = ({ history }) => {
             {getData('user') ?
                 <form className='user-data'>
                     <h1>
-                            Dados do Usuário
+                        Dados do Usuário
                     </h1>
                     <label>Nome de usuário</label>
                     <input
@@ -242,7 +205,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                     </p>
 
                     <label>Email</label>
@@ -276,7 +239,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Número de telefone inválido
+                        Número de telefone inválido
                     </p>
 
                     {getData('user')?.person ?
@@ -295,7 +258,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Digite no mínimo 10 caracteres
+                                Digite no mínimo 10 caracteres
                             </p>
 
                             <label>CPF</label>
@@ -316,7 +279,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    CPF inválido
+                                CPF inválido
                             </p>
 
                             <label>Data de nascimento</label>
@@ -325,7 +288,7 @@ const Profile = ({ history }) => {
                                 required
                                 pattern='\d{2}\/\d{2}\/\d{4}'
                                 defaultValue={formatTimeStamp(
-                                        getData('user')?.person?.birth
+                                    getData('user')?.person?.birth
                                 ) ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -336,7 +299,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Data inválida
+                                Data inválida
                             </p>
                         </>
                         :
@@ -348,7 +311,7 @@ const Profile = ({ history }) => {
                                 pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                                 defaultValue={
                                     formatCNPJ(
-                                            getData('user')?.company?.cnpj
+                                        getData('user')?.company?.cnpj
                                     ) ?? '--'
                                 }
                                 readOnly= {!admin}
@@ -363,7 +326,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    CNPJ inválido
+                                CNPJ inválido
                             </p>
 
                             <label>Nome Fantasia</label>
@@ -382,7 +345,7 @@ const Profile = ({ history }) => {
                                 }}
                             />
                             <p className='error-message'>
-                                    Digite no mínimo 6 caracteres
+                                Digite no mínimo 6 caracteres
                             </p>
 
                             <label>Razão social</label>
@@ -430,7 +393,7 @@ const Profile = ({ history }) => {
                             onClick={event => {
                                 event.preventDefault()
                                 if (validateForm(0)) {
-                                    handleSubmit(0)
+                                    submit(0)
                                 } else {
                                     setErrorMessage('Preencha todos os campos')
                                     const _error = [...error]
@@ -445,13 +408,13 @@ const Profile = ({ history }) => {
                                 }
                             }}
                         >
-                                Salvar
+                            Salvar
                         </button>
                         : null
                     }
                     {success[0] && !error[0]?
                         <p className='success'>
-                                Salvo com sucesso!
+                            Salvo com sucesso!
                         </p>
                         : null
                     }
@@ -468,7 +431,7 @@ const Profile = ({ history }) => {
             {getData('user').consumerUnits[ consumerUnitIndex ] ?
                 <form className='consumer-unit-data'>
                     <h1>
-                            Dados da Unidade Consumidora
+                        Dados da Unidade Consumidora
                     </h1>
                     <label>Número</label>
                     <input
@@ -486,7 +449,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 6 caracteres
+                        Digite no mínimo 6 caracteres
                     </p>
 
                     <label>Nome da unidade consumidora</label>
@@ -524,7 +487,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 10 caracteres
+                        Digite no mínimo 10 caracteres
                     </p>
 
                     <label>CEP</label>
@@ -544,7 +507,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            CEP inválido
+                        CEP inválido
                     </p>
 
                     <label>Cidade</label>
@@ -563,7 +526,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 3 caracteres
+                        Digite no mínimo 3 caracteres
                     </p>
 
                     <label>Estado</label>
@@ -582,7 +545,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 3 caracteres
+                        Digite no mínimo 3 caracteres
                     </p>
 
                     <div className='buttons'>
@@ -595,7 +558,7 @@ const Profile = ({ history }) => {
                                     setModal([false, true, false])
                                 }}
                             >
-                                    Excluir U.C.
+                                Excluir Unidade
                             </button>
                             : null
                         }
@@ -606,7 +569,7 @@ const Profile = ({ history }) => {
                                     history.push('/new-unit')
                                 }}
                             >
-                                    Cadastrar U.C.
+                                Nova Unidade
                             </button>
                             : null
                         }
@@ -616,7 +579,7 @@ const Profile = ({ history }) => {
                                 onClick={ event => {
                                     event.preventDefault()
                                     if (validateForm(1)) {
-                                        handleSubmit(1)
+                                        submit(1)
                                     } else {
                                         setErrorMessage('Preencha todos os campos')
                                         const _error = [...error]
@@ -631,7 +594,7 @@ const Profile = ({ history }) => {
                                     }
                                 }}
                             >
-                                    Salvar
+                                Salvar
                             </button>
                             : null
                         }
@@ -639,7 +602,7 @@ const Profile = ({ history }) => {
 
                     {success[1] && !error[1]?
                         <p className='success'>
-                                Salvo com sucesso!
+                            Salvo com sucesso!
                         </p>
                         : null
                     }
@@ -653,7 +616,7 @@ const Profile = ({ history }) => {
                 :
                 <div className='empty'>
                     <p>
-                            Escolha uma unidade Consumidora
+                        Escolha uma unidade Consumidora
                     </p>
                     {admin ?
                         <button
@@ -662,7 +625,7 @@ const Profile = ({ history }) => {
                                 history.push('/new-unit')
                             }}
                         >
-                                Cadastrar U.C.
+                            Nova Unidade
                         </button>
                         : null
                     }
@@ -740,7 +703,7 @@ const Profile = ({ history }) => {
                                                     onClick={event => {
                                                         event.preventDefault()
                                                         setDeviceIndex(index)
-                                                        handleSubmit(index + 2)
+                                                        submit(index + 2)
                                                     }}
                                                 >
                                                 Salvar
@@ -805,7 +768,7 @@ const Profile = ({ history }) => {
                         setModal([true, false, false])
                     }}
                 >
-                        Excluir Usuário
+                    Excluir Usuário
                 </button>
                 : null
             }

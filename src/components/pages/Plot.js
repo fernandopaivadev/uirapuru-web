@@ -5,7 +5,7 @@ import Chart from '../panels/Chart'
 import Export from '../panels/Export'
 
 import { getData } from '../../services/storage'
-import fetch from '../../services/fetch'
+import api from '../../services/api'
 
 import {
     ArrowLeft as ArrowBackIcon,
@@ -61,16 +61,16 @@ const Plot = ({ history }) => {
     }
 
     const changeDate = (change, dateString) => {
-        const dateSplit = dateString.split('-')
+        const date = new Date(dateString)
 
         if (change === 'forward') {
-            dateSplit[2] = String(Number(dateSplit[2]) + 1)
+            date.setDate(date.getDate() + 1)
         } else if (change === 'backward') {
-            dateSplit[2] = String(Number(dateSplit[2]) - 1)
+            date.setDate(date.getDate() - 1)
         }
 
-        dateString = dateSplit.join('-')
-        setCurrentDate(dateString)
+        const newDateString = date.toISOString().split('T')[0]
+        setCurrentDate(newDateString)
     }
 
     useEffect(() => {
@@ -79,13 +79,12 @@ const Plot = ({ history }) => {
 
             const [begin, end] = getPeriod(currentDate)
 
-            if (await fetch(
-                getData('user')._id,
+            if (await api.getChart(
                 consumerUnitIndex,
                 deviceIndex,
                 begin,
                 end
-            )) {
+            ) === 'OK') {
                 setSuccess(true)
                 setLoading(false)
             } else {
@@ -125,7 +124,6 @@ const Plot = ({ history }) => {
 
                     <input
                         type='date'
-                        defaultValue={currentDate}
                         value={currentDate}
                         onChange={event => {
                             setCurrentDate(event.target.value)
@@ -134,13 +132,14 @@ const Plot = ({ history }) => {
                 </div>
                 {!loading ?
                     success ?
-                        getData('messages')?.length ?
+                        getData('collection')?.length ?
                             <div className='chart-container'>
                                 <Chart
                                     collection={getData('collection')}
                                     aspectRatio={
                                         mobile ? 1.5 : null
                                     }
+                                    showDots
                                 />
                             </div>
                             :

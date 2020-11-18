@@ -5,6 +5,7 @@
     justify-content: space-around;
     align-items: center;
     overflow: hidden;
+    background: var(--default-light-purple);
 }
 
 .navbar .logo {
@@ -58,6 +59,7 @@
     width: 4rem;
     height: 4rem;
     font-size: 2rem;
+    font-weight: 600;
     color: #fff;
     transition: all 0.2s ease;
 }
@@ -74,12 +76,12 @@
 .navbar .navigation .profile-menu {
     position: absolute;
     bottom: 100;
-    transform: translate(-0.5rem, 15%);
+    transform: translate(-0.5rem, 20%);
     right: 0;
     margin: 10rem 0 0 0;
-    background: #fff;
+    background: #eee;
     border-radius: 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--default-green);
     visibility: hidden;
     opacity: 0;
     transition: all 0.2s ease;
@@ -133,7 +135,7 @@
 
 .navbar .navigation .profile-menu .item:hover,
 .navbar .navigation .profile-menu .item .icon:hover {
-    background: #eee;
+    background: #ccc;
 }
 
 @media screen and (max-width: 800px) {

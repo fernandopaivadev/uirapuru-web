@@ -6,7 +6,7 @@ import Overview from '../panels/Overview'
 
 import { getData } from '../../services/storage'
 import { websocketConfig } from '../../services/websocket'
-import fetch from '../../services/fetch'
+import api from '../../services/api'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -21,17 +21,16 @@ const Dashboard = ({ history }) => {
     const [newMessage, setNewMessage] = useState(false)
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
+    const [connected, setConnected] = useState(false)
 
+    let connectionTimeout = null
     let overviewProps = realTimeBuffer[0]
 
     useEffect(() => {
         (async () => {
             setLoading(true)
 
-            if (await fetch(
-                getData('user')._id,
-                consumerUnitIndex
-            )) {
+            if (await api.getCollection(consumerUnitIndex) === 'OK') {
                 setSuccess(true)
                 setLoading(false)
             } else {
@@ -50,7 +49,16 @@ const Dashboard = ({ history }) => {
 
     useEffect(
         useCallback(() => {
-            setNewMessage(false)
+            if (newMessage) {
+                setConnected(true)
+                setNewMessage(false)
+
+                clearTimeout(connectionTimeout)
+
+                connectionTimeout = setTimeout(() => {
+                    setConnected(false)
+                }, 10000)
+            }
         }, [newMessage])
     )
 
@@ -66,7 +74,10 @@ const Dashboard = ({ history }) => {
                 setItemIndex={setConsumerUnitIndex}
             />
             <div className='main-container'>
-                <Overview  {...overviewProps}/>
+                {connected ?
+                    <Overview  {...overviewProps}/>
+                    : null
+                }
                 <ul className='devices'>
                     {getData('user')
                         ?.consumerUnits[ consumerUnitIndex ]
@@ -98,12 +109,13 @@ const Dashboard = ({ history }) => {
             </div>
             {!loading ?
                 success ?
-                    getData('messages')?.length ?
+                    getData('collection')?.length ?
                         <div className='charts'>
                             <Chart
                                 collection={getData('collection')}
                                 realTime={realTimeBuffer}
                                 aspectRatio={2}
+                                showDots
                             />
                         </div>
                         :

@@ -1,56 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-import { isAuthenticated } from '../../services/auth'
-import { api } from '../../services/api'
+import api from '../../services/api'
 import logo from '../../assets/logo.svg'
 
 import '../../styles/login.css'
 import '../../styles/util.css'
 
-const ResetPassword = ({ history, match }) => {
+const ResetPassword = ({ history }) => {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [password, setPassword] = useState('')
     const [passwordChanged, setPasswordChanged] = useState(false)
 
-    useEffect(() => {
-        if (isAuthenticated()) {
-            history.push('/dashboard')
-        }
-    }, [history])
+    const submit = async event => {
+        event.preventDefault()
+        setLoading(true)
 
-    const handleSubmit = async event => {
-        try {
-            event.preventDefault()
-            setLoading(true)
+        const token = history
+            .location
+            .search
+            .split('?token=')[1]
 
-            const token = match.params.token
+        const result = await api.resetPassword(token, password)
 
-            const response = await api.patch('/user/reset-password', {
-                token,
-                password
-            })
-
-            const status = response?.status
-
-            if (status === 200) {
-                setLoading(false)
-                setPasswordChanged(true)
-            }
-        } catch (err) {
-            console.log(err.response.data.message)
-
-            const status = err?.response?.status
-
-            if (status === 404) {
-                setErrorMessage('Usuário não encontrado')
-            } else if (status === 401) {
-                setErrorMessage('Senha incorreta')
-            } else {
-                setErrorMessage('Ocorreu um erro')
-            }
-
+        if (result === 'OK') {
+            setLoading(false)
+            setPasswordChanged(true)
+        } else {
+            setErrorMessage(result)
             setLoading(false)
             setError(true)
         }
@@ -58,7 +36,7 @@ const ResetPassword = ({ history, match }) => {
 
     return (
         <div className='login'>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={submit}>
                 <div className='logo'>
                     <img
                         src={logo}
@@ -73,9 +51,9 @@ const ResetPassword = ({ history, match }) => {
                     </h1>
                     :
                     <>
-                        <h1 className='label'>
+                        <label>
                             Digite a nova senha
-                        </h1>
+                        </label>
                         <input
                             required
                             type='password'
@@ -91,9 +69,12 @@ const ResetPassword = ({ history, match }) => {
                         <progress className='circular-progress'/>
                     </div>
                     : passwordChanged ?
-                        <button onClick={() => {
-                            history.push('/login')
-                        }}>
+                        <button
+                            className='classic-button'
+                            onClick={() => {
+                                history.push('/login')
+                            }}
+                        >
                             FAZER LOGIN
                         </button>
                         :

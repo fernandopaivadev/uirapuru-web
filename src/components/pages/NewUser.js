@@ -4,11 +4,7 @@ import NavBar from '../panels/NavBar'
 
 import Modal from '../panels/Modal'
 
-import { api } from '../../services/api'
-
-import { logout } from '../../services/auth'
-
-import fetch from '../../services/fetch'
+import api from '../../services/api'
 
 import {
     formatUsername,
@@ -45,7 +41,7 @@ const NewUser = ({ history }) => {
         devices: []
     }
 
-    const [modal, setModal] = useState(false)
+    const [modal, setModal] = useState([false, false])
     const [step, setStep] = useState(0)
     const [userType, setUserType] = useState('company')
     const [success, setSuccess] = useState(false)
@@ -91,49 +87,24 @@ const NewUser = ({ history }) => {
 
     }
 
-    const handleSubmit = async () => {
-        try {
-            setLoading(true)
+    const submit = async () => {
+        setLoading(true)
 
-            const response = await api.post('/user/add', user)
+        const result = await api.createUser(user)
 
-            const status = response?.status
+        if (result === 'OK') {
+            setSuccess(true)
+            history.push('/users-list')
+        } else {
+            setErrorMessage(result)
+            setError(true)
 
-            if (status) {
-                setLoading(false)
-            }
-
-            if (status === 201) {
-                setSuccess(true)
-
-                if (await fetch()) {
-                    history.push('/users-list')
-                } else {
-                    logout()
-                    history.push('/login')
-                }
-            } else {
-                setError(true)
-
-                setTimeout(() => {
-                    setError(false)
-                }, 1500)
-            }
-        } catch (err) {
-            console.log(err?.message ?? err?.response?.data?.message)
-
-            const status = err?.response?.status
-
-            if (status === 400) {
-                setErrorMessage('Erro no processamento do formulário')
-            } else if (status === 409)
-                setErrorMessage('Usuário já cadastrado')
-
-            if (status) {
-                setLoading(false)
-                setError(true)
-            }
+            setTimeout(() => {
+                setError(false)
+            }, 2000)
         }
+
+        setLoading(false)
     }
 
     const buttonPress = task => {
@@ -151,19 +122,38 @@ const NewUser = ({ history }) => {
 
     return <div className='newuser'>
         <NavBar />
-        { modal ?
+        { modal[0] ?
             <Modal
-                message={'Você tem certeza?'}
+                message={'Adicionar outra unidade?'}
                 taskOnYes={() => {
-                    setModal(false)
-                    buttonPress(handleSubmit)
+                    setModal([false, false])
+
+                    buttonPress(() => {
+                        user.consumerUnits.push(consumerUnit)
+                        clearForm('all')
+                    })
                 }}
                 taskOnNo={() => {
-                    setModal(false)
+                    setModal([false, true])
                 }}
             />
             : null
         }
+
+        { modal[1] ?
+            <Modal
+                message={'Finalizar cadastro?'}
+                taskOnYes={() => {
+                    setModal([false, false])
+                    buttonPress(submit)
+                }}
+                taskOnNo={() => {
+                    setModal([false, false])
+                }}
+            />
+            : null
+        }
+
         <div className='main'>
             {step === 0 ?
                 <form>
@@ -409,7 +399,7 @@ const NewUser = ({ history }) => {
                     event.preventDefault()
                 }}>
                     <h1>
-                        Dados da nova unidade consumidora
+                        Dados da nova unidade
                     </h1>
                     <label>Número</label>
                     <input
@@ -523,20 +513,7 @@ const NewUser = ({ history }) => {
                                 className='classic-button'
                                 onClick={event => {
                                     event.preventDefault()
-                                    buttonPress(() => {
-                                        user.consumerUnits.push(consumerUnit)
-                                        clearForm('all')
-                                    })
-                                }}
-                            >
-                                Adicionar UC
-                            </button>
-
-                            <button
-                                className='classic-button'
-                                onClick={event => {
-                                    event.preventDefault()
-                                    setModal(true)
+                                    setModal([true, false])
                                 }}
                             >
                                 Salvar
