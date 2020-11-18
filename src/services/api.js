@@ -1,7 +1,6 @@
 import { create } from 'axios'
 import { getData, storeData, clearData } from './storage'
 
-// const baseURL = 'https://api.techamazon.tech'
 const baseURL = 'https://techamazon-uirapuru-api.herokuapp.com'
 
 const axios = create({
@@ -143,7 +142,17 @@ const getUsersList = async () => {
             }
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
         return 'Ocorreu um erro'
     }
 }
@@ -171,7 +180,17 @@ const getUserData = async (_id) => {
             }
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
         return 'Ocorreu um erro'
     }
 }
@@ -200,7 +219,17 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
             return 'OK'
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
         return 'Ocorreu um erro'
     }
 }
@@ -230,7 +259,17 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
             return 'OK'
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
         return 'Ocorreu um erro'
     }
 }
@@ -273,7 +312,17 @@ const login = async (username, password, adminMode) => {
             return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
 
         const status = err?.response?.status
 
@@ -301,7 +350,17 @@ const forgotPassword = async username => {
             return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
 
         const status = err?.response?.status
 
@@ -330,7 +389,17 @@ const resetPassword = async (token, password) => {
             return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
 
         const status = err?.response?.status
 
@@ -361,7 +430,17 @@ const createUser = async user => {
             return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
 
         const status = err?.response?.status
 
@@ -389,7 +468,17 @@ const updateUser = async user => {
             return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
         return 'Ocorreu um erro'
     }
 }
@@ -414,7 +503,17 @@ const deleteUser = async _id => {
             return 'Ocorreu um erro'
         }
     } catch (err) {
-        console.log(err?.response?.data?.message ?? err?.message)
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
         return 'Ocorreu um erro'
     }
 }

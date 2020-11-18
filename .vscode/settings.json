@@ -10,13 +10,11 @@
     "explorer.sortOrder": "type",
     "eslint.alwaysShowStatus": true,
     "eslint.codeActionsOnSave.mode": "all",
+    "eslint.format.enable": true,
+    "eslint.lintTask.enable": true,
     "javascript.validate.enable": false,
-
     "editor.cursorStyle": "block",
     "editor.cursorBlinking": "smooth",
-    "spellright.language": ["en"],
-    "spellright.documentTypes": ["markdown", "latex", "plaintext"],
-
     "[javascript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
@@ -29,7 +27,6 @@
     "[css]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-
     "editor.rulers": [
         {
             "column": 80,
@@ -38,12 +35,6 @@
     ],
     "editor.fontLigatures": true,
     "editor.fontSize": 16,
-    "cSpell.ignoreWords": [
-        "browserslist",
-        "commitlint",
-        "fontawesome",
-        "fortawesome",
-        "fortawesome react fontawesome",
-        "react"
-    ]
+    "workbench.colorTheme": "Dracula",
+    "workbench.activityBar.visible": true
 }

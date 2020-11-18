@@ -32,7 +32,7 @@ import '../../styles/util.css'
 const Profile = ({ history }) => {
     const admin = getData('admin')
     const user = getData('user')
-    const [consumerUnitIndex, setConsumerUnitIndex] = useState()
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState([false,false])
     const [success, setSuccess] = useState([false,false])

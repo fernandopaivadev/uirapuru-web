@@ -27,7 +27,7 @@ body,
 
 body {
     background: linear-gradient(#0005, #0005),
-        url("./assets/background.webp") no-repeat;
+        url("./assets/background.jpg") no-repeat;
     background-size: cover;
     -webkit-font-smoothing: antialiased !important;
 }
