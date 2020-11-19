@@ -28,7 +28,7 @@
         "react-dom": "^17.0.1",
         "react-router-dom": "^5.2.0",
         "react-scripts": "^4.0.0",
-        "socket.io-client": "^3.0.2",
+        "socket.io-client": "^3.0.3",
         "workbox-core": "^5.1.4",
         "workbox-expiration": "^5.1.4",
         "workbox-precaching": "^5.1.4",
