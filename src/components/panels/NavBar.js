@@ -5,12 +5,15 @@ import {
     RecentActors as UsersIcon,
     ExitToApp as LogoutIcon,
     Person as ProfileIcon,
-    Dashboard as DashboardIcon
+    Dashboard as DashboardIcon,
+    Brightness4 as ToggleDarkModeIcon
 } from '@material-ui/icons'
 
 import logo from '../../assets/logo.svg'
 
 import { getData, clearData } from '../../services/storage'
+
+import { applyTheme } from '../../themes'
 
 import '../../styles/navbar.css'
 
@@ -30,11 +33,19 @@ const NavBar = ({ history }) => <ul className='navbar'>
     </li>
 
     <li className='navigation' key='navigation'>
+        <ToggleDarkModeIcon
+            className='icon'
+            onClick={() => {
+                if (getData('theme') === 'dark') {
+                    applyTheme('default')
+                } else {
+                    applyTheme('dark')
+                }
+            }}
+        />
         <h1 className='username'>
             {getData('admin') ? '[Administrador] ': null}
             {getData('user')?.username ?? ''}
-
-
         </h1>
 
         {getData('user') ?

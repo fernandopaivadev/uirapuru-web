@@ -5,7 +5,7 @@
     justify-content: space-around;
     align-items: center;
     overflow: hidden;
-    background: var(--default-light-purple);
+    background: var(--secondary-color);
 }
 
 .navbar .logo {
@@ -22,7 +22,7 @@
 }
 
 .navbar .logo .text {
-    color: #fff;
+    color: var(--secondary-font-color);
     font-size: 2rem;
     letter-spacing: 0.3rem;
 }
@@ -34,15 +34,15 @@
 }
 
 .navbar .navigation > .username {
-    color: #fff;
+    color: var(--secondary-font-color);
     font-size: 2rem;
     margin: 1rem;
 }
 
 .navbar .navigation .avatar {
-    background: var(--default-green);
+    background: var(--primary-color);
     border-radius: 50%;
-    color: #fff;
+    color: var(--secondary-font-color);
     width: 4rem;
     height: 4rem;
     display: flex;
@@ -55,17 +55,17 @@
     border-radius: 50%;
     margin: 0 1rem 0 0;
     cursor: pointer;
-    background: var(--default-green);
+    background: var(--primary-color);
     width: 4rem;
     height: 4rem;
     font-size: 2rem;
     font-weight: 600;
-    color: #fff;
+    color: var(--secondary-font-color);
     transition: all 0.2s ease;
 }
 
 .navbar .navigation button:hover {
-    background: var(--default-light-green);
+    background: var(--primary-light-color);
 }
 
 .navbar .navigation button:focus + .profile-menu {
@@ -79,9 +79,9 @@
     transform: translate(-0.5rem, 20%);
     right: 0;
     margin: 10rem 0 0 0;
-    background: #eee;
+    background: var(--background-color);
     border-radius: 0.5rem;
-    border: 1px solid var(--default-green);
+    border: 1px solid var(--primary-color);
     visibility: hidden;
     opacity: 0;
     transition: all 0.2s ease;
@@ -95,7 +95,7 @@
 }
 
 .navbar .navigation .profile-menu .user .avatar {
-    background: var(--default-green);
+    background: var(--primary-color);
     font-size: 2rem;
 }
 
@@ -108,17 +108,17 @@
 
 .navbar .navigation .profile-menu .user .text .username {
     font-size: 2rem;
-    color: #555;
+    color: var(--primary-font-color);
 }
 
 .navbar .navigation .profile-menu .user .text .email {
     font-size: 1.6rem;
-    color: #888;
+    color: var(--neutral-color);
 }
 
 .navbar .navigation .profile-menu .item {
     margin: 0.5rem;
-    color: #555;
+    color: var(--primary-font-color);
     display: flex;
     align-items: center;
     font-size: 2rem;
@@ -130,16 +130,32 @@
 .navbar .navigation .profile-menu .item .icon {
     margin: 1rem;
     font-size: 2.4rem;
-    color: var(--default-green);
+    color: var(--primary-color);
+    background: var(--background-color);
 }
 
 .navbar .navigation .profile-menu .item:hover,
 .navbar .navigation .profile-menu .item .icon:hover {
-    background: #ccc;
+    background: var(--hovered-color);
 }
 
 @media screen and (max-width: 800px) {
     .navbar .consumerUnitName {
         display: none;
     }
+}
+
+.navbar .navigation .icon {
+    border-radius: 50%;
+    padding: 0.2rem;
+    color: var(--secondary-color);
+    background: var(--secondary-font-color);
+    font-size: 3rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.navbar .navigation .icon:hover {
+    background: var(--secondary-color);
+    color: var(--secondary-font-color);
 }

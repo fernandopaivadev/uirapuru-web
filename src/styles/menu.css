@@ -8,27 +8,27 @@
 .menu .title {
     font-size: 2.4rem;
     font-weight: 600;
-    color: var(--default-green);
+    color: var(--primary-color);
     margin: 1.5rem 1.5rem 0.5rem 1.5rem;
     height: 3.5rem;
 }
 
 .menu .items .item-name {
-    color: #333;
+    color: var(--primary-font-color);
     font-size: 2rem;
     font-weight: 600;
     padding: 1.5rem 1.5rem 1.5rem 3rem;
 }
 
 .menu .items .sub-items .sub-item-name {
-    color: #666;
+    color: var(--neutral-color);
     font-size: 1.8rem;
     font-weight: 600;
     padding: 1rem 3rem 1rem 5rem;
 }
 
 .menu .items p:hover {
-    background: #ddd;
+    background: var(--hovered-color);
 }
 
 .menu .items p {

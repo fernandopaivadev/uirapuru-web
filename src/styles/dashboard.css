@@ -3,7 +3,7 @@
     grid-template-columns: 12% 56% 32%;
     width: 100vw;
     height: 100vh;
-    background: #eee;
+    background: var(--background-color);
     position: fixed;
 }
 
@@ -21,7 +21,6 @@
     min-height: 25rem;
     padding: 2.5rem;
     grid-column: 2/3;
-    border-bottom: 1px solid #ccc;
 }
 
 .dashboard .main .main-container .displays .display {
@@ -31,7 +30,6 @@
     min-width: 30%;
     height: 14rem;
     margin: 2rem;
-    border: 1px solid #aaa;
     border-radius: 0.5rem;
 }
 
@@ -48,20 +46,20 @@
 .dashboard .main .main-container .displays .display .value .icon {
     margin-right: 1rem;
     font-size: 3rem;
-    color: var(--default-green);
+    color: var(--primary-color);
 }
 
 .dashboard .main .main-container .displays .display .value .text {
     margin: 0 0.8rem 0 0.8rem;
     font-size: 1.6rem;
     font-weight: 500;
-    color: #555;
+    color: var(--neutral-color);
 }
 
 .dashboard .main .main-container .displays .display .value .payload {
     font-size: 1.6rem;
     font-weight: 600;
-    color: #333;
+    color: var(--primary-font-color);
 }
 
 .dashboard .main .main-container .devices {
@@ -70,7 +68,7 @@
     grid-template-rows: repeat(5, 1fr);
     width: 99%;
     margin: 1rem;
-    border: 1px solid var(--default-green);
+    border: 1px solid var(--primary-color);
     border-radius: 0.5rem;
 }
 
@@ -91,14 +89,14 @@
     align-items: center;
     justify-content: center;
     font-size: 7rem;
-    color: var(--default-green);
+    color: var(--primary-color);
 }
 
 .dashboard .main .main-container .devices .device .text {
     margin: 0 0.8rem 0 0.8rem;
     font-size: 2rem;
     font-weight: 600;
-    color: #555;
+    color: var(--neutral-color);
 }
 
 .dashboard .main .charts {
@@ -125,13 +123,12 @@
 }
 
 .dashboard .main .empty p {
-    color: #999;
+    color: var(--neutral-color);
     font-size: 2rem;
     font-weight: 600;
 }
 
 .dashboard .main .error {
-    border-left: 1px solid #ccc;
     width: 100%;
     height: 100%;
     display: flex;
@@ -140,7 +137,7 @@
 }
 
 .dashboard .main .error p {
-    color: #dd0000;
+    color: var(--error-color);
     font-size: 2rem;
     font-weight: 600;
 }

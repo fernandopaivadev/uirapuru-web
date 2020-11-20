@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import themes from '../../themes'
+import { themes } from '../../themes'
 
 import {
     faThermometerThreeQuarters,

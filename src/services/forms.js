@@ -109,10 +109,10 @@ const validateInput = (formIndex, inputIndex) => {
     )
 
     if (inputs[inputIndex].checkValidity()) {
-        inputs[inputIndex].style.borderColor = 'var(--default-green)'
+        inputs[inputIndex].style.borderColor = 'var(--primary-color)'
         errorMessages[inputIndex].style.display = 'none'
     } else {
-        inputs[inputIndex].style.borderColor = '#d00'
+        inputs[inputIndex].style.borderColor = 'var(--error-color)'
         errorMessages[inputIndex].style.display = 'block'
     }
 }

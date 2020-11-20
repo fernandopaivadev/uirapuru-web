@@ -8,7 +8,7 @@
     padding: 0.25em;
     width: 3em;
     height: 3em;
-    color: var(--default-green);
+    color: var(--primary-color);
     background-color: transparent;
     font-size: 1.5rem;
     overflow: hidden;
@@ -35,7 +35,7 @@
 
 .circular-progress:indeterminate::before,
 .circular-progress:indeterminate::-webkit-progress-value {
-    content: '';
+    content: "";
     display: block;
     box-sizing: border-box;
     margin-bottom: 0.25em;
@@ -129,8 +129,8 @@
     font-weight: 600;
     border-radius: 0.3rem;
     border: none;
-    background: var(--default-green);
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--secondary-font-color);
     margin: 1.8rem;
     padding: 0 1.5rem 0 1.5rem;
     cursor: pointer;
@@ -138,5 +138,5 @@
 }
 
 .classic-button:hover {
-    background: var(--default-light-green);
+    background: var(--primary-light-color);
 }
