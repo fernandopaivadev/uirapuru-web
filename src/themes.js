@@ -52,33 +52,22 @@ const themes = {
     }
 }
 
-const applyTheme = theme => {
+const applyTheme = themeName => {
     const html = document.querySelector('html')
-    const {
-        primaryColor,
-        primaryLightColor,
-        secondaryColor,
-        primaryFontColor,
-        secondaryFontColor,
-        backgroundColor,
-        errorColor,
-        errorLightColor,
-        neutralColor,
-        hoveredColor
-    } = themes[theme]
+    const theme = themes[themeName]
 
-    html.style.setProperty('--primary-color', primaryColor)
-    html.style.setProperty('--primary-light-color', primaryLightColor)
-    html.style.setProperty('--secondary-color', secondaryColor)
-    html.style.setProperty('--primary-font-color', primaryFontColor)
-    html.style.setProperty('--secondary-font-color', secondaryFontColor)
-    html.style.setProperty('--background-color', backgroundColor)
-    html.style.setProperty('--error-color', errorColor)
-    html.style.setProperty('--error-light-color', errorLightColor)
-    html.style.setProperty('--neutral-color', neutralColor)
-    html.style.setProperty('--hovered-color', hoveredColor)
+    html.style.setProperty('--primary-color',        theme.primaryColor)
+    html.style.setProperty('--primary-light-color',  theme.primaryLightColor)
+    html.style.setProperty('--secondary-color',      theme.secondaryColor)
+    html.style.setProperty('--primary-font-color',   theme.primaryFontColor)
+    html.style.setProperty('--secondary-font-color', theme.secondaryFontColor)
+    html.style.setProperty('--background-color',     theme.backgroundColor)
+    html.style.setProperty('--error-color',          theme.errorColor)
+    html.style.setProperty('--error-light-color',    theme.errorLightColor)
+    html.style.setProperty('--neutral-color',        theme.neutralColor)
+    html.style.setProperty('--hovered-color',        theme.hoveredColor)
 
-    storeData('theme', theme)
+    storeData('theme', themeName)
 }
 
 export {

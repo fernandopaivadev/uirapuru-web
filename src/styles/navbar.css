@@ -134,8 +134,7 @@
     background: var(--background-color);
 }
 
-.navbar .navigation .profile-menu .item:hover,
-.navbar .navigation .profile-menu .item .icon:hover {
+.navbar .navigation .profile-menu .item:hover {
     background: var(--hovered-color);
 }
 

@@ -2,12 +2,12 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
-    RecentActors as UsersIcon,
-    ExitToApp as LogoutIcon,
-    Person as ProfileIcon,
-    Dashboard as DashboardIcon,
-    Brightness4 as ToggleDarkModeIcon
-} from '@material-ui/icons'
+    MdRecentActors as UsersIcon,
+    MdExitToApp as LogoutIcon,
+    MdPerson as ProfileIcon,
+    MdDashboard as DashboardIcon,
+    MdBrightness4 as ToggleDarkModeIcon
+} from 'react-icons/md'
 
 import logo from '../../assets/logo.svg'
 
@@ -28,7 +28,7 @@ const NavBar = ({ history }) => <ul className='navbar'>
         <img src={ logo } alt='tech amazon logo'/>
 
         <h1 className='text'>
-                Uirapuru
+            Uirapuru
         </h1>
     </li>
 
@@ -82,7 +82,7 @@ const NavBar = ({ history }) => <ul className='navbar'>
                             history.push('/users-list')
                         }}>
                         <UsersIcon className='icon' />
-                                Usuários
+                            Usuários
                     </li>
                 </>
                 : null
@@ -95,7 +95,7 @@ const NavBar = ({ history }) => <ul className='navbar'>
                         history.push('/dashboard')
                     }}>
                     <DashboardIcon className='icon' />
-                            Dashboard
+                        Dashboard
                 </li>
                 : null
             }
@@ -107,7 +107,7 @@ const NavBar = ({ history }) => <ul className='navbar'>
                         history.push('/profile')
                     }}>
                     <ProfileIcon className='icon' />
-                            Perfil
+                        Perfil
                 </li>
                 : null
             }
@@ -120,7 +120,7 @@ const NavBar = ({ history }) => <ul className='navbar'>
                     window.location.reload()
                 }}>
                 <LogoutIcon className='icon' />
-                        Sair
+                    Sair
             </li>
         </ul>
     </li>

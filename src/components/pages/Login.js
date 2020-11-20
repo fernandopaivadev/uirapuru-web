@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
+import { getData } from '../../services/storage'
 
 import api from '../../services/api'
 
@@ -9,6 +11,16 @@ import '../../styles/login.css'
 import '../../styles/util.css'
 
 const Login = ({ history }) => {
+    useEffect(() => {
+        if (getData('JWT')) {
+            if (getData('admin')) {
+                history.push('/users-list')
+            } else {
+                history.push('/dashboard')
+            }
+        }
+    })
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)

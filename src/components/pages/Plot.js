@@ -8,9 +8,9 @@ import { getData } from '../../services/storage'
 import api from '../../services/api'
 
 import {
-    ArrowLeft as ArrowBackIcon,
-    ArrowRight as ArrowForwardIcon
-} from '@material-ui/icons'
+    MdKeyboardArrowLeft as ArrowBackIcon,
+    MdKeyboardArrowRight as ArrowForwardIcon
+} from 'react-icons/md'
 
 import '../../styles/plot.css'
 import '../../styles/util.css'

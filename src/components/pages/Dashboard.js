@@ -8,9 +8,7 @@ import { getData } from '../../services/storage'
 import { websocketConfig } from '../../services/websocket'
 import api from '../../services/api'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-import { faSolarPanel } from '@fortawesome/free-solid-svg-icons'
+import { FaSolarPanel } from 'react-icons/fa'
 
 import '../../styles/dashboard.css'
 import '../../styles/util.css'
@@ -95,9 +93,8 @@ const Dashboard = ({ history }) => {
                                     )
                                 }}
                             >
-                                <FontAwesomeIcon
+                                <FaSolarPanel
                                     className='panelIcon'
-                                    icon={faSolarPanel}
                                 />
                                 <p className='text'>
                                     { device.name }

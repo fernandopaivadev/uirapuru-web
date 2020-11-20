@@ -1,14 +1,13 @@
 import React from 'react'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { themes } from '../../themes'
 
 import {
-    faThermometerThreeQuarters,
-    faTint,
-    faBolt,
-    faEllipsisH
-} from '@fortawesome/free-solid-svg-icons'
+    FaThermometerThreeQuarters,
+    FaTint,
+    FaBolt,
+    FaEllipsisH
+} from 'react-icons/fa'
 
 import '../../styles/overview.css'
 
@@ -20,9 +19,8 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     borderColor: themes.default.traceColors[0]
                 }}
             >
-                <FontAwesomeIcon
+                <FaThermometerThreeQuarters
                     className='icon'
-                    icon={faThermometerThreeQuarters}
                     style={{
                         color: themes.default.traceColors[0]
                     }}
@@ -42,9 +40,8 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     borderColor: themes.default.traceColors[1]
                 }}
             >
-                <FontAwesomeIcon
+                <FaTint
                     className='icon'
-                    icon={faTint}
                     style={{
                         color: themes.default.traceColors[1]
                     }}
@@ -64,9 +61,8 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     borderColor: themes.default.traceColors[2]
                 }}
             >
-                <FontAwesomeIcon
+                <FaBolt
                     className='icon'
-                    icon={faBolt}
                     style={{
                         color: themes.default.traceColors[2]
                     }}
@@ -86,9 +82,8 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     borderColor: themes.default.traceColors[3]
                 }}
             >
-                <FontAwesomeIcon
+                <FaEllipsisH
                     className='icon'
-                    icon={faEllipsisH}
                     style={{
                         color: themes.default.traceColors[3]
                     }}
@@ -108,9 +103,8 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     borderColor: themes.default.traceColors[4]
                 }}
             >
-                <FontAwesomeIcon
+                <FaBolt
                     className='icon'
-                    icon={faBolt}
                     style={{
                         color: themes.default.traceColors[4]
                     }}
@@ -130,9 +124,8 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     borderColor: themes.default.traceColors[5]
                 }}
             >
-                <FontAwesomeIcon
+                <FaEllipsisH
                     className='icon'
-                    icon={faEllipsisH}
                     style={{
                         color: themes.default.traceColors[5]
                     }}
