@@ -27,6 +27,10 @@
     padding: 1rem 3rem 1rem 5rem;
 }
 
+.menu .items p {
+    transition: all 0.2s ease;
+}
+
 .menu .items p:hover {
     background: var(--hovered-color);
 }

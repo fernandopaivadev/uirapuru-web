@@ -38,6 +38,15 @@
 .profile .main label {
     width: 85%;
     background: var(--background-color);
+    transition: all 0.2s ease;
+}
+
+.profile .main input:hover {
+    background: var(--hovered-color);
+}
+
+.profile .main input:focus {
+    background: var(--hovered-color);
 }
 
 .profile .main form {

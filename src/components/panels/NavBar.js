@@ -74,7 +74,7 @@ const NavBar = ({ history }) => {
                 }
             </div>
             <h1 className='username'>
-                {storage.read('access-level') === 'admin' ? '[Administrador] ': null}
+                {storage.read('access-level') === 'admin' ? 'Administrador | ': null}
                 {storage.read('user')?.username ?? ''}
             </h1>
 

@@ -82,6 +82,12 @@
     padding: 2rem;
     cursor: pointer;
     text-align: center;
+    transition: all 0.2s ease;
+    border-radius: 0.5rem;
+}
+
+.dashboard .main .main-container .devices .device:hover {
+    background: var(--hovered-color);
 }
 
 .dashboard .main .main-container .devices .device .panelIcon {
