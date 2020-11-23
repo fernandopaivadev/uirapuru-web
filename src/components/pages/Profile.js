@@ -43,32 +43,25 @@ const Profile = ({ history }) => {
     const [newDevicePopup, setNewDevicePopup] = useState(false)
 
     useEffect(() => {
-        if (consumerUnitIndex) {
+        if (consumerUnitIndex >= 0) {
             const len = storage.read('user')
                 .consumerUnits[consumerUnitIndex]
                 .devices
                 .length + 2
+
+            setSuccess(
+                new Array(len).fill(false)
+            )
+
+            setError(
+                new Array(len).fill(false)
+            )
 
             for (let k = 0; k < len; k++) {
                 setFormValidation(k)
             }
         } else {
             setFormValidation()
-        }
-    }, [consumerUnitIndex])
-
-    useEffect(() => {
-        if (consumerUnitIndex >= 0) {
-            const len = storage.read('user')
-                .consumerUnits[consumerUnitIndex]
-                .devices
-                .length + 2
-            setSuccess(
-                new Array(len).fill(false)
-            )
-            setError(
-                new Array(len).fill(false)
-            )
         }
     }, [consumerUnitIndex])
 
@@ -180,8 +173,8 @@ const Profile = ({ history }) => {
         <div className='main'>
             <Menu
                 title='Unidades'
-                items = {storage.read('user').consumerUnits}
-                setItemIndex = { setConsumerUnitIndex }
+                items={storage.read('user').consumerUnits}
+                setItemIndex={ setConsumerUnitIndex }
                 subItemKey='devices'
             />
             {storage.read('user') ?
@@ -221,7 +214,7 @@ const Profile = ({ history }) => {
                         }}
                     />
                     <p className='error-message'>
-                            Digite no mínimo 10 caracteres
+                        Digite no mínimo 10 caracteres
                     </p>
 
                     <label>Telefone</label>
@@ -631,7 +624,7 @@ const Profile = ({ history }) => {
                     }
                 </div>
             }
-            {storage.read('user').consumerUnits[ consumerUnitIndex ] ?
+            {storage.read('user').consumerUnits[consumerUnitIndex] ?
                 <div className='devices-list'>
                     <div className='header'>
                         <h1>Dispositivos</h1>
@@ -650,7 +643,7 @@ const Profile = ({ history }) => {
                     </div>
                     <ul>
                         {storage.read('user')
-                            .consumerUnits[ consumerUnitIndex ]
+                            .consumerUnits[consumerUnitIndex]
                             .devices.map((device, index) =>
                                 <li key={index}>
                                     <form>
@@ -714,9 +707,11 @@ const Profile = ({ history }) => {
                                                     onClick={event => {
                                                         event.preventDefault()
                                                         setDeviceIndex(index)
-                                                        setModal(
-                                                            [false, false, true]
-                                                        )
+                                                        setModal([
+                                                            false,
+                                                            false,
+                                                            true
+                                                        ])
                                                     }}
                                                 >
                                                 Excluir

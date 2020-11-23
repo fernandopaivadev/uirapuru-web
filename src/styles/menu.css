@@ -28,6 +28,7 @@
 }
 
 .menu .items p {
+    border-radius: 0.5rem;
     transition: all 0.2s ease;
 }
 

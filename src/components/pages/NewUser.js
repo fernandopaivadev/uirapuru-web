@@ -49,22 +49,20 @@ const NewUser = ({ history }) => {
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
     const [loading, setLoading] = useState(false)
 
-    useEffect(
-        useCallback(() => {
-            const _user = user
+    useEffect(useCallback(() => {
+        const _user = user
 
-            if (userType === 'person') {
-                delete _user.company
-                _user.person = {}
-            } else if (userType === 'company') {
-                delete _user.person
-                _user.company = {}
-            }
+        if (userType === 'person') {
+            delete _user.company
+            _user.person = {}
+        } else if (userType === 'company') {
+            delete _user.person
+            _user.company = {}
+        }
 
-            setUser(_user)
-        }, [userType, user]
-        ), []
-    )
+        setUser(_user)
+    }, [userType, user]
+    ))
 
     useEffect(() => {
         setFormValidation()
@@ -223,6 +221,24 @@ const NewUser = ({ history }) => {
                     <p className='error-message'>
                         Número de telefone inválido
                     </p>
+
+                    <label>Nível de Acesso</label>
+                    <select
+                        name='phone'
+                        required
+                        onChange={event => {
+                            const { value } = event.target
+
+                            if (value === 'Administrador') {
+                                user.accessLevel = 'admin'
+                            } else if (value === 'Usuário') {
+                                user.accessLevel = 'user'
+                            }
+                        }}
+                    >
+                        <option>Usuário</option>
+                        <option>Administrador</option>
+                    </select>
 
                     <div className='checkbox'>
                         <input

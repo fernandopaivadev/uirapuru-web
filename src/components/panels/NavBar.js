@@ -38,7 +38,11 @@ const NavBar = ({ history }) => {
             className='logo'
             key='logo'
             onClick={() => {
-                history.push('/login')
+                if (storage.read('access-level') === 'admin') {
+                    history.push('/users-list')
+                } else {
+                    history.push('/dashboard')
+                }
             }}
         >
             <img src={ logo } alt='tech amazon logo'/>

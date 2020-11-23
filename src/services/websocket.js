@@ -3,7 +3,7 @@ import storage from './storage'
 import api from './api'
 import io from 'socket.io-client'
 
-const websocketConfig = (
+const config = (
     consumerUnitIndex,
     realTimeBuffer,
     setRealTimeBuffer,
@@ -52,6 +52,6 @@ const websocketConfig = (
     }
 }
 
-export {
-    websocketConfig
+export default {
+    config
 }

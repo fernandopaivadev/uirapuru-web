@@ -5,7 +5,7 @@ import Chart from '../panels/Chart'
 import Overview from '../panels/Overview'
 
 import storage from '../../services/storage'
-import { websocketConfig } from '../../services/websocket'
+import websocket from '../../services/websocket'
 import api from '../../services/api'
 
 import { FaSolarPanel } from 'react-icons/fa'
@@ -37,7 +37,7 @@ const Dashboard = ({ history }) => {
             }
         })()
 
-        websocketConfig(
+        websocket.config(
             consumerUnitIndex,
             realTimeBuffer,
             setRealTimeBuffer,

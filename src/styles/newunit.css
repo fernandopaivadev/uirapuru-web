@@ -16,6 +16,7 @@
     font-size: 1.8rem;
     margin: 0.2rem 0 4rem 0;
     color: var(--primary-font-color);
+    background: var(--background-color);
 }
 
 .newunit .error-message {
