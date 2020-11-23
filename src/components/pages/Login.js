@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { getData } from '../../services/storage'
+import storage from '../../services/storage'
 
 import api from '../../services/api'
 
@@ -12,12 +12,8 @@ import '../../styles/util.css'
 
 const Login = ({ history }) => {
     useEffect(() => {
-        if (getData('JWT')) {
-            if (getData('admin')) {
-                history.push('/users-list')
-            } else {
-                history.push('/dashboard')
-            }
+        if (storage.read('JWT')) {
+            history.push('/dashboard')
         }
     })
 
@@ -26,21 +22,16 @@ const Login = ({ history }) => {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
-    const [adminMode, setAdminMode] = useState(false)
 
     const submit = async event => {
         event.preventDefault()
 
         setLoading(true)
 
-        const result = await api.login(username, password, adminMode)
+        const result = await api.login(username, password)
 
         if (result === 'OK') {
-            if (adminMode) {
-                history.push('/users-list')
-            } else {
-                history.push('/dashboard')
-            }
+            history.push('/dashboard')
         } else  {
             setLoading(false)
             setErrorMessage(result)
@@ -76,15 +67,9 @@ const Login = ({ history }) => {
                 <h1>Uirapuru</h1>
             </div>
 
-            {adminMode ?
-                <label htmlFor='email'>
-                    Nível de acesso
-                </label>
-                :
-                <label htmlFor='email'>
-                    E-mail ou nome de usuário
-                </label>
-            }
+            <label htmlFor='email'>
+                E-mail ou nome de usuário
+            </label>
             <input
                 autoFocus
                 id='email'
@@ -131,32 +116,13 @@ const Login = ({ history }) => {
             }
 
             {loading ? null :
-                !adminMode ?
-                    <>
-                        <p
-                            className='link'
-                            onClick={() => {
-                                history.push('/forgot-password')
-                            }}>
-                                Esqueci minha senha
-                        </p>
-                        <p
-                            className='link'
-                            onClick={() => {
-                                setAdminMode(true)
-                            }}>
-                                Sou administrador
-                        </p>
-                    </>
-                    :
-                    <p
-                        className='link'
-                        onClick={() => {
-                            setAdminMode(false)
-                        }}
-                    >
-                        Voltar
-                    </p>
+                <p
+                    className='link'
+                    onClick={() => {
+                        history.push('/forgot-password')
+                    }}>
+                    Esqueci minha senha
+                </p>
             }
 
             {error ?

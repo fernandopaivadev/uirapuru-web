@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 
 import { Chart as ChartJS } from 'chart.js'
 
-import { getData } from '../../services/storage'
+import storage from '../../services/storage'
 
 import { themes } from '../../themes'
 
 import '../../styles/chart.css'
 
 const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
-    const theme = themes[getData('theme')]
+    const theme = themes[storage.read('theme')]
     const { traceColors } = theme
 
     useEffect(() => {

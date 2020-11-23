@@ -1,4 +1,4 @@
-import { storeData } from './services/storage'
+import storage from './services/storage'
 
 const themes = {
     default: {
@@ -67,7 +67,7 @@ const applyTheme = themeName => {
     html.style.setProperty('--neutral-color',        theme.neutralColor)
     html.style.setProperty('--hovered-color',        theme.hoveredColor)
 
-    storeData('theme', themeName)
+    storage.write('theme', themeName)
 }
 
 export {

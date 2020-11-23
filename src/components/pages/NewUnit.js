@@ -4,7 +4,7 @@ import NavBar from '../panels/NavBar'
 
 import api from '../../services/api'
 
-import { getData } from '../../services/storage'
+import storage from '../../services/storage'
 
 import {
     formatCEP,
@@ -16,7 +16,7 @@ import {
 import '../../styles/newunit.css'
 
 const NewUnit = ({ history }) => {
-    const user = getData('user')
+    const user = storage.read('user')
 
     const [consumerUnit] = useState({
         number: '',

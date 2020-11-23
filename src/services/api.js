@@ -1,5 +1,5 @@
 import { create } from 'axios'
-import { getData, storeData, clearData } from './storage'
+import storage from './storage'
 
 const baseURL = 'https://techamazon-uirapuru-api.herokuapp.com'
 
@@ -8,8 +8,8 @@ const axios = create({
 })
 
 axios.interceptors.request.use(async config => {
-    if (getData('JWT')) {
-        config.headers.authorization = `Bearer ${getData('JWT')}`
+    if (storage.read('JWT')) {
+        config.headers.authorization = `Bearer ${storage.read('JWT')}`
     }
     return config
 })
@@ -32,7 +32,7 @@ const fetchDeviceData = async (
         end = end.toISOString()
     }
 
-    const device = getData('user')
+    const device = storage.read('user')
         .consumerUnits[consumerUnitIndex]
         .devices[deviceIndex]
 
@@ -58,7 +58,7 @@ const fetchDeviceData = async (
         }
 
         if (storeMessages) {
-            storeData('messages', messages)
+            storage.write('messages', messages)
         }
 
         messages.forEach(({ payload }) => {
@@ -128,17 +128,16 @@ const fetchDeviceData = async (
 
 const getUsersList = async () => {
     try {
-        if (getData('admin')) {
+        if (storage.read('access-level') === 'admin') {
             const response = await axios.get('/users')
 
             const status = response?.status
 
             if (status === 200) {
-                clearData('user')
-                clearData('collection')
-                clearData('messages')
+                storage.clear('collection')
+                storage.clear('messages')
 
-                storeData('users-list', response.data.usersList)
+                storage.write('users-list', response.data.usersList)
                 return 'OK'
             }
         } else {
@@ -162,26 +161,25 @@ const getUsersList = async () => {
 
 const getUserData = async (_id) => {
     try {
-        if (getData('admin') && _id) {
+        if (storage.read('access-level') === 'admin' && _id) {
             const { status, data } = await axios.get(
                 `/user/data?_id=${_id}`
             )
 
             if (status === 200) {
-                clearData('user')
-                clearData('collection')
-                clearData('messages')
+                storage.clear('collection')
+                storage.clear('messages')
 
-                storeData('user', data.user)
+                storage.write('user', data.user)
                 return 'OK'
             } else {
                 return 'Ocorreu um erro'
             }
-        } else if (getData('JWT')) {
+        } else if (storage.read('JWT')) {
             const { status, data } = await axios.get('/user/data')
 
             if (status === 200) {
-                storeData('user', data.user)
+                storage.write('user', data.user)
                 return 'OK'
             }
         }
@@ -202,8 +200,8 @@ const getUserData = async (_id) => {
 }
 
 const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
-    clearData('collection')
-    clearData('messages')
+    storage.clear('collection')
+    storage.clear('messages')
 
     try {
         if (deviceIndex >= 0) {
@@ -217,9 +215,9 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
             )
 
             if (chart) {
-                storeData('collection', [chart])
+                storage.write('collection', [chart])
             } else {
-                storeData('collection', [])
+                storage.write('collection', [])
             }
 
             return 'OK'
@@ -241,12 +239,12 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
 }
 
 const getCollection = async (consumerUnitIndex, begin, end) => {
-    clearData('collection')
-    clearData('messages')
+    storage.clear('collection')
+    storage.clear('messages')
 
     try {
         if (consumerUnitIndex >= 0) {
-            let collection = await Promise.all(getData('user')
+            let collection = await Promise.all(storage.read('user')
                 .consumerUnits[consumerUnitIndex]
                 .devices.map(async (device, deviceIndex) =>
                     await fetchDeviceData(
@@ -261,7 +259,7 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
 
             collection = collection.filter(chart => chart)
 
-            storeData('collection', collection)
+            storage.write('collection', collection)
             return 'OK'
         }
     } catch (err) {
@@ -280,39 +278,24 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
     }
 }
 
-const login = async (username, password, adminMode) => {
+const login = async (username, password) => {
     try {
         const response = await axios.get(
-            adminMode ?
-                `/admin/auth?level=${username}&password=${password}`
-                :
-                `/user/auth?username=${username}&password=${password}`
+            `/user/auth?username=${username}&password=${password}`
         )
 
         const status = response?.status
 
         if (status === 200) {
-            clearData('all')
+            storage.clear('all')
+            storage.write('JWT', response.data.token)
 
-            if (adminMode) {
-                storeData('JWT', response.data.token)
-                storeData('admin', true)
-
-                if (await getUsersList() === 'OK') {
-                    return 'OK'
-                } else {
-                    clearData('all')
-                    return 'Ocorreu um erro'
-                }
+            if (await getUserData() === 'OK') {
+                storage.write('access-level', storage.read('user').accessLevel)
+                return 'OK'
             } else {
-                storeData('JWT', response.data.token)
-
-                if (await getUserData()) {
-                    return 'OK'
-                } else {
-                    clearData('all')
-                    return 'Ocorreu um erro'
-                }
+                storage.clear('all')
+                return 'Ocorreu um erro'
             }
         } else {
             return 'Ocorreu um erro'
@@ -429,7 +412,7 @@ const createUser = async user => {
             if (await getUsersList() === 'OK') {
                 return 'OK'
             } else {
-                clearData('all')
+                storage.clear('all')
                 return 'Saia e faça login novamente'
             }
         } else {
@@ -462,7 +445,7 @@ const createUser = async user => {
 
 const updateUser = async user => {
     try {
-        storeData('user', user)
+        storage.write('user', user)
 
         const response = await axios.put('/user/update', user)
 
@@ -498,7 +481,7 @@ const deleteUser = async _id => {
         const status = response?.status
 
         if (status === 200) {
-            clearData('user')
+            storage.clear('user')
 
             if (await getUsersList() === 'OK') {
                 return 'OK'

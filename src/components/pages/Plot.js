@@ -4,7 +4,7 @@ import Menu from '../panels/Menu'
 import Chart from '../panels/Chart'
 import Export from '../panels/Export'
 
-import { getData } from '../../services/storage'
+import storage from '../../services/storage'
 import api from '../../services/api'
 
 import {
@@ -101,7 +101,7 @@ const Plot = ({ history }) => {
                 className='menu'
                 title='Unidades'
                 items={
-                    getData('user').consumerUnits
+                    storage.read('user').consumerUnits
                 }
                 subItemKey='devices'
                 setItemIndex={setConsumerUnitIndex}
@@ -132,10 +132,10 @@ const Plot = ({ history }) => {
                 </div>
                 {!loading ?
                     success ?
-                        getData('collection')?.length ?
+                        storage.read('collection')?.length ?
                             <div className='chart-container'>
                                 <Chart
-                                    collection={getData('collection')}
+                                    collection={storage.read('collection')}
                                     aspectRatio={
                                         mobile ? 1.5 : null
                                     }
@@ -164,8 +164,8 @@ const Plot = ({ history }) => {
                     >
                         Dashboard
                     </button>
-                    {!loading && getData('messages')?.length ?
-                        <Export data={getData('messages')}/>
+                    {!loading && storage.read('messages')?.length ?
+                        <Export data={storage.read('messages')}/>
                         : null
                     }
                 </div>

@@ -1,12 +1,12 @@
 import React from 'react'
 import Routes from './routes'
-import { getData } from './services/storage'
+import storage from './services/storage'
 import { applyTheme } from './themes'
 
 import './App.css'
 
 window.onload = () => {
-    const theme = getData('theme')
+    const theme = storage.read('theme')
 
     if (theme) {
         applyTheme(theme)

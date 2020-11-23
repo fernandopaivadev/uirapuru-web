@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { getData } from '../../services/storage'
+import storage from '../../services/storage'
 
 import api from '../../services/api'
 
@@ -20,7 +20,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
     const [errorMessage, setErrorMessage] = useState(
         'Erro no processamento do formulário'
     )
-    const user = getData('user')
+    const user = storage.read('user')
     const device = {
         id: '',
         name: ''

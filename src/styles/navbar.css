@@ -131,7 +131,6 @@
     margin: 1rem;
     font-size: 2.4rem;
     color: var(--primary-color);
-    background: var(--background-color);
 }
 
 .navbar .navigation .profile-menu .item:hover {
@@ -144,17 +143,30 @@
     }
 }
 
-.navbar .navigation .icon {
-    border-radius: 50%;
-    padding: 0.2rem;
-    color: var(--secondary-color);
-    background: var(--secondary-font-color);
-    font-size: 3rem;
+.navbar .toggle {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--secondary-font-color);
+    border-radius: 1rem;
+    padding: 0 0.5rem 0 0.5rem;
+    margin: 1rem;
     cursor: pointer;
+    color: var(--secondary-font-color);
     transition: all 0.2s ease;
 }
 
-.navbar .navigation .icon:hover {
-    background: var(--secondary-color);
-    color: var(--secondary-font-color);
+.navbar .toggle:hover {
+    background: var(--secondary-font-color);
+    color: var(--secondary-color);
+}
+
+.navbar .navigation .toggle .icon {
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.navbar .navigation .toggle .text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 1rem;
 }

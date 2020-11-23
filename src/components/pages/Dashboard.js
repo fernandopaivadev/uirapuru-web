@@ -4,7 +4,7 @@ import Menu from '../panels/Menu'
 import Chart from '../panels/Chart'
 import Overview from '../panels/Overview'
 
-import { getData } from '../../services/storage'
+import storage from '../../services/storage'
 import { websocketConfig } from '../../services/websocket'
 import api from '../../services/api'
 
@@ -66,7 +66,7 @@ const Dashboard = ({ history }) => {
             <Menu
                 title='Unidades'
                 items={
-                    getData('user').consumerUnits
+                    storage.read('user').consumerUnits
                 }
                 subItemKey='devices'
                 setItemIndex={setConsumerUnitIndex}
@@ -77,7 +77,7 @@ const Dashboard = ({ history }) => {
                     : null
                 }
                 <ul className='devices'>
-                    {getData('user')
+                    {storage.read('user')
                         ?.consumerUnits[ consumerUnitIndex ]
                         ?.devices.map((device, deviceIndex) =>
                             <li
@@ -106,10 +106,10 @@ const Dashboard = ({ history }) => {
             </div>
             {!loading ?
                 success ?
-                    getData('collection')?.length ?
+                    storage.read('collection')?.length ?
                         <div className='charts'>
                             <Chart
-                                collection={getData('collection')}
+                                collection={storage.read('collection')}
                                 realTime={realTimeBuffer}
                                 aspectRatio={2}
                                 showDots

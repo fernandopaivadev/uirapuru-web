@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
@@ -6,124 +6,155 @@ import {
     MdExitToApp as LogoutIcon,
     MdPerson as ProfileIcon,
     MdDashboard as DashboardIcon,
-    MdBrightness4 as ToggleDarkModeIcon
+    MdBrightness7 as DarkModeEnabledIcon,
+    MdBrightness2 as DarkModeDisabledIcon
 } from 'react-icons/md'
 
 import logo from '../../assets/logo.svg'
 
-import { getData, clearData } from '../../services/storage'
+import storage from '../../services/storage'
 
 import { applyTheme } from '../../themes'
 
 import '../../styles/navbar.css'
 
-const NavBar = ({ history }) => <ul className='navbar'>
-    <li
-        className='logo'
-        key='logo'
-        onClick={() => {
-            history.push('/login')
-        }}
-    >
-        <img src={ logo } alt='tech amazon logo'/>
+const NavBar = ({ history }) => {
+    const [darkMode, setDarkMode] = useState(
+        storage.read('theme') === 'dark'
+    )
 
-        <h1 className='text'>
-            Uirapuru
-        </h1>
-    </li>
-
-    <li className='navigation' key='navigation'>
-        <ToggleDarkModeIcon
-            className='icon'
-            onClick={() => {
-                if (getData('theme') === 'dark') {
-                    applyTheme('default')
-                } else {
-                    applyTheme('dark')
-                }
-            }}
-        />
-        <h1 className='username'>
-            {getData('admin') ? '[Administrador] ': null}
-            {getData('user')?.username ?? ''}
-        </h1>
-
-        {getData('user') ?
-            <button>
-                { getData('user')?.username?.split('')[0] }
-            </button>
-            : null
+    const toggleDarkMode = () => {
+        if (storage.read('theme') === 'dark') {
+            applyTheme('default')
+            setDarkMode(false)
+        } else {
+            applyTheme('dark')
+            setDarkMode(true)
         }
+    }
 
-        <ul className='profile-menu'>
-            <div className='user'>
-                <div className='avatar'>
-                    {getData('user')?.person
-                        ? getData('user')?.person?.name.split('')[0]
-                        : getData('user')?.company?.tradeName.split('')[0]
+    return <ul className='navbar'>
+        <li
+            className='logo'
+            key='logo'
+            onClick={() => {
+                history.push('/login')
+            }}
+        >
+            <img src={ logo } alt='tech amazon logo'/>
+
+            <h1 className='text'>
+                Uirapuru
+            </h1>
+        </li>
+
+        <li className='navigation' key='navigation'>
+            <div
+                className='toggle'
+                onClick={toggleDarkMode}
+            >
+                {darkMode ?
+                    <>
+                        <p className='text'>
+                            Tema Claro
+                        </p>
+                        <DarkModeEnabledIcon
+                            className='icon'
+                        />
+                    </>
+                    :
+                    <>
+                        <p className='text'>
+                            Tema Escuro
+                        </p>
+                        <DarkModeDisabledIcon
+                            className='icon'
+                        />
+                    </>
+                }
+            </div>
+            <h1 className='username'>
+                {storage.read('access-level') === 'admin' ? '[Administrador] ': null}
+                {storage.read('user')?.username ?? ''}
+            </h1>
+
+            {storage.read('user') ?
+                <button>
+                    { storage.read('user')?.username?.split('')[0] }
+                </button>
+                : null
+            }
+
+            <ul className='profile-menu'>
+                <div className='user'>
+                    <div className='avatar'>
+                        {storage.read('user')?.person
+                            ? storage.read('user')?.person?.name.split('')[0]
+                            : storage.read('user')?.company?.tradeName.split('')[0]
                             ||
                             'A'
-                    }
+                        }
+                    </div>
+
+                    <div className='text'>
+                        <h1 className='username'>
+                            {storage.read('user')?.username || 'Administrador'}
+                        </h1>
+                        <h2 className='email'>{storage.read('user')?.email}</h2>
+                    </div>
                 </div>
 
-                <div className='text'>
-                    <h1 className='username'>
-                        {getData('user')?.username || 'Administrador'}
-                    </h1>
-                    <h2 className='email'>{getData('user')?.email}</h2>
-                </div>
-            </div>
+                {storage.read('access-level') === 'admin' ?
+                    <>
+                        <li
+                            className='item'
+                            onClick={() => {
+                                history.push('/users-list')
+                            }}>
+                            <UsersIcon className='icon' />
+                            Usuários
+                        </li>
+                    </>
+                    : null
+                }
 
-            {getData('admin') ?
-                <>
+                {storage.read('user') ?
                     <li
                         className='item'
                         onClick={() => {
-                            history.push('/users-list')
+                            history.push('/dashboard')
                         }}>
-                        <UsersIcon className='icon' />
-                            Usuários
-                    </li>
-                </>
-                : null
-            }
-
-            {getData('user') ?
-                <li
-                    className='item'
-                    onClick={() => {
-                        history.push('/dashboard')
-                    }}>
-                    <DashboardIcon className='icon' />
+                        <DashboardIcon className='icon' />
                         Dashboard
-                </li>
-                : null
-            }
+                    </li>
+                    : null
+                }
 
-            {getData('user') ?
+                {storage.read('user') ?
+                    <li
+                        className='item'
+                        onClick={() => {
+                            history.push('/profile')
+                        }}>
+                        <ProfileIcon className='icon' />
+                        Perfil
+                    </li>
+                    : null
+                }
+
                 <li
                     className='item'
                     onClick={() => {
-                        history.push('/profile')
+                        storage.clear('all')
+                        history.push('/login')
+                        window.location.reload()
                     }}>
-                    <ProfileIcon className='icon' />
-                        Perfil
-                </li>
-                : null
-            }
-
-            <li
-                className='item'
-                onClick={() => {
-                    clearData('all')
-                    history.push('/login')
-                    window.location.reload()
-                }}>
-                <LogoutIcon className='icon' />
+                    <LogoutIcon className='icon' />
                     Sair
-            </li>
-        </ul>
-    </li>
-</ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+}
 
 export default withRouter(NavBar)

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { getData, clearData } from '../../services/storage'
+import storage from '../../services/storage'
 
 import api from '../../services/api'
 
@@ -8,7 +8,17 @@ import '../../styles/userslist.css'
 import '../../styles/util.css'
 
 const UsersList = ({ history }) => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        (async () => {
+            if (await api.getUsersList() === 'OK') {
+                setLoading(false)
+            } else {
+                history.push('/dashboard')
+            }
+        })()
+    })
 
     return <div className='userslist'>
         <div className='list'>
@@ -31,7 +41,7 @@ const UsersList = ({ history }) => {
                         <button
                             className='classic-button'
                             onClick={() => {
-                                clearData('all')
+                                storage.clear('all')
                                 history.push('/login')
                             }}
                         >
@@ -41,14 +51,14 @@ const UsersList = ({ history }) => {
                     : null
                 }
             </div>
-            {getData('users-list')?.length <= 0 ?
+            {storage.read('users-list')?.length <= 0 ?
                 <h1 className='empty'>
                     Não há usuários cadastrados
                 </h1>
                 :
                 !loading ?
                     <ul>
-                        {getData('users-list')?.map(user =>
+                        {storage.read('users-list')?.map(user =>
                             <li
                                 key={user?.username}
                                 className='item'
@@ -57,7 +67,7 @@ const UsersList = ({ history }) => {
                                     if (await api.getUserData(user._id) === 'OK') {
                                         history.push('/dashboard')
                                     } else {
-                                        if (getData('user')?._id === user._id) {
+                                        if (storage.read('user')?._id === user._id) {
                                             history.push('/dashboard')
                                         } else {
                                             setLoading(false)
