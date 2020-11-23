@@ -1,5 +1,5 @@
 
-import { getData } from './storage'
+import storage from './storage'
 import api from './api'
 import io from 'socket.io-client'
 
@@ -10,7 +10,7 @@ const websocketConfig = (
     setNewMessage
 ) => {
     try {
-        const devicesList = getData('user')
+        const devicesList = storage.read('user')
             .consumerUnits[consumerUnitIndex]
             .devices.map(device => device.id)
 
@@ -19,7 +19,7 @@ const websocketConfig = (
         const socket = io(api.baseURL)
 
         socket.emit('auth', {
-            token: getData('JWT')
+            token: storage.read('JWT')
         })
 
         socket.on('auth', ({ ok }) => {

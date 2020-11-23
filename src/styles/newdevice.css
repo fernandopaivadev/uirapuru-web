@@ -16,11 +16,11 @@
     align-items: center;
     padding: 2rem;
     border-radius: 0.5rem;
-    background: #eee;
+    background: var(--background-color);
 }
 
 .newdevice .window form h1 {
-    color: var(--default-green);
+    color: var(--primary-color);
     font-size: 2.4rem;
     margin: 0 0 2.5rem 0;
 }
@@ -35,21 +35,21 @@
 .newdevice .window form label {
     font-size: 1.6rem;
     font-weight: 600;
-    color: #555;
+    color: var(--neutral-color);
 }
 
 .newdevice .window form input {
     width: 90%;
     padding: 0.5rem;
-    border: 0.2rem solid var(--default-green);
+    border: 0.2rem solid var(--primary-color);
     border-radius: 0.3rem;
     font-size: 1.8rem;
     margin: 0.2rem 0 3rem 0;
-    color: #333;
+    color: var(--primary-font-color);
 }
 
 .newdevice .window form .error-message {
-    color: #d00;
+    color: var(--error-color);
     font-size: 1.4rem;
     font-weight: 600;
     margin: -2rem auto 2rem auto;
@@ -61,22 +61,22 @@
 }
 
 .newdevice .window .buttons #cancel-button {
-    background: #d00;
+    background: var(--error-color);
 }
 
 .newdevice .window .buttons #cancel-button:hover {
-    background: #f56f55;
+    background: var(--error-light-color);
 }
 
 .newdevice .window form .success {
     font-size: 2rem;
     font-weight: 600;
-    color: var(--default-green);
+    color: var(--primary-color);
 }
 
 .newdevice .window form .error {
     font-size: 2rem;
     font-weight: 600;
-    color: #d00;
+    color: var(--error-color);
     margin: 2rem 0 2rem 0;
 }

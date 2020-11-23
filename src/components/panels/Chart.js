@@ -2,12 +2,15 @@ import React, { useEffect } from 'react'
 
 import { Chart as ChartJS } from 'chart.js'
 
-import themes from '../../themes'
+import storage from '../../services/storage'
+
+import { themes } from '../../themes'
 
 import '../../styles/chart.css'
 
 const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
-    const { default: { traceColors } } = themes
+    const theme = themes[storage.read('theme')]
+    const { traceColors } = theme
 
     useEffect(() => {
         collection.forEach(({ datasets, labels }, index) => {
@@ -36,12 +39,13 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
                     animation: false,
                     devicePixelRatio: 2,
                     responsive: true,
-                    aspectRatio: aspectRatio ?? 2.6,
+                    aspectRatio: aspectRatio ?? 2.4,
                     maintainAspectRatio: true,
                     legend: {
                         labels: {
                             boxWidth: 10,
-
+                            fontColor: theme.primaryFontColor,
+                            fontSize: 20
                         }
                     },
                     tooltips: {
@@ -49,12 +53,19 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
                         axis: 'y',
                         intersect: false,
                         backgroundColor: '#333',
-
                     },
                     scales: {
                         yAxes: [{
                             ticks: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                fontSize: 20,
+                                fontColor: theme.primaryFontColor
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontSize: 20,
+                                fontColor: theme.primaryFontColor
                             }
                         }]
                     }

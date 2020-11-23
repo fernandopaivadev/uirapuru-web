@@ -87,7 +87,7 @@ const ResetPassword = ({ history }) => {
                 }
 
                 {error ?
-                    <h1 className='message'>
+                    <h1 className='error'>
                         {errorMessage}
                     </h1>
                     :null

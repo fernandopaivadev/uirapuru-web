@@ -4,8 +4,8 @@
     justify-items: center;
     width: 100vw;
     height: 100vh;
-    /* position: fixed; */
-    background: #eee;
+    position: fixed;
+    background: var(--background-color);
 }
 
 .plot .main .content-container {
@@ -40,7 +40,7 @@
 }
 
 .plot .main .content-container .error p {
-    color: #dd0000;
+    color: var(--error-color);
     font-size: 2rem;
     font-weight: 600;
 }
@@ -55,7 +55,7 @@
 }
 
 .plot .main .content-container .empty p {
-    color: #999;
+    color: var(--neutral-color);
     font-size: 2rem;
     font-weight: 600;
 }
@@ -82,23 +82,24 @@
     width: 20rem;
     padding: 0.3rem;
     margin: 0 0 0 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--primary-color);
     border-radius: 0.3rem;
     font-size: 2rem;
-    background: #eee;
+    background: var(--background-color);
+    color: var(--primary-font-color);
 }
 
 .plot .main .date-picker .icon {
     font-size: 3.5rem;
-    color: #eee;
+    color: var(--secondary-font-color);
     border-radius: 50%;
     margin: 0.5rem;
-    background: var(--default-green);
+    background: var(--primary-color);
     cursor: pointer;
 }
 
 .plot .main .date-picker .icon:hover {
-    background: var(--default-light-green);
+    background: var(--primary-light-color);
 }
 
 @media (orientation: portrait) {

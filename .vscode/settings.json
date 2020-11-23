@@ -36,5 +36,5 @@
     "editor.fontLigatures": true,
     "editor.fontSize": 16,
     "workbench.colorTheme": "Dracula",
-    "workbench.activityBar.visible": true
+    "workbench.activityBar.visible": false
 }

@@ -8,7 +8,7 @@ import Modal from '../panels/Modal'
 
 import NewDevice from '../panels/NewDevice'
 
-import { getData, clearData } from '../../services/storage'
+import storage from '../../services/storage'
 
 import api from '../../services/api'
 
@@ -30,9 +30,9 @@ import '../../styles/profile.css'
 import '../../styles/util.css'
 
 const Profile = ({ history }) => {
-    const admin = getData('admin')
-    const user = getData('user')
-    const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
+    const admin = storage.read('access-level') === 'admin'
+    const user = storage.read('user')
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState([false,false])
     const [success, setSuccess] = useState([false,false])
@@ -44,7 +44,7 @@ const Profile = ({ history }) => {
 
     useEffect(() => {
         if (consumerUnitIndex) {
-            const len = getData('user')
+            const len = storage.read('user')
                 .consumerUnits[consumerUnitIndex]
                 .devices
                 .length + 2
@@ -59,7 +59,7 @@ const Profile = ({ history }) => {
 
     useEffect(() => {
         if (consumerUnitIndex >= 0) {
-            const len = getData('user')
+            const len = storage.read('user')
                 .consumerUnits[consumerUnitIndex]
                 .devices
                 .length + 2
@@ -73,12 +73,12 @@ const Profile = ({ history }) => {
     }, [consumerUnitIndex])
 
     const deleteUser = async () => {
-        const result = await api.deleteUser(getData('user')._id)
+        const result = await api.deleteUser(storage.read('user')._id)
 
         if (result === 'OK') {
             history.push('/users-list')
         } else {
-            clearData('all')
+            storage.clear('all')
             history.push('/login')
         }
     }
@@ -180,11 +180,11 @@ const Profile = ({ history }) => {
         <div className='main'>
             <Menu
                 title='Unidades'
-                items = {getData('user').consumerUnits}
+                items = {storage.read('user').consumerUnits}
                 setItemIndex = { setConsumerUnitIndex }
                 subItemKey='devices'
             />
-            {getData('user') ?
+            {storage.read('user') ?
                 <form className='user-data'>
                     <h1>
                         Dados do Usuário
@@ -195,7 +195,7 @@ const Profile = ({ history }) => {
                         maxLength='20'
                         minLength='6'
                         required
-                        defaultValue={getData('user')?.username ?? ''}
+                        defaultValue={storage.read('user')?.username ?? ''}
                         readOnly= {!admin}
                         onChange={ event => {
                             user.username = event.target.value
@@ -214,7 +214,7 @@ const Profile = ({ history }) => {
                         maxLength='40'
                         minLength='10'
                         required
-                        defaultValue={getData('user')?.email ?? ''}
+                        defaultValue={storage.read('user')?.email ?? ''}
                         readOnly= {!admin}
                         onChange={ event => {
                             user.email = event.target.value
@@ -229,7 +229,7 @@ const Profile = ({ history }) => {
                         name='phone'
                         required
                         pattern='\(\d{2}\) \d{5}-\d{4}$'
-                        defaultValue={formatPhone(getData('user')?.phone) ?? ''}
+                        defaultValue={formatPhone(storage.read('user')?.phone) ?? ''}
                         readOnly= {!admin}
                         onChange={ event => {
                             user.phone = getOnlyNumbers(event.target.value)
@@ -242,7 +242,7 @@ const Profile = ({ history }) => {
                         Número de telefone inválido
                     </p>
 
-                    {getData('user')?.person ?
+                    {storage.read('user')?.person ?
                         <>
                             <label>Nome completo</label>
                             <input
@@ -250,7 +250,7 @@ const Profile = ({ history }) => {
                                 maxLength='128'
                                 minLength='10'
                                 required
-                                defaultValue={getData('user')?.person
+                                defaultValue={storage.read('user')?.person
                                     ?.name ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -266,7 +266,7 @@ const Profile = ({ history }) => {
                                 name='cpf'
                                 required
                                 pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
-                                defaultValue={formatCPF(getData('user')?.person
+                                defaultValue={formatCPF(storage.read('user')?.person
                                     ?.cpf) ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -288,7 +288,7 @@ const Profile = ({ history }) => {
                                 required
                                 pattern='\d{2}\/\d{2}\/\d{4}'
                                 defaultValue={formatTimeStamp(
-                                    getData('user')?.person?.birth
+                                    storage.read('user')?.person?.birth
                                 ) ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -311,7 +311,7 @@ const Profile = ({ history }) => {
                                 pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                                 defaultValue={
                                     formatCNPJ(
-                                        getData('user')?.company?.cnpj
+                                        storage.read('user')?.company?.cnpj
                                     ) ?? '--'
                                 }
                                 readOnly= {!admin}
@@ -335,7 +335,7 @@ const Profile = ({ history }) => {
                                 maxLength='128'
                                 minLength='6'
                                 required
-                                defaultValue={getData('user')?.company
+                                defaultValue={storage.read('user')?.company
                                     ?.name ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -354,7 +354,7 @@ const Profile = ({ history }) => {
                                 maxLength='128'
                                 minLength='6'
                                 required
-                                defaultValue={getData('user')?.company
+                                defaultValue={storage.read('user')?.company
                                     ?.tradeName ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -373,7 +373,7 @@ const Profile = ({ history }) => {
                                 maxLength='512'
                                 minLength='50'
                                 required
-                                defaultValue={getData('user')?.company
+                                defaultValue={storage.read('user')?.company
                                     ?.description ?? ''}
                                 readOnly= {!admin}
                                 onChange={ event => {
@@ -428,7 +428,7 @@ const Profile = ({ history }) => {
                 : null
             }
 
-            {getData('user').consumerUnits[ consumerUnitIndex ] ?
+            {storage.read('user').consumerUnits[ consumerUnitIndex ] ?
                 <form className='consumer-unit-data'>
                     <h1>
                         Dados da Unidade Consumidora
@@ -439,7 +439,7 @@ const Profile = ({ history }) => {
                         minLength='6'
                         maxLength='16'
                         required
-                        defaultValue={getData('user')
+                        defaultValue={storage.read('user')
                             .consumerUnits[ consumerUnitIndex ]
                             ?.number ?? ''}
                         readOnly= {!admin}
@@ -458,7 +458,7 @@ const Profile = ({ history }) => {
                         maxLength='64'
                         minLength='8'
                         required
-                        defaultValue={getData('user')
+                        defaultValue={storage.read('user')
                             .consumerUnits[ consumerUnitIndex ]
                             ?.name ?? ''}
                         readOnly= {!admin}
@@ -477,7 +477,7 @@ const Profile = ({ history }) => {
                         maxLength='256'
                         minLength='10'
                         required
-                        defaultValue={getData('user')
+                        defaultValue={storage.read('user')
                             .consumerUnits[ consumerUnitIndex ]
                             ?.address ?? ''}
                         readOnly= {!admin}
@@ -495,7 +495,7 @@ const Profile = ({ history }) => {
                         name='zip'
                         required
                         pattern='\d{5}-\d{3}'
-                        defaultValue={formatCEP(getData('user')
+                        defaultValue={formatCEP(storage.read('user')
                             .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
                         readOnly= {!admin}
                         onChange={ event => {
@@ -516,7 +516,7 @@ const Profile = ({ history }) => {
                         maxLength='64'
                         minLength='3'
                         required
-                        defaultValue={getData('user')
+                        defaultValue={storage.read('user')
                             .consumerUnits[ consumerUnitIndex ]
                             ?.city ?? ''}
                         readOnly= {!admin}
@@ -535,7 +535,7 @@ const Profile = ({ history }) => {
                         maxLength='64'
                         minLength='3'
                         required
-                        defaultValue={getData('user')
+                        defaultValue={storage.read('user')
                             .consumerUnits[ consumerUnitIndex ]
                             ?.state ?? ''}
                         readOnly= {!admin}
@@ -631,7 +631,7 @@ const Profile = ({ history }) => {
                     }
                 </div>
             }
-            {getData('user').consumerUnits[ consumerUnitIndex ] ?
+            {storage.read('user').consumerUnits[ consumerUnitIndex ] ?
                 <div className='devices-list'>
                     <div className='header'>
                         <h1>Dispositivos</h1>
@@ -649,7 +649,7 @@ const Profile = ({ history }) => {
                         }
                     </div>
                     <ul>
-                        {getData('user')
+                        {storage.read('user')
                             .consumerUnits[ consumerUnitIndex ]
                             .devices.map((device, index) =>
                                 <li key={index}>

@@ -4,7 +4,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #eee;
+    background: var(--background-color);
     border-radius: 0.5rem;
 }
 
@@ -27,7 +27,7 @@
     font-size: 3.4rem;
     font-weight: 400;
     letter-spacing: 0.3rem;
-    color: #333;
+    color: var(--primary-font-color);
 }
 
 .login form .logo img {
@@ -44,7 +44,7 @@
 .login form label {
     font-size: 1.6rem;
     font-weight: 600;
-    color: #555;
+    color: var(--neutral-color);
     width: 28rem;
     text-align: left;
 }
@@ -54,15 +54,16 @@
     width: 28rem;
     height: 4rem;
     border-radius: 0.3rem;
-    border: 1px solid var(--default-green);
+    border: 1px solid var(--primary-color);
     font-size: 1.8rem;
     padding: 1rem;
-    background: #eee;
+    background: var(--background-color);
+    color: var(--primary-font-color);
 }
 
 .login form input:focus,
 .login form input:hover {
-    border-color: var(--default-light-green);
+    border-color: var(--primary-light-color);
 }
 
 .login form #toggle-password {
@@ -74,22 +75,22 @@
     font-size: 1.6rem;
     padding: 0.2rem;
     text-decoration: none;
-    color: #333;
+    color: var(--primary-font-color);
 }
 
 .login form #toggle-password:hover {
-    color: #309d20;
+    color: var(--primary-color);
 }
 
 .login form .link {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #777;
+    color: var(--neutral-color);
     cursor: pointer;
 }
 
 .login form .link:hover {
-    color: var(--default-light-green);
+    color: var(--primary-light-color);
 }
 
 .login form .loading-container {
@@ -100,12 +101,12 @@
 
 .login form .error {
     font-size: 1.6rem;
-    color: #d00;
-    margin: 2rem;
+    color: var(--error-color);
+    margin: 1rem;
     text-align: center;
 }
 
 .login form .message {
-    color: var(--default-green);
+    color: var(--primary-color);
     font-size: 2rem;
 }

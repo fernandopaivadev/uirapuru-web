@@ -12,8 +12,7 @@
 }
 
 .userslist .list {
-    background: #eee;
-    /* background: #eee; */
+    background: var(--background-color);
     min-width: 40rem;
     min-height: 18rem;
     border-radius: 0.5rem;
@@ -29,11 +28,11 @@
 }
 
 .userslist .list .item:hover {
-    background: #ccc;
+    background: var(--hovered-color);
 }
 
 .userslist .list .title {
-    color: var(--default-green);
+    color: var(--primary-color);
     font-size: 2.4rem;
     margin: 2rem auto 0 auto;
     font-weight: 600;
@@ -46,7 +45,7 @@
 }
 
 .userslist .list .item {
-    color: #fff;
+    color: var(--secondary-font-color);
     margin: 2rem 2rem 2rem 0rem;
 }
 
@@ -55,28 +54,28 @@
     border-radius: 50%;
     margin: 0 1rem 0 0;
     cursor: pointer;
-    background: var(--default-green);
+    background: var(--primary-color);
     width: 4rem;
     height: 4rem;
     font-size: 2rem;
     font-weight: 600;
-    color: #fff;
+    color: var(--secondary-font-color);
 }
 
 .userslist .list .item .text .name,
 .userslist .list .item .text .username {
-    color: #333;
+    color: var(--primary-font-color);
     font-size: 2rem;
 }
 
 .userslist .list .item .text .number,
 .userslist .list .item .text .email {
-    color: #555;
+    color: var(--neutral-color);
     font-size: 1.8rem;
 }
 
 .userslist .list .item .text .address {
-    color: #555;
+    color: var(--neutral-color);
     font-size: 1.6rem;
 }
 

@@ -8,7 +8,7 @@
     padding: 1.5rem;
     grid-column: 2/3;
     margin: 1rem;
-    border: 1px solid var(--default-green);
+    border: 1px solid var(--primary-color);
     border-radius: 0.5rem;
 }
 
@@ -21,18 +21,18 @@
 .overview .value .icon {
     margin-right: 1rem;
     font-size: 3rem;
-    color: var(--default-green);
+    color: var(--primary-color);
 }
 
 .overview .value .text {
     margin: 0 0.8rem 0 0.8rem;
     font-size: 1.6rem;
     font-weight: 500;
-    color: #555;
+    color: var(--neutral-color);
 }
 
 .overview .value .payload {
     font-size: 1.6rem;
     font-weight: 600;
-    color: #333;
+    color: var(--primary-font-color);
 }

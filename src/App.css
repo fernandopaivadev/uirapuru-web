@@ -11,10 +11,6 @@
 }
 
 html {
-    --default-green: #309d20;
-    --default-light-green: #3fc82a;
-    --default-purple: #d900b7;
-    --default-light-purple: #712b74;
     font-size: 65.5%;
 }
 
@@ -43,18 +39,18 @@ button {
 }
 
 ::-webkit-scrollbar-track-piece {
-    background-color: #eee;
+    background-color: var(--background-color);
 }
 
 ::-webkit-scrollbar-thumb:vertical {
     height: 0.5rem;
-    background-color: #ccc;
+    background-color: var(--neutral-color);
     border-radius: 0.5rem;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
     width: 0.5rem;
-    background-color: #ccc;
+    background-color: var(--neutral-color);
 }
 
 @media screen and (min-width: 2000px) {

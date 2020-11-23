@@ -3,7 +3,7 @@
     grid-template-columns: 12% 33% 33% 22%;
     width: 100vw;
     height: 100vh;
-    background: #eee;
+    background: var(--background-color);
     position: fixed;
 }
 
@@ -13,15 +13,15 @@
 
 .profile .main input {
     padding: 0.5rem;
-    border: 0.2rem solid var(--default-green);
+    border: 0.2rem solid var(--primary-color);
     border-radius: 0.3rem;
     font-size: 1.8rem;
     margin: 0.2rem 0 3rem 0;
-    color: #333;
+    color: var(--primary-font-color);
 }
 
 .profile .error-message {
-    color: #d00;
+    color: var(--error-color);
     font-size: 1.4rem;
     font-weight: 600;
     margin: -2rem auto 0rem auto;
@@ -31,13 +31,13 @@
 .profile .main label {
     font-size: 1.6rem;
     font-weight: 600;
-    color: #555;
+    color: var(--neutral-color);
 }
 
 .profile .main input,
 .profile .main label {
     width: 85%;
-    background: #eee;
+    background: var(--background-color);
 }
 
 .profile .main form {
@@ -71,23 +71,23 @@
 }
 
 .profile .nav-buttons #delete-button {
-    background: #d00;
+    background: var(--error-color);
 }
 
 .profile .nav-buttons #delete-button:hover {
-    background: #f56f55;
+    background: var(--error-light-color);
 }
 
 .profile .buttons #delete-button {
-    background: #d00;
+    background: var(--error-color);
 }
 
 .profile .buttons #delete-button:hover {
-    background: #f56f55;
+    background: var(--error-light-color);
 }
 
 .profile form h1 {
-    color: var(--default-green);
+    color: var(--primary-color);
     font-size: 2.4rem;
     margin: 1.5rem 0 2rem 0;
 }
@@ -107,7 +107,7 @@
     width: 100%;
     font-size: 3rem;
     font-weight: 600;
-    color: #777;
+    color: var(--neutral-color);
 }
 
 .profile .main .empty p {
@@ -123,13 +123,13 @@
 .profile .main form .success {
     font-size: 2rem;
     font-weight: 600;
-    color: var(--default-green);
+    color: var(--primary-color);
 }
 
 .profile .main form .error {
     font-size: 2rem;
     font-weight: 600;
-    color: #d00;
+    color: var(--error-color);
 }
 
 .profile .main .devices-list {
@@ -153,7 +153,7 @@
 .profile .main .devices-list .header h1 {
     font-size: 2.4rem;
     font-weight: 600;
-    color: var(--default-green);
+    color: var(--primary-color);
     margin: 1rem;
 }
 
@@ -163,7 +163,7 @@
     width: 90%;
     align-items: center;
     padding: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--primary-color);
     border-radius: 0.3rem;
 }
 

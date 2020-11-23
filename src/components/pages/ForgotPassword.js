@@ -80,7 +80,7 @@ const ForgotPassword = ({ history }) => {
             }
 
             {error ?
-                <p className='message'>
+                <p className='error'>
                     {errorMessage}
                 </p>
                 :null

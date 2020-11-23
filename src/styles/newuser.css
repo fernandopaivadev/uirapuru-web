@@ -3,7 +3,7 @@
 }
 
 .newuser .main {
-    background: #eee;
+    background: var(--background-color);
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -11,15 +11,15 @@
 
 .newuser .main input {
     padding: 0.5rem;
-    border: 0.2rem solid var(--default-green);
+    border: 0.2rem solid var(--primary-color);
     border-radius: 0.3rem;
     font-size: 1.8rem;
     margin: 0.2rem 0 2.5rem 0;
-    color: #333;
+    color: var(--primary-font-color);
 }
 
 .newuser .error-message {
-    color: #d00;
+    color: var(--error-color);
     font-size: 1.4rem;
     font-weight: 600;
     margin: -2rem auto 1rem auto;
@@ -29,19 +29,19 @@
 .newuser .main label {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #555;
+    color: var(--neutral-color);
 }
 
 .newuser .main label {
     font-size: 1.8rem;
     font-weight: 600;
-    color: #555;
+    color: var(--neutral-color);
 }
 
 .newuser .main input,
 .newuser .main label {
     width: 40%;
-    background: #eee;
+    background: var(--background-color);
 }
 
 .newuser .main form {
@@ -75,7 +75,7 @@
 }
 
 .newuser .main form h1 {
-    color: var(--default-green);
+    color: var(--primary-color);
     font-size: 2.4rem;
     margin: 1.5rem 0 2rem 0;
 }
@@ -83,19 +83,19 @@
 .newuser .main form .success {
     font-size: 2rem;
     font-weight: 600;
-    color: var(--default-green);
+    color: var(--primary-color);
 }
 
 .newuser .main form .error {
     font-size: 2rem;
     font-weight: 600;
-    color: #d00;
+    color: var(--error-color);
 }
 
 .newuser .main form .validation-error {
     font-size: 1.6rem;
     font-weight: 600;
-    color: #d00;
+    color: var(--error-color);
     margin: -2rem 0 1rem 0;
 }
 

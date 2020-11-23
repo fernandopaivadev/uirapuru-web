@@ -1,11 +1,10 @@
 import api from './api'
-import { getData } from './storage'
+import storage from './storage'
 
 const schedule = {
     updateUser: () => {
         const retry = async () => {
-            console.log('Updating')
-            if (!(await api.updateUser(getData('user')) === 'OK')) {
+            if (!(await api.updateUser(storage.read('user')) === 'OK')) {
                 setTimeout(retry, 5000)
             }
         }

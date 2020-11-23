@@ -1,15 +1,15 @@
-const storeData = (key, value) => {
+const write = (key, value) => {
     localStorage.setItem(
         key,
         JSON.stringify(value)
     )
 }
 
-const getData = key => JSON.parse(
+const read = key => JSON.parse(
     localStorage.getItem(key)
 )
 
-const clearData = item => {
+const clear = item => {
     if (item === 'all') {
         localStorage.clear()
     } else {
@@ -17,8 +17,8 @@ const clearData = item => {
     }
 }
 
-export {
-    storeData,
-    getData,
-    clearData
+export default {
+    write,
+    read,
+    clear
 }
