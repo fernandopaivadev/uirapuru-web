@@ -4,8 +4,6 @@ import storage from '../../services/storage'
 
 import api from '../../services/api'
 
-// import schedule from '../../services/schedule'
-
 import {
     formatDeviceID,
     validateForm,
@@ -14,7 +12,7 @@ import {
 
 import '../../styles/newdevice.css'
 
-const NewUnit = ({ consumerUnitIndex, exit }) => {
+const NewDevice = ({ consumerUnitIndex, exit }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(
@@ -126,4 +124,4 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
     </div>
 }
 
-export default NewUnit
+export default NewDevice
