@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import NavBar from '../panels/NavBar'
-import Menu from '../panels/Menu'
-import Chart from '../panels/Chart'
-import Overview from '../panels/Overview'
+import NavBar from '../blocks/NavBar'
+import Menu from '../blocks/Menu'
+import Chart from '../blocks/Chart'
+import Overview from '../blocks/Overview'
 
 import storage from '../../services/storage'
 import websocket from '../../services/websocket'

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import NavBar from '../panels/NavBar'
-import Menu from '../panels/Menu'
-import Chart from '../panels/Chart'
-import Export from '../panels/Export'
+import NavBar from '../blocks/NavBar'
+import Menu from '../blocks/Menu'
+import Chart from '../blocks/Chart'
+import Export from '../blocks/Export'
 
 import storage from '../../services/storage'
 import api from '../../services/api'

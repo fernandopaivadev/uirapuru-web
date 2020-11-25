@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
 
-import NavBar from '../panels/NavBar'
+import NavBar from '../blocks/NavBar'
 
-import Modal from '../panels/Modal'
+import Modal from '../blocks/Modal'
 
 import api from '../../services/api'
 
@@ -69,7 +69,6 @@ const NewUser = ({ history }) => {
         } else if (mode === 'all') {
             document.querySelector('form').reset()
         }
-
     }
 
     const submit = async () => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import NavBar from '../panels/NavBar'
+import NavBar from '../blocks/NavBar'
 
 import api from '../../services/api'
 

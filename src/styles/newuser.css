@@ -9,23 +9,16 @@
     position: fixed;
 }
 
-.newuser .main input {
+.newuser .main input,
+.newuser .main select {
     padding: 0.5rem;
     border: 0.2rem solid var(--primary-color);
     border-radius: 0.3rem;
     font-size: 1.8rem;
     margin: 0.2rem 0 2.5rem 0;
     color: var(--primary-font-color);
-}
-
-.newuser .main select {
-    padding: 0.5rem;
-    border: 0.2rem solid var(--primary-color);
-    border-radius: 0.3rem;
-    font-size: 1.8rem;
-    margin: 0.2rem auto 2.5rem 53.5rem;
-    color: var(--primary-font-color);
     background: var(--background-color);
+    width: 40%;
 }
 
 .newuser .error-message {

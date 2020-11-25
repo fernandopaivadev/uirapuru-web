@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
-import NavBar from '../panels/NavBar'
+import NavBar from '../blocks/NavBar'
 
-import Menu from '../panels/Menu'
+import Menu from '../blocks/Menu'
 
-import Modal from '../panels/Modal'
+import Modal from '../blocks/Modal'
 
-import NewDevice from '../panels/NewDevice'
+import NewDevice from '../blocks/NewDevice'
 
 import storage from '../../services/storage'
 
@@ -32,6 +32,7 @@ import '../../styles/util.css'
 const Profile = ({ history }) => {
     const admin = storage.read('access-level') === 'admin'
     const user = storage.read('user')
+
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState([false,false])
