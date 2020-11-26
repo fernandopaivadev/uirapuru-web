@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import api from '../../services/api'
 import logo from '../../assets/logo.svg'
 
-import '../../styles/login.css'
-import '../../styles/util.css'
+import styles from '../../styles/login'
+import global from '../../styles/global'
 
 const ForgotPassword = ({ history }) => {
     const [username, setUsername] = useState('')
@@ -29,26 +29,26 @@ const ForgotPassword = ({ history }) => {
         }
     }
 
-    return <div className='login'>
-        <form onSubmit={submit}>
-            <div className='logo'>
+    return <styles.main>
+        <styles.form onSubmit={submit}>
+            <styles.logo>
                 <img
                     src={logo}
                     alt='Tech Amazon Logo'
                 />
-                <h1>Uirapuru</h1>
-            </div>
+                <p>Uirapuru</p>
+            </styles.logo>
 
             {emailSent ?
-                <p className='message'>
+                <styles.message>
                     Enviamos um link para o seu email
-                </p>
+                </styles.message>
                 :
                 <>
-                    <label>
+                    <styles.label>
                         E-mail ou nome de usuário
-                    </label>
-                    <input
+                    </styles.label>
+                    <styles.input
                         required
                         onChange={event => {
                             setUsername(event.target.value)
@@ -58,35 +58,33 @@ const ForgotPassword = ({ history }) => {
             }
 
             {loading ?
-                <div className='loading-container'>
+                <styles.loading>
                     <progress className='circular-progress'/>
-                </div>
+                </styles.loading>
                 : emailSent ?
-                    <button
-                        className='classic-button'
+                    <styles.classicButton
                         onClick={() => {
                             history.push('/login')
                         }}
                     >
                         FAZER LOGIN
-                    </button>
+                    </styles.classicButton>
                     :
-                    <button
+                    <global.classicButton
                         type='submit'
-                        className='classic-button'
                     >
                         ENVIAR LINK
-                    </button>
+                    </global.classicButton>
             }
 
             {error ?
-                <p className='error'>
+                <styles.error>
                     {errorMessage}
-                </p>
+                </styles.error>
                 :null
             }
-        </form>
-    </div>
+        </styles.form>
+    </styles.main>
 }
 
 export default ForgotPassword

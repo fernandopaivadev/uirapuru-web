@@ -16,7 +16,7 @@ import storage from '../../services/storage'
 
 import { applyTheme } from '../../themes'
 
-import '../../styles/navbar.css'
+import styles from '../../styles/navbar'
 
 const NavBar = ({ history }) => {
     const [darkMode, setDarkMode] = useState(
@@ -33,9 +33,8 @@ const NavBar = ({ history }) => {
         }
     }
 
-    return <ul className='navbar'>
-        <li
-            className='logo'
+    return <styles.main>
+        <styles.logo
             key='logo'
             onClick={() => {
                 if (storage.read('access-level') === 'admin') {
@@ -47,19 +46,20 @@ const NavBar = ({ history }) => {
         >
             <img src={ logo } alt='tech amazon logo'/>
 
-            <h1 className='text'>
+            <p>
                 Uirapuru
-            </h1>
-        </li>
+            </p>
+        </styles.logo>
 
-        <li className='navigation' key='navigation'>
-            <div
-                className='toggle'
+        <styles.navigation
+            key='navigation'
+        >
+            <styles.toggle
                 onClick={toggleDarkMode}
             >
                 {darkMode ?
                     <>
-                        <p className='text'>
+                        <p>
                             Tema Claro
                         </p>
                         <DarkModeEnabledIcon
@@ -68,7 +68,7 @@ const NavBar = ({ history }) => {
                     </>
                     :
                     <>
-                        <p className='text'>
+                        <p>
                             Tema Escuro
                         </p>
                         <DarkModeDisabledIcon
@@ -76,78 +76,74 @@ const NavBar = ({ history }) => {
                         />
                     </>
                 }
-            </div>
-            <h1 className='username'>
+            </styles.toggle>
+            <styles.username>
                 {storage.read('access-level') === 'admin' ? 'Administrador | ': null}
                 {storage.read('user')?.username ?? ''}
-            </h1>
+            </styles.username>
 
             {storage.read('user') ?
-                <button>
+                <styles.avatar>
                     { storage.read('user')?.username?.split('')[0] }
-                </button>
+                </styles.avatar>
                 : null
             }
 
-            <ul className='profile-menu'>
-                <div className='user'>
-                    <div className='avatar'>
+            <styles.profileMenu>
+                <styles.userInfo>
+                    <styles.avatar>
                         {storage.read('user')?.person
                             ? storage.read('user')?.person?.name.split('')[0]
                             : storage.read('user')?.company?.tradeName.split('')[0]
                             ||
                             'A'
                         }
-                    </div>
+                    </styles.avatar>
 
-                    <div className='text'>
+                    <styles.textInfo>
                         <h1 className='username'>
                             {storage.read('user')?.username || 'Administrador'}
                         </h1>
                         <h2 className='email'>{storage.read('user')?.email}</h2>
-                    </div>
-                </div>
+                    </styles.textInfo>
+                </styles.userInfo>
 
                 {storage.read('access-level') === 'admin' ?
                     <>
-                        <li
-                            className='item'
+                        <styles.item
                             onClick={() => {
                                 history.push('/users-list')
                             }}>
                             <UsersIcon className='icon' />
                             Usuários
-                        </li>
+                        </styles.item>
                     </>
                     : null
                 }
 
                 {storage.read('user') ?
-                    <li
-                        className='item'
+                    <styles.item
                         onClick={() => {
                             history.push('/dashboard')
                         }}>
                         <DashboardIcon className='icon' />
                         Dashboard
-                    </li>
+                    </styles.item>
                     : null
                 }
 
                 {storage.read('user') ?
-                    <li
-                        className='item'
+                    <styles.item
                         onClick={() => {
                             history.push('/profile')
                         }}>
                         <ProfileIcon className='icon' />
                         Perfil
-                    </li>
+                    </styles.item>
                     : null
                 }
 
-                <li
-                    className='item'
+                <styles.item
                     onClick={() => {
                         storage.clear('all')
                         history.push('/login')
@@ -155,10 +151,10 @@ const NavBar = ({ history }) => {
                     }}>
                     <LogoutIcon className='icon' />
                     Sair
-                </li>
-            </ul>
-        </li>
-    </ul>
+                </styles.item>
+            </styles.profileMenu>
+        </styles.navigation>
+    </styles.main>
 }
 
 export default withRouter(NavBar)

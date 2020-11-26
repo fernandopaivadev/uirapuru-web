@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import api from '../../services/api'
 import logo from '../../assets/logo.svg'
 
-import '../../styles/login.css'
-import '../../styles/util.css'
+import styles from '../../styles/login'
+import global from '../../styles/global'
 
 const ResetPassword = ({ history }) => {
     const [error, setError] = useState(false)
@@ -35,26 +35,26 @@ const ResetPassword = ({ history }) => {
     }
 
     return (
-        <div className='login'>
-            <form onSubmit={submit}>
-                <div className='logo'>
+        <styles.main>
+            <styles.form onSubmit={submit}>
+                <styles.logo>
                     <img
                         src={logo}
                         alt='Tech Amazon Logo'
                     />
-                    <h1>Uirapuru</h1>
-                </div>
+                    <p>Uirapuru</p>
+                </styles.logo>
 
                 {passwordChanged ?
-                    <h1 className='message'>
+                    <styles.message>
                         Senha alterada com sucesso
-                    </h1>
+                    </styles.message>
                     :
                     <>
-                        <label>
+                        <styles.label>
                             Digite a nova senha
-                        </label>
-                        <input
+                        </styles.label>
+                        <styles.input
                             required
                             type='password'
                             onChange={event => {
@@ -65,35 +65,35 @@ const ResetPassword = ({ history }) => {
                 }
 
                 {loading ?
-                    <div className='loading-container'>
+                    <styles.loading>
                         <progress className='circular-progress'/>
-                    </div>
+                    </styles.loading>
                     : passwordChanged ?
-                        <button
+                        <global.classicButton
                             className='classic-button'
                             onClick={() => {
                                 history.push('/login')
                             }}
                         >
                             FAZER LOGIN
-                        </button>
+                        </global.classicButton>
                         :
-                        <button
+                        <global.classicButton
                             type='submit'
                             className='classic-button'
                         >
                             SALVAR
-                        </button>
+                        </global.classicButton>
                 }
 
                 {error ?
-                    <h1 className='error'>
+                    <styles.error>
                         {errorMessage}
-                    </h1>
+                    </styles.error>
                     :null
                 }
-            </form>
-        </div>
+            </styles.form>
+        </styles.main>
     )
 }
 
