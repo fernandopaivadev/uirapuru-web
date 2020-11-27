@@ -4,7 +4,7 @@ import api from '../../services/api'
 import logo from '../../assets/logo.svg'
 
 import styles from '../../styles/login'
-import global from '../../styles/global'
+import util from '../../styles/util'
 
 const ForgotPassword = ({ history }) => {
     const [username, setUsername] = useState('')
@@ -70,11 +70,11 @@ const ForgotPassword = ({ history }) => {
                         FAZER LOGIN
                     </styles.classicButton>
                     :
-                    <global.classicButton
+                    <util.classicButton
                         type='submit'
                     >
                         ENVIAR LINK
-                    </global.classicButton>
+                    </util.classicButton>
             }
 
             {error ?

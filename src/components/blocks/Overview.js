@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { themes } from '../../themes'
+import { themes } from '../../styles/themes'
 
 import {
     FaThermometerThreeQuarters,

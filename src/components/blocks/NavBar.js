@@ -14,7 +14,7 @@ import logo from '../../assets/logo.svg'
 
 import storage from '../../services/storage'
 
-import { applyTheme } from '../../themes'
+import { applyTheme } from '../../styles/themes'
 
 import styles from '../../styles/navbar'
 
@@ -84,7 +84,7 @@ const NavBar = ({ history }) => {
 
             {storage.read('user') ?
                 <styles.avatar>
-                    { storage.read('user')?.username?.split('')[0] }
+                    { storage.read('user')?.username?.split('')[0].toUpperCase()}
                 </styles.avatar>
                 : null
             }
@@ -101,10 +101,10 @@ const NavBar = ({ history }) => {
                     </styles.avatar>
 
                     <styles.textInfo>
-                        <h1 className='username'>
+                        <p className='username'>
                             {storage.read('user')?.username || 'Administrador'}
-                        </h1>
-                        <h2 className='email'>{storage.read('user')?.email}</h2>
+                        </p>
+                        <p className='email'>{storage.read('user')?.email}</p>
                     </styles.textInfo>
                 </styles.userInfo>
 

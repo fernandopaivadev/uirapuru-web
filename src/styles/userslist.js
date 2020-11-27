@@ -1,4 +1,6 @@
-.userslist {
+import styled from 'styled-components'
+
+const main = styled.div`
     display: grid;
     width: 100%;
     height: 100%;
@@ -9,83 +11,79 @@
     z-index: 1;
     align-content: center;
     justify-content: center;
-}
+`
 
-.userslist .list {
+const container = styled.div`
     background: var(--background-color);
     min-width: 40rem;
     min-height: 18rem;
     border-radius: 0.5rem;
-}
-
-.userslist .list .item {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    padding: 1rem 2rem 1rem 2rem;
-    width: 100%;
-}
-
-.userslist .list .item:hover {
-    background: var(--hovered-color);
-}
-
-.userslist .list .title {
+`
+const title = styled.p`
     color: var(--primary-color);
     font-size: 2.4rem;
     margin: 2rem auto 0 auto;
     font-weight: 600;
     text-align: center;
-}
+`
 
-.userslist .list .header {
+const header = styled.div`
     display: flex;
     justify-content: center;
-}
+`
 
-.userslist .list .item {
+const empty = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        color: var(--neutral-color);
+        font-size: 2rem;
+        font-weight: 600;
+    }
+`
+
+const item = styled.li`
     color: var(--secondary-font-color);
     margin: 2rem 2rem 2rem 0rem;
-}
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    width: 100%;
 
-.userslist .list .item .icon {
+    &:hover {
+        background: var(--hovered-color);
+    }
+`
+const avatar = styled.button`
     border: none;
     border-radius: 50%;
-    margin: 0 1rem 0 0;
-    cursor: pointer;
+    margin: 1rem;
     background: var(--primary-color);
     width: 4rem;
     height: 4rem;
     font-size: 2rem;
     font-weight: 600;
     color: var(--secondary-font-color);
-}
+`
 
-.userslist .list .item .text .name,
-.userslist .list .item .text .username {
+const username = styled.p`
     color: var(--primary-font-color);
     font-size: 2rem;
-}
+    font-weight: 600;
+`
 
-.userslist .list .item .text .number,
-.userslist .list .item .text .email {
+const email = styled.p`
     color: var(--neutral-color);
     font-size: 1.8rem;
-}
+    font-weight: 600;
+`
 
-.userslist .list .item .text .address {
-    color: var(--neutral-color);
-    font-size: 1.6rem;
-}
-
-.userslist .list .header {
-    display: flex;
-    width: 100%;
-    align-items: center;
-}
-
-.userslist .list .loading-container {
+const loading = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,14 +92,17 @@
     left: 50%;
     position: fixed;
     transform: translate(-50%, -50%);
-}
+`
 
-@media screen and (orientation: portrait) {
-    .userslist .list .header .title {
-        font-size: 2rem;
-        margin: 0 1rem 0 2rem;
-    }
-    .userslist .list .header button {
-        font-size: 2rem;
-    }
+export default {
+    main,
+    container,
+    title,
+    header,
+    empty,
+    item,
+    avatar,
+    username,
+    email,
+    loading
 }

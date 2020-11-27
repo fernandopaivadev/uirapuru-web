@@ -13,7 +13,7 @@ import {
 } from 'react-icons/md'
 
 import '../../styles/plot.css'
-import '../../styles/util.css'
+import util from '../../styles/util'
 
 const mobile = window.innerHeight > window.innerWidth
 
@@ -152,7 +152,7 @@ const Plot = ({ history }) => {
                         </div>
                     :
                     <div className='loading-container'>
-                        <progress className='circular-progress'/>
+                        <util.circularProgress/>
                     </div>
                 }
                 <div className='buttons'>

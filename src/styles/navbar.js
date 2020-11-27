@@ -45,6 +45,7 @@ const toggle = styled.div`
     cursor: pointer;
     color: var(--secondary-font-color);
     transition: all 0.2s ease;
+    
     &:hover {
         background: var(--secondary-font-color);
         color: var(--secondary-color);
@@ -82,6 +83,8 @@ const avatar = styled.button`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: all 0.2s ease;
+
     &:hover {
         background-color: var(--primary-light-color);
     }
@@ -100,6 +103,7 @@ const profileMenu = styled.ul`
     opacity: 0;
     transition: all 0.2s ease;
     z-index: 1;
+
     ${avatar}:focus + & {
         visibility: visible;
         opacity: 1;
@@ -111,20 +115,23 @@ const userInfo = styled.div`
     align-items: center;
     margin: 0.5rem 1.5rem 0.5rem 1.5rem;
 `
+
 const textInfo = styled.div`
     display: flex;
     flex-direction: column;
     margin: 1rem;
     font-weight: 300;
 
-    h1 {
+    .username {
         font-size: 2rem;
         color: var(--primary-font-color);
+        font-weight: 600;
     }
 
-    h2 {
+    .email {
         font-size: 1.6rem;
         color: var(--neutral-color);
+        font-weight: 600;
     }
 `
 
@@ -139,13 +146,14 @@ const item = styled.li`
     border-radius: 0.5rem;
     transition: all 0.2s ease;
 
+    &:hover {
+        background: var(--hovered-color);
+    }
+
     .icon {
         margin: 1rem;
         font-size: 2.4rem;
         color: var(--primary-color);
-        &:hover {
-            background: var(--hovered-color);
-        }
     }
 `
 

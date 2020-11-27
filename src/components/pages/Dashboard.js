@@ -10,8 +10,8 @@ import api from '../../services/api'
 
 import { FaSolarPanel } from 'react-icons/fa'
 
-import '../../styles/dashboard.css'
-import '../../styles/util.css'
+import styles from '../../styles/dashboard'
+import util from '../../styles/util'
 
 const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
@@ -62,7 +62,7 @@ const Dashboard = ({ history }) => {
 
     return <div className='dashboard'>
         <NavBar />
-        <div className='main'>
+        <styles.main>
             <Menu
                 title='Unidades'
                 items={
@@ -71,17 +71,16 @@ const Dashboard = ({ history }) => {
                 subItemKey='devices'
                 setItemIndex={setConsumerUnitIndex}
             />
-            <div className='main-container'>
+            <styles.container>
                 {connected ?
                     <Overview  {...overviewProps}/>
                     : null
                 }
-                <ul className='devices'>
+                <styles.devices>
                     {storage.read('user')
                         ?.consumerUnits[ consumerUnitIndex ]
                         ?.devices.map((device, deviceIndex) =>
                             <li
-                                className='device'
                                 key={ deviceIndex }
                                 onClick={() => {
                                     history.push(
@@ -94,7 +93,7 @@ const Dashboard = ({ history }) => {
                                 }}
                             >
                                 <FaSolarPanel
-                                    className='panelIcon'
+                                    className='panel-icon'
                                 />
                                 <p className='text'>
                                     { device.name }
@@ -102,33 +101,33 @@ const Dashboard = ({ history }) => {
                             </li>
                         )
                     }
-                </ul>
-            </div>
+                </styles.devices>
+            </styles.container>
             {!loading ?
                 success ?
                     storage.read('collection')?.length ?
-                        <div className='charts'>
+                        <styles.charts>
                             <Chart
                                 collection={storage.read('collection')}
                                 realTime={realTimeBuffer}
                                 aspectRatio={2}
                                 showDots
                             />
-                        </div>
+                        </styles.charts>
                         :
-                        <div className='empty'>
+                        <styles.empty>
                             <p>Não há dados destes dispositivos</p>
-                        </div>
+                        </styles.empty>
                     :
-                    <div className='error'>
+                    <styles.error>
                         <p>Não foi possível obter os dados</p>
-                    </div>
+                    </styles.error>
                 :
-                <div className='loading-container'>
-                    <progress className='circular-progress'/>
-                </div>
+                <styles.loading>
+                    <util.circularProgress/>
+                </styles.loading>
             }
-        </div>
+        </styles.main>
     </div>
 }
 

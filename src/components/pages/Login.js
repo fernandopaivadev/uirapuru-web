@@ -7,7 +7,7 @@ import api from '../../services/api'
 import logo from '../../assets/logo.svg'
 
 import styles from '../../styles/login'
-import global from '../../styles/global'
+import util from '../../styles/util'
 
 const Login = ({ history }) => {
     useEffect(() => {
@@ -103,14 +103,14 @@ const Login = ({ history }) => {
 
             {loading ?
                 <styles.loading>
-                    <progress className='circular-progress'/>
+                    <util.circularProgress/>
                 </styles.loading>
                 :
-                <global.classicButton
+                <util.classicButton
                     type='submit'
                 >
                     ENTRAR
-                </global.classicButton>
+                </util.classicButton>
             }
 
             {loading ? null :

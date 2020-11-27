@@ -4,7 +4,7 @@ import { Chart as ChartJS } from 'chart.js'
 
 import storage from '../../services/storage'
 
-import { themes } from '../../themes'
+import { themes } from '../../styles/themes'
 
 import '../../styles/chart.css'
 

@@ -101,12 +101,3 @@
 .plot .main .date-picker .icon:hover {
     background: var(--primary-light-color);
 }
-
-@media (orientation: portrait) {
-    .plot .main {
-        grid-template-columns: 1fr;
-    }
-    .plot .main .menu {
-        display: none;
-    }
-}

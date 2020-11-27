@@ -4,7 +4,7 @@ import api from '../../services/api'
 import logo from '../../assets/logo.svg'
 
 import styles from '../../styles/login'
-import global from '../../styles/global'
+import util from '../../styles/util'
 
 const ResetPassword = ({ history }) => {
     const [error, setError] = useState(false)
@@ -69,21 +69,21 @@ const ResetPassword = ({ history }) => {
                         <progress className='circular-progress'/>
                     </styles.loading>
                     : passwordChanged ?
-                        <global.classicButton
+                        <util.classicButton
                             className='classic-button'
                             onClick={() => {
                                 history.push('/login')
                             }}
                         >
                             FAZER LOGIN
-                        </global.classicButton>
+                        </util.classicButton>
                         :
-                        <global.classicButton
+                        <util.classicButton
                             type='submit'
                             className='classic-button'
                         >
                             SALVAR
-                        </global.classicButton>
+                        </util.classicButton>
                 }
 
                 {error ?
