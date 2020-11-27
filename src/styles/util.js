@@ -19,6 +19,13 @@ const classicButton = styled.button`
     }
 `
 
+const criticalButton = styled(classicButton)`
+    background: var(--error-color);
+    &:hover {
+        background: var(--error-light-color);
+    }
+`
+
 const circularAnimation = keyframes`
     0% {
         transform: rotate(0deg);
@@ -139,5 +146,6 @@ const circularProgress = styled.progress`
 
 export default {
     classicButton,
+    criticalButton,
     circularProgress
 }

@@ -6,7 +6,7 @@ import storage from '../../services/storage'
 
 import { themes } from '../../styles/themes'
 
-import '../../styles/chart.css'
+import styles from '../../styles/chart'
 
 const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
     const theme = themes[storage.read('theme')]
@@ -45,7 +45,7 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
                         labels: {
                             boxWidth: 10,
                             fontColor: theme.primaryFontColor,
-                            fontSize: 20
+                            fontSize: 15
                         }
                     },
                     tooltips: {
@@ -58,13 +58,13 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
                         yAxes: [{
                             ticks: {
                                 beginAtZero: true,
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontColor: theme.primaryFontColor
                             }
                         }],
                         xAxes: [{
                             ticks: {
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontColor: theme.primaryFontColor
                             }
                         }]
@@ -108,14 +108,14 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
         }
     }
 
-    return <div className='chart'>
+    return <styles.main>
         {collection.map((chart, chartIndex) =>
             chart ?
-                <div className='chart-view' key={chartIndex}>
-                    <h1>{ chart.title } </h1>
+                <styles.chart key={chartIndex}>
+                    <styles.title>{ chart.title } </styles.title>
                     <canvas id={`chart-${chartIndex}`}/>
                     {realTime?.length > 0 ?
-                        <ul className='real-time'>
+                        <styles.realTime>
                             {Object.keys(realTime[chartIndex])
                                 .map((key, keyIndex) =>
                                     <li key={keyIndex}>
@@ -128,16 +128,16 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
                                         </p>
                                     </li>
                                 )}
-                        </ul>
+                        </styles.realTime>
                         : null
                     }
-                </div>
+                </styles.chart>
                 :
-                <div className='chart-error'>
+                <styles.error>
                     <p>Não foi possível obter os dados</p>
-                </div>
+                </styles.error>
         )}
-    </div>
+    </styles.main>
 }
 
 export default Chart

@@ -37,6 +37,10 @@ const devices = styled.ul`
         text-align: center;
         transition: all 0.2s ease;
         border-radius: 0.5rem;
+        &:hover {
+            background: var(--hovered-color);
+            border-radius: 0.5rem;
+        }
     }
 
     li .panel-icon {

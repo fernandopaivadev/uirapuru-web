@@ -48,7 +48,7 @@ const empty = styled.div`
 
 const item = styled.li`
     color: var(--secondary-font-color);
-    margin: 2rem 2rem 2rem 0rem;
+    padding: 1rem 0 1rem 0rem;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -62,7 +62,7 @@ const item = styled.li`
 const avatar = styled.button`
     border: none;
     border-radius: 50%;
-    margin: 1rem;
+    margin: 0 1rem 0 2rem;
     background: var(--primary-color);
     width: 4rem;
     height: 4rem;

@@ -15,7 +15,7 @@ import {
 const UserForm = isAdmin => {
     const user = storage.read('user')
 
-    return <from>
+    return <form>
         <h1>
             Dados do Usuário
         </h1>
@@ -217,7 +217,7 @@ const UserForm = isAdmin => {
                 </p>
             </>
         }
-    </from>
+    </form>
 }
 
 export default UserForm

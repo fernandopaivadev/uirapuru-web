@@ -91,14 +91,14 @@ const NavBar = ({ history }) => {
 
             <styles.profileMenu>
                 <styles.userInfo>
-                    <styles.avatar>
+                    <styles.profileAvatar>
                         {storage.read('user')?.person
                             ? storage.read('user')?.person?.name.split('')[0]
                             : storage.read('user')?.company?.tradeName.split('')[0]
                             ||
                             'A'
                         }
-                    </styles.avatar>
+                    </styles.profileAvatar>
 
                     <styles.textInfo>
                         <p className='username'>

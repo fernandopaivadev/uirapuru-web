@@ -90,6 +90,13 @@ const avatar = styled.button`
     }
 `
 
+const profileAvatar = styled(avatar)`
+    cursor: default;
+    &:hover {
+        background: var(--primary-color);
+    }
+`
+
 const profileMenu = styled.ul`
     position: absolute;
     bottom: 100;
@@ -166,6 +173,7 @@ export default {
     profileMenu,
     userInfo,
     avatar,
+    profileAvatar,
     textInfo,
     item
 }

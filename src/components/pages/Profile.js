@@ -25,7 +25,9 @@ import {
     setFormValidation
 } from '../../services/forms'
 
-import '../../styles/profile.css'
+import styles from '../../styles/profile'
+
+import util from '../../styles/util'
 
 import '../../styles/util.css'
 
@@ -171,7 +173,7 @@ const Profile = ({ history }) => {
             : null
         }
 
-        <div className='main'>
+        <styles.main>
             <Menu
                 title='Unidades'
                 items={storage.read('user').consumerUnits}
@@ -179,10 +181,11 @@ const Profile = ({ history }) => {
                 subItemKey='devices'
             />
             {storage.read('user') ?
-                <form className='user-data'>
-                    <h1>
+                <styles.form>
+                    <styles.title>
                         Dados do Usuário
-                    </h1>
+                    </styles.title>
+
                     <label>Nome de usuário</label>
                     <input
                         name='username'
@@ -382,8 +385,7 @@ const Profile = ({ history }) => {
                         </>
                     }
                     {admin ?
-                        <button
-                            className='classic-button'
+                        <util.classicButton
                             onClick={event => {
                                 event.preventDefault()
                                 if (validateForm(0)) {
@@ -403,7 +405,7 @@ const Profile = ({ history }) => {
                             }}
                         >
                             Salvar
-                        </button>
+                        </util.classicButton>
                         : null
                     }
                     {success[0] && !error[0]?
@@ -418,15 +420,15 @@ const Profile = ({ history }) => {
                         </p>
                         : null
                     }
-                </form>
+                </styles.form>
                 : null
             }
 
             {storage.read('user').consumerUnits[ consumerUnitIndex ] ?
-                <form className='consumer-unit-data'>
-                    <h1>
+                <styles.form>
+                    <styles.title>
                         Dados da Unidade Consumidora
-                    </h1>
+                    </styles.title>
                     <label>Número</label>
                     <input
                         name='number'
@@ -542,34 +544,30 @@ const Profile = ({ history }) => {
                         Digite no mínimo 3 caracteres
                     </p>
 
-                    <div className='buttons'>
+                    <styles.buttons>
                         {admin ?
-                            <button
-                                id='delete-button'
-                                className='classic-button'
+                            <util.criticalButton
                                 onClick={ event => {
                                     event.preventDefault()
                                     setModal([false, true, false])
                                 }}
                             >
                                 Excluir Unidade
-                            </button>
+                            </util.criticalButton>
                             : null
                         }
                         {admin ?
-                            <button
-                                className='classic-button'
+                            <util.classicButton
                                 onClick = { () => {
                                     history.push('/new-unit')
                                 }}
                             >
                                 Nova Unidade
-                            </button>
+                            </util.classicButton>
                             : null
                         }
                         {admin ?
-                            <button
-                                className='classic-button'
+                            <util.classicButton
                                 onClick={ event => {
                                     event.preventDefault()
                                     if (validateForm(1)) {
@@ -589,10 +587,10 @@ const Profile = ({ history }) => {
                                 }}
                             >
                                 Salvar
-                            </button>
+                            </util.classicButton>
                             : null
                         }
-                    </div>
+                    </styles.buttons>
 
                     {success[1] && !error[1]?
                         <p className='success'>
@@ -606,48 +604,46 @@ const Profile = ({ history }) => {
                         </p>
                         : null
                     }
-                </form>
+                </styles.form>
                 :
-                <div className='empty'>
+                <styles.empty>
                     <p>
                         Escolha uma unidade Consumidora
                     </p>
                     {admin ?
-                        <button
-                            className='classic-button'
+                        <util.classicButton
                             onClick = { () => {
                                 history.push('/new-unit')
                             }}
                         >
                             Nova Unidade
-                        </button>
+                        </util.classicButton>
                         : null
                     }
-                </div>
+                </styles.empty>
             }
             {storage.read('user').consumerUnits[consumerUnitIndex] ?
-                <div className='devices-list'>
-                    <div className='header'>
-                        <h1>Dispositivos</h1>
+                <styles.devicesList>
+                    <styles.header>
+                        <styles.title>Dispositivos</styles.title>
                         {admin ?
-                            <button
-                                className='classic-button'
+                            <util.classicButton
                                 onClick={event => {
                                     event.preventDefault()
                                     setNewDevicePopup(true)
                                 }}
                             >
                                 Novo dispositivo
-                            </button>
+                            </util.classicButton>
                             : null
                         }
-                    </div>
+                    </styles.header>
                     <ul>
                         {storage.read('user')
                             .consumerUnits[consumerUnitIndex]
                             .devices.map((device, index) =>
                                 <li key={index}>
-                                    <form>
+                                    <styles.devicesForm>
                                         <label>
                                             ID
                                         </label>
@@ -691,9 +687,8 @@ const Profile = ({ history }) => {
                                             Digite no mínimo 6 caracteres
                                         </p>
                                         {admin ?
-                                            <div className='buttons'>
-                                                <button
-                                                    className='classic-button'
+                                            <styles.buttons>
+                                                <util.classicButton
                                                     onClick={event => {
                                                         event.preventDefault()
                                                         setDeviceIndex(index)
@@ -701,10 +696,8 @@ const Profile = ({ history }) => {
                                                     }}
                                                 >
                                                 Salvar
-                                                </button>
-                                                <button
-                                                    className='classic-button'
-                                                    id='delete-button'
+                                                </util.classicButton>
+                                                <util.criticalButton
                                                     onClick={event => {
                                                         event.preventDefault()
                                                         setDeviceIndex(index)
@@ -716,8 +709,8 @@ const Profile = ({ history }) => {
                                                     }}
                                                 >
                                                 Excluir
-                                                </button>
-                                            </div>
+                                                </util.criticalButton>
+                                            </styles.buttons>
                                             : null
                                         }
                                         {success[index + 2] && !error[index + 2]?
@@ -732,43 +725,40 @@ const Profile = ({ history }) => {
                                             </p>
                                             : null
                                         }
-                                    </form>
+                                    </styles.devicesForm>
                                 </li>
                             )
                         }
                     </ul>
-                </div>
+                </styles.devicesList>
                 :
-                <div className='empty'>
+                <styles.empty>
                     <p>
                         Sem dispositivos
                     </p>
-                </div>
+                </styles.empty>
             }
-        </div>
+        </styles.main>
 
-        <div className='nav-buttons'>
-            <button
-                className='classic-button'
+        <styles.navButtons>
+            <util.classicButton
                 onClick={() =>{
                     history.push('/dashboard')
                 }}
             >
                     Dashboard
-            </button>
+            </util.classicButton>
             {admin ?
-                <button
-                    id='delete-button'
-                    className='classic-button'
+                <util.criticalButton
                     onClick={ () => {
                         setModal([true, false, false])
                     }}
                 >
                     Excluir Usuário
-                </button>
+                </util.criticalButton>
                 : null
             }
-        </div>
+        </styles.navButtons>
     </div>
 }
 

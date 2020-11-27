@@ -169,8 +169,8 @@
 .profile .main .devices-list li form {
     display: flex;
     flex-direction: column;
-    width: 90%;
     align-items: center;
+    width: 90%;
     padding: 1rem;
     border: 1px solid var(--primary-color);
     border-radius: 0.3rem;
