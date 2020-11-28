@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+import storage from '../services/storage'
+
+const admin = storage.read('access-level') === 'admin'
+
 const main = styled.ul`
     width: 100vw;
     height: 5rem;
@@ -100,7 +104,9 @@ const profileAvatar = styled(avatar)`
 const profileMenu = styled.ul`
     position: absolute;
     bottom: 100;
-    transform: translate(-0.5rem, 20%);
+    transform: ${
+        admin ? 'translate(-0.5rem, 24%);' : 'translate(-0.5rem, 19%);'
+    }
     right: 0;
     margin: 10rem 0 0 0;
     background: var(--background-color);
