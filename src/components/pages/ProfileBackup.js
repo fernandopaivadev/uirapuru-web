@@ -14,9 +14,9 @@ import api from '../../services/api'
 
 import UserForm from '../forms/UserForm'
 
-import ConsumerUnitForm from '../forms/ConsumerUnitForm'
-
 import {
+    formatCEP,
+    getOnlyNumbers,
     validateForm,
     setFormValidation
 } from '../../services/forms'
@@ -203,7 +203,12 @@ const Profile = ({ history }) => {
                     >
                         Salvar
                     </util.classicButton>
-                    : null
+                    :
+                    <styles.empty>
+                        <p>
+                            Nenhum usuário encontrado.
+                        </p>
+                    </styles.empty>
                 }
                 {success[0] && !error[0]?
                     <p className='success'>
@@ -219,67 +224,138 @@ const Profile = ({ history }) => {
                 }
             </styles.formContainer>
 
-            <styles.formContainer>
-                {consumerUnitIndex >= 0 ?
-                    <>
-                        <ConsumerUnitForm
-                            user={storage.read('user')}
-                            consumerUnitIndex={consumerUnitIndex}
-                            isAdmin={admin}
-                        />
-                        <styles.buttons>
-                            {admin ?
-                                <util.criticalButton
-                                    onClick={ event => {
-                                        event.preventDefault()
-                                        setModal([false, true, false])
-                                    }}
-                                >
-                                Excluir Unidade
-                                </util.criticalButton>
-                                : null
-                            }
-                            {admin ?
-                                <util.classicButton
-                                    onClick = { () => {
-                                        history.push('/new-unit')
-                                    }}
-                                >
-                                Nova Unidade
-                                </util.classicButton>
-                                : null
-                            }
-                            {admin ?
-                                <util.classicButton
-                                    onClick={ event => {
-                                        event.preventDefault()
-                                        if (validateForm(1)) {
-                                            submit(1)
-                                        } else {
-                                            setErrorMessage('Preencha todos os campos')
-                                            const _error = [...error]
-                                            _error[1] = true
-                                            setError(_error)
+            {storage.read('user').consumerUnits[ consumerUnitIndex ] ?
+                <styles.form>
+                    <styles.title>
+                        Dados da Unidade Consumidora
+                    </styles.title>
+                    <label>Número</label>
+                    <input
+                        name='number'
+                        minLength='6'
+                        maxLength='16'
+                        required
+                        defaultValue={storage.read('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.number ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .number = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 6 caracteres
+                    </p>
 
-                                            setTimeout(() => {
-                                                const _error = [...error]
-                                                _error[1] = false
-                                                setError(_error)
-                                            }, 3000)
-                                        }
-                                    }}
-                                >
-                                    Salvar
-                                </util.classicButton>
-                                : null
-                            }
-                        </styles.buttons>
-                    </>
-                    :
-                    <styles.empty>
-                        <p>
-                            Escolha uma unidade Consumidora
-                        </p>
+                    <label>Nome da unidade consumidora</label>
+                    <input
+                        name='name'
+                        maxLength='64'
+                        minLength='8'
+                        required
+                        defaultValue={storage.read('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.name ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .name = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 8 caracteres
+                    </p>
+
+                    <label>Endereço</label>
+                    <input
+                        name='address'
+                        maxLength='256'
+                        minLength='10'
+                        required
+                        defaultValue={storage.read('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.address ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .address = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 10 caracteres
+                    </p>
+
+                    <label>CEP</label>
+                    <input
+                        name='zip'
+                        required
+                        pattern='\d{5}-\d{3}'
+                        defaultValue={formatCEP(storage.read('user')
+                            .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user
+                                .consumerUnits[ consumerUnitIndex]
+                                .zip = getOnlyNumbers(event.target.value)
+                            event.target.value =  formatCEP(event.target
+                                .value)
+                        }}
+                    />
+                    <p className='error-message'>
+                        CEP inválido
+                    </p>
+
+                    <label>Cidade</label>
+                    <input
+                        name='city'
+                        maxLength='64'
+                        minLength='3'
+                        required
+                        defaultValue={storage.read('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.city ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .city = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 3 caracteres
+                    </p>
+
+                    <label>Estado</label>
+                    <input
+                        name='state'
+                        maxLength='64'
+                        minLength='3'
+                        required
+                        defaultValue={storage.read('user')
+                            .consumerUnits[ consumerUnitIndex ]
+                            ?.state ?? ''}
+                        readOnly= {!admin}
+                        onChange={ event => {
+                            user.consumerUnits[ consumerUnitIndex]
+                                .state = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 3 caracteres
+                    </p>
+
+                    <styles.buttons>
+                        {admin ?
+                            <util.criticalButton
+                                onClick={ event => {
+                                    event.preventDefault()
+                                    setModal([false, true, false])
+                                }}
+                            >
+                                Excluir Unidade
+                            </util.criticalButton>
+                            : null
+                        }
                         {admin ?
                             <util.classicButton
                                 onClick = { () => {
@@ -290,23 +366,62 @@ const Profile = ({ history }) => {
                             </util.classicButton>
                             : null
                         }
-                    </styles.empty>
-                }
+                        {admin ?
+                            <util.classicButton
+                                onClick={ event => {
+                                    event.preventDefault()
+                                    if (validateForm(1)) {
+                                        submit(1)
+                                    } else {
+                                        setErrorMessage('Preencha todos os campos')
+                                        const _error = [...error]
+                                        _error[1] = true
+                                        setError(_error)
 
-                {success[1] && !error[1]?
-                    <p className='success'>
+                                        setTimeout(() => {
+                                            const _error = [...error]
+                                            _error[1] = false
+                                            setError(_error)
+                                        }, 3000)
+                                    }
+                                }}
+                            >
+                                Salvar
+                            </util.classicButton>
+                            : null
+                        }
+                    </styles.buttons>
+
+                    {success[1] && !error[1]?
+                        <p className='success'>
                             Salvo com sucesso!
+                        </p>
+                        : null
+                    }
+                    {!success[1] && error[1]?
+                        <p className='error'>
+                            { errorMessage }
+                        </p>
+                        : null
+                    }
+                </styles.form>
+                :
+                <styles.empty>
+                    <p>
+                        Escolha uma unidade Consumidora
                     </p>
-                    : null
-                }
-                {!success[1] && error[1]?
-                    <p className='error'>
-                        { errorMessage }
-                    </p>
-                    : null
-                }
-            </styles.formContainer>
-
+                    {admin ?
+                        <util.classicButton
+                            onClick = { () => {
+                                history.push('/new-unit')
+                            }}
+                        >
+                            Nova Unidade
+                        </util.classicButton>
+                        : null
+                    }
+                </styles.empty>
+            }
             {storage.read('user').consumerUnits[consumerUnitIndex] ?
                 <styles.devicesList>
                     <styles.header>

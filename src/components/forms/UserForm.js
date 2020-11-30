@@ -1,7 +1,5 @@
 import React from 'react'
 
-import storage from '../../services/storage'
-
 import {
     formatUsername,
     formatPhone,
@@ -12,20 +10,21 @@ import {
     getOnlyNumbers
 } from '../../services/forms'
 
-const UserForm = isAdmin => {
-    const user = storage.read('user')
+import styles from '../../styles/userform'
 
-    return <form>
-        <h1>
+const UserForm = ({ isAdmin, user }) => {
+    return <styles.form>
+        <styles.title>
             Dados do Usuário
-        </h1>
+        </styles.title>
+
         <label>Nome de usuário</label>
         <input
             name='username'
             maxLength='20'
             minLength='6'
             required
-            defaultValue={storage.read('user')?.username ?? ''}
+            defaultValue={user?.username ?? ''}
             readOnly= {!isAdmin}
             onChange={ event => {
                 user.username = event.target.value
@@ -44,7 +43,7 @@ const UserForm = isAdmin => {
             maxLength='40'
             minLength='10'
             required
-            defaultValue={storage.read('user')?.email ?? ''}
+            defaultValue={user?.email ?? ''}
             readOnly= {!isAdmin}
             onChange={ event => {
                 user.email = event.target.value
@@ -59,7 +58,7 @@ const UserForm = isAdmin => {
             name='phone'
             required
             pattern='\(\d{2}\) \d{5}-\d{4}$'
-            defaultValue={formatPhone(storage.read('user')?.phone) ?? ''}
+            defaultValue={formatPhone(user?.phone) ?? ''}
             readOnly= {!isAdmin}
             onChange={ event => {
                 user.phone = getOnlyNumbers(event.target.value)
@@ -72,7 +71,7 @@ const UserForm = isAdmin => {
             Número de telefone inválido
         </p>
 
-        {storage.read('user')?.person ?
+        {user?.person ?
             <>
                 <label>Nome completo</label>
                 <input
@@ -80,7 +79,7 @@ const UserForm = isAdmin => {
                     maxLength='128'
                     minLength='10'
                     required
-                    defaultValue={storage.read('user')?.person
+                    defaultValue={user?.person
                         ?.name ?? ''}
                     readOnly= {!isAdmin}
                     onChange={ event => {
@@ -96,7 +95,7 @@ const UserForm = isAdmin => {
                     name='cpf'
                     required
                     pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
-                    defaultValue={formatCPF(storage.read('user')?.person
+                    defaultValue={formatCPF(user?.person
                         ?.cpf) ?? ''}
                     readOnly= {!isAdmin}
                     onChange={ event => {
@@ -118,7 +117,7 @@ const UserForm = isAdmin => {
                     required
                     pattern='\d{2}\/\d{2}\/\d{4}'
                     defaultValue={formatTimeStamp(
-                        storage.read('user')?.person?.birth
+                        user?.person?.birth
                     ) ?? ''}
                     readOnly= {!isAdmin}
                     onChange={ event => {
@@ -141,7 +140,7 @@ const UserForm = isAdmin => {
                     pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                     defaultValue={
                         formatCNPJ(
-                            storage.read('user')?.company?.cnpj
+                            user?.company?.cnpj
                         ) ?? '--'
                     }
                     readOnly= {!isAdmin}
@@ -165,7 +164,7 @@ const UserForm = isAdmin => {
                     maxLength='128'
                     minLength='6'
                     required
-                    defaultValue={storage.read('user')?.company
+                    defaultValue={user?.company
                         ?.name ?? ''}
                     readOnly= {!isAdmin}
                     onChange={ event => {
@@ -184,7 +183,7 @@ const UserForm = isAdmin => {
                     maxLength='128'
                     minLength='6'
                     required
-                    defaultValue={storage.read('user')?.company
+                    defaultValue={user?.company
                         ?.tradeName ?? ''}
                     readOnly= {!isAdmin}
                     onChange={ event => {
@@ -194,7 +193,7 @@ const UserForm = isAdmin => {
                     }}
                 />
                 <p className='error-message'>
-                    Digite no mínimo 6 caracteres
+                                    Digite no mínimo 6 caracteres
                 </p>
 
                 <label>Descrição</label>
@@ -203,7 +202,7 @@ const UserForm = isAdmin => {
                     maxLength='512'
                     minLength='50'
                     required
-                    defaultValue={storage.read('user')?.company
+                    defaultValue={user?.company
                         ?.description ?? ''}
                     readOnly= {!isAdmin}
                     onChange={ event => {
@@ -217,7 +216,7 @@ const UserForm = isAdmin => {
                 </p>
             </>
         }
-    </form>
+    </styles.form>
 }
 
 export default UserForm

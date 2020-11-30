@@ -1,26 +1,25 @@
 import React from 'react'
 
-import storage from '../../services/storage'
-
 import {
     formatCEP,
     getOnlyNumbers
 } from '../../services/forms'
 
-const ConsumerUnitForm = (consumerUnitIndex, isAdmin) => {
-    const user = storage.read('user')
+import styles from '../../styles/consumerunitform'
 
-    return <form>
-        <h1>
+const ConsumerUnitForm = ({ consumerUnitIndex, isAdmin, user }) => {
+
+    return  <styles.form>
+        <styles.title>
             Dados da Unidade Consumidora
-        </h1>
+        </styles.title>
         <label>Número</label>
         <input
             name='number'
             minLength='6'
             maxLength='16'
             required
-            defaultValue={storage.read('user')
+            defaultValue={user
                 .consumerUnits[ consumerUnitIndex ]
                 ?.number ?? ''}
             readOnly= {!isAdmin}
@@ -39,7 +38,7 @@ const ConsumerUnitForm = (consumerUnitIndex, isAdmin) => {
             maxLength='64'
             minLength='8'
             required
-            defaultValue={storage.read('user')
+            defaultValue={user
                 .consumerUnits[ consumerUnitIndex ]
                 ?.name ?? ''}
             readOnly= {!isAdmin}
@@ -58,7 +57,7 @@ const ConsumerUnitForm = (consumerUnitIndex, isAdmin) => {
             maxLength='256'
             minLength='10'
             required
-            defaultValue={storage.read('user')
+            defaultValue={user
                 .consumerUnits[ consumerUnitIndex ]
                 ?.address ?? ''}
             readOnly= {!isAdmin}
@@ -76,7 +75,7 @@ const ConsumerUnitForm = (consumerUnitIndex, isAdmin) => {
             name='zip'
             required
             pattern='\d{5}-\d{3}'
-            defaultValue={formatCEP(storage.read('user')
+            defaultValue={formatCEP(user
                 .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
             readOnly= {!isAdmin}
             onChange={ event => {
@@ -97,7 +96,7 @@ const ConsumerUnitForm = (consumerUnitIndex, isAdmin) => {
             maxLength='64'
             minLength='3'
             required
-            defaultValue={storage.read('user')
+            defaultValue={user
                 .consumerUnits[ consumerUnitIndex ]
                 ?.city ?? ''}
             readOnly= {!isAdmin}
@@ -116,7 +115,7 @@ const ConsumerUnitForm = (consumerUnitIndex, isAdmin) => {
             maxLength='64'
             minLength='3'
             required
-            defaultValue={storage.read('user')
+            defaultValue={user
                 .consumerUnits[ consumerUnitIndex ]
                 ?.state ?? ''}
             readOnly= {!isAdmin}
@@ -128,7 +127,7 @@ const ConsumerUnitForm = (consumerUnitIndex, isAdmin) => {
         <p className='error-message'>
             Digite no mínimo 3 caracteres
         </p>
-    </form>
+    </styles.form>
 }
 
 export default ConsumerUnitForm

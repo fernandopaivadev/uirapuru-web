@@ -64,6 +64,12 @@ const form = styled.form`
     }
 `
 
+const formContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
 const buttons = styled.div`
     display: flex;
 `
@@ -126,7 +132,7 @@ const devicesForm = styled(form)`
     }
     
     .error-message {
-        margin: 0 auto 0rem auto;
+        margin: 0 auto 0 auto;
     }
 `
 
@@ -143,6 +149,7 @@ const navButtons = styled.div`
 export default {
     main,
     form,
+    formContainer,
     buttons,
     empty,
     devicesList,
