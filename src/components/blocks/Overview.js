@@ -9,12 +9,12 @@ import {
     FaEllipsisH
 } from 'react-icons/fa'
 
-import '../../styles/overview.css'
+import styles from '../../styles/overview'
 
 const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
-    <div className='overview'>
+    <styles.main>
         {t1 !== undefined ?
-            <div className='value'
+            <styles.value
                 style={{
                     borderColor: themes.default.traceColors[0]
                 }}
@@ -31,11 +31,11 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                 <p className='payload'>
                     {t1} °C
                 </p>
-            </div>
+            </styles.value>
             : null
         }
         {h1 !== undefined ?
-            <div className='value'
+            <styles.value
                 style={{
                     borderColor: themes.default.traceColors[1]
                 }}
@@ -52,11 +52,11 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                 <p className='payload'>
                     {h1} %
                 </p>
-            </div>
+            </styles.value>
             : null
         }
         {v1 !== undefined ?
-            <div className='value'
+            <styles.value
                 style={{
                     borderColor: themes.default.traceColors[2]
                 }}
@@ -73,11 +73,11 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                 <p className='payload'>
                     {v1} V
                 </p>
-            </div>
+            </styles.value>
             : null
         }
         {i1 !== undefined ?
-            <div className='value'
+            <styles.value
                 style={{
                     borderColor: themes.default.traceColors[3]
                 }}
@@ -94,11 +94,11 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                 <h1 className='payload'>
                     {i1} A
                 </h1>
-            </div>
+            </styles.value>
             : null
         }
         {v2 !== undefined ?
-            <div className='value'
+            <styles.value
                 style={{
                     borderColor: themes.default.traceColors[4]
                 }}
@@ -115,11 +115,11 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                 <p className='payload'>
                     {v2} V
                 </p>
-            </div>
+            </styles.value>
             :null
         }
         {i2 !== undefined?
-            <div className='value'
+            <styles.value
                 style={{
                     borderColor: themes.default.traceColors[5]
                 }}
@@ -136,9 +136,9 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                 <h1 className='payload'>
                     {i2} A
                 </h1>
-            </div>
+            </styles.value>
             : null
         }
-    </div>
+    </styles.main>
 
 export default Overview
