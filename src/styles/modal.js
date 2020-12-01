@@ -6,7 +6,7 @@ const main = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
+    position: absolute;
     background: linear-gradient(#3339, #3339);
     z-index: 1;
 `

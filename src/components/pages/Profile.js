@@ -16,8 +16,9 @@ import UserForm from '../forms/UserForm'
 
 import ConsumerUnitForm from '../forms/ConsumerUnitForm'
 
+import DevicesList from '../forms/DevicesList'
+
 import {
-    validateForm,
     setFormValidation
 } from '../../services/forms'
 
@@ -135,20 +136,6 @@ const Profile = ({ history }) => {
             : null
         }
 
-        { modal[1] ?
-            <Modal
-                message={'Você tem certeza?'}
-                taskOnYes={() => {
-                    user.consumerUnits.pop(consumerUnitIndex)
-                    submit(1)
-                    setModal([false, false, false])
-                }}
-                taskOnNo={() => {
-                    setModal([false, false, false])
-                }}
-            />
-            : null
-        }
 
         { modal[2] ?
             <Modal
@@ -174,246 +161,58 @@ const Profile = ({ history }) => {
                 setItemIndex={ setConsumerUnitIndex }
                 subItemKey='devices'
             />
+            <UserForm />
 
-            <styles.formContainer>
-                <UserForm
-                    user={storage.read('user')}
-                />
-                {admin ?
-                    <util.classicButton
-                        onClick={event => {
-                            event.preventDefault()
-                            if (validateForm(0)) {
-                                submit(0)
-                            } else {
-                                setErrorMessage('Preencha todos os campos')
-                                const _error = [...error]
-                                _error[0] = true
-                                setError(_error)
-
-                                setTimeout(() => {
-                                    const _error = [...error]
-                                    _error[0] = false
-                                    setError(_error)
-                                }, 3000)
-                            }
-                        }}
-                    >
-                        Salvar
-                    </util.classicButton>
-                    : null
-                }
-                {success[0] && !error[0]?
-                    <p className='success'>
-                            Salvo com sucesso!
-                    </p>
-                    : null
-                }
-                {!success[0] && error[0]?
-                    <p className='error'>
-                        { errorMessage }
-                    </p>
-                    : null
-                }
-            </styles.formContainer>
-
-            <styles.formContainer>
-                {consumerUnitIndex >= 0 ?
-                    <>
-                        <ConsumerUnitForm
-                            user={storage.read('user')}
-                            consumerUnitIndex={consumerUnitIndex}
-                            isAdmin={admin}
-                        />
-                        <styles.buttons>
-                            {admin ?
-                                <util.criticalButton
-                                    onClick={ event => {
-                                        event.preventDefault()
-                                        setModal([false, true, false])
-                                    }}
-                                >
-                                Excluir Unidade
-                                </util.criticalButton>
-                                : null
-                            }
-                            {admin ?
-                                <util.classicButton
-                                    onClick = { () => {
-                                        history.push('/new-unit')
-                                    }}
-                                >
-                                Nova Unidade
-                                </util.classicButton>
-                                : null
-                            }
-                            {admin ?
-                                <util.classicButton
-                                    onClick={ event => {
-                                        event.preventDefault()
-                                        if (validateForm(1)) {
-                                            submit(1)
-                                        } else {
-                                            setErrorMessage('Preencha todos os campos')
-                                            const _error = [...error]
-                                            _error[1] = true
-                                            setError(_error)
-
-                                            setTimeout(() => {
-                                                const _error = [...error]
-                                                _error[1] = false
-                                                setError(_error)
-                                            }, 3000)
-                                        }
-                                    }}
-                                >
-                                    Salvar
-                                </util.classicButton>
-                                : null
-                            }
-                        </styles.buttons>
-                    </>
-                    :
-                    <styles.empty>
-                        <p>
+            {consumerUnitIndex >= 0 ?
+                <>
+                    <ConsumerUnitForm
+                        consumerUnitIndex={consumerUnitIndex}
+                    />
+                </>
+                :
+                <styles.empty>
+                    <p>
                             Escolha uma unidade Consumidora
-                        </p>
-                        {admin ?
-                            <util.classicButton
-                                onClick = { () => {
-                                    history.push('/new-unit')
-                                }}
-                            >
+                    </p>
+                    {admin ?
+                        <util.classicButton
+                            onClick = { () => {
+                                history.push('/new-unit')
+                            }}
+                        >
                                 Nova Unidade
-                            </util.classicButton>
-                            : null
-                        }
-                    </styles.empty>
-                }
+                        </util.classicButton>
+                        : null
+                    }
+                </styles.empty>
+            }
 
-                {success[1] && !error[1]?
-                    <p className='success'>
+            {success[1] && !error[1]?
+                <p className='success'>
                         Salvo com sucesso!
-                    </p>
-                    : null
-                }
-                {!success[1] && error[1]?
-                    <p className='error'>
-                        { errorMessage }
-                    </p>
-                    : null
-                }
-            </styles.formContainer>
+                </p>
+                : null
+            }
+            {!success[1] && error[1]?
+                <p className='error'>
+                    { errorMessage }
+                </p>
+                : null
+            }
 
-            {storage.read('user').consumerUnits[consumerUnitIndex] ?
-                <styles.devicesList>
-                    <styles.header>
-                        <styles.title>Dispositivos</styles.title>
-                        {admin ?
-                            <util.classicButton
-                                onClick={event => {
-                                    event.preventDefault()
-                                    setNewDevicePopup(true)
-                                }}
-                            >
-                                Novo dispositivo
-                            </util.classicButton>
-                            : null
-                        }
-                    </styles.header>
-                    <ul>
-                        {storage.read('user')
-                            .consumerUnits[consumerUnitIndex]
-                            .devices.map((device, index) =>
-                                <li key={index}>
-                                    <styles.devicesForm>
-                                        <label>
-                                            ID
-                                        </label>
-                                        <input
-                                            defaultValue={device.id}
-                                            readOnly={!admin}
-                                            maxLength='8'
-                                            minLength='8'
-                                            onChange={ event => {
-                                                user
-                                                    .consumerUnits[
-                                                        consumerUnitIndex
-                                                    ]
-                                                    .devices[index].id
-                                                    =
-                                                    event.target.value
-                                            }}
-                                        />
-                                        <p className='error-message'>
-                                            ID inválido
-                                        </p>
-                                        <label>
-                                            Nome
-                                        </label>
-                                        <input
-                                            defaultValue={device.name}
-                                            readOnly={!admin}
-                                            maxLength='20'
-                                            minLength='6'
-                                            onChange={ event => {
-                                                user
-                                                    .consumerUnits[
-                                                        consumerUnitIndex
-                                                    ]
-                                                    .devices[index].name
-                                                    =
-                                                    event.target.value
-                                            }}
-                                        />
-                                        <p className='error-message'>
-                                            Digite no mínimo 6 caracteres
-                                        </p>
-                                        {admin ?
-                                            <styles.buttons>
-                                                <util.classicButton
-                                                    onClick={event => {
-                                                        event.preventDefault()
-                                                        setDeviceIndex(index)
-                                                        submit(index + 2)
-                                                    }}
-                                                >
-                                                Salvar
-                                                </util.classicButton>
-                                                <util.criticalButton
-                                                    onClick={event => {
-                                                        event.preventDefault()
-                                                        setDeviceIndex(index)
-                                                        setModal([
-                                                            false,
-                                                            false,
-                                                            true
-                                                        ])
-                                                    }}
-                                                >
-                                                Excluir
-                                                </util.criticalButton>
-                                            </styles.buttons>
-                                            : null
-                                        }
-                                        {success[index + 2] && !error[index + 2]?
-                                            <p className='success'>
-                                                Salvo com sucesso!
-                                            </p>
-                                            : null
-                                        }
-                                        {!success[index + 2] && error[index + 2]?
-                                            <p className='error'>
-                                                { errorMessage }
-                                            </p>
-                                            : null
-                                        }
-                                    </styles.devicesForm>
-                                </li>
-                            )
-                        }
-                    </ul>
-                </styles.devicesList>
+            {consumerUnitIndex >= 0 ?
+                <DevicesList
+                    user={storage.read('user')}
+                    consumerUnitIndex={consumerUnitIndex}
+                    isAdmin={admin}
+                    setNewDevicePopup={setNewDevicePopup}
+                    setDeviceIndex={setDeviceIndex}
+                    submit={submit}
+                    setModal={setModal}
+                    success={success}
+                    error={error}
+                    errorMessage={errorMessage}
+                />
                 :
                 <styles.empty>
                     <p>
@@ -429,7 +228,7 @@ const Profile = ({ history }) => {
                     history.push('/dashboard')
                 }}
             >
-                    Dashboard
+                Dashboard
             </util.classicButton>
             {admin ?
                 <util.criticalButton

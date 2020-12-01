@@ -10,7 +10,8 @@ import {
     setFormValidation
 } from '../../services/forms'
 
-import '../../styles/newdevice.css'
+import styles from '../../styles/newdevice'
+import util from '../../styles/util'
 
 const NewDevice = ({ consumerUnitIndex, exit }) => {
     const [success, setSuccess] = useState(false)
@@ -47,10 +48,10 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
         exit()
     }
 
-    return <div className='newdevice'>
-        <div className='window'>
-            <form>
-                <h1>Novo dispositivo</h1>
+    return <styles.main>
+        <styles.window>
+            <styles.form>
+                <styles.title>Novo dispositivo</styles.title>
                 <label>ID do dispositivo</label>
                 <input
                     maxLength='10'
@@ -80,9 +81,8 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                     Digite no mínimo 6 caracteres
                 </p>
 
-                <div className='buttons'>
-                    <button
-                        className='classic-button'
+                <styles.buttons>
+                    <util.classicButton
                         onClick={event => {
                             event.preventDefault()
                             if (validateForm()) {
@@ -104,24 +104,22 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                         }}
                     >
                         Salvar
-                    </button>
-                    <button
-                        className='classic-button'
-                        id='cancel-button'
+                    </util.classicButton>
+                    <util.criticalButton
                         onClick={exit}
                     >
                         Cancelar
-                    </button>
-                </div>
+                    </util.criticalButton>
+                </styles.buttons>
                 {error && !success ?
                     <p className='error'>
                         { errorMessage }
                     </p>
                     : null
                 }
-            </form>
-        </div>
-    </div>
+            </styles.form>
+        </styles.window>
+    </styles.main>
 }
 
 export default NewDevice

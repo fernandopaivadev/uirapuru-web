@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+import storage from '../../services/storage'
+
+import api from '../../services/api'
 
 import {
     formatUsername,
@@ -7,12 +11,44 @@ import {
     formatCNPJ,
     formatTimeStamp,
     formatDate,
-    getOnlyNumbers
+    getOnlyNumbers,
+    validateForm,
 } from '../../services/forms'
 
 import styles from '../../styles/userform'
+import util from '../../styles/util'
 
-const UserForm = ({ isAdmin, user }) => {
+const UserForm = () => {
+    const [success, setSuccess] = useState(false)
+    const [error, setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(
+        'Ocorreu um erro'
+    )
+
+    const user = storage.read('user')
+    const admin = storage.read('access-level') === 'admin'
+
+    const submit = async () => {
+        const result = await api.updateUser(user)
+
+        if (result === 'OK') {
+            setSuccess(true)
+            setError(false)
+
+            setTimeout(() => {
+                setSuccess(false)
+            }, 2000)
+        } else {
+            setErrorMessage(result)
+            setSuccess(false)
+            setError(true)
+
+            setTimeout(() => {
+                setError(false)
+            }, 2000)
+        }
+    }
+
     return <styles.form>
         <styles.title>
             Dados do Usuário
@@ -24,8 +60,8 @@ const UserForm = ({ isAdmin, user }) => {
             maxLength='20'
             minLength='6'
             required
-            defaultValue={user?.username ?? ''}
-            readOnly= {!isAdmin}
+            defaultValue={user.username ?? ''}
+            readOnly= {!admin}
             onChange={ event => {
                 user.username = event.target.value
                 event.target.value = formatUsername(
@@ -44,7 +80,7 @@ const UserForm = ({ isAdmin, user }) => {
             minLength='10'
             required
             defaultValue={user?.email ?? ''}
-            readOnly= {!isAdmin}
+            readOnly= {!admin}
             onChange={ event => {
                 user.email = event.target.value
             }}
@@ -59,7 +95,7 @@ const UserForm = ({ isAdmin, user }) => {
             required
             pattern='\(\d{2}\) \d{5}-\d{4}$'
             defaultValue={formatPhone(user?.phone) ?? ''}
-            readOnly= {!isAdmin}
+            readOnly= {!admin}
             onChange={ event => {
                 user.phone = getOnlyNumbers(event.target.value)
                 event.target.value =  formatPhone(
@@ -81,7 +117,7 @@ const UserForm = ({ isAdmin, user }) => {
                     required
                     defaultValue={user?.person
                         ?.name ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly= {!admin}
                     onChange={ event => {
                         user.person.name = event.target.value
                     }}
@@ -97,7 +133,7 @@ const UserForm = ({ isAdmin, user }) => {
                     pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
                     defaultValue={formatCPF(user?.person
                         ?.cpf) ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly= {!admin}
                     onChange={ event => {
                         user.person.cpf = getOnlyNumbers(
                             event.target.value
@@ -119,7 +155,7 @@ const UserForm = ({ isAdmin, user }) => {
                     defaultValue={formatTimeStamp(
                         user?.person?.birth
                     ) ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly= {!admin}
                     onChange={ event => {
                         user.person.birth = event.target.value
                         event.target.value = formatDate(
@@ -143,7 +179,7 @@ const UserForm = ({ isAdmin, user }) => {
                             user?.company?.cnpj
                         ) ?? '--'
                     }
-                    readOnly= {!isAdmin}
+                    readOnly= {!admin}
                     onChange={ event => {
                         user.company.cnpj = getOnlyNumbers(
                             event.target.value
@@ -166,7 +202,7 @@ const UserForm = ({ isAdmin, user }) => {
                     required
                     defaultValue={user?.company
                         ?.name ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly= {!admin}
                     onChange={ event => {
                         user.company.name = event
                             .target
@@ -185,7 +221,7 @@ const UserForm = ({ isAdmin, user }) => {
                     required
                     defaultValue={user?.company
                         ?.tradeName ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly= {!admin}
                     onChange={ event => {
                         user.company.tradeName = event
                             .target
@@ -204,7 +240,7 @@ const UserForm = ({ isAdmin, user }) => {
                     required
                     defaultValue={user?.company
                         ?.description ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly= {!admin}
                     onChange={ event => {
                         user.company.description = event
                             .target
@@ -215,6 +251,38 @@ const UserForm = ({ isAdmin, user }) => {
                     Digite no mínimo 50 caracteres
                 </p>
             </>
+        }
+        {admin ?
+            <util.classicButton
+                onClick={event => {
+                    event.preventDefault()
+                    if (validateForm(0)) {
+                        submit()
+                    } else {
+                        setErrorMessage('Preencha todos os campos')
+                        setError(true)
+
+                        setTimeout(() => {
+                            setError(false)
+                        }, 3000)
+                    }
+                }}
+            >
+                Salvar
+            </util.classicButton>
+            : null
+        }
+        {success && !error?
+            <p className='success'>
+                Salvo com sucesso!
+            </p>
+            : null
+        }
+        {!success && error?
+            <p className='error'>
+                { errorMessage }
+            </p>
+            : null
         }
     </styles.form>
 }

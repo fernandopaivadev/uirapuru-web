@@ -1,23 +1,47 @@
 import styled from 'styled-components'
 
+const main = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background: linear-gradient(#3339, #3339);
+    z-index: 1;
+`
+
+const window = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    background: var(--background-color);
+`
+
 const form = styled.form`
     display: flex;
     flex-direction: column;
+    padding: 2rem 2rem 0 2rem;
     align-items: center;
-    height: fit-content;
-    margin: 1rem 2rem 0rem 2rem;
-    width: 100%;
+
+    label {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--neutral-color);
+    }
 
     input {
+        width: 90%;
         padding: 0.5rem;
         border: 0.2rem solid var(--primary-color);
         border-radius: 0.3rem;
         font-size: 1.8rem;
         margin: 0.2rem 0 3rem 0;
         color: var(--primary-font-color);
-        width: 85%;
         background: var(--background-color);
-        transition: all 0.2s ease;
         &:hover {
             background: var(--hovered-color);
         }
@@ -26,49 +50,35 @@ const form = styled.form`
         }
     }
 
-    label {
-        font-size: 1.6rem;
-        font-weight: 600;
-        color: var(--neutral-color);
-        width: 85%;
-        background: var(--background-color);
-        transition: all 0.2s ease;
-    }
-
     .error-message {
         color: var(--error-color);
         font-size: 1.4rem;
         font-weight: 600;
-        margin: -2rem auto 0rem auto;
+        margin: -2rem auto 2rem auto;
         display: none;
-    }
-
-    .success {
-        font-size: 2rem;
-        font-weight: 600;
-        color: var(--primary-color);
     }
 
     .error {
         font-size: 2rem;
         font-weight: 600;
         color: var(--error-color);
+        margin: 2rem 0 2rem 0;
     }
 `
 
-const title = styled.p`
-    font-size: 2.4rem;
-    font-weight: 600;
+const title = styled.h1`
     color: var(--primary-color);
-    margin: 1rem;
+    font-size: 2.4rem;
+    margin: 0 0 2.5rem 0;
 `
+
 const buttons = styled.div`
     display: flex;
 `
-
 export default {
+    main,
+    window,
     form,
     title,
     buttons
-
 }
