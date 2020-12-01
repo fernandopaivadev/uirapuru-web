@@ -24,6 +24,7 @@ const devices = styled.ul`
     margin: 1rem;
     border: 1px solid var(--primary-color);
     border-radius: 0.5rem;
+    overflow: hidden;
 
     li {
         display: flex;
