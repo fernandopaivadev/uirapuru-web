@@ -1,27 +1,25 @@
 import React from 'react'
 
-import '../../styles/modal.css'
+import styles from '../../styles/modal'
+import util from '../../styles/util'
 
 const Modal = ({ message, taskOnYes, taskOnNo }) =>
-    <div className='modal'>
-        <div className='window'>
+    <styles.main>
+        <styles.window>
             <p>{ message }</p>
-            <div className='buttons'>
-                <button
-                    className='classic-button'
+            <div>
+                <util.classicButton
                     onClick={taskOnYes}
                 >
                     Sim
-                </button>
-                <button
-                    id='cancel-button'
-                    className='classic-button'
+                </util.classicButton>
+                <util.criticalButton
                     onClick= {taskOnNo}
                 >
                     Não
-                </button>
+                </util.criticalButton>
             </div>
-        </div>
-    </div>
+        </styles.window>
+    </styles.main>
 
 export default Modal

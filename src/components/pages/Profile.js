@@ -25,8 +25,6 @@ import styles from '../../styles/profile'
 
 import util from '../../styles/util'
 
-import '../../styles/util.css'
-
 const Profile = ({ history }) => {
     const admin = storage.read('access-level') === 'admin'
     const user = storage.read('user')
@@ -295,7 +293,7 @@ const Profile = ({ history }) => {
 
                 {success[1] && !error[1]?
                     <p className='success'>
-                            Salvo com sucesso!
+                        Salvo com sucesso!
                     </p>
                     : null
                 }

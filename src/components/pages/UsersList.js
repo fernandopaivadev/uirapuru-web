@@ -30,23 +30,21 @@ const UsersList = ({ history }) => {
             <styles.header>
                 {!loading ?
                     <>
-                        <button
-                            className='classic-button'
+                        <util.classicButton
                             onClick={() => {
                                 history.push('/new-user')
                             }}
                         >
                             Novo Usuário
-                        </button>
-                        <button
-                            className='classic-button'
+                        </util.classicButton>
+                        <util.classicButton
                             onClick={() => {
                                 storage.clear('all')
                                 history.push('/login')
                             }}
                         >
                             Sair
-                        </button>
+                        </util.classicButton>
                     </>
                     : null
                 }
