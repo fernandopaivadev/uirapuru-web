@@ -1,29 +1,79 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import NewDevice from '../blocks/NewDevice'
+
+import Modal from '../blocks/Modal'
+
+import api from '../../services/api'
+
+import storage from '../../services/storage'
 
 import styles from '../../styles/deviceform'
 import util from '../../styles/util'
 
-const DevicesList = ({
-    user,
-    consumerUnitIndex,
-    isAdmin,
-    setNewDevicePopup,
-    setDeviceIndex,
-    submit,
-    setModal,
-    success,
-    error,
-    errorMessage
-}) => {
+const DevicesList = ({ consumerUnitIndex }) => {
+    const [newDevicePopup, setNewDevicePopup] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const [error, setError] = useState(false)
+    const [deviceIndex, setDeviceIndex] = useState()
+    const [modal, setModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(
+        'Ocorreu um erro'
+    )
+
+    const user = storage.read('user')
+    const admin = storage.read('access-level') === 'admin'
+
+    const submit = async () => {
+        const result = await api.updateUser(user)
+
+        if (result === 'OK') {
+            setSuccess(true)
+            setError(false)
+
+            setTimeout(() => {
+                setSuccess(false)
+            }, 2000)
+        } else {
+            setErrorMessage(result)
+            setSuccess(false)
+            setError(true)
+
+            setTimeout(() => {
+                setError(false)
+            }, 2000)
+        }
+    }
 
     return <styles.devicesList>
-        <NewDevice />
+        {newDevicePopup ?
+            <NewDevice
+                exit={() => {
+                    setNewDevicePopup(false)
+                }}
+            />
+            : null
+        }
 
+        { modal ?
+            <Modal
+                message={'Você tem certeza?'}
+                taskOnYes={() => {
+                    user
+                        .consumerUnits[consumerUnitIndex]
+                        .devices.pop(deviceIndex)
+                    submit()
+                    setModal(false)
+                }}
+                taskOnNo={() => {
+                    setModal(false)
+                }}
+            />
+            : null
+        }
         <styles.header>
             <styles.title>Dispositivos</styles.title>
-            {isAdmin ?
+            {admin ?
                 <util.classicButton
                     onClick={event => {
                         event.preventDefault()
@@ -42,11 +92,11 @@ const DevicesList = ({
                     <li key={index}>
                         <styles.devicesForm>
                             <label>
-                                            ID
+                                ID
                             </label>
                             <input
                                 defaultValue={device.id}
-                                readOnly={!isAdmin}
+                                readOnly={!admin}
                                 maxLength='8'
                                 minLength='8'
                                 onChange={ event => {
@@ -63,11 +113,11 @@ const DevicesList = ({
                                 ID inválido
                             </p>
                             <label>
-                                            Nome
+                                Nome
                             </label>
                             <input
                                 defaultValue={device.name}
-                                readOnly={!isAdmin}
+                                readOnly={!admin}
                                 maxLength='20'
                                 minLength='6'
                                 onChange={ event => {
@@ -83,40 +133,36 @@ const DevicesList = ({
                             <p className='error-message'>
                                             Digite no mínimo 6 caracteres
                             </p>
-                            {isAdmin ?
+                            {admin ?
                                 <styles.buttons>
                                     <util.classicButton
                                         onClick={event => {
                                             event.preventDefault()
                                             setDeviceIndex(index)
-                                            submit(index + 2)
+                                            submit()
                                         }}
                                     >
-                                                Salvar
+                                        Salvar
                                     </util.classicButton>
                                     <util.criticalButton
                                         onClick={event => {
                                             event.preventDefault()
                                             setDeviceIndex(index)
-                                            setModal([
-                                                false,
-                                                false,
-                                                true
-                                            ])
+                                            setModal(true)
                                         }}
                                     >
-                                                Excluir
+                                        Excluir
                                     </util.criticalButton>
                                 </styles.buttons>
                                 : null
                             }
-                            {success[index + 2] && !error[index + 2]?
+                            {success && !error?
                                 <p className='success'>
                                     Salvo com sucesso!
                                 </p>
                                 : null
                             }
-                            {!success[index + 2] && error[index + 2]?
+                            {!success && error?
                                 <p className='error'>
                                     { errorMessage }
                                 </p>

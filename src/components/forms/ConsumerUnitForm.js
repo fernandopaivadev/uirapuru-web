@@ -210,17 +210,13 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
                     onClick={ event => {
                         event.preventDefault()
                         if (validateForm(1)) {
-                            submit(1)
+                            submit()
                         } else {
                             setErrorMessage('Preencha todos os campos')
-                            const _error = [...error]
-                            _error[1] = true
-                            setError(_error)
+                            setError(true)
 
                             setTimeout(() => {
-                                const _error = [...error]
-                                _error[1] = false
-                                setError(_error)
+                                setError(false)
                             }, 3000)
                         }
                     }}
@@ -230,6 +226,7 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
                 : null
             }
         </styles.buttons>
+
         {success && !error?
             <p className='success'>
                 Salvo com sucesso!

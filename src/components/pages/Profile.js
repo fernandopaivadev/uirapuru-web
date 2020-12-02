@@ -6,8 +6,6 @@ import Menu from '../blocks/Menu'
 
 import Modal from '../blocks/Modal'
 
-import NewDevice from '../blocks/NewDevice'
-
 import storage from '../../services/storage'
 
 import api from '../../services/api'
@@ -27,18 +25,10 @@ import styles from '../../styles/profile'
 import util from '../../styles/util'
 
 const Profile = ({ history }) => {
-    const admin = storage.read('access-level') === 'admin'
-    const user = storage.read('user')
-
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
-    const [deviceIndex, setDeviceIndex] = useState()
-    const [modal, setModal] = useState([false,false])
-    const [success, setSuccess] = useState([false,false])
-    const [error, setError] = useState([false,false])
-    const [errorMessage, setErrorMessage] = useState(
-        'Ocorreu um erro'
-    )
-    const [newDevicePopup, setNewDevicePopup] = useState(false)
+    const [modal, setModal] = useState(false)
+
+    const admin = storage.read('access-level') === 'admin'
 
     useEffect(() => {
         if (consumerUnitIndex >= 0) {
@@ -46,14 +36,6 @@ const Profile = ({ history }) => {
                 .consumerUnits[consumerUnitIndex]
                 .devices
                 .length + 2
-
-            setSuccess(
-                new Array(len).fill(false)
-            )
-
-            setError(
-                new Array(len).fill(false)
-            )
 
             for (let k = 0; k < len; k++) {
                 setFormValidation(k)
@@ -74,56 +56,10 @@ const Profile = ({ history }) => {
         }
     }
 
-    const submit = async index => {
-        const result = await api.updateUser(user)
-
-        if (result === 'OK') {
-            const _success = [...success]
-            _success[index] = true
-            setSuccess(_success)
-
-            const _error = [...error]
-            _error[index] = false
-            setError(_error)
-
-            setTimeout(() => {
-                const _success = [...success]
-                _success[index] = false
-                setSuccess(_success)
-            }, 2000)
-        } else {
-            setErrorMessage(result)
-
-            const _success = [...success]
-            _success[index] = false
-            setSuccess(_success)
-
-            const _error = [...error]
-            _error[index] = true
-            setError(_error)
-
-            setTimeout(() => {
-                const _error = [...error]
-                _error[index] = false
-                setError(_error)
-            }, 2000)
-        }
-    }
-
     return <div className='profile'>
         <NavBar />
 
-        { newDevicePopup ?
-            <NewDevice
-                consumerUnitIndex={consumerUnitIndex}
-                exit={() => {
-                    setNewDevicePopup(false)
-                }}
-            />
-            : null
-        }
-
-        { modal[0] ?
+        { modal ?
             <Modal
                 message={'Você tem certeza?'}
                 taskOnYes={() => {
@@ -136,24 +72,6 @@ const Profile = ({ history }) => {
             : null
         }
 
-
-        { modal[2] ?
-            <Modal
-                message={'Você tem certeza?'}
-                taskOnYes={() => {
-                    user
-                        .consumerUnits[consumerUnitIndex]
-                        .devices.pop(deviceIndex)
-                    submit(1)
-                    setModal([false, false, false])
-                }}
-                taskOnNo={() => {
-                    setModal([false, false, false])
-                }}
-            />
-            : null
-        }
-
         <styles.main>
             <Menu
                 title='Unidades'
@@ -161,6 +79,7 @@ const Profile = ({ history }) => {
                 setItemIndex={ setConsumerUnitIndex }
                 subItemKey='devices'
             />
+
             <UserForm />
 
             {consumerUnitIndex >= 0 ?
@@ -187,31 +106,9 @@ const Profile = ({ history }) => {
                 </styles.empty>
             }
 
-            {success[1] && !error[1]?
-                <p className='success'>
-                        Salvo com sucesso!
-                </p>
-                : null
-            }
-            {!success[1] && error[1]?
-                <p className='error'>
-                    { errorMessage }
-                </p>
-                : null
-            }
-
             {consumerUnitIndex >= 0 ?
                 <DevicesList
-                    user={storage.read('user')}
                     consumerUnitIndex={consumerUnitIndex}
-                    isAdmin={admin}
-                    setNewDevicePopup={setNewDevicePopup}
-                    setDeviceIndex={setDeviceIndex}
-                    submit={submit}
-                    setModal={setModal}
-                    success={success}
-                    error={error}
-                    errorMessage={errorMessage}
                 />
                 :
                 <styles.empty>
@@ -233,7 +130,7 @@ const Profile = ({ history }) => {
             {admin ?
                 <util.criticalButton
                     onClick={ () => {
-                        setModal([true, false, false])
+                        setModal(true)
                     }}
                 >
                     Excluir Usuário

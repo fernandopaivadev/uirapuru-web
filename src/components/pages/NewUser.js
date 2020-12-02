@@ -17,7 +17,8 @@ import {
     setFormValidation
 } from '../../services/forms'
 
-import '../../styles/newuser.css'
+import styles from '../../styles/newuser'
+import util from '../../styles/util'
 
 const NewUser = ({ history }) => {
     const [user, setUser] = useState({
@@ -121,11 +122,11 @@ const NewUser = ({ history }) => {
             : null
         }
 
-        <div className='main'>
-            <form>
-                <h1>
+        <styles.main>
+            <styles.form>
+                <styles.title>
                     Dados do novo usuário
-                </h1>
+                </styles.title>
 
                 <label>Nome de usuário</label>
                 <input
@@ -208,7 +209,7 @@ const NewUser = ({ history }) => {
                     <option>Administrador</option>
                 </select>
 
-                <div className='checkbox'>
+                <styles.checkbox>
                     <input
                         type='checkbox'
                         onClick={() => {
@@ -222,7 +223,7 @@ const NewUser = ({ history }) => {
                         }}
                     />
                     <label>Sou pessoa física</label>
-                </div>
+                </styles.checkbox>
 
                 {userType === 'company' ?
                     <>
@@ -344,18 +345,16 @@ const NewUser = ({ history }) => {
                     </>
                 }
 
-                <div className='buttons'>
-                    <button
-                        className='classic-button'
+                <styles.buttons>
+                    <util.classicButton
                         onClick={event => {
                             event.preventDefault()
                             history.push('/users-list')
                         }}
                     >
                             Voltar
-                    </button>
-                    <button
-                        className='classic-button'
+                    </util.classicButton>
+                    <util.classicButton
                         onClick={event => {
                             event.preventDefault()
                             buttonPress(() => {
@@ -364,13 +363,13 @@ const NewUser = ({ history }) => {
                         }}
                     >
                         Salvar
-                    </button>
-                </div>
+                    </util.classicButton>
+                </styles.buttons>
 
                 {loading ?
-                    <div className='loading-container'>
-                        <progress className='circular-progress'/>
-                    </div>
+                    <styles.loading>
+                        <util.circularProgress/>
+                    </styles.loading>
                     :
                     !success && error?
                         <p className='error'>
@@ -378,8 +377,8 @@ const NewUser = ({ history }) => {
                         </p>
                         : null
                 }
-            </form>
-        </div>
+            </styles.form>
+        </styles.main>
     </div>
 }
 

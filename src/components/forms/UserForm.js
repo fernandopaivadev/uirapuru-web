@@ -229,7 +229,7 @@ const UserForm = () => {
                     }}
                 />
                 <p className='error-message'>
-                                    Digite no mínimo 6 caracteres
+                    Digite no mínimo 6 caracteres
                 </p>
 
                 <label>Descrição</label>
