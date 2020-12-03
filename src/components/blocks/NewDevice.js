@@ -19,6 +19,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
     const [errorMessage, setErrorMessage] = useState(
         'Erro no processamento do formulário'
     )
+
     const user = storage.read('user')
     const device = {
         id: '',
@@ -86,8 +87,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                         onClick={event => {
                             event.preventDefault()
                             if (validateForm()) {
-                                user
-                                    .consumerUnits[consumerUnitIndex]
+                                user.consumerUnits[consumerUnitIndex]
                                     .devices.push(device)
                                 submit()
                             } else {

@@ -49,7 +49,7 @@ const UserForm = () => {
         }
     }
 
-    return <styles.form>
+    return <styles.form id='userForm'>
         <styles.title>
             Dados do Usuário
         </styles.title>
@@ -244,7 +244,7 @@ const UserForm = () => {
             <util.classicButton
                 onClick={event => {
                     event.preventDefault()
-                    if (validateForm(0)) {
+                    if (validateForm('userForm')) {
                         submit()
                     } else {
                         setErrorMessage('Preencha todos os campos')

@@ -6,6 +6,7 @@ const devicesList = styled.div`
     flex-direction: column;
     align-items: center;
     height: 95.5%;
+    
     padding: 1rem;
 `
 
@@ -27,8 +28,7 @@ const title = styled.p`
     margin: 1rem;
 `
 
-
-const devicesForm = styled.form`
+const deviceForm = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,9 +49,11 @@ const devicesForm = styled.form`
         width: 90%;
         background: var(--background-color);
         transition: all 0.2s ease;
+        
         &:hover {
             background: var(--hovered-color);
         }
+        
         &:focus {
             background: var(--hovered-color);
         }
@@ -74,6 +76,18 @@ const devicesForm = styled.form`
         margin: 0 auto 0 auto;
         display: none;
     }
+
+    .success {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .error {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--error-color);
+    }
 `
 
 const buttons = styled.div`
@@ -85,6 +99,6 @@ export default {
     header,
     ul,
     title,
-    devicesForm,
+    deviceForm,
     buttons
 }

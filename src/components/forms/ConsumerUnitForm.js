@@ -49,7 +49,7 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
         }
     }
 
-    return <styles.form>
+    return <styles.form id='consumerUnitForm'>
         { modal ?
             <Modal
                 message={'Você tem certeza?'}
@@ -209,7 +209,7 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
                 <util.classicButton
                     onClick={ event => {
                         event.preventDefault()
-                        if (validateForm(1)) {
+                        if (validateForm('consumerUnitForm')) {
                             submit()
                         } else {
                             setErrorMessage('Preencha todos os campos')

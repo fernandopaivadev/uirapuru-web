@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
+
 import NavBar from '../blocks/NavBar'
 import Menu from '../blocks/Menu'
 import Chart from '../blocks/Chart'
@@ -71,38 +72,50 @@ const Dashboard = ({ history }) => {
                 subItemKey='devices'
                 setItemIndex={setConsumerUnitIndex}
             />
+
             <styles.container>
                 {connected ?
                     <Overview  {...overviewProps}/>
                     : null
                 }
-                <styles.devices>
-                    {storage.read('user')
-                        ?.consumerUnits[ consumerUnitIndex ]
-                        ?.devices.map((device, deviceIndex) =>
-                            <li
-                                key={ deviceIndex }
-                                onClick={() => {
-                                    history.push(
+
+                {storage.read('user')?.consumerUnits[
+                    consumerUnitIndex
+                ].devices.length > 0 ?
+                    <styles.devices>
+                        {storage.read('user')
+                            ?.consumerUnits[consumerUnitIndex]
+                            ?.devices.map((device, deviceIndex) =>
+                                <li
+                                    key={ deviceIndex }
+                                    onClick={() => {
+                                        history.push(
                                         `/plot?${
                                             consumerUnitIndex
                                         }&${
                                             deviceIndex
-                                        }`
-                                    )
-                                }}
-                            >
-                                <FaSolarPanel
-                                    className='panel-icon'
-                                />
-                                <p className='text'>
-                                    { device.name }
-                                </p>
-                            </li>
-                        )
-                    }
-                </styles.devices>
+                                        }`)
+                                    }}
+                                >
+                                    <FaSolarPanel
+                                        className='panel-icon'
+                                    />
+                                    <p className='text'>
+                                        { device.name }
+                                    </p>
+                                </li>
+                            )
+                        }
+                    </styles.devices>
+                    :
+                    <styles.empty>
+                        <p>
+                            Não há dispositivos cadastrados
+                        </p>
+                    </styles.empty>
+                }
             </styles.container>
+
             {!loading ?
                 success ?
                     storage.read('collection')?.length ?

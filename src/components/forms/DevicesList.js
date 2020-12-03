@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 
 import NewDevice from '../blocks/NewDevice'
-
 import Modal from '../blocks/Modal'
 
 import api from '../../services/api'
-
 import storage from '../../services/storage'
 
-import styles from '../../styles/deviceform'
+import styles from '../../styles/deviceslist'
 import util from '../../styles/util'
 
 import { validateForm } from '../../services/forms'
@@ -48,6 +46,9 @@ const DevicesList = ({ consumerUnitIndex }) => {
     return <styles.devicesList>
         {newDevicePopup ?
             <NewDevice
+                consumerUnitIndex={
+                    consumerUnitIndex
+                }
                 exit={() => {
                     setNewDevicePopup(false)
                 }}
@@ -55,7 +56,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
             : null
         }
 
-        { modal ?
+        {modal ?
             <Modal
                 message={'Você tem certeza?'}
                 taskOnYes={() => {
@@ -73,7 +74,10 @@ const DevicesList = ({ consumerUnitIndex }) => {
         }
 
         <styles.header>
-            <styles.title>Dispositivos</styles.title>
+            <styles.title>
+                Dispositivos
+            </styles.title>
+
             {isAdmin ?
                 <util.classicButton
                     onClick={event => {
@@ -87,101 +91,101 @@ const DevicesList = ({ consumerUnitIndex }) => {
             }
         </styles.header>
 
-        <ul>
-            {user
-                .consumerUnits[consumerUnitIndex]
-                .devices.map((device, index) =>
-                    <li key={index}>
-                        <styles.devicesForm>
-                            <label>
-                                ID
-                            </label>
-                            <input
-                                defaultValue={device.id}
-                                readOnly={!isAdmin}
-                                maxLength='8'
-                                minLength='8'
-                                onChange={ event => {
-                                    user.consumerUnits[
-                                        consumerUnitIndex
-                                    ].devices[index].id = event.target.value
-                                }}
-                            />
-                            <p className='error-message'>
-                                ID inválido
-                            </p>
-                            <label>
-                                Nome
-                            </label>
-                            <input
-                                defaultValue={device.name}
-                                readOnly={!isAdmin}
-                                maxLength='20'
-                                minLength='6'
-                                onChange={ event => {
-                                    user.consumerUnits[
-                                        consumerUnitIndex
-                                    ].devices[index].name
+        <ul>{
+            user.consumerUnits[consumerUnitIndex].devices.map((device, index) =>
+                <li key={index}>
+                    <styles.deviceForm id={`deviceForm${index}`}>
+                        <label>
+                            ID
+                        </label>
+                        <input
+                            defaultValue={device.id}
+                            readOnly={!isAdmin}
+                            maxLength='8'
+                            minLength='8'
+                            onChange={ event => {
+                                user.consumerUnits[
+                                    consumerUnitIndex
+                                ].devices[index].id = event.target.value
+                            }}
+                        />
+                        <p className='error-message'>
+                            ID inválido
+                        </p>
+
+                        <label>
+                            Nome
+                        </label>
+                        <input
+                            defaultValue={device.name}
+                            readOnly={!isAdmin}
+                            maxLength='20'
+                            minLength='6'
+                            onChange={ event => {
+                                user.consumerUnits[
+                                    consumerUnitIndex
+                                ].devices[index].name
                                     =
                                     event.target.value
-                                }}
-                            />
-                            <p className='error-message'>
-                                Digite no mínimo 6 caracteres
-                            </p>
-                            {isAdmin ?
-                                <styles.buttons>
-                                    <util.classicButton
-                                        onClick={event => {
-                                            event.preventDefault()
-                                            if (validateForm(index + 2)) {
-                                                setDeviceIndex(index)
-                                                submit()
-                                            } else {
-                                                setErrorMessage(
-                                                    'Preencha todos os campos'
-                                                )
-                                                setError(true)
+                            }}
+                        />
+                        <p className='error-message'>
+                            Digite no mínimo 6 caracteres
+                        </p>
 
-                                                setTimeout(() => {
-                                                    setError(false)
-                                                }, 3000)
-                                            }
-                                        }}
-                                    >
-                                        Salvar
-                                    </util.classicButton>
-                                    <util.criticalButton
-                                        onClick={event => {
-                                            event.preventDefault()
+                        {isAdmin ?
+                            <styles.buttons>
+                                <util.classicButton
+                                    onClick={event => {
+                                        event.preventDefault()
+                                        if (validateForm(`deviceForm${index}`)) {
                                             setDeviceIndex(index)
-                                            setModal(true)
-                                        }}
-                                    >
-                                        Excluir
-                                    </util.criticalButton>
-                                </styles.buttons>
-                                : null
-                            }
+                                            submit()
+                                        } else {
+                                            console.log('Validating')
+                                            setErrorMessage(
+                                                'Preencha todos os campos'
+                                            )
+                                            setError(true)
 
-                            {success && !error?
-                                <p className='success'>
-                                    Salvo com sucesso!
-                                </p>
-                                : null
-                            }
+                                            setTimeout(() => {
+                                                setError(false)
+                                            }, 3000)
+                                        }
+                                    }}
+                                >
+                                    Salvar
+                                </util.classicButton>
+                                <util.criticalButton
+                                    onClick={event => {
+                                        event.preventDefault()
+                                        setDeviceIndex(index)
+                                        setModal(true)
+                                    }}
+                                >
+                                    Excluir
+                                </util.criticalButton>
+                            </styles.buttons>
+                            : null
+                        }
 
-                            {!success && error?
-                                <p className='error'>
-                                    { errorMessage }
-                                </p>
-                                : null
-                            }
-                        </styles.devicesForm>
-                    </li>
-                )
-            }
-        </ul>
+                        {success && !error?
+                            <p className='success'>
+                                Salvo com sucesso!
+                            </p>
+                            : null
+                        }
+
+                        {!success && error?
+                            <p className='error-message'>
+                                { errorMessage }
+                            </p>
+                            : null
+                        }
+                    </styles.deviceForm>
+                </li>
+            )
+        }</ul>
     </styles.devicesList>
 }
 

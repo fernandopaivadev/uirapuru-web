@@ -8,6 +8,9 @@ const main = styled.div`
     justify-content: center;
     position: absolute;
     background: linear-gradient(#3339, #3339);
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 1;
 `
 

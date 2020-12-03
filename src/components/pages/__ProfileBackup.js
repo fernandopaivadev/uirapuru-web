@@ -18,7 +18,7 @@ import {
     formatCEP,
     getOnlyNumbers,
     validateForm,
-    setFormValidation
+    setFormsValidation
 } from '../../services/forms'
 
 import styles from '../../styles/profile'
@@ -55,10 +55,10 @@ const Profile = ({ history }) => {
             )
 
             for (let k = 0; k < len; k++) {
-                setFormValidation(k)
+                setFormsValidation(k)
             }
         } else {
-            setFormValidation()
+            setFormsValidation()
         }
     }, [consumerUnitIndex])
 

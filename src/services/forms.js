@@ -53,12 +53,8 @@ const formatDate = input =>
 const getOnlyNumbers = input =>
     input?.replace(/\D/g, '')
 
-const validateForm = index => {
-    if (!index) {
-        index = 0
-    }
-
-    const form = document.querySelector(`form:nth-child(${index + 1})`)
+const validateForm = id => {
+    const form = document.querySelector(`#${id}`)
 
     if (!form) {
         return false

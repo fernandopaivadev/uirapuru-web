@@ -6,8 +6,10 @@ const main = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
     background: linear-gradient(#3339, #3339);
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 1;
 `
 

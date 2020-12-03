@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
 import NavBar from '../blocks/NavBar'
-
 import Menu from '../blocks/Menu'
-
 import Modal from '../blocks/Modal'
-
 import storage from '../../services/storage'
-
-import api from '../../services/api'
-
 import UserForm from '../forms/UserForm'
-
 import ConsumerUnitForm from '../forms/ConsumerUnitForm'
-
 import DevicesList from '../forms/DevicesList'
 
+import api from '../../services/api'
 import { setFormsValidation } from '../../services/forms'
 
 import styles from '../../styles/profile'
-
 import util from '../../styles/util'
 
 const Profile = ({ history }) => {
@@ -46,7 +38,7 @@ const Profile = ({ history }) => {
     return <div className='profile'>
         <NavBar />
 
-        { modal ?
+        {modal ?
             <Modal
                 message={'Você tem certeza?'}
                 taskOnYes={() => {
@@ -70,23 +62,22 @@ const Profile = ({ history }) => {
             <UserForm />
 
             {consumerUnitIndex >= 0 ?
-                <>
-                    <ConsumerUnitForm
-                        consumerUnitIndex={consumerUnitIndex}
-                    />
-                </>
+                <ConsumerUnitForm
+                    consumerUnitIndex={consumerUnitIndex}
+                />
                 :
                 <styles.empty>
                     <p>
-                            Escolha uma unidade Consumidora
+                        Escolha uma unidade Consumidora
                     </p>
+
                     {isAdmin ?
                         <util.classicButton
                             onClick = { () => {
                                 history.push('/new-unit')
                             }}
                         >
-                                Nova Unidade
+                            Nova Unidade
                         </util.classicButton>
                         : null
                     }
@@ -114,6 +105,7 @@ const Profile = ({ history }) => {
             >
                 Dashboard
             </util.classicButton>
+
             {isAdmin ?
                 <util.criticalButton
                     onClick={ () => {

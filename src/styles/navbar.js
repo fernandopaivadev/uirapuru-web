@@ -78,6 +78,7 @@ const avatar = styled.button`
     background: var(--primary-color);
     border-radius: 50%;
     border: none;
+    font-size: 2rem;
     font-weight: 600;
     color: var(--secondary-font-color);
     margin: 0 1rem 0 0;
