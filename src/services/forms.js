@@ -85,63 +85,42 @@ const validateForm = index => {
     return sum === expected
 }
 
-const validateInput = (formIndex, inputIndex) => {
-    if (!formIndex) {
-        formIndex = 0
-    }
+const setFormsValidation = () => {
+    const forms = [...document.querySelectorAll('form')]
 
-    const form = document.querySelector(`form:nth-child(${formIndex + 1})`)
-
-    if (!form) {
+    if (!forms) {
         return false
     }
 
-    const formChildren = [...form.children]
+    let children = []
 
-    const inputs = formChildren.filter(child =>
+    forms.map(form =>
+        [...form.children]
+    ).map(formChildren => {
+        children.push(...formChildren)
+    })
+
+    const inputs = children.filter(child =>
         child.tagName === 'INPUT'
         &&
         child.type !== 'checkbox'
     )
 
-    const errorMessages = formChildren.filter(child =>
+    const errorMessages = children.filter(child =>
         child.className === 'error-message'
-    )
-
-    if (inputs[inputIndex].checkValidity()) {
-        inputs[inputIndex].style.borderColor = 'var(--primary-color)'
-        errorMessages[inputIndex].style.display = 'none'
-    } else {
-        inputs[inputIndex].style.borderColor = 'var(--error-color)'
-        errorMessages[inputIndex].style.display = 'block'
-    }
-}
-
-const setFormValidation = formIndex => {
-    if (!formIndex) {
-        formIndex = 0
-    }
-
-    const form = document.querySelector(`form:nth-child(${formIndex + 1})`)
-
-    if (!form) {
-        return false
-    }
-
-    const formChildren = [...form.children]
-
-    const inputs = formChildren.filter(child =>
-        child.tagName === 'INPUT'
-        &&
-        child.type !== 'checkbox'
     )
 
     inputs.forEach((input, inputIndex) => {
         input.onblur = () => {
-            validateInput(formIndex, inputIndex)
+            if (inputs[inputIndex].checkValidity()) {
+                inputs[inputIndex].style.borderColor = 'var(--primary-color)'
+                errorMessages[inputIndex].style.display = 'none'
+            } else {
+                inputs[inputIndex].style.borderColor = 'var(--error-color)'
+                errorMessages[inputIndex].style.display = 'block'
+            }
         }
     })
-
 }
 
 export {
@@ -155,5 +134,5 @@ export {
     formatDate,
     getOnlyNumbers,
     validateForm,
-    setFormValidation
+    setFormsValidation
 }

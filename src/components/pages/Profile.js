@@ -16,9 +16,7 @@ import ConsumerUnitForm from '../forms/ConsumerUnitForm'
 
 import DevicesList from '../forms/DevicesList'
 
-import {
-    setFormValidation
-} from '../../services/forms'
+import { setFormsValidation } from '../../services/forms'
 
 import styles from '../../styles/profile'
 
@@ -28,21 +26,10 @@ const Profile = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [modal, setModal] = useState(false)
 
-    const admin = storage.read('access-level') === 'admin'
+    const isAdmin = storage.read('access-level') === 'admin'
 
     useEffect(() => {
-        if (consumerUnitIndex >= 0) {
-            const len = storage.read('user')
-                .consumerUnits[consumerUnitIndex]
-                .devices
-                .length + 2
-
-            for (let k = 0; k < len; k++) {
-                setFormValidation(k)
-            }
-        } else {
-            setFormValidation()
-        }
+        setFormsValidation()
     }, [consumerUnitIndex])
 
     const deleteUser = async () => {
@@ -93,7 +80,7 @@ const Profile = ({ history }) => {
                     <p>
                             Escolha uma unidade Consumidora
                     </p>
-                    {admin ?
+                    {isAdmin ?
                         <util.classicButton
                             onClick = { () => {
                                 history.push('/new-unit')
@@ -127,7 +114,7 @@ const Profile = ({ history }) => {
             >
                 Dashboard
             </util.classicButton>
-            {admin ?
+            {isAdmin ?
                 <util.criticalButton
                     onClick={ () => {
                         setModal(true)

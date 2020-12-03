@@ -7,7 +7,7 @@ import api from '../../services/api'
 import {
     formatDeviceID,
     validateForm,
-    setFormValidation
+    setFormsValidation
 } from '../../services/forms'
 
 import styles from '../../styles/newdevice'
@@ -26,7 +26,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
     }
 
     useEffect(() => {
-        setFormValidation()
+        setFormsValidation()
     })
 
     const submit = async () => {

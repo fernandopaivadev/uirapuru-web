@@ -26,7 +26,7 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
     )
 
     const user = storage.read('user')
-    const admin = storage.read('access-level') === 'admin'
+    const isAdmin = storage.read('access-level') === 'admin'
 
     const submit = async () => {
         const result = await api.updateUser(user)
@@ -184,7 +184,7 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
         </p>
 
         <styles.buttons>
-            {admin ?
+            {isAdmin ?
                 <util.criticalButton
                     onClick={ event => {
                         event.preventDefault()
@@ -195,7 +195,7 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
                 </util.criticalButton>
                 : null
             }
-            {admin ?
+            {isAdmin ?
                 <util.classicButton
                     onClick = { () => {
                         history.push('/new-unit')
@@ -205,7 +205,7 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
                 </util.classicButton>
                 : null
             }
-            {admin ?
+            {isAdmin ?
                 <util.classicButton
                     onClick={ event => {
                         event.preventDefault()

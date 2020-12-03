@@ -11,18 +11,18 @@ import storage from '../../services/storage'
 import styles from '../../styles/deviceform'
 import util from '../../styles/util'
 
+import { validateForm } from '../../services/forms'
+
 const DevicesList = ({ consumerUnitIndex }) => {
     const [newDevicePopup, setNewDevicePopup] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState(false)
-    const [errorMessage, setErrorMessage] = useState(
-        'Ocorreu um erro'
-    )
+    const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
 
     const user = storage.read('user')
-    const admin = storage.read('access-level') === 'admin'
+    const isAdmin = storage.read('access-level') === 'admin'
 
     const submit = async () => {
         const result = await api.updateUser(user)
@@ -71,9 +71,10 @@ const DevicesList = ({ consumerUnitIndex }) => {
             />
             : null
         }
+
         <styles.header>
             <styles.title>Dispositivos</styles.title>
-            {admin ?
+            {isAdmin ?
                 <util.classicButton
                     onClick={event => {
                         event.preventDefault()
@@ -85,6 +86,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                 : null
             }
         </styles.header>
+
         <ul>
             {user
                 .consumerUnits[consumerUnitIndex]
@@ -96,17 +98,13 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             </label>
                             <input
                                 defaultValue={device.id}
-                                readOnly={!admin}
+                                readOnly={!isAdmin}
                                 maxLength='8'
                                 minLength='8'
                                 onChange={ event => {
-                                    user
-                                        .consumerUnits[
-                                            consumerUnitIndex
-                                        ]
-                                        .devices[index].id
-                                                    =
-                                                    event.target.value
+                                    user.consumerUnits[
+                                        consumerUnitIndex
+                                    ].devices[index].id = event.target.value
                                 }}
                             />
                             <p className='error-message'>
@@ -117,29 +115,38 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             </label>
                             <input
                                 defaultValue={device.name}
-                                readOnly={!admin}
+                                readOnly={!isAdmin}
                                 maxLength='20'
                                 minLength='6'
                                 onChange={ event => {
-                                    user
-                                        .consumerUnits[
-                                            consumerUnitIndex
-                                        ]
-                                        .devices[index].name
-                                                    =
-                                            event.target.value
+                                    user.consumerUnits[
+                                        consumerUnitIndex
+                                    ].devices[index].name
+                                    =
+                                    event.target.value
                                 }}
                             />
                             <p className='error-message'>
-                                            Digite no mínimo 6 caracteres
+                                Digite no mínimo 6 caracteres
                             </p>
-                            {admin ?
+                            {isAdmin ?
                                 <styles.buttons>
                                     <util.classicButton
                                         onClick={event => {
                                             event.preventDefault()
-                                            setDeviceIndex(index)
-                                            submit()
+                                            if (validateForm(index + 2)) {
+                                                setDeviceIndex(index)
+                                                submit()
+                                            } else {
+                                                setErrorMessage(
+                                                    'Preencha todos os campos'
+                                                )
+                                                setError(true)
+
+                                                setTimeout(() => {
+                                                    setError(false)
+                                                }, 3000)
+                                            }
                                         }}
                                     >
                                         Salvar
@@ -156,12 +163,14 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                 </styles.buttons>
                                 : null
                             }
+
                             {success && !error?
                                 <p className='success'>
                                     Salvo com sucesso!
                                 </p>
                                 : null
                             }
+
                             {!success && error?
                                 <p className='error'>
                                     { errorMessage }

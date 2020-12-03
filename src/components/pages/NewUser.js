@@ -14,7 +14,7 @@ import {
     formatDate,
     getOnlyNumbers,
     validateForm,
-    setFormValidation
+    setFormsValidation
 } from '../../services/forms'
 
 import styles from '../../styles/newuser'
@@ -53,7 +53,7 @@ const NewUser = ({ history }) => {
     ))
 
     useEffect(() => {
-        setFormValidation()
+        setFormsValidation()
     })
 
     const clearForm = mode => {

@@ -10,7 +10,7 @@ import {
     formatCEP,
     getOnlyNumbers,
     validateForm,
-    setFormValidation
+    setFormsValidation
 } from '../../services/forms'
 
 import styles from '../../styles/newunit'
@@ -36,7 +36,7 @@ const NewUnit = ({ history }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setFormValidation()
+        setFormsValidation()
     })
 
     const submit = async event => {

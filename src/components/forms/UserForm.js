@@ -26,7 +26,7 @@ const UserForm = () => {
     )
 
     const user = storage.read('user')
-    const admin = storage.read('access-level') === 'admin'
+    const isAdmin = storage.read('access-level') === 'admin'
 
     const submit = async () => {
         const result = await api.updateUser(user)
@@ -61,7 +61,7 @@ const UserForm = () => {
             minLength='6'
             required
             defaultValue={user.username ?? ''}
-            readOnly= {!admin}
+            readOnly= {!isAdmin}
             onChange={ event => {
                 user.username = event.target.value
                 event.target.value = formatUsername(
@@ -80,7 +80,7 @@ const UserForm = () => {
             minLength='10'
             required
             defaultValue={user?.email ?? ''}
-            readOnly= {!admin}
+            readOnly= {!isAdmin}
             onChange={ event => {
                 user.email = event.target.value
             }}
@@ -95,7 +95,7 @@ const UserForm = () => {
             required
             pattern='\(\d{2}\) \d{5}-\d{4}$'
             defaultValue={formatPhone(user?.phone) ?? ''}
-            readOnly= {!admin}
+            readOnly= {!isAdmin}
             onChange={ event => {
                 user.phone = getOnlyNumbers(event.target.value)
                 event.target.value =  formatPhone(
@@ -115,9 +115,8 @@ const UserForm = () => {
                     maxLength='128'
                     minLength='10'
                     required
-                    defaultValue={user?.person
-                        ?.name ?? ''}
-                    readOnly= {!admin}
+                    defaultValue={user?.person?.name ?? ''}
+                    readOnly= {!isAdmin}
                     onChange={ event => {
                         user.person.name = event.target.value
                     }}
@@ -131,9 +130,8 @@ const UserForm = () => {
                     name='cpf'
                     required
                     pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
-                    defaultValue={formatCPF(user?.person
-                        ?.cpf) ?? ''}
-                    readOnly= {!admin}
+                    defaultValue={formatCPF(user?.person?.cpf) ?? ''}
+                    readOnly= {!isAdmin}
                     onChange={ event => {
                         user.person.cpf = getOnlyNumbers(
                             event.target.value
@@ -152,10 +150,8 @@ const UserForm = () => {
                     name='birth'
                     required
                     pattern='\d{2}\/\d{2}\/\d{4}'
-                    defaultValue={formatTimeStamp(
-                        user?.person?.birth
-                    ) ?? ''}
-                    readOnly= {!admin}
+                    defaultValue={formatTimeStamp(user?.person?.birth) ?? ''}
+                    readOnly= {!isAdmin}
                     onChange={ event => {
                         user.person.birth = event.target.value
                         event.target.value = formatDate(
@@ -174,17 +170,12 @@ const UserForm = () => {
                     name='cnpj'
                     required
                     pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
-                    defaultValue={
-                        formatCNPJ(
-                            user?.company?.cnpj
-                        ) ?? '--'
-                    }
-                    readOnly= {!admin}
+                    defaultValue={formatCNPJ(user?.company?.cnpj) ?? '--'}
+                    readOnly= {!isAdmin}
                     onChange={ event => {
                         user.company.cnpj = getOnlyNumbers(
                             event.target.value
                         )
-                        user.phone = event.target.value
                         event.target.value =  formatCNPJ(
                             event.target.value
                         )
@@ -202,7 +193,7 @@ const UserForm = () => {
                     required
                     defaultValue={user?.company
                         ?.name ?? ''}
-                    readOnly= {!admin}
+                    readOnly= {!isAdmin}
                     onChange={ event => {
                         user.company.name = event
                             .target
@@ -221,7 +212,7 @@ const UserForm = () => {
                     required
                     defaultValue={user?.company
                         ?.tradeName ?? ''}
-                    readOnly= {!admin}
+                    readOnly= {!isAdmin}
                     onChange={ event => {
                         user.company.tradeName = event
                             .target
@@ -238,13 +229,10 @@ const UserForm = () => {
                     maxLength='512'
                     minLength='50'
                     required
-                    defaultValue={user?.company
-                        ?.description ?? ''}
-                    readOnly= {!admin}
+                    defaultValue={user?.company?.description ?? ''}
+                    readOnly= {!isAdmin}
                     onChange={ event => {
-                        user.company.description = event
-                            .target
-                            .value
+                        user.company.description = event.target.value
                     }}
                 />
                 <p className='error-message'>
@@ -252,7 +240,7 @@ const UserForm = () => {
                 </p>
             </>
         }
-        {admin ?
+        {isAdmin ?
             <util.classicButton
                 onClick={event => {
                     event.preventDefault()
