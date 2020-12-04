@@ -61,7 +61,7 @@ const UserForm = () => {
             minLength='6'
             required
             defaultValue={user.username ?? ''}
-            readOnly= {!isAdmin}
+            readOnly={!isAdmin}
             onChange={ event => {
                 user.username = event.target.value
                 event.target.value = formatUsername(
@@ -80,7 +80,7 @@ const UserForm = () => {
             minLength='10'
             required
             defaultValue={user?.email ?? ''}
-            readOnly= {!isAdmin}
+            readOnly={!isAdmin}
             onChange={ event => {
                 user.email = event.target.value
             }}
@@ -95,7 +95,7 @@ const UserForm = () => {
             required
             pattern='\(\d{2}\) \d{5}-\d{4}$'
             defaultValue={formatPhone(user?.phone) ?? ''}
-            readOnly= {!isAdmin}
+            readOnly={!isAdmin}
             onChange={ event => {
                 user.phone = getOnlyNumbers(event.target.value)
                 event.target.value =  formatPhone(
@@ -131,7 +131,7 @@ const UserForm = () => {
                     required
                     pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
                     defaultValue={formatCPF(user?.person?.cpf) ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly={!isAdmin}
                     onChange={ event => {
                         user.person.cpf = getOnlyNumbers(
                             event.target.value
@@ -151,7 +151,7 @@ const UserForm = () => {
                     required
                     pattern='\d{2}\/\d{2}\/\d{4}'
                     defaultValue={formatTimeStamp(user?.person?.birth) ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly={!isAdmin}
                     onChange={ event => {
                         user.person.birth = event.target.value
                         event.target.value = formatDate(
@@ -171,7 +171,7 @@ const UserForm = () => {
                     required
                     pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                     defaultValue={formatCNPJ(user?.company?.cnpj) ?? '--'}
-                    readOnly= {!isAdmin}
+                    readOnly={!isAdmin}
                     onChange={ event => {
                         user.company.cnpj = getOnlyNumbers(
                             event.target.value
@@ -193,7 +193,7 @@ const UserForm = () => {
                     required
                     defaultValue={user?.company
                         ?.name ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly={!isAdmin}
                     onChange={ event => {
                         user.company.name = event
                             .target
@@ -212,7 +212,7 @@ const UserForm = () => {
                     required
                     defaultValue={user?.company
                         ?.tradeName ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly={!isAdmin}
                     onChange={ event => {
                         user.company.tradeName = event
                             .target
@@ -230,7 +230,7 @@ const UserForm = () => {
                     minLength='50'
                     required
                     defaultValue={user?.company?.description ?? ''}
-                    readOnly= {!isAdmin}
+                    readOnly={!isAdmin}
                     onChange={ event => {
                         user.company.description = event.target.value
                     }}

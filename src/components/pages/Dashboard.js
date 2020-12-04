@@ -3,7 +3,6 @@ import React, { useState, useEffect, useCallback } from 'react'
 import NavBar from '../blocks/NavBar'
 import Menu from '../blocks/Menu'
 import Chart from '../blocks/Chart'
-import Overview from '../blocks/Overview'
 
 import storage from '../../services/storage'
 import websocket from '../../services/websocket'
@@ -20,10 +19,8 @@ const Dashboard = ({ history }) => {
     const [newMessage, setNewMessage] = useState(false)
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
-    const [connected, setConnected] = useState(false)
 
     let connectionTimeout = null
-    let overviewProps = realTimeBuffer[0]
 
     useEffect(() => {
         (async () => {
@@ -49,20 +46,16 @@ const Dashboard = ({ history }) => {
     useEffect(
         useCallback(() => {
             if (newMessage) {
-                setConnected(true)
                 setNewMessage(false)
 
                 clearTimeout(connectionTimeout)
-
-                connectionTimeout = setTimeout(() => {
-                    setConnected(false)
-                }, 10000)
             }
         }, [newMessage])
     )
 
-    return <div className='dashboard'>
+    return <>
         <NavBar />
+
         <styles.main>
             <Menu
                 title='Unidades'
@@ -74,11 +67,6 @@ const Dashboard = ({ history }) => {
             />
 
             <styles.container>
-                {connected ?
-                    <Overview  {...overviewProps}/>
-                    : null
-                }
-
                 {storage.read('user')?.consumerUnits[
                     consumerUnitIndex
                 ].devices.length > 0 ?
@@ -141,7 +129,7 @@ const Dashboard = ({ history }) => {
                 </styles.loading>
             }
         </styles.main>
-    </div>
+    </>
 }
 
 export default Dashboard

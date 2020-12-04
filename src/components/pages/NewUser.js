@@ -105,7 +105,7 @@ const NewUser = ({ history }) => {
         }
     }
 
-    return <div className='newuser'>
+    return <>
         <NavBar />
 
         { modal ?
@@ -379,7 +379,7 @@ const NewUser = ({ history }) => {
                 }
             </styles.form>
         </styles.main>
-    </div>
+    </>
 }
 
 export default NewUser

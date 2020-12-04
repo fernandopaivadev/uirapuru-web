@@ -15,12 +15,6 @@ import {
 import styles from '../../styles/plot'
 import util from '../../styles/util'
 
-const mobile = window.innerHeight > window.innerWidth
-
-window.onorientationchange = () => {
-    window.location.reload()
-}
-
 const Plot = ({ history }) => {
     const params = history
         .location
@@ -94,8 +88,9 @@ const Plot = ({ history }) => {
         })()
     }, [consumerUnitIndex, deviceIndex, currentDate])
 
-    return <div className='plot'>
+    return <>
         <NavBar />
+
         <styles.main>
             <Menu
                 className='menu'
@@ -136,9 +131,6 @@ const Plot = ({ history }) => {
                             <styles.chartContainer>
                                 <Chart
                                     collection={storage.read('collection')}
-                                    aspectRatio={
-                                        mobile ? 1.5 : null
-                                    }
                                     showDots
                                 />
                             </styles.chartContainer>
@@ -170,7 +162,7 @@ const Plot = ({ history }) => {
                 </styles.buttons>
             </styles.contentContainer>
         </styles.main>
-    </div>
+    </>
 }
 
 export default Plot

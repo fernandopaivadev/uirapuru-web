@@ -51,12 +51,15 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
 
     return <styles.main>
         <styles.window>
-            <styles.form>
-                <styles.title>Novo dispositivo</styles.title>
+            <styles.form id='newDeviceForm'>
+                <styles.title>
+                    Novo dispositivo
+                </styles.title>
+
                 <label>ID do dispositivo</label>
                 <input
-                    maxLength='10'
-                    minLength='6'
+                    maxLength='8'
+                    minLength='8'
                     required
                     onChange={event => {
                         device.id = event.target.value
@@ -86,7 +89,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                     <util.classicButton
                         onClick={event => {
                             event.preventDefault()
-                            if (validateForm()) {
+                            if (validateForm('newDeviceForm')) {
                                 user.consumerUnits[consumerUnitIndex]
                                     .devices.push(device)
                                 submit()

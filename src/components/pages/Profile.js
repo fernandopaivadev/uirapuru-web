@@ -35,7 +35,7 @@ const Profile = ({ history }) => {
         }
     }
 
-    return <div className='profile'>
+    return <>
         <NavBar />
 
         {modal ?
@@ -117,7 +117,7 @@ const Profile = ({ history }) => {
                 : null
             }
         </styles.navButtons>
-    </div>
+    </>
 }
 
 export default Profile

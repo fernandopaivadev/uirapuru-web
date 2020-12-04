@@ -55,8 +55,9 @@ const NewUnit = ({ history }) => {
         setLoading(false)
     }
 
-    return <div className='newunit'>
+    return <>
         <NavBar />
+
         <styles.main>
             <styles.form onSubmit={event=>{
                 event.preventDefault()
@@ -205,7 +206,7 @@ const NewUnit = ({ history }) => {
                 }
             </styles.form>
         </styles.main>
-    </div>
+    </>
 }
 
 export default NewUnit

@@ -103,6 +103,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             readOnly={!isAdmin}
                             maxLength='8'
                             minLength='8'
+                            required
                             onChange={ event => {
                                 user.consumerUnits[
                                     consumerUnitIndex
@@ -121,6 +122,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             readOnly={!isAdmin}
                             maxLength='20'
                             minLength='6'
+                            required
                             onChange={ event => {
                                 user.consumerUnits[
                                     consumerUnitIndex
