@@ -83,7 +83,7 @@ const NavBar = ({ history }) => {
             </styles.username>
 
             {storage.read('user') ?
-                <styles.avatar>
+                <styles.avatar aria-label='Menu'>
                     { storage.read('user')?.username?.split('')[0].toUpperCase()}
                 </styles.avatar>
                 : null

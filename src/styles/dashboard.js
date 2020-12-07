@@ -38,9 +38,29 @@ const devices = styled.ul`
         text-align: center;
         transition: all 0.2s ease;
         border-radius: 0.5rem;
+
         &:hover {
             background: var(--hovered-color);
             border-radius: 0.5rem;
+        }
+
+        &:hover::after {
+            opacity: 1;
+            transition: all 0.5s ease;
+            pointer-events: all;
+        }
+
+        &::after {
+            opacity: 0;
+            pointer-event: none;
+            content: attr(aria-label);
+            color: var(--background-color);
+            background: var(--primary-font-color);
+            font-weight: 600;
+            font-size: 1.4rem;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            z-index: 1;
         }
     }
 
