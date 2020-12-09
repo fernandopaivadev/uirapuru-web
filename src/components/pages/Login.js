@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react'
-
-import storage from '../../services/storage'
+import React, { useState } from 'react'
 
 import api from '../../services/api'
 
@@ -10,12 +8,6 @@ import styles from '../../styles/login'
 import util from '../../styles/util'
 
 const Login = ({ history }) => {
-    useEffect(() => {
-        if (storage.read('JWT')) {
-            history.push('/dashboard')
-        }
-    })
-
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)

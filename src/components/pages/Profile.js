@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react'
 import NavBar from '../blocks/NavBar'
 import Menu from '../blocks/Menu'
 import Modal from '../blocks/Modal'
-import storage from '../../services/storage'
 import UserForm from '../forms/UserForm'
 import ConsumerUnitForm from '../forms/ConsumerUnitForm'
 import DevicesList from '../forms/DevicesList'
 
+import storage from '../../services/storage'
 import api from '../../services/api'
 import { setFormsValidation } from '../../services/forms'
 

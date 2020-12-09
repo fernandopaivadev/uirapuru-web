@@ -19,8 +19,9 @@ const container = styled.div`
 const devices = styled.ul`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    /* grid-template-rows: repeat(4, 1fr); */
     width: 99%;
+    min-height: 10%;
     margin: 1rem;
     border: 1px solid var(--primary-color);
     border-radius: 0.5rem;
@@ -33,11 +34,12 @@ const devices = styled.ul`
         justify-content: center;
         width: 100%;
         height: 100%;
-        padding: 2rem;
+        padding: 1.5rem;
         cursor: pointer;
         text-align: center;
         transition: all 0.2s ease;
         border-radius: 0.5rem;
+        position: relative;
 
         &:hover {
             background: var(--hovered-color);
@@ -46,7 +48,7 @@ const devices = styled.ul`
 
         &:hover::after {
             opacity: 1;
-            transition: all 0.5s ease;
+            transition: all 0.3s ease;
             pointer-events: all;
         }
 
@@ -61,6 +63,8 @@ const devices = styled.ul`
             border-radius: 0.5rem;
             padding: 0.5rem;
             z-index: 1;
+            position: absolute;
+            top: 20%;
         }
     }
 
@@ -73,7 +77,7 @@ const devices = styled.ul`
     }
 
     li p {
-        margin: 0 0.8rem 0 0.8rem;
+        margin: 0.8rem;
         font-size: 2rem;
         font-weight: 600;
         color: var(--neutral-color);

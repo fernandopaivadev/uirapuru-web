@@ -75,7 +75,7 @@ const Dashboard = ({ history }) => {
                             ?.consumerUnits[consumerUnitIndex]
                             ?.devices.map((device, deviceIndex) =>
                                 <li
-                                    aria-label={device.id}
+                                    aria-label={`ID: ${device.id}`}
                                     key={ deviceIndex }
                                     onClick={() => {
                                         history.push(
