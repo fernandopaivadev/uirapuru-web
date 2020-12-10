@@ -12,6 +12,7 @@ import { FaSolarPanel } from 'react-icons/fa'
 
 import styles from '../../styles/dashboard'
 import util from '../../styles/util'
+import { themes } from '../../styles/themes'
 
 const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
@@ -21,6 +22,9 @@ const Dashboard = ({ history }) => {
     const [success, setSuccess] = useState(false)
 
     let connectionTimeout = null
+
+    const theme = themes[storage.read('theme')]
+    const { traceColors } = theme
 
     useEffect(() => {
         (async () => {
@@ -47,11 +51,33 @@ const Dashboard = ({ history }) => {
         useCallback(() => {
             if (newMessage) {
                 setNewMessage(false)
-
                 clearTimeout(connectionTimeout)
             }
         }, [newMessage])
     )
+
+    const keyToUnity = key => {
+        switch (key) {
+        case 'T':
+            return ' °C'
+        case 'U.R.':
+            return ' %'
+        case 'Vac':
+            return ' V'
+        case 'Vcc':
+            return ' V'
+        case 'Iac':
+            return ' A'
+        case 'Icc':
+            return ' A'
+        case 'Pac':
+            return ' W'
+        case 'Pcc':
+            return ' W'
+        default:
+            return ''
+        }
+    }
 
     return <>
         <NavBar />
@@ -74,9 +100,9 @@ const Dashboard = ({ history }) => {
                         {storage.read('user')
                             ?.consumerUnits[consumerUnitIndex]
                             ?.devices.map((device, deviceIndex) =>
-                                <li
+                                <styles.deviceIcon
                                     aria-label={`ID: ${device.id}`}
-                                    key={ deviceIndex }
+                                    key={deviceIndex}
                                     onClick={() => {
                                         history.push(
                                         `/plot?${
@@ -89,10 +115,28 @@ const Dashboard = ({ history }) => {
                                     <FaSolarPanel
                                         className='panel-icon'
                                     />
-                                    <p className='text'>
-                                        { device.name }
+                                    <p className='device-name'>
+                                        {device.name}
                                     </p>
-                                </li>
+
+                                    <ul className='real-time'>
+                                        {Object.keys(
+                                            realTimeBuffer[deviceIndex] ?? {}
+                                        ).map((key, keyIndex) =>
+                                            <li key={keyIndex}>
+                                                <p style={{
+                                                    color: traceColors[keyIndex]
+                                                }}>
+                                                    {key}:
+                                                    {realTimeBuffer[
+                                                        deviceIndex
+                                                    ][key] ?? null}
+                                                    {keyToUnity(key)}
+                                                </p>
+                                            </li>
+                                        )}
+                                    </ul>
+                                </styles.deviceIcon>
                             )
                         }
                     </styles.devices>
@@ -111,7 +155,6 @@ const Dashboard = ({ history }) => {
                         <styles.charts>
                             <Chart
                                 collection={storage.read('collection')}
-                                realTime={realTimeBuffer}
                                 aspectRatio={2}
                                 showDots
                             />

@@ -12,6 +12,7 @@ const main = styled.ul`
     align-items: center;
     overflow: hidden;
     background: var(--secondary-color);
+    position: static;
 `
 const logo = styled.li`
     display: flex;

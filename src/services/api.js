@@ -101,6 +101,8 @@ const fetchDeviceData = async (
 
             delete parsedPayload.rtc
             delete parsedPayload.store
+            delete parsedPayload.id
+
             params.push(parsedPayload)
             timestamps.push(timestamp)
         })

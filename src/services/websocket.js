@@ -36,8 +36,11 @@ const config = (
                     if (id === topic) {
                         const _buffer = realTimeBuffer
                         const parsedPayload = JSON.parse(payload)
+
                         delete parsedPayload.rtc
                         delete parsedPayload.store
+                        delete parsedPayload.id
+
                         _buffer[index] = parsedPayload
                         setRealTimeBuffer(_buffer)
                         setNewMessage(true)
