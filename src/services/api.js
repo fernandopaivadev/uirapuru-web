@@ -26,7 +26,7 @@ const fetchDeviceData = async (
         begin = new Date()
         end = new Date()
 
-        begin.setMinutes(begin.getMinutes() - 1)
+        begin.setHours(begin.getHours() - 12)
 
         begin = begin.toISOString()
         end = end.toISOString()

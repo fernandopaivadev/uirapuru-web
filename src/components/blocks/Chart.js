@@ -9,7 +9,7 @@ import { themes } from '../../styles/themes'
 import styles from '../../styles/chart'
 
 const Chart = ({ collection, aspectRatio, showDots }) => {
-    const theme = themes[storage.read('theme')]
+    const theme = themes[storage.read('theme') ?? 'default']
     const { traceColors } = theme
 
     useEffect(() => {
@@ -58,6 +58,8 @@ const Chart = ({ collection, aspectRatio, showDots }) => {
                         yAxes: [{
                             ticks: {
                                 beginAtZero: true,
+                                min: -500,
+                                max: 1500,
                                 fontSize: 15,
                                 fontColor: theme.primaryFontColor
                             }

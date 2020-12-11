@@ -23,7 +23,7 @@ const Dashboard = ({ history }) => {
 
     let connectionTimeout = null
 
-    const theme = themes[storage.read('theme')]
+    const theme = themes[storage.read('theme') ?? 'default']
     const { traceColors } = theme
 
     useEffect(() => {
