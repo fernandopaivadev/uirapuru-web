@@ -90,6 +90,14 @@ const Dashboard = ({ history }) => {
                 }
                 subItemKey='devices'
                 setItemIndex={setConsumerUnitIndex}
+                setSubItemIndex={(deviceIndex) => {
+                    history.push(
+                        `/plot?${
+                            consumerUnitIndex
+                        }&${
+                            deviceIndex
+                        }`)
+                }}
             />
 
             <styles.container>
