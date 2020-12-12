@@ -73,7 +73,7 @@ const Profile = ({ history }) => {
 
                     {isAdmin ?
                         <util.classicButton
-                            onClick = { () => {
+                            onClick={() => {
                                 history.push('/new-unit')
                             }}
                         >
@@ -108,7 +108,7 @@ const Profile = ({ history }) => {
 
             {isAdmin ?
                 <util.criticalButton
-                    onClick={ () => {
+                    onClick={() => {
                         setModal(true)
                     }}
                 >

@@ -57,7 +57,38 @@ const fetchDeviceData = async (
         }
 
         if (storeMessages) {
-            storage.write('messages', messages)
+            const dataObjects = messages.map(message => {
+                if (message) {
+                    return {
+                        id: message.topic,
+                        ...JSON.parse(message.payload)
+                    }
+                }
+            })
+
+            dataObjects.forEach(dataObject => {
+                if (dataObject) {
+                    const rtc = new Date(dataObject.rtc)
+                    const timestamp = `${
+                        rtc.getDate()
+                    }/${
+                        rtc.getMonth() + 1
+                    }/${
+                        rtc.getFullYear()
+                    } ${
+                        rtc.getHours()
+                    }:${
+                        rtc.getMinutes()
+                    }`
+
+                    delete dataObject.rtc
+                    delete dataObject.store
+                    dataObject.timestamp = timestamp
+                }
+            })
+
+            const csvData = dataObjects.filter(dataObject => dataObject)
+            storage.write('csv-data', csvData)
         }
 
         messages.forEach(({ payload }) => {
@@ -130,7 +161,7 @@ const fetchDeviceData = async (
 const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
     try {
         storage.clear('collection')
-        storage.clear('messages')
+        storage.clear('csv-data')
 
         if (deviceIndex >= 0) {
             const chart = await fetchDeviceData(
@@ -171,7 +202,7 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
 const getCollection = async (consumerUnitIndex, begin, end) => {
     try {
         storage.clear('collection')
-        storage.clear('messages')
+        storage.clear('csv-data')
 
         if (consumerUnitIndex >= 0) {
             let collection = await Promise.all(storage.read('user')
@@ -219,7 +250,7 @@ const getUsersList = async () => {
 
             if (status === 200) {
                 storage.clear('collection')
-                storage.clear('messages')
+                storage.clear('csv-data')
 
                 storage.write('users-list', usersList)
                 return 'OK'
@@ -254,7 +285,7 @@ const getUserData = async (_id) => {
 
             if (status === 200) {
                 storage.clear('collection')
-                storage.clear('messages')
+                storage.clear('csv-data')
 
                 storage.write('user', user)
                 return 'OK'

@@ -18,6 +18,7 @@ const container = styled.div`
     min-width: 40rem;
     min-height: 18rem;
     border-radius: 0.5rem;
+    padding-bottom: 1rem;
 `
 const title = styled.p`
     color: var(--primary-color);

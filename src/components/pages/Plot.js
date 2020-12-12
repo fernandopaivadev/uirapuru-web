@@ -155,8 +155,8 @@ const Plot = ({ history }) => {
                     >
                         Dashboard
                     </util.classicButton>
-                    {!loading && storage.read('messages')?.length ?
-                        <Export data={storage.read('messages')}/>
+                    {!loading && storage.read('csv-data')?.length ?
+                        <Export data={storage.read('csv-data')}/>
                         : null
                     }
                 </styles.buttons>

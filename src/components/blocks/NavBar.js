@@ -5,18 +5,19 @@ import {
     MdRecentActors as UsersIcon,
     MdExitToApp as LogoutIcon,
     MdPerson as ProfileIcon,
-    MdDashboard as DashboardIcon,
-    MdBrightness7 as DarkModeEnabledIcon,
-    MdBrightness2 as DarkModeDisabledIcon
+    MdDashboard as DashboardIcon
 } from 'react-icons/md'
 
-import logo from '../../assets/logo.svg'
+import {
+    FaSun as DarkModeEnabledIcon,
+    FaMoon as DarkModeDisabledIcon
+} from 'react-icons/fa'
 
 import storage from '../../services/storage'
 
 import { applyTheme } from '../../styles/themes'
-
 import styles from '../../styles/navbar'
+import logo from '../../assets/logo.svg'
 
 const NavBar = ({ history }) => {
     const [darkMode, setDarkMode] = useState(
@@ -44,7 +45,7 @@ const NavBar = ({ history }) => {
                 }
             }}
         >
-            <img src={ logo } alt='tech amazon logo'/>
+            <img src={logo} alt='tech amazon logo'/>
 
             <p>
                 Uirapuru
@@ -55,26 +56,17 @@ const NavBar = ({ history }) => {
             key='navigation'
         >
             <styles.toggle
+                aria-label='Dark Mode'
                 onClick={toggleDarkMode}
             >
                 {darkMode ?
-                    <>
-                        <p>
-                            Tema Claro
-                        </p>
-                        <DarkModeEnabledIcon
-                            className='icon'
-                        />
-                    </>
+                    <DarkModeEnabledIcon
+                        className='icon'
+                    />
                     :
-                    <>
-                        <p>
-                            Tema Escuro
-                        </p>
-                        <DarkModeDisabledIcon
-                            className='icon'
-                        />
-                    </>
+                    <DarkModeDisabledIcon
+                        className='icon'
+                    />
                 }
             </styles.toggle>
             <styles.username>

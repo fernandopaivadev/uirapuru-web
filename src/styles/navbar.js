@@ -43,10 +43,8 @@ const navigation = styled.li`
 const toggle = styled.div`
     display: flex;
     align-items: center;
-    border: 1px solid var(--secondary-font-color);
-    border-radius: 1rem;
-    padding: 0 0.5rem 0 0.5rem;
-    margin: 1rem;
+    border-radius: 50%;
+    padding: 0.5rem;
     cursor: pointer;
     color: var(--secondary-font-color);
     transition: all 0.2s ease;
