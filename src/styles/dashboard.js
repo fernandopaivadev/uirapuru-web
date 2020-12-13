@@ -64,7 +64,7 @@ const deviceIcon = styled.li`
         padding: 0.5rem;
         z-index: 1;
         position: absolute;
-        top: 20%;
+        top: 5%;
     }
 
     .panel-icon {

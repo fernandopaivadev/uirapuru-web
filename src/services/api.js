@@ -471,9 +471,7 @@ const createUser = async user => {
 
         const status = err?.response?.status
 
-        if (status === 400) {
-            return 'Erro na requisição'
-        } else if (status === 409) {
+        if (status === 409) {
             return 'Usuário já cadastrado'
         } else {
             return 'Ocorreu um erro'
