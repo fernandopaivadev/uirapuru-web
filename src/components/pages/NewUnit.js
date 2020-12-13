@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import NavBar from '../panels/NavBar'
+import NavBar from '../blocks/NavBar'
 
 import api from '../../services/api'
 
@@ -10,10 +10,11 @@ import {
     formatCEP,
     getOnlyNumbers,
     validateForm,
-    setFormValidation
+    setFormsValidation
 } from '../../services/forms'
 
-import '../../styles/newunit.css'
+import styles from '../../styles/newunit'
+import util from '../../styles/util'
 
 const NewUnit = ({ history }) => {
     const user = storage.read('user')
@@ -35,7 +36,7 @@ const NewUnit = ({ history }) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setFormValidation()
+        setFormsValidation()
     })
 
     const submit = async event => {
@@ -54,15 +55,16 @@ const NewUnit = ({ history }) => {
         setLoading(false)
     }
 
-    return <div className='newunit'>
+    return <>
         <NavBar />
-        <div className='main'>
-            <form onSubmit={event=>{
+
+        <styles.main>
+            <styles.form onSubmit={event=>{
                 event.preventDefault()
             }}>
-                <h1>
+                <styles.title>
                     Dados da nova unidade
-                </h1>
+                </styles.title>
                 <label>Número</label>
                 <input
                     name='number'
@@ -155,23 +157,21 @@ const NewUnit = ({ history }) => {
                 </p>
 
                 {loading ?
-                    <div className='loading-container'>
-                        <progress className='circular-progress'/>
-                    </div>
+                    <styles.loading>
+                        <util.circularProgress/>
+                    </styles.loading>
                     :
-                    <div className='buttons'>
-                        <button
-                            className='classic-button'
+                    <styles.buttons>
+                        <util.classicButton
                             onClick={event => {
                                 event.preventDefault()
                                 history.push('/profile')
                             }}
                         >
                             Voltar
-                        </button>
+                        </util.classicButton>
 
-                        <button
-                            className='classic-button'
+                        <util.classicButton
                             onClick={event => {
                                 event.preventDefault()
                                 if (validateForm()) {
@@ -188,12 +188,12 @@ const NewUnit = ({ history }) => {
                             }}
                         >
                             Salvar
-                        </button>
-                    </div>
+                        </util.classicButton>
+                    </styles.buttons>
                 }
                 {success && !error?
                     <p className='success'>
-                            Salvo com sucesso!
+                        Salvo com sucesso!
                     </p>
                     : null
                 }
@@ -204,9 +204,9 @@ const NewUnit = ({ history }) => {
                     </p>
                     : null
                 }
-            </form>
-        </div>
-    </div>
+            </styles.form>
+        </styles.main>
+    </>
 }
 
 export default NewUnit

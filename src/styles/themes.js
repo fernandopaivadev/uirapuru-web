@@ -1,4 +1,4 @@
-import storage from './services/storage'
+import storage from '../services/storage'
 
 const themes = {
     default: {
@@ -20,7 +20,7 @@ const themes = {
             '#9E4E45',
             '#018E42',
             '#9900ff',
-            '#004807'
+            '#f56f55'
         ]
     },
     dark: {
@@ -42,13 +42,8 @@ const themes = {
             '#9E4E45',
             '#018E42',
             '#9900ff',
-            '#004807'
+            '#f56f55'
         ]
-    },
-    uirapuru: {
-        yellow: '#ffcd04',
-        red: '#ff0000',
-        black: '#000000'
     }
 }
 

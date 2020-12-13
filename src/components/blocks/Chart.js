@@ -4,12 +4,12 @@ import { Chart as ChartJS } from 'chart.js'
 
 import storage from '../../services/storage'
 
-import { themes } from '../../themes'
+import { themes } from '../../styles/themes'
 
-import '../../styles/chart.css'
+import styles from '../../styles/chart'
 
-const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
-    const theme = themes[storage.read('theme')]
+const Chart = ({ collection, aspectRatio, showDots }) => {
+    const theme = themes[storage.read('theme') ?? 'default']
     const { traceColors } = theme
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
                         labels: {
                             boxWidth: 10,
                             fontColor: theme.primaryFontColor,
-                            fontSize: 20
+                            fontSize: 15
                         }
                     },
                     tooltips: {
@@ -58,13 +58,15 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
                         yAxes: [{
                             ticks: {
                                 beginAtZero: true,
-                                fontSize: 20,
+                                min: -500,
+                                max: 1500,
+                                fontSize: 15,
                                 fontColor: theme.primaryFontColor
                             }
                         }],
                         xAxes: [{
                             ticks: {
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontColor: theme.primaryFontColor
                             }
                         }]
@@ -74,70 +76,19 @@ const Chart = ({ collection, realTime, aspectRatio, showDots }) => {
         })
     })
 
-    const keyToUnity = key => {
-        switch (key) {
-        case 't1':
-            return ' °C'
-        case 'h1':
-            return ' %'
-        case 'v1':
-            return ' V'
-        case 'v2':
-            return ' V'
-        case 'i1':
-            return ' A'
-        case 'i2':
-            return ' A'
-        }
-    }
-
-    const keyToIdentifier = key => {
-        switch (key) {
-        case 't1':
-            return 'T: '
-        case 'h1':
-            return 'U.R.A: '
-        case 'v1':
-            return 'Vac: '
-        case 'v2':
-            return 'Vcc: '
-        case 'i1':
-            return 'Iac: '
-        case 'i2':
-            return 'Icc: '
-        }
-    }
-
-    return <div className='chart'>
+    return <styles.main>
         {collection.map((chart, chartIndex) =>
             chart ?
-                <div className='chart-view' key={chartIndex}>
-                    <h1>{ chart.title } </h1>
+                <styles.chart key={chartIndex}>
+                    <styles.title>{chart.title} </styles.title>
                     <canvas id={`chart-${chartIndex}`}/>
-                    {realTime?.length > 0 ?
-                        <ul className='real-time'>
-                            {Object.keys(realTime[chartIndex])
-                                .map((key, keyIndex) =>
-                                    <li key={keyIndex}>
-                                        <p style={{
-                                            color: traceColors[keyIndex]
-                                        }}>
-                                            {keyToIdentifier(key)}
-                                            {realTime[chartIndex][key]}
-                                            {keyToUnity(key)}
-                                        </p>
-                                    </li>
-                                )}
-                        </ul>
-                        : null
-                    }
-                </div>
+                </styles.chart>
                 :
-                <div className='chart-error'>
+                <styles.error>
                     <p>Não foi possível obter os dados</p>
-                </div>
+                </styles.error>
         )}
-    </div>
+    </styles.main>
 }
 
 export default Chart

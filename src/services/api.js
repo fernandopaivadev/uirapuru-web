@@ -26,7 +26,7 @@ const fetchDeviceData = async (
         begin = new Date()
         end = new Date()
 
-        begin.setMinutes(begin.getMinutes() - 1)
+        begin.setHours(begin.getHours() - 12)
 
         begin = begin.toISOString()
         end = end.toISOString()
@@ -46,10 +46,9 @@ const fetchDeviceData = async (
         }`
     )
 
-    const status = response?.status
+    const { status, data: { messages } } = response
 
     if (status === 200) {
-        const { messages } = response.data
         const params = []
         const timestamps = []
 
@@ -58,7 +57,38 @@ const fetchDeviceData = async (
         }
 
         if (storeMessages) {
-            storage.write('messages', messages)
+            const dataObjects = messages.map(message => {
+                if (message) {
+                    return {
+                        id: message.topic,
+                        ...JSON.parse(message.payload)
+                    }
+                }
+            })
+
+            dataObjects.forEach(dataObject => {
+                if (dataObject) {
+                    const rtc = new Date(dataObject.rtc)
+                    const timestamp = `${
+                        rtc.getDate()
+                    }/${
+                        rtc.getMonth() + 1
+                    }/${
+                        rtc.getFullYear()
+                    } ${
+                        rtc.getHours()
+                    }:${
+                        rtc.getMinutes()
+                    }`
+
+                    delete dataObject.rtc
+                    delete dataObject.store
+                    dataObject.timestamp = timestamp
+                }
+            })
+
+            const csvData = dataObjects.filter(dataObject => dataObject)
+            storage.write('csv-data', csvData)
         }
 
         messages.forEach(({ payload }) => {
@@ -102,6 +132,8 @@ const fetchDeviceData = async (
 
             delete parsedPayload.rtc
             delete parsedPayload.store
+            delete parsedPayload.id
+
             params.push(parsedPayload)
             timestamps.push(timestamp)
         })
@@ -126,19 +158,104 @@ const fetchDeviceData = async (
     }
 }
 
+const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
+    try {
+        storage.clear('collection')
+        storage.clear('csv-data')
+
+        if (deviceIndex >= 0) {
+            const chart = await fetchDeviceData(
+                consumerUnitIndex,
+                deviceIndex,
+                begin,
+                end,
+                true,
+                true
+            )
+
+            if (chart) {
+                storage.write('collection', [chart])
+            } else {
+                storage.write('collection', [])
+            }
+
+            return 'OK'
+        } else {
+            return 'Índice inválido'
+        }
+    } catch (err) {
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
+        return 'Ocorreu um erro'
+    }
+}
+
+const getCollection = async (consumerUnitIndex, begin, end) => {
+    try {
+        storage.clear('collection')
+        storage.clear('csv-data')
+
+        if (consumerUnitIndex >= 0) {
+            let collection = await Promise.all(storage.read('user')
+                .consumerUnits[consumerUnitIndex]
+                .devices.map(async (device, deviceIndex) =>
+                    await fetchDeviceData(
+                        consumerUnitIndex,
+                        deviceIndex,
+                        begin,
+                        end,
+                        false,
+                        false
+                    )
+                ))
+
+            collection = collection.filter(chart => chart)
+
+            storage.write('collection', collection)
+            return 'OK'
+        } else {
+            return 'Índice inválido'
+        }
+    } catch (err) {
+        if (err?.response?.data?.message) {
+            console.log(`ERRO NO SERVIDOR: ${
+                err?.response?.data?.message
+            }`)
+        } else if (err?.message) {
+            console.log(`ERRO LOCAL: ${
+                err?.message
+            }`)
+        } else {
+            console.log('ERRO NÃO IDENTIFICADO')
+        }
+        return 'Ocorreu um erro'
+    }
+}
+
 const getUsersList = async () => {
     try {
         if (storage.read('access-level') === 'admin') {
             const response = await axios.get('/users')
 
-            const status = response?.status
+            const { status, data: { usersList } } = response
 
             if (status === 200) {
                 storage.clear('collection')
-                storage.clear('messages')
+                storage.clear('csv-data')
 
-                storage.write('users-list', response.data.usersList)
+                storage.write('users-list', usersList)
                 return 'OK'
+            } else {
+                return 'Ocorreu um erro'
             }
         } else {
             return 'Somente para administradores'
@@ -162,15 +279,15 @@ const getUsersList = async () => {
 const getUserData = async (_id) => {
     try {
         if (storage.read('access-level') === 'admin' && _id) {
-            const { status, data } = await axios.get(
+            const { status, data: { user } } = await axios.get(
                 `/user/data?_id=${_id}`
             )
 
             if (status === 200) {
                 storage.clear('collection')
-                storage.clear('messages')
+                storage.clear('csv-data')
 
-                storage.write('user', data.user)
+                storage.write('user', user)
                 return 'OK'
             } else {
                 return 'Ocorreu um erro'
@@ -199,96 +316,17 @@ const getUserData = async (_id) => {
     }
 }
 
-const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
-    storage.clear('collection')
-    storage.clear('messages')
-
-    try {
-        if (deviceIndex >= 0) {
-            const chart = await fetchDeviceData(
-                consumerUnitIndex,
-                deviceIndex,
-                begin,
-                end,
-                true,
-                true
-            )
-
-            if (chart) {
-                storage.write('collection', [chart])
-            } else {
-                storage.write('collection', [])
-            }
-
-            return 'OK'
-        }
-    } catch (err) {
-        if (err?.response?.data?.message) {
-            console.log(`ERRO NO SERVIDOR: ${
-                err?.response?.data?.message
-            }`)
-        } else if (err?.message) {
-            console.log(`ERRO LOCAL: ${
-                err?.message
-            }`)
-        } else {
-            console.log('ERRO NÃO IDENTIFICADO')
-        }
-        return 'Ocorreu um erro'
-    }
-}
-
-const getCollection = async (consumerUnitIndex, begin, end) => {
-    storage.clear('collection')
-    storage.clear('messages')
-
-    try {
-        if (consumerUnitIndex >= 0) {
-            let collection = await Promise.all(storage.read('user')
-                .consumerUnits[consumerUnitIndex]
-                .devices.map(async (device, deviceIndex) =>
-                    await fetchDeviceData(
-                        consumerUnitIndex,
-                        deviceIndex,
-                        begin,
-                        end,
-                        false,
-                        false
-                    )
-                ))
-
-            collection = collection.filter(chart => chart)
-
-            storage.write('collection', collection)
-            return 'OK'
-        }
-    } catch (err) {
-        if (err?.response?.data?.message) {
-            console.log(`ERRO NO SERVIDOR: ${
-                err?.response?.data?.message
-            }`)
-        } else if (err?.message) {
-            console.log(`ERRO LOCAL: ${
-                err?.message
-            }`)
-        } else {
-            console.log('ERRO NÃO IDENTIFICADO')
-        }
-        return 'Ocorreu um erro'
-    }
-}
-
 const login = async (username, password) => {
     try {
         const response = await axios.get(
             `/user/auth?username=${username}&password=${password}`
         )
 
-        const status = response?.status
+        const { status, data: { token } } = response
 
         if (status === 200) {
             storage.clear('all')
-            storage.write('JWT', response.data.token)
+            storage.write('JWT', token)
 
             if (await getUserData() === 'OK') {
                 storage.write('access-level', storage.read('user').accessLevel)
@@ -331,7 +369,7 @@ const forgotPassword = async username => {
             `/user/forgot-password?username=${username}`
         )
 
-        const status = response?.status
+        const { status } = response
 
         if (status === 200) {
             return 'OK'
@@ -370,7 +408,7 @@ const resetPassword = async (token, password) => {
             password
         })
 
-        const status = response?.status
+        const { status } = response
 
         if (status === 200) {
             return 'OK'
@@ -406,7 +444,7 @@ const createUser = async user => {
     try {
         const response = await axios.post('/user/add', user)
 
-        const status = response?.status
+        const { status } = response
 
         if (status === 201) {
             if (await getUsersList() === 'OK') {
@@ -433,9 +471,7 @@ const createUser = async user => {
 
         const status = err?.response?.status
 
-        if (status === 400) {
-            return 'Erro na requisição'
-        } else if (status === 409) {
+        if (status === 409) {
             return 'Usuário já cadastrado'
         } else {
             return 'Ocorreu um erro'
@@ -449,7 +485,7 @@ const updateUser = async user => {
 
         const response = await axios.put('/user/update', user)
 
-        const status = response?.status
+        const { status } = response
 
         if (status === 200) {
             return 'OK'
@@ -478,7 +514,7 @@ const deleteUser = async _id => {
             `/user/remove?_id=${_id}`
         )
 
-        const status = response?.status
+        const { status } = response
 
         if (status === 200) {
             storage.clear('user')

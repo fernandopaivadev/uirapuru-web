@@ -1,17 +1,16 @@
 import React from 'react'
 
-import '../../styles/menu.css'
+import styles from '../../styles/menu'
 
 const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
-    <div className='menu'>
-        <p className='title'>
+    <styles.main>
+        <styles.title>
             { title }
-        </p>
-        <ul className='items'>
+        </styles.title>
+        <ul>
             {items.map((item, itemIndex) =>
                 <li key={ itemIndex }>
-                    <p
-                        className='item-name'
+                    <styles.itemName
                         onClick={ () => {
                             if (setItemIndex) {
                                 setItemIndex(itemIndex)
@@ -19,13 +18,12 @@ const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
                         }}
                     >
                         { item.name }
-                    </p>
+                    </styles.itemName>
 
-                    <ul className='sub-items'>
+                    <ul>
                         {item[subItemKey]?.map((subItem, subItemIndex) =>
                             <li key={ subItemIndex }>
-                                <p
-                                    className='sub-item-name'
+                                <styles.subItemName
                                     onClick={ () => {
                                         if (setSubItemIndex) {
                                             setSubItemIndex(subItemIndex)
@@ -36,13 +34,13 @@ const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
                                     }}
                                 >
                                     { subItem.name }
-                                </p>
+                                </styles.subItemName>
                             </li>
                         )}
                     </ul>
                 </li>
             )}
         </ul>
-    </div>
+    </styles.main>
 
 export default Menu

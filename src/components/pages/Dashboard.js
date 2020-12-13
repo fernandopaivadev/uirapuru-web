@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import NavBar from '../panels/NavBar'
-import Menu from '../panels/Menu'
-import Chart from '../panels/Chart'
-import Overview from '../panels/Overview'
+
+import NavBar from '../blocks/NavBar'
+import Menu from '../blocks/Menu'
+import Chart from '../blocks/Chart'
 
 import storage from '../../services/storage'
-import { websocketConfig } from '../../services/websocket'
+import websocket from '../../services/websocket'
 import api from '../../services/api'
 
 import { FaSolarPanel } from 'react-icons/fa'
 
-import '../../styles/dashboard.css'
-import '../../styles/util.css'
+import styles from '../../styles/dashboard'
+import util from '../../styles/util'
+import { themes } from '../../styles/themes'
 
 const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
@@ -19,10 +20,11 @@ const Dashboard = ({ history }) => {
     const [newMessage, setNewMessage] = useState(false)
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
-    const [connected, setConnected] = useState(false)
 
     let connectionTimeout = null
-    let overviewProps = realTimeBuffer[0]
+
+    const theme = themes[storage.read('theme') ?? 'default']
+    const { traceColors } = theme
 
     useEffect(() => {
         (async () => {
@@ -37,7 +39,7 @@ const Dashboard = ({ history }) => {
             }
         })()
 
-        websocketConfig(
+        websocket.config(
             consumerUnitIndex,
             realTimeBuffer,
             setRealTimeBuffer,
@@ -48,21 +50,39 @@ const Dashboard = ({ history }) => {
     useEffect(
         useCallback(() => {
             if (newMessage) {
-                setConnected(true)
                 setNewMessage(false)
-
                 clearTimeout(connectionTimeout)
-
-                connectionTimeout = setTimeout(() => {
-                    setConnected(false)
-                }, 10000)
             }
         }, [newMessage])
     )
 
-    return <div className='dashboard'>
+    const keyToUnity = key => {
+        switch (key) {
+        case 'T':
+            return ' °C'
+        case 'U.R.':
+            return ' %'
+        case 'Vac':
+            return ' V'
+        case 'Vcc':
+            return ' V'
+        case 'Iac':
+            return ' A'
+        case 'Icc':
+            return ' A'
+        case 'Pac':
+            return ' W'
+        case 'Pcc':
+            return ' W'
+        default:
+            return ''
+        }
+    }
+
+    return <>
         <NavBar />
-        <div className='main'>
+
+        <styles.main>
             <Menu
                 title='Unidades'
                 items={
@@ -70,66 +90,98 @@ const Dashboard = ({ history }) => {
                 }
                 subItemKey='devices'
                 setItemIndex={setConsumerUnitIndex}
+                setSubItemIndex={(deviceIndex) => {
+                    history.push(
+                        `/plot?${
+                            consumerUnitIndex
+                        }&${
+                            deviceIndex
+                        }`)
+                }}
             />
-            <div className='main-container'>
-                {connected ?
-                    <Overview  {...overviewProps}/>
-                    : null
-                }
-                <ul className='devices'>
-                    {storage.read('user')
-                        ?.consumerUnits[ consumerUnitIndex ]
-                        ?.devices.map((device, deviceIndex) =>
-                            <li
-                                className='device'
-                                key={ deviceIndex }
-                                onClick={() => {
-                                    history.push(
+
+            <styles.container>
+                {storage.read('user')?.consumerUnits[
+                    consumerUnitIndex
+                ].devices.length > 0 ?
+                    <styles.devices>
+                        {storage.read('user')
+                            ?.consumerUnits[consumerUnitIndex]
+                            ?.devices.map((device, deviceIndex) =>
+                                <styles.deviceIcon
+                                    aria-label={`ID: ${device.id}`}
+                                    key={deviceIndex}
+                                    onClick={() => {
+                                        history.push(
                                         `/plot?${
                                             consumerUnitIndex
                                         }&${
                                             deviceIndex
-                                        }`
-                                    )
-                                }}
-                            >
-                                <FaSolarPanel
-                                    className='panelIcon'
-                                />
-                                <p className='text'>
-                                    { device.name }
-                                </p>
-                            </li>
-                        )
-                    }
-                </ul>
-            </div>
+                                        }`)
+                                    }}
+                                >
+                                    <FaSolarPanel
+                                        className='panel-icon'
+                                    />
+                                    <p className='device-name'>
+                                        {device.name}
+                                    </p>
+
+                                    <ul className='real-time'>
+                                        {Object.keys(
+                                            realTimeBuffer[deviceIndex] ?? {}
+                                        ).map((key, keyIndex) =>
+                                            <li key={keyIndex}>
+                                                <p style={{
+                                                    color: traceColors[keyIndex]
+                                                }}>
+                                                    {key}:
+                                                    {realTimeBuffer[
+                                                        deviceIndex
+                                                    ][key] ?? null}
+                                                    {keyToUnity(key)}
+                                                </p>
+                                            </li>
+                                        )}
+                                    </ul>
+                                </styles.deviceIcon>
+                            )
+                        }
+                    </styles.devices>
+                    :
+                    <styles.empty>
+                        <p>
+                            Não há dispositivos cadastrados
+                        </p>
+                    </styles.empty>
+                }
+            </styles.container>
+
             {!loading ?
                 success ?
                     storage.read('collection')?.length ?
-                        <div className='charts'>
+                        <styles.charts>
                             <Chart
                                 collection={storage.read('collection')}
-                                realTime={realTimeBuffer}
                                 aspectRatio={2}
                                 showDots
                             />
-                        </div>
+                        </styles.charts>
                         :
-                        <div className='empty'>
+                        <styles.empty>
                             <p>Não há dados destes dispositivos</p>
-                        </div>
+                        </styles.empty>
                     :
-                    <div className='error'>
+                    <styles.error>
                         <p>Não foi possível obter os dados</p>
-                    </div>
+                    </styles.error>
                 :
-                <div className='loading-container'>
-                    <progress className='circular-progress'/>
-                </div>
+                <styles.loading>
+                    <util.circularProgress/>
+                </styles.loading>
             }
-        </div>
-    </div>
+        </styles.main>
+    </>
 }
 
 export default Dashboard

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import NavBar from '../panels/NavBar'
-import Menu from '../panels/Menu'
-import Chart from '../panels/Chart'
-import Export from '../panels/Export'
+import NavBar from '../blocks/NavBar'
+import Menu from '../blocks/Menu'
+import Chart from '../blocks/Chart'
+import Export from '../blocks/Export'
 
 import storage from '../../services/storage'
 import api from '../../services/api'
@@ -12,14 +12,8 @@ import {
     MdKeyboardArrowRight as ArrowForwardIcon
 } from 'react-icons/md'
 
-import '../../styles/plot.css'
-import '../../styles/util.css'
-
-const mobile = window.innerHeight > window.innerWidth
-
-window.onorientationchange = () => {
-    window.location.reload()
-}
+import styles from '../../styles/plot'
+import util from '../../styles/util'
 
 const Plot = ({ history }) => {
     const params = history
@@ -94,9 +88,10 @@ const Plot = ({ history }) => {
         })()
     }, [consumerUnitIndex, deviceIndex, currentDate])
 
-    return <div className='plot'>
+    return <>
         <NavBar />
-        <div className='main'>
+
+        <styles.main>
             <Menu
                 className='menu'
                 title='Unidades'
@@ -107,8 +102,8 @@ const Plot = ({ history }) => {
                 setItemIndex={setConsumerUnitIndex}
                 setSubItemIndex={setDeviceIndex}
             />
-            <div className='content-container'>
-                <div className='date-picker'>
+            <styles.contentContainer>
+                <styles.datePicker>
                     <ArrowBackIcon
                         className='icon'
                         onClick={() => {
@@ -129,49 +124,45 @@ const Plot = ({ history }) => {
                             setCurrentDate(event.target.value)
                         }}
                     />
-                </div>
+                </styles.datePicker>
                 {!loading ?
                     success ?
                         storage.read('collection')?.length ?
-                            <div className='chart-container'>
+                            <styles.chartContainer>
                                 <Chart
                                     collection={storage.read('collection')}
-                                    aspectRatio={
-                                        mobile ? 1.5 : null
-                                    }
                                     showDots
                                 />
-                            </div>
+                            </styles.chartContainer>
                             :
-                            <div className='empty'>
+                            <styles.empty>
                                 <p>Não há dados deste dispositivo</p>
-                            </div>
+                            </styles.empty>
                         :
-                        <div className='error'>
+                        <styles.error>
                             <p>Não foi possível obter os dados</p>
-                        </div>
+                        </styles.error>
                     :
-                    <div className='loading-container'>
-                        <progress className='circular-progress'/>
-                    </div>
+                    <styles.loading>
+                        <util.circularProgress/>
+                    </styles.loading>
                 }
-                <div className='buttons'>
-                    <button
-                        className='classic-button'
+                <styles.buttons>
+                    <util.classicButton
                         onClick={() => {
                             history.push('/dashboard')
                         }}
                     >
                         Dashboard
-                    </button>
-                    {!loading && storage.read('messages')?.length ?
-                        <Export data={storage.read('messages')}/>
+                    </util.classicButton>
+                    {!loading && storage.read('csv-data')?.length ?
+                        <Export data={storage.read('csv-data')}/>
                         : null
                     }
-                </div>
-            </div>
-        </div>
-    </div>
+                </styles.buttons>
+            </styles.contentContainer>
+        </styles.main>
+    </>
 }
 
 export default Plot

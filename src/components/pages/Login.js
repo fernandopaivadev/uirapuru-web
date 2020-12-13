@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react'
-
-import storage from '../../services/storage'
+import React, { useState } from 'react'
 
 import api from '../../services/api'
 
 import logo from '../../assets/logo.svg'
 
-import '../../styles/login.css'
-
-import '../../styles/util.css'
+import styles from '../../styles/login'
+import util from '../../styles/util'
 
 const Login = ({ history }) => {
-    useEffect(() => {
-        if (storage.read('JWT')) {
-            history.push('/dashboard')
-        }
-    })
-
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(false)
@@ -57,20 +48,20 @@ const Login = ({ history }) => {
         }
     }
 
-    return <div className='login'>
-        <form onSubmit={submit}>
-            <div className='logo'>
+    return <styles.main>
+        <styles.form onSubmit={submit}>
+            <styles.logo>
                 <img
                     src={logo}
                     alt='Tech Amazon Logo'
                 />
-                <h1>Uirapuru</h1>
-            </div>
+                <p>Uirapuru</p>
+            </styles.logo>
 
-            <label htmlFor='email'>
+            <styles.label htmlFor='email'>
                 E-mail ou nome de usuário
-            </label>
-            <input
+            </styles.label>
+            <styles.input
                 autoFocus
                 id='email'
                 required
@@ -79,10 +70,10 @@ const Login = ({ history }) => {
                 }}
             />
 
-            <div className='container'>
-                <label htmlFor='password'>
+            <styles.container>
+                <styles.label htmlFor='password'>
                     Senha
-                </label>
+                </styles.label>
                 <p
                     id='toggle-password'
                     onClick={event => {
@@ -91,9 +82,9 @@ const Login = ({ history }) => {
                 >
                     Mostrar
                 </p>
-            </div>
+            </styles.container>
 
-            <input
+            <styles.input
                 id='password'
                 type='password'
                 required
@@ -103,36 +94,34 @@ const Login = ({ history }) => {
             />
 
             {loading ?
-                <div className='loading-container'>
-                    <progress className='circular-progress'/>
-                </div>
+                <styles.loading>
+                    <util.circularProgress/>
+                </styles.loading>
                 :
-                <button
+                <util.classicButton
                     type='submit'
-                    className='classic-button'
                 >
                     ENTRAR
-                </button>
+                </util.classicButton>
             }
 
             {loading ? null :
-                <p
-                    className='link'
+                <styles.link
                     onClick={() => {
                         history.push('/forgot-password')
                     }}>
                     Esqueci minha senha
-                </p>
+                </styles.link>
             }
 
             {error ?
-                <h1 className='error'>
+                <styles.error>
                     {errorMessage}
-                </h1>
+                </styles.error>
                 :null
             }
-        </form>
-    </div>
+        </styles.form>
+    </styles.main>
 }
 
 export default Login

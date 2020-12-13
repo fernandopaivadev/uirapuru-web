@@ -4,8 +4,8 @@ import storage from '../../services/storage'
 
 import api from '../../services/api'
 
-import '../../styles/userslist.css'
-import '../../styles/util.css'
+import styles from '../../styles/userslist'
+import util from '../../styles/util'
 
 const UsersList = ({ history }) => {
     const [loading, setLoading] = useState(true)
@@ -20,48 +20,45 @@ const UsersList = ({ history }) => {
         })()
     })
 
-    return <div className='userslist'>
-        <div className='list'>
+    return <styles.main>
+        <styles.container>
             {!loading ?
-                <p className='title'>Usuários</p>
+                <styles.title>Usuários</styles.title>
                 :
-                <p className='title'>Buscando dados</p>
+                <styles.title>Buscando dados</styles.title>
             }
-            <div className='header'>
+            <styles.header>
                 {!loading ?
                     <>
-                        <button
-                            className='classic-button'
+                        <util.classicButton
                             onClick={() => {
                                 history.push('/new-user')
                             }}
                         >
                             Novo Usuário
-                        </button>
-                        <button
-                            className='classic-button'
+                        </util.classicButton>
+                        <util.classicButton
                             onClick={() => {
                                 storage.clear('all')
                                 history.push('/login')
                             }}
                         >
                             Sair
-                        </button>
+                        </util.classicButton>
                     </>
                     : null
                 }
-            </div>
+            </styles.header>
             {storage.read('users-list')?.length <= 0 ?
-                <h1 className='empty'>
+                <styles.empty>
                     Não há usuários cadastrados
-                </h1>
+                </styles.empty>
                 :
                 !loading ?
                     <ul>
                         {storage.read('users-list')?.map(user =>
-                            <li
+                            <styles.item
                                 key={user?.username}
-                                className='item'
                                 onClick={async () => {
                                     setLoading(true)
                                     if (await api.getUserData(user._id) === 'OK') {
@@ -75,29 +72,29 @@ const UsersList = ({ history }) => {
                                     }
                                 }}>
 
-                                <button className='icon'>
-                                    { user?.username?.split('')[0] }
-                                </button>
+                                <styles.avatar>
+                                    { user?.username?.split('')[0].toUpperCase() }
+                                </styles.avatar>
 
-                                <div className='text'>
-                                    <h1 className='username'>
+                                <div>
+                                    <styles.username>
                                         {user?.username}
-                                    </h1>
+                                    </styles.username>
 
-                                    <h1 className='email'>
+                                    <styles.email>
                                         {user?.email}
-                                    </h1>
+                                    </styles.email>
                                 </div>
-                            </li>
+                            </styles.item>
                         )}
                     </ul>
                     :
-                    <div className='loading-container'>
-                        <progress className='circular-progress'/>
-                    </div>
+                    <styles.loading>
+                        <util.circularProgress/>
+                    </styles.loading>
             }
-        </div>
-    </div>
+        </styles.container>
+    </styles.main>
 }
 
 export default UsersList

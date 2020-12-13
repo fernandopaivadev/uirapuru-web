@@ -4,22 +4,22 @@ import storage from '../../services/storage'
 
 import api from '../../services/api'
 
-// import schedule from '../../services/schedule'
-
 import {
     formatDeviceID,
     validateForm,
-    setFormValidation
+    setFormsValidation
 } from '../../services/forms'
 
-import '../../styles/newdevice.css'
+import styles from '../../styles/newdevice'
+import util from '../../styles/util'
 
-const NewUnit = ({ consumerUnitIndex, exit }) => {
+const NewDevice = ({ consumerUnitIndex, exit }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(
         'Erro no processamento do formulário'
     )
+
     const user = storage.read('user')
     const device = {
         id: '',
@@ -27,7 +27,7 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
     }
 
     useEffect(() => {
-        setFormValidation()
+        setFormsValidation()
     })
 
     const submit = async () => {
@@ -49,14 +49,17 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
         exit()
     }
 
-    return <div className='newdevice'>
-        <div className='window'>
-            <form>
-                <h1>Novo dispositivo</h1>
+    return <styles.main>
+        <styles.window>
+            <styles.form id='newDeviceForm'>
+                <styles.title>
+                    Novo dispositivo
+                </styles.title>
+
                 <label>ID do dispositivo</label>
                 <input
-                    maxLength='10'
-                    minLength='6'
+                    maxLength='8'
+                    minLength='8'
                     required
                     onChange={event => {
                         device.id = event.target.value
@@ -82,14 +85,12 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                     Digite no mínimo 6 caracteres
                 </p>
 
-                <div className='buttons'>
-                    <button
-                        className='classic-button'
+                <styles.buttons>
+                    <util.classicButton
                         onClick={event => {
                             event.preventDefault()
-                            if (validateForm()) {
-                                user
-                                    .consumerUnits[consumerUnitIndex]
+                            if (validateForm('newDeviceForm')) {
+                                user.consumerUnits[consumerUnitIndex]
                                     .devices.push(device)
                                 submit()
                             } else {
@@ -106,24 +107,22 @@ const NewUnit = ({ consumerUnitIndex, exit }) => {
                         }}
                     >
                         Salvar
-                    </button>
-                    <button
-                        className='classic-button'
-                        id='cancel-button'
+                    </util.classicButton>
+                    <util.criticalButton
                         onClick={exit}
                     >
                         Cancelar
-                    </button>
-                </div>
+                    </util.criticalButton>
+                </styles.buttons>
                 {error && !success ?
                     <p className='error'>
                         { errorMessage }
                     </p>
                     : null
                 }
-            </form>
-        </div>
-    </div>
+            </styles.form>
+        </styles.window>
+    </styles.main>
 }
 
-export default NewUnit
+export default NewDevice

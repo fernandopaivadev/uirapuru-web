@@ -5,18 +5,19 @@ import {
     MdRecentActors as UsersIcon,
     MdExitToApp as LogoutIcon,
     MdPerson as ProfileIcon,
-    MdDashboard as DashboardIcon,
-    MdBrightness7 as DarkModeEnabledIcon,
-    MdBrightness2 as DarkModeDisabledIcon
+    MdDashboard as DashboardIcon
 } from 'react-icons/md'
 
-import logo from '../../assets/logo.svg'
+import {
+    FaSun as DarkModeEnabledIcon,
+    FaMoon as DarkModeDisabledIcon
+} from 'react-icons/fa'
 
 import storage from '../../services/storage'
 
-import { applyTheme } from '../../themes'
-
-import '../../styles/navbar.css'
+import { applyTheme } from '../../styles/themes'
+import styles from '../../styles/navbar'
+import logo from '../../assets/logo.svg'
 
 const NavBar = ({ history }) => {
     const [darkMode, setDarkMode] = useState(
@@ -33,117 +34,108 @@ const NavBar = ({ history }) => {
         }
     }
 
-    return <ul className='navbar'>
-        <li
-            className='logo'
+    return <styles.main>
+        <styles.logo
             key='logo'
             onClick={() => {
-                history.push('/login')
+                if (storage.read('access-level') === 'admin') {
+                    history.push('/users-list')
+                } else {
+                    history.push('/dashboard')
+                }
             }}
         >
-            <img src={ logo } alt='tech amazon logo'/>
+            <img src={logo} alt='tech amazon logo'/>
 
-            <h1 className='text'>
+            <p>
                 Uirapuru
-            </h1>
-        </li>
+            </p>
+        </styles.logo>
 
-        <li className='navigation' key='navigation'>
-            <div
-                className='toggle'
+        <styles.navigation
+            key='navigation'
+        >
+            <styles.toggle
+                aria-label='Dark Mode'
                 onClick={toggleDarkMode}
             >
                 {darkMode ?
-                    <>
-                        <p className='text'>
-                            Tema Claro
-                        </p>
-                        <DarkModeEnabledIcon
-                            className='icon'
-                        />
-                    </>
+                    <DarkModeEnabledIcon
+                        className='icon'
+                    />
                     :
-                    <>
-                        <p className='text'>
-                            Tema Escuro
-                        </p>
-                        <DarkModeDisabledIcon
-                            className='icon'
-                        />
-                    </>
+                    <DarkModeDisabledIcon
+                        className='icon'
+                    />
                 }
-            </div>
-            <h1 className='username'>
-                {storage.read('access-level') === 'admin' ? '[Administrador] ': null}
+            </styles.toggle>
+            <styles.username>
+                {storage.read('access-level') === 'admin' ? 'Administrador | ': null}
                 {storage.read('user')?.username ?? ''}
-            </h1>
+            </styles.username>
 
             {storage.read('user') ?
-                <button>
-                    { storage.read('user')?.username?.split('')[0] }
-                </button>
+                <styles.avatar aria-label='Menu'>
+                    { storage.read('user')?.username?.split('')[0].toUpperCase()}
+                </styles.avatar>
                 : null
             }
 
-            <ul className='profile-menu'>
-                <div className='user'>
-                    <div className='avatar'>
+            <styles.profileMenu>
+                <styles.userInfo>
+                    <styles.profileAvatar>
                         {storage.read('user')?.person
                             ? storage.read('user')?.person?.name.split('')[0]
                             : storage.read('user')?.company?.tradeName.split('')[0]
                             ||
                             'A'
                         }
-                    </div>
+                    </styles.profileAvatar>
 
-                    <div className='text'>
-                        <h1 className='username'>
+                    <styles.textInfo>
+                        <p className='username'>
                             {storage.read('user')?.username || 'Administrador'}
-                        </h1>
-                        <h2 className='email'>{storage.read('user')?.email}</h2>
-                    </div>
-                </div>
+                        </p>
+                        <p className='email'>{storage.read('user')?.email}</p>
+                    </styles.textInfo>
+                </styles.userInfo>
 
                 {storage.read('access-level') === 'admin' ?
                     <>
-                        <li
-                            className='item'
+                        <styles.item
                             onClick={() => {
                                 history.push('/users-list')
                             }}>
                             <UsersIcon className='icon' />
                             Usuários
-                        </li>
+                        </styles.item>
                     </>
                     : null
                 }
 
                 {storage.read('user') ?
-                    <li
-                        className='item'
+                    <styles.item
                         onClick={() => {
                             history.push('/dashboard')
                         }}>
                         <DashboardIcon className='icon' />
                         Dashboard
-                    </li>
+                    </styles.item>
                     : null
                 }
 
                 {storage.read('user') ?
-                    <li
-                        className='item'
+                    <styles.item
                         onClick={() => {
                             history.push('/profile')
                         }}>
                         <ProfileIcon className='icon' />
                         Perfil
-                    </li>
+                    </styles.item>
                     : null
                 }
 
-                <li
-                    className='item'
+                <styles.item
                     onClick={() => {
                         storage.clear('all')
                         history.push('/login')
@@ -151,10 +143,10 @@ const NavBar = ({ history }) => {
                     }}>
                     <LogoutIcon className='icon' />
                     Sair
-                </li>
-            </ul>
-        </li>
-    </ul>
+                </styles.item>
+            </styles.profileMenu>
+        </styles.navigation>
+    </styles.main>
 }
 
 export default withRouter(NavBar)

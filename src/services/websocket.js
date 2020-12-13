@@ -3,7 +3,7 @@ import storage from './storage'
 import api from './api'
 import io from 'socket.io-client'
 
-const websocketConfig = (
+const config = (
     consumerUnitIndex,
     realTimeBuffer,
     setRealTimeBuffer,
@@ -36,8 +36,11 @@ const websocketConfig = (
                     if (id === topic) {
                         const _buffer = realTimeBuffer
                         const parsedPayload = JSON.parse(payload)
+
                         delete parsedPayload.rtc
                         delete parsedPayload.store
+                        delete parsedPayload.id
+
                         _buffer[index] = parsedPayload
                         setRealTimeBuffer(_buffer)
                         setNewMessage(true)
@@ -52,6 +55,6 @@ const websocketConfig = (
     }
 }
 
-export {
-    websocketConfig
+export default {
+    config
 }
