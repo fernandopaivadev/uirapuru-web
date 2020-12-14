@@ -13,6 +13,12 @@ import {
     FaMoon as DarkModeDisabledIcon
 } from 'react-icons/fa'
 
+import {
+    BsToggleOn as ToggleOnIcon,
+    BsToggleOff as ToggleOffIcon
+} from 'react-icons/bs'
+
+
 import storage from '../../services/storage'
 
 import { applyTheme } from '../../styles/themes'
@@ -60,13 +66,23 @@ const NavBar = ({ history }) => {
                 onClick={toggleDarkMode}
             >
                 {darkMode ?
-                    <DarkModeEnabledIcon
-                        className='icon'
-                    />
+                    <>
+                        <DarkModeEnabledIcon
+                            className='icon'
+                        />
+                        <ToggleOnIcon
+                            className='toggle-icon'
+                        />
+                    </>
                     :
-                    <DarkModeDisabledIcon
-                        className='icon'
-                    />
+                    <>
+                        <DarkModeDisabledIcon
+                            className='icon'
+                        />
+                        <ToggleOffIcon
+                            className='toggle-icon'
+                        />
+                    </>
                 }
             </styles.toggle>
             <styles.username>

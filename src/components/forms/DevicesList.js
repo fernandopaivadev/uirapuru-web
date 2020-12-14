@@ -144,7 +144,6 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                             setDeviceIndex(index)
                                             submit()
                                         } else {
-                                            console.log('Validating')
                                             setErrorMessage(
                                                 'Preencha todos os campos'
                                             )

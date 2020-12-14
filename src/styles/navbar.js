@@ -43,8 +43,8 @@ const navigation = styled.li`
 const toggle = styled.div`
     display: flex;
     align-items: center;
-    border-radius: 50%;
-    padding: 0.5rem;
+    border-radius: 3rem;
+    padding: 0.2rem 1rem 0.2rem 1rem;
     cursor: pointer;
     color: var(--secondary-font-color);
     transition: all 0.2s ease;
@@ -61,8 +61,12 @@ const toggle = styled.div`
     }
 
     .icon {
+        font-size: 1.8rem;
+    }
+
+    .toggle-icon {
         font-size: 3rem;
-        cursor: pointer;
+        margin-left: 0.5rem;
     }
 `
 

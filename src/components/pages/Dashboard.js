@@ -113,9 +113,9 @@ const Dashboard = ({ history }) => {
                                     key={deviceIndex}
                                     onClick={() => {
                                         history.push(
-                                        `/plot?${
+                                        `/plot?consumerUnitIndex=${
                                             consumerUnitIndex
-                                        }&${
+                                        }&deviceIndex=${
                                             deviceIndex
                                         }`)
                                     }}

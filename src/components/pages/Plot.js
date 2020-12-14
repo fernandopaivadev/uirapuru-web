@@ -22,8 +22,13 @@ const Plot = ({ history }) => {
         .split('?')[1]
         .split('&')
 
-    const [consumerUnitIndex, setConsumerUnitIndex] = useState(Number(params[0]))
-    const [deviceIndex, setDeviceIndex] = useState(Number(params[1]))
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState(
+        params[0].split('consumerUnitIndex=')[1]
+    )
+    const [deviceIndex, setDeviceIndex] = useState(
+        params[1].split('deviceIndex=')[1]
+    )
+
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
     const [currentDate, setCurrentDate] = useState(

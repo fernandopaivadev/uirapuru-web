@@ -55,8 +55,7 @@ const Profile = ({ history }) => {
             <Menu
                 title='Unidades'
                 items={storage.read('user').consumerUnits}
-                setItemIndex={ setConsumerUnitIndex }
-                subItemKey='devices'
+                setItemIndex={setConsumerUnitIndex}
             />
 
             <UserForm />
