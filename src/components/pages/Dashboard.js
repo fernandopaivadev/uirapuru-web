@@ -21,8 +21,6 @@ const Dashboard = ({ history }) => {
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
 
-    let connectionTimeout = null
-
     const theme = themes[storage.read('theme') ?? 'default']
     const { traceColors } = theme
 
@@ -51,7 +49,6 @@ const Dashboard = ({ history }) => {
         useCallback(() => {
             if (newMessage) {
                 setNewMessage(false)
-                clearTimeout(connectionTimeout)
             }
         }, [newMessage])
     )
