@@ -8,9 +8,9 @@ import storage from '../../services/storage'
 import api from '../../services/api'
 
 import {
-    MdKeyboardArrowLeft as ArrowBackIcon,
-    MdKeyboardArrowRight as ArrowForwardIcon
-} from 'react-icons/md'
+    BsCaretLeftFill as ArrowBackIcon,
+    BsCaretRightFill as ArrowForwardIcon
+} from 'react-icons/bs'
 
 import styles from '../../styles/plot'
 import util from '../../styles/util'

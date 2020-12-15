@@ -8,7 +8,11 @@ import { themes } from '../../styles/themes'
 
 import styles from '../../styles/chart'
 
-const Chart = ({ collection, aspectRatio, showDots }) => {
+const Chart = ({ collection, aspectRatio, showDots, fontSize }) => {
+    if (!fontSize) {
+        fontSize = 12
+    }
+
     const theme = themes[storage.read('theme') ?? 'default']
     const { traceColors } = theme
 
@@ -45,13 +49,12 @@ const Chart = ({ collection, aspectRatio, showDots }) => {
                         labels: {
                             boxWidth: 10,
                             fontColor: theme.primaryFontColor,
-                            fontSize: 15
+                            fontSize
                         }
                     },
                     tooltips: {
                         mode: 'index',
                         axis: 'y',
-                        intersect: false,
                         backgroundColor: '#333',
                     },
                     scales: {
@@ -60,13 +63,13 @@ const Chart = ({ collection, aspectRatio, showDots }) => {
                                 beginAtZero: true,
                                 min: -500,
                                 max: 1500,
-                                fontSize: 15,
+                                fontSize,
                                 fontColor: theme.primaryFontColor
                             }
                         }],
                         xAxes: [{
                             ticks: {
-                                fontSize: 15,
+                                fontSize,
                                 fontColor: theme.primaryFontColor
                             }
                         }]
