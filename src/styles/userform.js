@@ -8,7 +8,7 @@ const form = styled.form`
     margin: 1rem 2rem 0 2rem;
     width: 100%;
 
-    input {
+    input, textarea {
         padding: 0.5rem;
         border: 0.2rem solid var(--primary-color);
         border-radius: 0.3rem;
@@ -18,7 +18,8 @@ const form = styled.form`
         width: 85%;
         background: var(--background-color);
         transition: all 0.2s ease;
-        
+        resize: vertical;
+
         &:hover {
             background: var(--hovered-color);
         }
@@ -26,6 +27,10 @@ const form = styled.form`
         &:focus {
             background: var(--hovered-color);
         }
+    }
+
+    textarea {
+        height: 12rem;
     }
 
     label {

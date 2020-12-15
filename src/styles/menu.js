@@ -25,6 +25,27 @@ const itemName = styled.p`
         background: var(--hovered-color);
         cursor: pointer;
     }
+
+    &:hover::after {
+        opacity: 1;
+        transition: all 0.3s ease;
+        pointer-events: all;
+    }
+
+    &::after {
+        opacity: 0;
+        pointer-event: none;
+        content: attr(aria-label);
+        color: var(--background-color);
+        background: var(--primary-font-color);
+        font-weight: 600;
+        font-size: 1.4rem;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        z-index: 1;
+        position: absolute;
+        left: 22rem;
+    }
 `
 
 const subItemName = styled.p`
@@ -37,6 +58,27 @@ const subItemName = styled.p`
     &:hover {
         background: var(--hovered-color);
         cursor: pointer;
+    }
+
+    &:hover::after {
+        opacity: 1;
+        transition: all 0.3s ease;
+        pointer-events: all;
+    }
+
+    &::after {
+        opacity: 0;
+        pointer-event: none;
+        content: attr(aria-label);
+        color: var(--background-color);
+        background: var(--primary-font-color);
+        font-weight: 600;
+        font-size: 1.4rem;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        z-index: 1;
+        position: absolute;
+        left: 22rem;
     }
 `
 

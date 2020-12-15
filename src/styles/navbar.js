@@ -44,17 +44,18 @@ const toggle = styled.div`
     display: flex;
     align-items: center;
     border-radius: 3rem;
+    border: 1px solid var(--secondary-font-color);
     padding: 0.2rem 1rem 0.2rem 1rem;
     cursor: pointer;
     color: var(--secondary-font-color);
     transition: all 0.2s ease;
-    
+
     &:hover {
         background: var(--secondary-font-color);
         color: var(--secondary-color);
     }
 
-    P {
+    p {
         font-size: 1.8rem;
         font-weight: 600;
         margin: 0.7rem;

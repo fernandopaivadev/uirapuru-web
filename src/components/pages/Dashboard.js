@@ -161,7 +161,6 @@ const Dashboard = ({ history }) => {
                             <Chart
                                 collection={storage.read('collection')}
                                 aspectRatio={2}
-                                showDots
                             />
                         </styles.charts>
                         :

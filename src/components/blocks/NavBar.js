@@ -62,7 +62,6 @@ const NavBar = ({ history }) => {
             key='navigation'
         >
             <styles.toggle
-                aria-label='Dark Mode'
                 onClick={toggleDarkMode}
             >
                 {darkMode ?

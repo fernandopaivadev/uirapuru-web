@@ -8,9 +8,13 @@ import { themes } from '../../styles/themes'
 
 import styles from '../../styles/chart'
 
-const Chart = ({ collection, aspectRatio, showDots, fontSize }) => {
+const Chart = ({ collection, aspectRatio, fontSize, pointSize }) => {
     if (!fontSize) {
-        fontSize = 12
+        fontSize = 14
+    }
+
+    if (!pointSize) {
+        pointSize = 6
     }
 
     const theme = themes[storage.read('theme') ?? 'default']
@@ -24,7 +28,8 @@ const Chart = ({ collection, aspectRatio, showDots, fontSize }) => {
                 dataset.pointBorderColor = traceColors[index]
                 dataset.pointBackgroundColor = traceColors[index]
                 dataset.borderWidth = 1.5
-                dataset.pointRadius = showDots ? 2 : 0
+                dataset.pointHoverRadius = pointSize
+                dataset.pointRadius = pointSize
                 dataset.fill = true
                 dataset.cubicInterpolationMode = 'linear'
             })
