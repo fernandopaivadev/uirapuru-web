@@ -28,6 +28,7 @@ const datePicker = styled.div`
         font-size: 3.5rem;
         color: var(--secondary-font-color);
         border-radius: 50%;
+        padding: 0.5rem;
         margin: 0.5rem;
         background: var(--primary-color);
         cursor: pointer;
@@ -43,6 +44,7 @@ const datePicker = styled.div`
         border: 1px solid var(--primary-color);
         border-radius: 0.3rem;
         font-size: 2rem;
+        font-weight: 500;
         background: var(--background-color);
         color: var(--primary-font-color);
     }
