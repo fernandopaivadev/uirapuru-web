@@ -19,8 +19,7 @@ const fetchDeviceData = async (
     deviceIndex,
     begin,
     end,
-    fullTimestamp,
-    storeMessages
+    storeCSV
 ) => {
     if (!(begin && end)) {
         begin = new Date()
@@ -56,7 +55,7 @@ const fetchDeviceData = async (
             return null
         }
 
-        if (storeMessages) {
+        if (storeCSV) {
             const dataObjects = messages.map(message => {
                 if (message) {
                     return {
@@ -95,8 +94,7 @@ const fetchDeviceData = async (
             const parsedPayload = JSON.parse(payload)
             const dateRTC = new Date(parsedPayload.rtc)
 
-            const timestamp = fullTimestamp ?
-            `${
+            const timestamp = `${
                 dateRTC.getDate() < 10 ?
                     `0${dateRTC.getDate()}`
                     :
@@ -107,18 +105,6 @@ const fetchDeviceData = async (
                     :
                     dateRTC.getMonth() + 1
             } ${
-                dateRTC.getHours() < 10 ?
-                    `0${dateRTC.getHours()}`
-                    :
-                    dateRTC.getHours()
-            }:${
-                dateRTC.getMinutes() < 10 ?
-                    `0${dateRTC.getMinutes()}`
-                    :
-                    dateRTC.getMinutes()
-            }`
-                :
-            `${
                 dateRTC.getHours() < 10 ?
                     `0${dateRTC.getHours()}`
                     :
@@ -169,7 +155,6 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
                 deviceIndex,
                 begin,
                 end,
-                true,
                 true
             )
 
@@ -213,7 +198,6 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
                         deviceIndex,
                         begin,
                         end,
-                        false,
                         false
                     )
                 ))

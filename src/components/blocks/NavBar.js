@@ -18,12 +18,13 @@ import {
     BsToggleOff as ToggleOffIcon
 } from 'react-icons/bs'
 
-
 import storage from '../../services/storage'
 
 import { applyTheme } from '../../styles/themes'
 import styles from '../../styles/navbar'
+
 import logo from '../../assets/logo.svg'
+import { version } from '../../../package.json'
 
 const NavBar = ({ history }) => {
     const [darkMode, setDarkMode] = useState(
@@ -43,6 +44,7 @@ const NavBar = ({ history }) => {
     return <styles.main>
         <styles.logo
             key='logo'
+            aria-label={version}
             onClick={() => {
                 if (storage.read('access-level') === 'admin') {
                     history.push('/users-list')

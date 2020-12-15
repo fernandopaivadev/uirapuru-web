@@ -108,7 +108,7 @@ const Plot = ({ history }) => {
                 setLoading(false)
             }
         })()
-    }, [consumerUnitIndex, deviceIndex, currentDate, time])
+    }, [consumerUnitIndex, deviceIndex, currentDate, time, period])
 
     return <>
         <NavBar />
