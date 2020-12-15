@@ -87,7 +87,7 @@ const NavBar = ({ history }) => {
                 }
             </styles.toggle>
             <styles.username>
-                {storage.read('access-level') === 'admin' ? 'Administrador | ': null}
+                {storage.read('access-level') === 'admin' ? 'Administrador | ' : null}
                 {storage.read('user')?.username ?? ''}
             </styles.username>
 
@@ -101,12 +101,7 @@ const NavBar = ({ history }) => {
             <styles.profileMenu>
                 <styles.userInfo>
                     <styles.profileAvatar>
-                        {storage.read('user')?.person
-                            ? storage.read('user')?.person?.name.split('')[0]
-                            : storage.read('user')?.company?.tradeName.split('')[0]
-                            ||
-                            'A'
-                        }
+                        { storage.read('user')?.username?.split('')[0].toUpperCase()}
                     </styles.profileAvatar>
 
                     <styles.textInfo>
