@@ -17,7 +17,7 @@ import {
 import styles from '../../styles/consumerunitform'
 import util from '../../styles/util'
 
-const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
+const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [modal, setModal] = useState(false)
@@ -75,11 +75,11 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
             maxLength='16'
             required
             defaultValue={user
-                .consumerUnits[ consumerUnitIndex ]
+                .consumerUnits[consumerUnitIndex]
                 ?.number ?? ''}
             readOnly= {!user}
             onChange={ event => {
-                user.consumerUnits[ consumerUnitIndex]
+                user.consumerUnits[consumerUnitIndex]
                     .number = event.target.value
             }}
         />
@@ -94,11 +94,11 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
             minLength='8'
             required
             defaultValue={user
-                .consumerUnits[ consumerUnitIndex ]
+                .consumerUnits[consumerUnitIndex]
                 ?.name ?? ''}
             readOnly= {!user}
             onChange={ event => {
-                user.consumerUnits[ consumerUnitIndex]
+                user.consumerUnits[consumerUnitIndex]
                     .name = event.target.value
             }}
         />
@@ -113,11 +113,11 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
             minLength='10'
             required
             defaultValue={user
-                .consumerUnits[ consumerUnitIndex ]
+                .consumerUnits[consumerUnitIndex]
                 ?.address ?? ''}
             readOnly= {!user}
             onChange={ event => {
-                user.consumerUnits[ consumerUnitIndex]
+                user.consumerUnits[consumerUnitIndex]
                     .address = event.target.value
             }}
         />
@@ -131,11 +131,11 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
             required
             pattern='\d{5}-\d{3}'
             defaultValue={formatCEP(user
-                .consumerUnits[ consumerUnitIndex ]?.zip) ?? ''}
+                .consumerUnits[consumerUnitIndex]?.zip) ?? ''}
             readOnly= {!user}
             onChange={ event => {
                 user
-                    .consumerUnits[ consumerUnitIndex]
+                    .consumerUnits[consumerUnitIndex]
                     .zip = getOnlyNumbers(event.target.value)
                 event.target.value =  formatCEP(event.target
                     .value)
@@ -152,11 +152,11 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
             minLength='3'
             required
             defaultValue={user
-                .consumerUnits[ consumerUnitIndex ]
+                .consumerUnits[consumerUnitIndex]
                 ?.city ?? ''}
             readOnly= {!user}
             onChange={ event => {
-                user.consumerUnits[ consumerUnitIndex]
+                user.consumerUnits[consumerUnitIndex]
                     .city = event.target.value
             }}
         />
@@ -171,11 +171,11 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
             minLength='3'
             required
             defaultValue={user
-                .consumerUnits[ consumerUnitIndex ]
+                .consumerUnits[consumerUnitIndex]
                 ?.state ?? ''}
             readOnly= {!user}
             onChange={ event => {
-                user.consumerUnits[ consumerUnitIndex]
+                user.consumerUnits[consumerUnitIndex]
                     .state = event.target.value
             }}
         />
@@ -186,7 +186,7 @@ const ConsumerUnitForm = ({ consumerUnitIndex, history }) => {
         <styles.buttons>
             {isAdmin ?
                 <util.criticalButton
-                    onClick={ event => {
+                    onClick={event => {
                         event.preventDefault()
                         setModal(true)
                     }}

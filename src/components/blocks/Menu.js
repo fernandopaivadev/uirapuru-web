@@ -5,26 +5,28 @@ import styles from '../../styles/menu'
 const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
     <styles.main>
         <styles.title>
-            { title }
+            {title}
         </styles.title>
         <ul>
             {items.map((item, itemIndex) =>
                 <li key={ itemIndex }>
                     <styles.itemName
-                        onClick={ () => {
+                        aria-label='Unidade Consumidora'
+                        onClick={() => {
                             if (setItemIndex) {
                                 setItemIndex(itemIndex)
                             }
                         }}
                     >
-                        { item.name }
+                        {item.name}
                     </styles.itemName>
 
                     <ul>
                         {item[subItemKey]?.map((subItem, subItemIndex) =>
-                            <li key={ subItemIndex }>
+                            <li key={subItemIndex}>
                                 <styles.subItemName
-                                    onClick={ () => {
+                                    aria-label='Dispositivo'
+                                    onClick={() => {
                                         if (setSubItemIndex) {
                                             setSubItemIndex(subItemIndex)
                                         }
@@ -33,7 +35,7 @@ const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
                                         }
                                     }}
                                 >
-                                    { subItem.name }
+                                    {subItem.name}
                                 </styles.subItemName>
                             </li>
                         )}

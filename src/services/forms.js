@@ -107,7 +107,6 @@ const setFormsValidation = () => {
     )
 
     inputs.forEach((input, inputIndex) => {
-        console.log(inputIndex)
         input.onblur = () => {
             if (inputs[inputIndex].checkValidity()) {
                 inputs[inputIndex].style.borderColor = 'var(--primary-color)'

@@ -13,11 +13,18 @@ import {
     FaMoon as DarkModeDisabledIcon
 } from 'react-icons/fa'
 
+import {
+    BsToggleOn as ToggleOnIcon,
+    BsToggleOff as ToggleOffIcon
+} from 'react-icons/bs'
+
 import storage from '../../services/storage'
 
 import { applyTheme } from '../../styles/themes'
 import styles from '../../styles/navbar'
+
 import logo from '../../assets/logo.svg'
+import { version } from '../../../package.json'
 
 const NavBar = ({ history }) => {
     const [darkMode, setDarkMode] = useState(
@@ -37,6 +44,7 @@ const NavBar = ({ history }) => {
     return <styles.main>
         <styles.logo
             key='logo'
+            aria-label={version}
             onClick={() => {
                 if (storage.read('access-level') === 'admin') {
                     history.push('/users-list')
@@ -56,21 +64,30 @@ const NavBar = ({ history }) => {
             key='navigation'
         >
             <styles.toggle
-                aria-label='Dark Mode'
                 onClick={toggleDarkMode}
             >
                 {darkMode ?
-                    <DarkModeEnabledIcon
-                        className='icon'
-                    />
+                    <>
+                        <DarkModeEnabledIcon
+                            className='icon'
+                        />
+                        <ToggleOnIcon
+                            className='toggle-icon'
+                        />
+                    </>
                     :
-                    <DarkModeDisabledIcon
-                        className='icon'
-                    />
+                    <>
+                        <DarkModeDisabledIcon
+                            className='icon'
+                        />
+                        <ToggleOffIcon
+                            className='toggle-icon'
+                        />
+                    </>
                 }
             </styles.toggle>
             <styles.username>
-                {storage.read('access-level') === 'admin' ? 'Administrador | ': null}
+                {storage.read('access-level') === 'admin' ? 'Administrador | ' : null}
                 {storage.read('user')?.username ?? ''}
             </styles.username>
 
@@ -84,12 +101,7 @@ const NavBar = ({ history }) => {
             <styles.profileMenu>
                 <styles.userInfo>
                     <styles.profileAvatar>
-                        {storage.read('user')?.person
-                            ? storage.read('user')?.person?.name.split('')[0]
-                            : storage.read('user')?.company?.tradeName.split('')[0]
-                            ||
-                            'A'
-                        }
+                        { storage.read('user')?.username?.split('')[0].toUpperCase()}
                     </styles.profileAvatar>
 
                     <styles.textInfo>

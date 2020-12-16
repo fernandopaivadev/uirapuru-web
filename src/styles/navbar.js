@@ -32,6 +32,27 @@ const logo = styled.li`
         font-weight: 600;
         letter-spacing: 0.3rem;
     }
+
+    &:hover::after {
+        opacity: 1;
+        transition: all 0.3s ease;
+        pointer-events: all;
+    }
+
+    &::after {
+        opacity: 0;
+        pointer-event: none;
+        content: attr(aria-label);
+        color: var(--background-color);
+        background: var(--primary-font-color);
+        font-weight: 600;
+        font-size: 1.4rem;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        z-index: 1;
+        position: absolute;
+        left: 18rem;
+    }
 `
 
 const navigation = styled.li`
@@ -43,26 +64,31 @@ const navigation = styled.li`
 const toggle = styled.div`
     display: flex;
     align-items: center;
-    border-radius: 50%;
-    padding: 0.5rem;
+    border-radius: 3rem;
+    border: 1px solid var(--secondary-font-color);
+    padding: 0.2rem 1rem 0.2rem 1rem;
     cursor: pointer;
     color: var(--secondary-font-color);
     transition: all 0.2s ease;
-    
+
     &:hover {
         background: var(--secondary-font-color);
         color: var(--secondary-color);
     }
 
-    P {
+    p {
         font-size: 1.8rem;
         font-weight: 600;
         margin: 0.7rem;
     }
 
     .icon {
+        font-size: 1.8rem;
+    }
+
+    .toggle-icon {
         font-size: 3rem;
-        cursor: pointer;
+        margin-left: 0.5rem;
     }
 `
 

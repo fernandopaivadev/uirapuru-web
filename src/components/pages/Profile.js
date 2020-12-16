@@ -15,7 +15,10 @@ import styles from '../../styles/profile'
 import util from '../../styles/util'
 
 const Profile = ({ history }) => {
-    const [consumerUnitIndex, setConsumerUnitIndex] = useState()
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState(
+        storage.read('user').consumerUnits.length === 1 ?
+            0 : undefined
+    )
     const [modal, setModal] = useState(false)
 
     const isAdmin = storage.read('access-level') === 'admin'
@@ -55,8 +58,7 @@ const Profile = ({ history }) => {
             <Menu
                 title='Unidades'
                 items={storage.read('user').consumerUnits}
-                setItemIndex={ setConsumerUnitIndex }
-                subItemKey='devices'
+                setItemIndex={setConsumerUnitIndex}
             />
 
             <UserForm />

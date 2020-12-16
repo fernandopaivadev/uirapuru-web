@@ -224,7 +224,7 @@ const UserForm = () => {
                 </p>
 
                 <label>Descrição</label>
-                <input
+                <textarea
                     name='description'
                     maxLength='512'
                     minLength='50'

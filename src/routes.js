@@ -14,6 +14,19 @@ import NewUnit from './components/pages/NewUnit'
 import storage from './services/storage'
 
 const authenticated = storage.read('JWT') ?? false
+const isMobile = [
+    /Android/i,
+    /webOS/i,
+    /iPhone/i,
+    /iPad/i,
+    /iPod/i,
+    /BlackBerry/i,
+    /Windows Phone/i
+].some(item => navigator.userAgent.match(item))
+
+if (isMobile) {
+    window.location.replace('https://m.techamazon.tech')
+}
 
 const Routes = () => <Router>
     <Switch>

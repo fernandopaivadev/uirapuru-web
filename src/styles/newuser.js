@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-
-
 const main = styled.div`
     background: var(--background-color);
     width: 100vw;
@@ -15,7 +13,7 @@ const form = styled.form`
     align-items: center;
     justify-content: left;
     margin: 1rem 2rem 3rem 2rem;
-    height: 90vh;
+    height: 110vh;
 
     * {
         overflow: hidden;
@@ -29,8 +27,7 @@ const form = styled.form`
         background: var(--background-color);
     }
 
-    input,
-    select {
+    input, textarea, select {
         padding: 0.5rem;
         border: 0.2rem solid var(--primary-color);
         border-radius: 0.3rem;
@@ -39,6 +36,11 @@ const form = styled.form`
         color: var(--primary-font-color);
         background: var(--background-color);
         width: 40%;
+        resize: vertical;
+    }
+
+    textarea {
+        height: 12rem;
     }
 
     .error-message {

@@ -47,11 +47,11 @@ const config = (
                     }
                 })
             } catch (err) {
-                console.log(err.message)
+                console.log(`ERRO LOCAL: ${err.message}`)
             }
         })
     } catch (err) {
-        console.log(err.message)
+        console.log(`ERRO LOCAL: ${err.message}`)
     }
 }
 

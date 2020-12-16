@@ -8,9 +8,9 @@ import storage from '../../services/storage'
 import api from '../../services/api'
 
 import {
-    MdKeyboardArrowLeft as ArrowBackIcon,
-    MdKeyboardArrowRight as ArrowForwardIcon
-} from 'react-icons/md'
+    BsCaretLeftFill as ArrowBackIcon,
+    BsCaretRightFill as ArrowForwardIcon
+} from 'react-icons/bs'
 
 import styles from '../../styles/plot'
 import util from '../../styles/util'
@@ -22,8 +22,12 @@ const Plot = ({ history }) => {
         .split('?')[1]
         .split('&')
 
-    const [consumerUnitIndex, setConsumerUnitIndex] = useState(Number(params[0]))
-    const [deviceIndex, setDeviceIndex] = useState(Number(params[1]))
+    const [consumerUnitIndex, setConsumerUnitIndex] = useState(
+        params[0].split('consumerUnitIndex=')[1]
+    )
+    const [deviceIndex, setDeviceIndex] = useState(
+        params[1].split('deviceIndex=')[1]
+    )
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
     const [currentDate, setCurrentDate] = useState(
@@ -41,17 +45,35 @@ const Plot = ({ history }) => {
                 new Date().getDate()
         }`
     )
+    const [time, setTime] = useState('00:00')
+    const [period, setPeriod] = useState('24h')
 
     const getPeriod = dateString => {
-        let begin = new Date(dateString)
-        let end = new Date(dateString)
+        const begin = new Date(dateString)
+        const end = new Date(dateString)
+        let increment = 1
 
-        end.setDate(end.getDate() + 1)
+        switch (period) {
+        case '24h':
+            increment = 24
+            break
+        case '12h':
+            increment = 12
+            break
+        case '6h':
+            increment = 6
+            break
+        case '1h':
+            increment = 1
+            break
+        default:
+            increment = 24
+        }
 
-        begin = begin.toISOString()
-        end = end.toISOString()
+        begin.setHours(time.split(':')[0])
+        end.setHours(time.split(':')[0] + increment)
 
-        return [begin, end]
+        return [begin.toISOString(), end.toISOString()]
     }
 
     const changeDate = (change, dateString) => {
@@ -86,7 +108,7 @@ const Plot = ({ history }) => {
                 setLoading(false)
             }
         })()
-    }, [consumerUnitIndex, deviceIndex, currentDate])
+    }, [consumerUnitIndex, deviceIndex, currentDate, time, period])
 
     return <>
         <NavBar />
@@ -102,6 +124,7 @@ const Plot = ({ history }) => {
                 setItemIndex={setConsumerUnitIndex}
                 setSubItemIndex={setDeviceIndex}
             />
+
             <styles.contentContainer>
                 <styles.datePicker>
                     <ArrowBackIcon
@@ -124,23 +147,63 @@ const Plot = ({ history }) => {
                             setCurrentDate(event.target.value)
                         }}
                     />
+
+                    <select
+                        onInput={event => {
+                            setPeriod(event.target.value)
+                        }}
+                    >
+                        <option value='24h'>24 horas</option>
+                        <option value='12h'>12 horas</option>
+                        <option value='6h'>6 horas</option>
+                        <option value='1h'>1 hora</option>
+                    </select>
+
+                    {!(period === '24h') ?
+                        <input
+                            type='time'
+                            defaultValue='00:00'
+                            onInput={event => {
+                                setTime(event.target.value)
+                            }}
+                        />
+                        : null
+                    }
                 </styles.datePicker>
+
                 {!loading ?
                     success ?
                         storage.read('collection')?.length ?
                             <styles.chartContainer>
                                 <Chart
                                     collection={storage.read('collection')}
-                                    showDots
                                 />
                             </styles.chartContainer>
                             :
                             <styles.empty>
-                                <p>Não há dados deste dispositivo</p>
+                                <p>Não há dados do dispositivo</p>
+                                <p>
+                                    &quot;
+                                    {storage.read('user')
+                                        .consumerUnits[consumerUnitIndex]
+                                        .devices[deviceIndex]
+                                        .name
+                                    }
+                                    &quot;
+                                </p>
                             </styles.empty>
                         :
                         <styles.error>
-                            <p>Não foi possível obter os dados</p>
+                            <p>Não foi possível obter os dados de</p>
+                            <p>
+                                &quot;
+                                {storage.read('user')
+                                    .consumerUnits[consumerUnitIndex]
+                                    .devices[deviceIndex]
+                                    .name
+                                }
+                                &quot;
+                            </p>
                         </styles.error>
                     :
                     <styles.loading>

@@ -277,7 +277,7 @@ const NewUser = ({ history }) => {
                         </p>
 
                         <label>Descrição</label>
-                        <input
+                        <textarea
                             name='description'
                             maxLength='512'
                             minLength='50'
@@ -340,7 +340,7 @@ const NewUser = ({ history }) => {
                             }}
                         />
                         <p className='error-message'>
-                                Data inválida
+                            Data inválida
                         </p>
                     </>
                 }

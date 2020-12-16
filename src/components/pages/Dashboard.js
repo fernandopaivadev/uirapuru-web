@@ -21,8 +21,6 @@ const Dashboard = ({ history }) => {
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
 
-    let connectionTimeout = null
-
     const theme = themes[storage.read('theme') ?? 'default']
     const { traceColors } = theme
 
@@ -51,7 +49,6 @@ const Dashboard = ({ history }) => {
         useCallback(() => {
             if (newMessage) {
                 setNewMessage(false)
-                clearTimeout(connectionTimeout)
             }
         }, [newMessage])
     )
@@ -92,9 +89,9 @@ const Dashboard = ({ history }) => {
                 setItemIndex={setConsumerUnitIndex}
                 setSubItemIndex={(deviceIndex) => {
                     history.push(
-                        `/plot?${
+                        `/plot?consumerUnitIndex=${
                             consumerUnitIndex
-                        }&${
+                        }&deviceIndex=${
                             deviceIndex
                         }`)
                 }}
@@ -113,9 +110,9 @@ const Dashboard = ({ history }) => {
                                     key={deviceIndex}
                                     onClick={() => {
                                         history.push(
-                                        `/plot?${
+                                        `/plot?consumerUnitIndex=${
                                             consumerUnitIndex
-                                        }&${
+                                        }&deviceIndex=${
                                             deviceIndex
                                         }`)
                                     }}
@@ -164,7 +161,6 @@ const Dashboard = ({ history }) => {
                             <Chart
                                 collection={storage.read('collection')}
                                 aspectRatio={2}
-                                showDots
                             />
                         </styles.charts>
                         :
