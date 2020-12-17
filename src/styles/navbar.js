@@ -41,7 +41,7 @@ const logo = styled.li`
 
     &::after {
         opacity: 0;
-        pointer-event: none;
+        pointer-events: none;
         content: attr(aria-label);
         color: var(--background-color);
         background: var(--primary-font-color);
@@ -132,7 +132,7 @@ const profileMenu = styled.ul`
     bottom: 100;
     transform: ${
         admin ? 'translate(-0.5rem, 24%);' : 'translate(-0.5rem, 19%);'
-    }
+    };
     right: 0;
     margin: 10rem 0 0 0;
     background: var(--background-color);

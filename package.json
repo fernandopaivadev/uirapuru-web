@@ -1,11 +1,11 @@
 {
     "name": "uirapuru-web",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged",
+            "pre-commit": "npm run lint:css && lint-staged",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
             "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
         }
@@ -39,6 +39,7 @@
         "eject": "react-scripts eject",
         "update": "npm prune && ncu -u && npm install",
         "lint": "eslint --fix src/",
+        "lint:css": "stylelint './src/**/*.js'",
         "start": "npm run build && npx serve -s build",
         "reinstall": "rm -rf node_modules && rm -f package-lock.json && npm install"
     },
@@ -63,7 +64,11 @@
         "eslint-plugin-import": "^2.22.1",
         "husky": "^4.3.6",
         "lint-staged": "^10.5.3",
-        "npm-check-updates": "^10.2.5"
+        "npm-check-updates": "^10.2.5",
+        "stylelint": "^13.8.0",
+        "stylelint-config-recommended": "^3.0.0",
+        "stylelint-config-styled-components": "^0.1.1",
+        "stylelint-processor-styled-components": "^1.10.0"
     },
     "config": {
         "commitizen": {

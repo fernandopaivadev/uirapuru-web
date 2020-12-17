@@ -84,8 +84,8 @@ const pseudoAnimation = keyframes`
 `
 
 const circularProgress = styled.progress`
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    --webkit-appearance: none;
+    --moz-appearance: none;
     appearance: none;
     box-sizing: border-box;
     border: none;
@@ -103,7 +103,7 @@ const circularProgress = styled.progress`
     }
 
     &:indeterminate {
-        -webkit-mask-image: linear-gradient(transparent 50%, black 50%),
+        --webkit-mask-image: linear-gradient(transparent 50%, black 50%),
             linear-gradient(to right, transparent 50%, black 50%);
         mask-image: linear-gradient(transparent 50%, black 50%),
             linear-gradient(to right, transparent 50%, black 50%);
