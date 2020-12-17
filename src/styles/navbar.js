@@ -65,7 +65,7 @@ const toggle = styled.div`
     display: flex;
     align-items: center;
     border-radius: 3rem;
-    border: 1px solid var(--secondary-font-color);
+    border: 0.1rem solid var(--secondary-font-color);
     padding: 0.2rem 1rem 0.2rem 1rem;
     cursor: pointer;
     color: var(--secondary-font-color);
@@ -137,7 +137,7 @@ const profileMenu = styled.ul`
     margin: 10rem 0 0 0;
     background: var(--background-color);
     border-radius: 0.5rem;
-    border: 1px solid var(--primary-color);
+    border: 0.1rem solid var(--primary-color);
     visibility: hidden;
     opacity: 0;
     transition: all 0.2s ease;

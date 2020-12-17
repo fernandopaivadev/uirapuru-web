@@ -22,7 +22,7 @@ const devices = styled.ul`
     width: 99%;
     min-height: 10%;
     margin: 1rem;
-    border: 1px solid var(--primary-color);
+    border: 0.2rem solid var(--primary-color);
     border-radius: 0.5rem;
     overflow: hidden;
 `
@@ -91,7 +91,7 @@ const deviceIcon = styled.li`
     .real-time li {
         padding: 0.3rem;
         border-radius: 0.5rem;
-        border: 1px solid var(--primary-color);
+        border: 0.2rem solid var(--primary-color);
         margin: 0.2rem;
     }
 

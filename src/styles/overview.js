@@ -10,7 +10,7 @@ const main = styled.div`
     padding: 1rem;
     grid-column: 2/3;
     margin: 1rem;
-    border: 1px solid var(--primary-color);
+    border: 0.2rem solid var(--primary-color);
     border-radius: 0.5rem;
 `
 

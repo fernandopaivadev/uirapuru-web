@@ -14,7 +14,7 @@ const header = styled.div`
     display: flex;
     flex-direction: column;
     width: 70%;
-    min-height: 15rem;
+    min-height: 4rem;
     align-items: center;
     justify-content: center;
 `
@@ -36,7 +36,7 @@ const deviceForm = styled.form`
     margin: 1rem 2rem 0 2rem;
     padding: 1rem;
     width: 90%;
-    border: 1px solid var(--primary-color);
+    border: 0.2rem solid var(--primary-color);
     border-radius: 0.3rem;
 
     input {
