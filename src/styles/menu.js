@@ -34,7 +34,7 @@ const itemName = styled.p`
 
     &::after {
         opacity: 0;
-        pointer-event: none;
+        pointer-events: none;
         content: attr(aria-label);
         color: var(--background-color);
         background: var(--primary-font-color);
@@ -68,7 +68,7 @@ const subItemName = styled.p`
 
     &::after {
         opacity: 0;
-        pointer-event: none;
+        pointer-events: none;
         content: attr(aria-label);
         color: var(--background-color);
         background: var(--primary-font-color);

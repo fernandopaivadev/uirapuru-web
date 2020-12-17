@@ -5,6 +5,7 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
+    "theme_color": "#712b74",
     "icons": [
         {
             "src": "shortcut-icon.png",

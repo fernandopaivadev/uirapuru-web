@@ -54,7 +54,7 @@ const deviceIcon = styled.li`
 
     &::after {
         opacity: 0;
-        pointer-event: none;
+        pointer-events: none;
         content: attr(aria-label);
         color: var(--background-color);
         background: var(--primary-font-color);
