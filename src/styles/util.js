@@ -13,7 +13,8 @@ const classicButton = styled.button`
     padding: 0 1.5rem 0 1.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    
+    overflow: hidden;
+
     &:hover {
         background: var(--primary-light-color);
     }

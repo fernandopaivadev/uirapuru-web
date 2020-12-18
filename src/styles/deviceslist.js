@@ -6,7 +6,6 @@ const devicesList = styled.div`
     flex-direction: column;
     align-items: center;
     height: 95.5%;
-    
     padding: 1rem;
 `
 
@@ -14,7 +13,7 @@ const header = styled.div`
     display: flex;
     flex-direction: column;
     width: 70%;
-    min-height: 4rem;
+    min-height: 13rem;
     align-items: center;
     justify-content: center;
 `
