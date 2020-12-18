@@ -73,7 +73,6 @@ const deviceForm = styled.form`
         font-size: 1.4rem;
         font-weight: 600;
         margin: 0 auto 0 auto;
-        display: none;
     }
 
     .success {

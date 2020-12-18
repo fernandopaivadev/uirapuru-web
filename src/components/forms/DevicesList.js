@@ -33,9 +33,9 @@ const DevicesList = ({ consumerUnitIndex }) => {
     }
 
     const toggleError = (index, value) => {
-        const _success = success
-        _success[index] = value
-        setError([..._success])
+        const _error = error
+        _error[index] = value
+        setError([..._error])
     }
 
     const submit = async (index) => {
@@ -166,6 +166,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
 
                                             toggleError(index, true)
 
+                                            console.log(error[index], success[index])
                                             setTimeout(() => {
                                                 toggleError(index, false)
                                             }, 3000)
@@ -196,7 +197,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
 
                         {!success[index] && error[index]?
                             <p className='error-message'>
-                                { errorMessage }
+                                {errorMessage}
                             </p>
                             : null
                         }
