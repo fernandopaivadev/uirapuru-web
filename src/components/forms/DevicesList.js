@@ -196,7 +196,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                         }
 
                         {!success[index] && error[index]?
-                            <p className='error-message'>
+                            <p className='error'>
                                 {errorMessage}
                             </p>
                             : null
