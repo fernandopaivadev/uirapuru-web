@@ -72,7 +72,8 @@ const deviceForm = styled.form`
         color: var(--error-color);
         font-size: 1.4rem;
         font-weight: 600;
-        margin: 0 auto 0 auto;
+        margin: 0rem auto 0rem auto;
+        display: none;
     }
 
     .success {

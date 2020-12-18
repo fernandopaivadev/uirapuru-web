@@ -1,6 +1,6 @@
 {
     "name": "uirapuru-web",
-    "version": "1.4.8",
+    "version": "1.4.9",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
@@ -41,6 +41,7 @@
         "lint": "eslint --fix src/",
         "lint:css": "stylelint './src/**/*.js'",
         "start": "npm run build && npx serve -s build",
+        "deploy": "git checkout main && git merge develop && git push",
         "reinstall": "rm -rf node_modules && rm -f package-lock.json && npm install"
     },
     "browserslist": {
