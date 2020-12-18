@@ -1,10 +1,12 @@
 const formatDeviceID = input =>
     input
         ?.replace(/[\W_]/g, '')
+        .toUpperCase()
 
 const formatUsername = input =>
     input
         ?.replace(/[\W_]/g, '')
+        .toLowerCase()
 
 const formatPhone = phone =>
     phone

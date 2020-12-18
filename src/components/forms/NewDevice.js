@@ -59,8 +59,8 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                 <label>ID do dispositivo</label>
                 <input
                     maxLength='8'
-                    minLength='8'
                     required
+                    pattern='[A-Z0-9]{8}'
                     onChange={event => {
                         device.id = event.target.value
                         event.target.value = formatDeviceID(
@@ -69,7 +69,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                     }}
                 />
                 <p className='error-message'>
-                    Digite no mínimo 6 caracteres
+                    Digite no mínimo 8 caracteres
                 </p>
 
                 <label>Nome do dispositivo</label>
@@ -116,7 +116,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                 </styles.buttons>
                 {error && !success ?
                     <p className='error'>
-                        { errorMessage }
+                        {errorMessage}
                     </p>
                     : null
                 }

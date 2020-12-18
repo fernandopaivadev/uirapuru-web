@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import NewDevice from '../blocks/NewDevice'
+import NewDevice from '../forms/NewDevice'
 import Modal from '../blocks/Modal'
 
 import api from '../../services/api'
@@ -9,7 +9,7 @@ import storage from '../../services/storage'
 import styles from '../../styles/deviceslist'
 import util from '../../styles/util'
 
-import { validateForm } from '../../services/forms'
+import { validateForm, formatDeviceID } from '../../services/forms'
 
 const DevicesList = ({ consumerUnitIndex }) => {
     const [newDevicePopup, setNewDevicePopup] = useState(false)
@@ -124,6 +124,9 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                 user.consumerUnits[
                                     consumerUnitIndex
                                 ].devices[index].id = event.target.value
+                                event.target.value = formatDeviceID(
+                                    event.target.value
+                                )
                             }}
                         />
                         <p className='error-message'>
@@ -166,7 +169,6 @@ const DevicesList = ({ consumerUnitIndex }) => {
 
                                             toggleError(index, true)
 
-                                            console.log(error[index], success[index])
                                             setTimeout(() => {
                                                 toggleError(index, false)
                                             }, 3000)

@@ -29,9 +29,11 @@ const navButtons = styled.div`
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 0;
+    bottom: 0.5rem;
     left: 50vw;
+    border-radius: 0.5rem;
     transform: translateX(-50%);
+    background: var(--primary-font-color);
 `
 
 export default {
