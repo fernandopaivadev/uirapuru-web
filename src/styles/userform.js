@@ -19,7 +19,7 @@ const form = styled.form`
         background: var(--background-color);
         transition: all 0.2s ease;
         resize: vertical;
-
+        overflow: hidden;
         &:hover {
             background: var(--hovered-color);
         }

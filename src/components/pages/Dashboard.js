@@ -165,7 +165,10 @@ const Dashboard = ({ history }) => {
                         </styles.charts>
                         :
                         <styles.empty>
-                            <p>Não há dados destes dispositivos</p>
+                            <p>
+                                Não há dados registrados
+                                nas últimas 24 horas
+                            </p>
                         </styles.empty>
                     :
                     <styles.error>

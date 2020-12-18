@@ -13,32 +13,48 @@ import { validateForm } from '../../services/forms'
 
 const DevicesList = ({ consumerUnitIndex }) => {
     const [newDevicePopup, setNewDevicePopup] = useState(false)
-    const [success, setSuccess] = useState(false)
-    const [error, setError] = useState(false)
     const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
 
     const user = storage.read('user')
     const isAdmin = storage.read('access-level') === 'admin'
+    const numberOfDevices = storage.read('user')
+        .consumerUnits[consumerUnitIndex]
+        .devices.length
 
-    const submit = async () => {
+    const [success, setSuccess] = useState(new Array(numberOfDevices).fill(false))
+    const [error, setError] = useState(new Array(numberOfDevices).fill(false))
+
+    const toggleSuccess = (index, value) => {
+        const _success = success
+        _success[index] = value
+        setSuccess([..._success])
+    }
+
+    const toggleError = (index, value) => {
+        const _error = error
+        _error[index] = value
+        setError([..._error])
+    }
+
+    const submit = async (index) => {
         const result = await api.updateUser(user)
 
         if (result === 'OK') {
-            setSuccess(true)
-            setError(false)
+            toggleSuccess(index, true)
+            toggleError(index, false)
 
             setTimeout(() => {
-                setSuccess(false)
+                toggleSuccess(index, false)
             }, 2000)
         } else {
             setErrorMessage(result)
-            setSuccess(false)
-            setError(true)
+            toggleSuccess(index, false)
+            toggleError(index, true)
 
             setTimeout(() => {
-                setError(false)
+                toggleError(index, false)
             }, 2000)
         }
     }
@@ -123,7 +139,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             maxLength='20'
                             minLength='6'
                             required
-                            onChange={ event => {
+                            onChange={event => {
                                 user.consumerUnits[
                                     consumerUnitIndex
                                 ].devices[index].name
@@ -142,15 +158,17 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                         event.preventDefault()
                                         if (validateForm(`deviceForm${index}`)) {
                                             setDeviceIndex(index)
-                                            submit()
+                                            submit(index)
                                         } else {
                                             setErrorMessage(
                                                 'Preencha todos os campos'
                                             )
-                                            setError(true)
 
+                                            toggleError(index, true)
+
+                                            console.log(error[index], success[index])
                                             setTimeout(() => {
-                                                setError(false)
+                                                toggleError(index, false)
                                             }, 3000)
                                         }
                                     }}
@@ -170,16 +188,16 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             : null
                         }
 
-                        {success && !error?
+                        {success[index] && !error[index]?
                             <p className='success'>
                                 Salvo com sucesso!
                             </p>
                             : null
                         }
 
-                        {!success && error?
+                        {!success[index] && error[index]?
                             <p className='error-message'>
-                                { errorMessage }
+                                {errorMessage}
                             </p>
                             : null
                         }

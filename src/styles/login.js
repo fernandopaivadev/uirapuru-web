@@ -51,7 +51,7 @@ const input = styled.input`
     width: 28rem;
     height: 4rem;
     border-radius: 0.3rem;
-    border: 1px solid var(--primary-color);
+    border: 0.2rem solid var(--primary-color);
     font-size: 1.8rem;
     padding: 1rem;
     background: var(--background-color);

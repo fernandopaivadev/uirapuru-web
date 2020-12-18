@@ -66,7 +66,9 @@ const validateForm = id => {
     let expected = 0
 
     const inputs = formChildren.filter(child =>
-        child.tagName === 'INPUT'
+        (child.tagName === 'INPUT'
+        ||
+        child.tagName === 'TEXTAREA')
         &&
         child.type !== 'checkbox'
     )
@@ -97,7 +99,9 @@ const setFormsValidation = () => {
     })
 
     const inputs = children.filter(child =>
-        child.tagName === 'INPUT'
+        (child.tagName === 'INPUT'
+        ||
+        child.tagName === 'TEXTAREA')
         &&
         child.type !== 'checkbox'
     )

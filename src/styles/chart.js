@@ -11,7 +11,7 @@ const chart = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--primary-color);
+    border: 0.2rem solid var(--primary-color);
     border-radius: 0.5rem;
     margin: 1rem;
     

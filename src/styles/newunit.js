@@ -32,6 +32,7 @@ const form = styled.form`
         color: var(--primary-font-color);
         background: var(--background-color);
         width: 40%;
+        overflow: hidden;
     }
 
     .error-message {

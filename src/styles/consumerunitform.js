@@ -18,6 +18,7 @@ const form = styled.form`
         width: 85%;
         background: var(--background-color);
         transition: all 0.2s ease;
+        overflow: hidden;
         &:hover {
             background: var(--hovered-color);
         }

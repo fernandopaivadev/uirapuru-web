@@ -43,7 +43,7 @@ const datePicker = styled.div`
         width: 20rem;
         padding: 0.3rem;
         margin: 0 0 0 1rem;
-        border: 1px solid var(--primary-color);
+        border: 0.2rem solid var(--primary-color);
         border-radius: 0.3rem;
         font-size: 2rem;
         font-weight: 500;
