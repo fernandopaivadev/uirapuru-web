@@ -1,16 +1,11 @@
-<div align="center">
-<img src="https://uirapuru.techamazon.tech/static/media/logo.797c925f.svg" height="150" width="150">
-<p style="font-size: 50px;">
+<div>
+<img src="https://uirapuru.techamazon.tech/static/media/logo.797c925f.svg" height="100" width="100%" align="left">
+<h1 align="center">
 Uirapuru
-</p>
+</h1>
 </div>
 
-<h3 align="center">
-Plataforma de sensoriamento IoT
-</h3>
-
-<!-- # Uirapuru -->
-
+<div align="center">
 <img src="https://img.shields.io/badge/Project-Uirapuru-309d20">
 
 <img src="https://img.shields.io/badge/Platform-Web-blue">
@@ -24,6 +19,8 @@ Plataforma de sensoriamento IoT
 <img src="https://img.shields.io/netlify/bebbc4b1-f05d-41fc-aa2c-1691aa546111">
 
 <a href="https://uirapuru.techamazon.tech"><img src="https://img.shields.io/badge/Available on-https%3A%2F%2Fuirapuru.techamazon.tech-309d20"></a>
+
+</div>
 
 ## Sobre
 

@@ -1,6 +1,6 @@
 {
     "name": "uirapuru-web",
-    "version": "1.4.16",
+    "version": "1.4.17",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
