@@ -2,8 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react'
 
 import NavBar from '../blocks/NavBar'
 
-import Modal from '../blocks/Modal'
-
 import api from '../../services/api'
 
 import {
@@ -30,7 +28,6 @@ const NewUser = ({ history }) => {
         consumerUnits: []
     })
 
-    const [modal, setModal] = useState(false)
     const [userType, setUserType] = useState('company')
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
@@ -92,8 +89,8 @@ const NewUser = ({ history }) => {
         setLoading(false)
     }
 
-    const buttonPress = task => {
-        if (validateForm()) {
+    const buttonPress = (task, id) => {
+        if (validateForm(id)) {
             task()
         } else {
             setErrorMessage('Preencha todos os campos')
@@ -108,22 +105,8 @@ const NewUser = ({ history }) => {
     return <>
         <NavBar />
 
-        { modal ?
-            <Modal
-                message={'Finalizar cadastro?'}
-                taskOnYes={() => {
-                    setModal(false)
-                    buttonPress(submit)
-                }}
-                taskOnNo={() => {
-                    setModal(false)
-                }}
-            />
-            : null
-        }
-
         <styles.main>
-            <styles.form>
+            <styles.form id='userForm'>
                 <styles.title>
                     Dados do novo usuário
                 </styles.title>
@@ -359,7 +342,7 @@ const NewUser = ({ history }) => {
                             event.preventDefault()
                             buttonPress(() => {
                                 submit()
-                            })
+                            }, 'userForm')
                         }}
                     >
                         Salvar
