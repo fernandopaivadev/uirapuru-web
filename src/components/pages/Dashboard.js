@@ -21,6 +21,8 @@ const Dashboard = ({ history }) => {
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
 
+    const isAdmin = storage.read('access-level') === 'admin'
+
     const theme = themes[storage.read('theme') ?? 'default']
     const { traceColors } = theme
 
@@ -79,107 +81,131 @@ const Dashboard = ({ history }) => {
     return <>
         <NavBar />
 
-        <styles.main>
-            <Menu
-                title='Unidades'
-                items={
-                    storage.read('user').consumerUnits
-                }
-                subItemKey='devices'
-                setItemIndex={setConsumerUnitIndex}
-                setSubItemIndex={(deviceIndex) => {
-                    history.push(
+        {storage.read('user').consumerUnits.length > 0 ?
+            <styles.main>
+                <Menu
+                    title='Unidades'
+                    items={
+                        storage.read('user').consumerUnits
+                    }
+                    subItemKey='devices'
+                    setItemIndex={setConsumerUnitIndex}
+                    setSubItemIndex={(deviceIndex) => {
+                        history.push(
                         `/plot?consumerUnitIndex=${
                             consumerUnitIndex
                         }&deviceIndex=${
                             deviceIndex
                         }`)
-                }}
-            />
+                    }}
+                />
 
-            <styles.container>
-                {storage.read('user')?.consumerUnits[
-                    consumerUnitIndex
-                ].devices.length > 0 ?
-                    <styles.devices>
-                        {storage.read('user')
-                            ?.consumerUnits[consumerUnitIndex]
-                            ?.devices.map((device, deviceIndex) =>
-                                <styles.deviceIcon
-                                    aria-label={`ID: ${device.id}`}
-                                    key={deviceIndex}
-                                    onClick={() => {
-                                        history.push(
+                <styles.container>
+                    {storage.read('user')?.consumerUnits[
+                        consumerUnitIndex
+                    ].devices.length > 0 ?
+                        <styles.devices>
+                            {storage.read('user')
+                                ?.consumerUnits[consumerUnitIndex]
+                                ?.devices.map((device, deviceIndex) =>
+                                    <styles.deviceIcon
+                                        aria-label={`ID: ${device.id}`}
+                                        key={deviceIndex}
+                                        onClick={() => {
+                                            history.push(
                                         `/plot?consumerUnitIndex=${
                                             consumerUnitIndex
                                         }&deviceIndex=${
                                             deviceIndex
                                         }`)
-                                    }}
-                                >
-                                    <FaSolarPanel
-                                        className='panel-icon'
-                                    />
-                                    <p className='device-name'>
-                                        {device.name}
-                                    </p>
+                                        }}
+                                    >
+                                        <FaSolarPanel
+                                            className='panel-icon'
+                                        />
+                                        <p className='device-name'>
+                                            {device.name}
+                                        </p>
 
-                                    <ul className='real-time'>
-                                        {Object.keys(
-                                            realTimeBuffer[deviceIndex] ?? {}
-                                        ).map((key, keyIndex) =>
-                                            <li key={keyIndex}>
-                                                <p style={{
-                                                    color: traceColors[keyIndex]
-                                                }}>
-                                                    {key}:
-                                                    {realTimeBuffer[
-                                                        deviceIndex
-                                                    ][key] ?? null}
-                                                    {keyToUnity(key)}
-                                                </p>
-                                            </li>
-                                        )}
-                                    </ul>
-                                </styles.deviceIcon>
-                            )
-                        }
-                    </styles.devices>
-                    :
-                    <styles.empty>
-                        <p>
-                            Não há dispositivos cadastrados
-                        </p>
-                    </styles.empty>
-                }
-            </styles.container>
-
-            {!loading ?
-                success ?
-                    storage.read('collection')?.length ?
-                        <styles.charts>
-                            <Chart
-                                collection={storage.read('collection')}
-                                aspectRatio={2}
-                            />
-                        </styles.charts>
+                                        <ul className='real-time'>
+                                            {Object.keys(
+                                                realTimeBuffer[deviceIndex] ?? {}
+                                            ).map((key, keyIndex) =>
+                                                <li key={keyIndex}>
+                                                    <p style={{
+                                                        color: traceColors[keyIndex]
+                                                    }}>
+                                                        {key}:
+                                                        {realTimeBuffer[
+                                                            deviceIndex
+                                                        ][key] ?? null}
+                                                        {keyToUnity(key)}
+                                                    </p>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </styles.deviceIcon>
+                                )
+                            }
+                        </styles.devices>
                         :
                         <styles.empty>
                             <p>
-                                Não há dados registrados
-                                nas últimas 24 horas
+                            Não há dispositivos cadastrados
                             </p>
                         </styles.empty>
+                    }
+                </styles.container>
+
+                {!loading ?
+                    success ?
+                        storage.read('collection')?.length ?
+                            <styles.charts>
+                                <Chart
+                                    collection={storage.read('collection')}
+                                    aspectRatio={2}
+                                />
+                            </styles.charts>
+                            :
+                            <styles.empty>
+                                <p>
+                                    Não há dados registrados
+                                    nas últimas 24 horas
+                                </p>
+                            </styles.empty>
+                        :
+                        <styles.error>
+                            <p>Não foi possível obter os dados</p>
+                        </styles.error>
                     :
-                    <styles.error>
-                        <p>Não foi possível obter os dados</p>
-                    </styles.error>
-                :
-                <styles.loading>
-                    <util.circularProgress/>
-                </styles.loading>
-            }
-        </styles.main>
+                    <styles.loading>
+                        <util.circularProgress/>
+                    </styles.loading>
+                }
+
+            </styles.main>
+            :
+            <styles.noUnit>
+                {isAdmin ?
+                    <>
+                        <p>
+                            Cadastre uma unidade consumidora
+                        </p>
+                        <util.classicButton
+                            onClick={() => {
+                                history.push('/new-unit')
+                            }}
+                        >
+                            Nova Unidade
+                        </util.classicButton>
+                    </>
+                    :
+                    <p>
+                        Não há unidade consumidora cadastrada
+                    </p>
+                }
+            </styles.noUnit>
+        }
     </>
 }
 
