@@ -1,6 +1,15 @@
-<img src="https://uirapuru.techamazon.tech/static/media/logo.797c925f.svg" width="50" height="40" style="float: left;">
+<div align="center">
+<img src="https://uirapuru.techamazon.tech/static/media/logo.797c925f.svg" height="150" width="150">
+<p style="font-size: 50px;">
+Uirapuru
+</p>
+</div>
 
-# Uirapuru
+<h3 align="center">
+Plataforma de sensoriamento IoT
+</h3>
+
+<!-- # Uirapuru -->
 
 <img src="https://img.shields.io/badge/Project-Uirapuru-309d20">
 
@@ -22,9 +31,33 @@ A plataforma Uirapuru é parte do Projeto Uirapuru, uma aplicação web utilizad
 
 ## Como contribuir
 
+### Requisitos
+
+- node (>=14.15.0)
+- npm (>=6.0.0) ou Yarn (>=1.22.0)
+
+### Com os requisitos instalados, execute os passos a seguir:
+
+1. Clone o repositório:
+
 ```shell
 git clone https://github.com/FernandoPaivaEC/uirapuru-web
+```
+
+2. Entre na pasta do repositório clonado:
+
+```shell
 cd uirapuru-web
+```
+
+3. Instale as dependências:
+
+```shell
 npm install
+```
+
+4. Inicie o servidor de desenvolvimento
+
+```shell
 npm run dev
 ```
