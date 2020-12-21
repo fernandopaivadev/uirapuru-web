@@ -1,20 +1,20 @@
-<img src="https://uirapuru.techamazon.tech/static/media/logo.797c925f.svg" width="150">
+<img src="https://uirapuru.techamazon.tech/static/media/logo.797c925f.svg" width="50" height="40" style="float: left;">
 
-# **Plataforma Uirapuru**
+# Uirapuru
 
-<img src="https://img.shields.io/badge/Project-Uirapuru-%23309d20">
+<img src="https://img.shields.io/badge/Project-Uirapuru-309d20">
 
-<img src="https://img.shields.io/badge/Platform-Web-%23309d20">
+<img src="https://img.shields.io/badge/Platform-Web-blue">
 
-<img src="https://img.shields.io/badge/Framework-React-%23309d20">
+<img src="https://img.shields.io/badge/Language-Javascript-yellow">
 
-<img src="https://img.shields.io/netlify/bebbc4b1-f05d-41fc-aa2c-1691aa546111">
-
-<img src="https://img.shields.io/badge/node-%3E%3D14.15.0-blue">
+<img src="https://img.shields.io/badge/Framework-React-blue">
 
 <img src="https://img.shields.io/badge/react-%5E17.0.1-blue">
 
-<img src="https://img.shields.io/badge/Available on-https%3A%2F%2Fuirapuru.techamazon.tech-%23309d20">
+<img src="https://img.shields.io/netlify/bebbc4b1-f05d-41fc-aa2c-1691aa546111">
+
+<a href="https://uirapuru.techamazon.tech"><img src="https://img.shields.io/badge/Available on-https%3A%2F%2Fuirapuru.techamazon.tech-309d20"></a>
 
 ## Sobre
 
