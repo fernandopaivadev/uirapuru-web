@@ -3,8 +3,8 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
-    "editor.renderWhitespace": "boundary",
-    "editor.renameOnType": true,
+    "editor.renderWhitespace": "all",
+    "editor.linkedEditing": true,
     "workbench.editor.highlightModifiedTabs": true,
     "files.autoSave": "onFocusChange",
     "explorer.sortOrder": "type",
@@ -24,9 +24,6 @@
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
     },
-    "[css]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
     "editor.rulers": [
         {
             "column": 80,
@@ -36,5 +33,9 @@
     "editor.fontLigatures": true,
     "editor.fontSize": 16,
     "workbench.colorTheme": "Dracula",
-    "workbench.activityBar.visible": false
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.activityBar.visible": false,
+    "breadcrumbs.enabled": true,
+    "workbench.statusBar.visible": true,
+    "explorer.openEditors.visible": 0
 }

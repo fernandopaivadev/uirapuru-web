@@ -30,7 +30,7 @@ const form = styled.form`
     }
 
     textarea {
-        height: 12rem;
+        height: 10rem;
     }
 
     label {
