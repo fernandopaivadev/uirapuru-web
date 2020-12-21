@@ -31,9 +31,7 @@ const navButtons = styled.div`
     position: fixed;
     bottom: 0.5rem;
     left: 50vw;
-    border-radius: 0.5rem;
     transform: translateX(-50%);
-    background: var(--primary-font-color);
 `
 
 export default {

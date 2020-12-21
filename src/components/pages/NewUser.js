@@ -59,7 +59,7 @@ const NewUser = ({ history }) => {
             const formChildren = [...form.children]
 
             formChildren.forEach((field, index) => {
-                if (index > 4 && field.tagName === 'INPUT') {
+                if (index > 11 && field.tagName === 'INPUT') {
                     field.value = ''
                 }
             })
@@ -171,7 +171,7 @@ const NewUser = ({ history }) => {
                     }}
                 />
                 <p className='error-message'>
-                        Número de telefone inválido
+                    Número de telefone inválido
                 </p>
 
                 <label>Nível de Acesso</label>
