@@ -59,9 +59,11 @@ const NewUnit = ({ history }) => {
         <NavBar />
 
         <styles.main>
-            <styles.form onSubmit={event=>{
-                event.preventDefault()
-            }}>
+            <styles.form
+                id='consumerUnitForm'
+                onSubmit={event=>{
+                    event.preventDefault()
+                }}>
                 <styles.title>
                     Dados da nova unidade
                 </styles.title>
@@ -174,7 +176,7 @@ const NewUnit = ({ history }) => {
                         <util.classicButton
                             onClick={event => {
                                 event.preventDefault()
-                                if (validateForm()) {
+                                if (validateForm('consumerUnitForm')) {
                                     user.consumerUnits.push(consumerUnit)
                                     submit(event)
                                 } else {
@@ -200,7 +202,7 @@ const NewUnit = ({ history }) => {
 
                 {!success && error?
                     <p className='error'>
-                        { errorMessage }
+                        {errorMessage}
                     </p>
                     : null
                 }

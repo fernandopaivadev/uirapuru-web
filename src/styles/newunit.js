@@ -42,6 +42,12 @@ const form = styled.form`
         margin: -2.5rem auto 1.5rem auto;
         display: none;
     }
+
+    .error {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--error-color);
+    }
 `
 
 const title = styled.h1`
