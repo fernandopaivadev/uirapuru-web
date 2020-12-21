@@ -31,7 +31,13 @@ const Profile = ({ history }) => {
         const result = await api.deleteUser(storage.read('user')._id)
 
         if (result === 'OK') {
-            history.push('/users-list')
+            const result = await api.getUserData()
+
+            if (result === 'OK') {
+                history.push('/users-list')
+            } else {
+                storage.clear('all')
+            }
         } else {
             storage.clear('all')
             history.push('/login')
