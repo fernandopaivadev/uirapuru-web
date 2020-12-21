@@ -46,28 +46,21 @@ const NewUser = ({ history }) => {
         }
 
         setUser(_user)
+
+        const form = document.querySelector('form')
+        const formChildren = [...form.children]
+
+        formChildren.forEach((field, index) => {
+            if (index > 11 && field.tagName === 'INPUT') {
+                field.value = ''
+            }
+        })
     }, [userType, user]
     ))
 
     useEffect(() => {
         setFormsValidation()
     })
-
-    const clearForm = mode => {
-        if (mode === 'user-type') {
-            const form = document.querySelector('form')
-            const formChildren = [...form.children]
-
-            formChildren.forEach((field, index) => {
-                if (index > 11 && field.tagName === 'INPUT') {
-                    field.value = ''
-                }
-            })
-
-        } else if (mode === 'all') {
-            document.querySelector('form').reset()
-        }
-    }
 
     const submit = async () => {
         setLoading(true)
@@ -118,7 +111,7 @@ const NewUser = ({ history }) => {
                     minLength='6'
                     required
                     pattern='[a-zA-Z0-9]{6,20}'
-                    onChange={ event => {
+                    onChange={event => {
                         user.username = event.target.value
                         event.target.value = formatUsername(
                             event.target.value
@@ -196,8 +189,6 @@ const NewUser = ({ history }) => {
                     <input
                         type='checkbox'
                         onClick={() => {
-                            clearForm('user-type')
-
                             if (userType === 'company') {
                                 setUserType('person')
                             } else if (userType === 'person') {
