@@ -9,8 +9,7 @@ import {
 } from 'react-icons/md'
 
 import {
-    FaSun as DarkModeEnabledIcon,
-    FaMoon as DarkModeDisabledIcon
+    FaMoon as DarkModeIcon
 } from 'react-icons/fa'
 
 import {
@@ -66,24 +65,18 @@ const NavBar = ({ history }) => {
             <styles.toggle
                 onClick={toggleDarkMode}
             >
+                <DarkModeIcon
+                    className='icon'
+                />
+
                 {darkMode ?
-                    <>
-                        <DarkModeEnabledIcon
-                            className='icon'
-                        />
-                        <ToggleOnIcon
-                            className='toggle-icon'
-                        />
-                    </>
+                    <ToggleOnIcon
+                        className='toggle-icon'
+                    />
                     :
-                    <>
-                        <DarkModeDisabledIcon
-                            className='icon'
-                        />
-                        <ToggleOffIcon
-                            className='toggle-icon'
-                        />
-                    </>
+                    <ToggleOffIcon
+                        className='toggle-icon'
+                    />
                 }
             </styles.toggle>
             <styles.username>
