@@ -1,20 +1,26 @@
-<img src="https://uirapuru.techamazon.tech/static/media/logo.797c925f.svg" width="150">
+<div>
+<img src="https://uirapuru.techamazon.tech/static/media/logo.797c925f.svg" height="100" width="100%" align="left">
+<h1 align="center">
+Uirapuru
+</h1>
+</div>
 
-# **Plataforma Uirapuru**
+<div align="center">
+<img src="https://img.shields.io/badge/Project-Uirapuru-309d20">
 
-<img src="https://img.shields.io/badge/Project-Uirapuru-%23309d20">
+<img src="https://img.shields.io/badge/Platform-Web-blue">
 
-<img src="https://img.shields.io/badge/Platform-Web-%23309d20">
+<img src="https://img.shields.io/badge/Language-Javascript-yellow">
 
-<img src="https://img.shields.io/badge/Framework-React-%23309d20">
-
-<img src="https://img.shields.io/netlify/bebbc4b1-f05d-41fc-aa2c-1691aa546111">
-
-<img src="https://img.shields.io/badge/node-%3E%3D14.15.0-blue">
+<img src="https://img.shields.io/badge/Framework-React-blue">
 
 <img src="https://img.shields.io/badge/react-%5E17.0.1-blue">
 
-<img src="https://img.shields.io/badge/Available on-https%3A%2F%2Fuirapuru.techamazon.tech-%23309d20">
+<img src="https://img.shields.io/netlify/bebbc4b1-f05d-41fc-aa2c-1691aa546111">
+
+<a href="https://uirapuru.techamazon.tech"><img src="https://img.shields.io/badge/Available on-https%3A%2F%2Fuirapuru.techamazon.tech-309d20"></a>
+
+</div>
 
 ## Sobre
 
@@ -22,9 +28,33 @@ A plataforma Uirapuru é parte do Projeto Uirapuru, uma aplicação web utilizad
 
 ## Como contribuir
 
+### Requisitos
+
+- node (>=14.15.0)
+- npm (>=6.0.0) ou Yarn (>=1.22.0)
+
+### Com os requisitos instalados, execute os passos a seguir:
+
+1. Clone o repositório:
+
 ```shell
 git clone https://github.com/FernandoPaivaEC/uirapuru-web
+```
+
+2. Entre na pasta do repositório clonado:
+
+```shell
 cd uirapuru-web
+```
+
+3. Instale as dependências:
+
+```shell
 npm install
+```
+
+4. Inicie o servidor de desenvolvimento
+
+```shell
 npm run dev
 ```

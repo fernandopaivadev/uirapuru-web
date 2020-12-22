@@ -122,6 +122,23 @@ const empty = styled.div`
     }
 `
 
+const noUnit = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background: var(--background-color);
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        color: var(--neutral-color);
+        font-size: 3rem;
+        font-weight: 600;
+    }
+`
+
 const error = styled.div`
     width: 100%;
     height: 100%;
@@ -152,5 +169,6 @@ export default {
     charts,
     empty,
     error,
-    loading
+    loading,
+    noUnit
 }

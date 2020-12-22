@@ -2,8 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react'
 
 import NavBar from '../blocks/NavBar'
 
-import Modal from '../blocks/Modal'
-
 import api from '../../services/api'
 
 import {
@@ -30,7 +28,6 @@ const NewUser = ({ history }) => {
         consumerUnits: []
     })
 
-    const [modal, setModal] = useState(false)
     const [userType, setUserType] = useState('company')
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
@@ -49,28 +46,21 @@ const NewUser = ({ history }) => {
         }
 
         setUser(_user)
+
+        const form = document.querySelector('form')
+        const formChildren = [...form.children]
+
+        formChildren.forEach((field, index) => {
+            if (index > 11 && field.tagName === 'INPUT') {
+                field.value = ''
+            }
+        })
     }, [userType, user]
     ))
 
     useEffect(() => {
         setFormsValidation()
     })
-
-    const clearForm = mode => {
-        if (mode === 'user-type') {
-            const form = document.querySelector('form')
-            const formChildren = [...form.children]
-
-            formChildren.forEach((field, index) => {
-                if (index > 4 && field.tagName === 'INPUT') {
-                    field.value = ''
-                }
-            })
-
-        } else if (mode === 'all') {
-            document.querySelector('form').reset()
-        }
-    }
 
     const submit = async () => {
         setLoading(true)
@@ -92,8 +82,8 @@ const NewUser = ({ history }) => {
         setLoading(false)
     }
 
-    const buttonPress = task => {
-        if (validateForm()) {
+    const buttonPress = (task, id) => {
+        if (validateForm(id)) {
             task()
         } else {
             setErrorMessage('Preencha todos os campos')
@@ -108,22 +98,8 @@ const NewUser = ({ history }) => {
     return <>
         <NavBar />
 
-        { modal ?
-            <Modal
-                message={'Finalizar cadastro?'}
-                taskOnYes={() => {
-                    setModal(false)
-                    buttonPress(submit)
-                }}
-                taskOnNo={() => {
-                    setModal(false)
-                }}
-            />
-            : null
-        }
-
         <styles.main>
-            <styles.form>
+            <styles.form id='userForm'>
                 <styles.title>
                     Dados do novo usuário
                 </styles.title>
@@ -135,7 +111,7 @@ const NewUser = ({ history }) => {
                     minLength='6'
                     required
                     pattern='[a-zA-Z0-9]{6,20}'
-                    onChange={ event => {
+                    onChange={event => {
                         user.username = event.target.value
                         event.target.value = formatUsername(
                             event.target.value
@@ -188,7 +164,7 @@ const NewUser = ({ history }) => {
                     }}
                 />
                 <p className='error-message'>
-                        Número de telefone inválido
+                    Número de telefone inválido
                 </p>
 
                 <label>Nível de Acesso</label>
@@ -213,8 +189,6 @@ const NewUser = ({ history }) => {
                     <input
                         type='checkbox'
                         onClick={() => {
-                            clearForm('user-type')
-
                             if (userType === 'company') {
                                 setUserType('person')
                             } else if (userType === 'person') {
@@ -359,7 +333,7 @@ const NewUser = ({ history }) => {
                             event.preventDefault()
                             buttonPress(() => {
                                 submit()
-                            })
+                            }, 'userForm')
                         }}
                     >
                         Salvar

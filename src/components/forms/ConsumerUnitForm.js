@@ -50,13 +50,14 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
     }
 
     return <styles.form id='consumerUnitForm'>
-        { modal ?
+        {modal ?
             <Modal
                 message={'Você tem certeza?'}
                 taskOnYes={() => {
                     user.consumerUnits.pop(consumerUnitIndex)
                     submit()
                     setModal(false)
+                    window.location.reload()
                 }}
                 taskOnNo={() => {
                     setModal(false)

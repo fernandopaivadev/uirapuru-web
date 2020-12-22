@@ -13,7 +13,7 @@ const form = styled.form`
     align-items: center;
     justify-content: left;
     margin: 1rem 2rem 3rem 2rem;
-    height: 110vh;
+    height: 120%;
 
     * {
         overflow: hidden;
@@ -69,10 +69,12 @@ const checkbox = styled.div`
     align-items: center;
     justify-content: center;
     width: 40rem;
-
+    height: 1.8rem;
+    
     input {
         margin: 1rem;
         width: 1.8rem;
+        height: 10rem;
     }
 
     label {
@@ -84,6 +86,7 @@ const buttons = styled.button`
     display: flex;
     align-items: center;
     border: none;
+    background: var(--background-color);
 `
 
 const loading = styled.div`
