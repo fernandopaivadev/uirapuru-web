@@ -1,6 +1,6 @@
 {
     "name": "uirapuru-web",
-    "version": "1.4.24",
+    "version": "1.4.25",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
@@ -16,7 +16,7 @@
         ]
     },
     "dependencies": {
-        "axios": "^0.21.0",
+        "axios": "^0.21.1",
         "chart.js": "^2.9.4",
         "react": "^17.0.1",
         "react-csv": "^2.0.3",

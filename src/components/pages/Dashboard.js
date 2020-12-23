@@ -151,8 +151,15 @@ const Dashboard = ({ history }) => {
                         :
                         <styles.empty>
                             <p>
-                            Não há dispositivos cadastrados
+                                Não há dispositivos cadastrados
                             </p>
+                            <util.classicButton
+                                onClick={() => {
+                                    history.push('/profile')
+                                }}
+                            >
+                                Cadastrar dispositivo
+                            </util.classicButton>
                         </styles.empty>
                     }
                 </styles.container>
