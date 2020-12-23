@@ -80,7 +80,13 @@ const NavBar = ({ history }) => {
                 }
             </styles.toggle>
             <styles.username>
-                {storage.read('access-level') === 'admin' ? 'Administrador | ' : null}
+                {storage.read('access-level') === 'admin'
+                &&
+                !(storage.read('username') === storage.read('user').username)
+                    ?
+                        `${storage.read('username')} | `
+                    : null
+                }
                 {storage.read('user')?.username ?? ''}
             </styles.username>
 

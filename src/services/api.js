@@ -314,6 +314,7 @@ const login = async (username, password) => {
 
             if (await getUserData() === 'OK') {
                 storage.write('access-level', storage.read('user').accessLevel)
+                storage.write('username', storage.read('user').username)
                 return 'OK'
             } else {
                 storage.clear('all')
