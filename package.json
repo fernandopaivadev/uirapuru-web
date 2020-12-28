@@ -1,6 +1,6 @@
 {
     "name": "uirapuru-web",
-    "version": "1.4.27",
+    "version": "1.4.28",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
@@ -35,7 +35,7 @@
     "scripts": {
         "dev": "code . && react-scripts start",
         "build": "rimraf ./build && react-scripts build && rimraf ./build/**/*.map",
-        "test": "react-scripts test",
+        "test": "testcafe firefox:headless __tests__/*.test.js",
         "eject": "react-scripts eject",
         "update": "npm prune && ncu -u -x styled-components && npm install",
         "lint": "eslint --fix src/",
