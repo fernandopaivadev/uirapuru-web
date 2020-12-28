@@ -170,6 +170,12 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -211,6 +217,12 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -246,6 +258,12 @@ const getUsersList = async () => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -286,6 +304,12 @@ const getUserData = async (_id) => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -325,6 +349,12 @@ const login = async (username, password) => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -363,6 +393,12 @@ const forgotPassword = async username => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -402,6 +438,12 @@ const resetPassword = async (token, password) => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -443,6 +485,12 @@ const createUser = async user => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -479,6 +527,12 @@ const updateUser = async user => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
@@ -514,6 +568,12 @@ const deleteUser = async _id => {
         }
     } catch (err) {
         if (err?.response?.data?.message) {
+            if (err?.response?.data?.message === 'jwt expired') {
+                window.location.replace(
+                    `${window.location.href.split('#')[0]}#/login`
+                )
+            }
+
             console.log(`ERRO NO SERVIDOR: ${
                 err?.response?.data?.message
             }`)
