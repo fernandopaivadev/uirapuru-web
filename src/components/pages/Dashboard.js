@@ -109,6 +109,7 @@ const Dashboard = ({ history }) => {
                                 ?.consumerUnits[consumerUnitIndex]
                                 ?.devices.map((device, deviceIndex) =>
                                     <styles.deviceIcon
+                                        id={`deviceIcon${deviceIndex}`}
                                         aria-label={`ID: ${device.id}`}
                                         key={deviceIndex}
                                         onClick={() => {

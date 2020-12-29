@@ -1,11 +1,14 @@
-import { Selector } from 'testcafe'
+import { Selector, ClientFunction } from 'testcafe'
 
-fixture `Getting Started`
-    .page `http://localhost:3000/#/login`
+fixture('/login').page('http://localhost:3000/#/login')
+
+const getPageUrl = ClientFunction(() => window.location.href)
 
 test('Login test', async t => {
     await t
         .typeText('#email', 'techamazon')
         .typeText('#password', 'TechAmazon2015')
-        .click('button')
+        .click('#button')
+        .expect(Selector('#loading').exists).ok()
+        .expect(getPageUrl()).contains('/dashboard')
 })

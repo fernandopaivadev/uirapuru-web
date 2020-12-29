@@ -95,10 +95,14 @@ const Login = ({ history }) => {
 
             {loading ?
                 <styles.loading>
-                    <util.circularProgress/>
+                    <util.circularProgress
+                        id='loading'
+                    />
                 </styles.loading>
+
                 :
                 <util.classicButton
+                    id='button'
                     type='submit'
                 >
                     ENTRAR
