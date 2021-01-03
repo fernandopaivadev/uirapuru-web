@@ -1,6 +1,6 @@
 {
     "name": "uirapuru-web",
-    "version": "1.4.31",
+    "version": "1.4.32",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
@@ -33,7 +33,7 @@
         "workbox-strategies": "^6.0.2"
     },
     "scripts": {
-        "dev": "code . && react-scripts start",
+        "dev": "react-scripts start",
         "build": "rimraf ./build && react-scripts build && rimraf ./build/**/*.map",
         "test": "testcafe firefox:headless  __tests__/*.test.js",
         "eject": "react-scripts eject",
