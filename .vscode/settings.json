@@ -34,7 +34,7 @@
     "editor.fontSize": 16,
     "workbench.colorTheme": "Dracula",
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "breadcrumbs.enabled": true,
     "workbench.statusBar.visible": true,
     "explorer.openEditors.visible": 0

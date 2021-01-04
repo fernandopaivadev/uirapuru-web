@@ -212,6 +212,7 @@ const Plot = ({ history }) => {
                 }
                 <styles.buttons>
                     <util.classicButton
+                        id='dashboard'
                         onClick={() => {
                             history.push('/dashboard')
                         }}
