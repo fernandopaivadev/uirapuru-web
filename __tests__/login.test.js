@@ -1,6 +1,6 @@
 import { Selector, ClientFunction } from 'testcafe'
 
-fixture('/login').page('http://localhost:3000/#/login')
+fixture('/login').page('http://localhost:5000/#/login')
 
 const getPageUrl = ClientFunction(() => window.location.href)
 
