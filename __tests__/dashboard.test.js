@@ -1,14 +1,14 @@
 import { Selector, ClientFunction } from 'testcafe'
 
-fixture('/dashboard').page('http://localhost:3000')
+fixture('/dashboard').page(process.env.TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
 const goBack = ClientFunction(() => window.history.back())
 
 test('Dashboard test', async t => {
     await t
-        .typeText('#email', 'techamazon')
-        .typeText('#password', 'TechAmazon2015')
+        .typeText('#email', process.env.TEST_LOGIN)
+        .typeText('#password', process.env.TEST_PASSWORD)
         .click('#button')
         .expect(Selector('#loading').exists).ok()
         .expect(getPageUrl()).contains('/dashboard')

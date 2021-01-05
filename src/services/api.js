@@ -1,7 +1,8 @@
 import { create } from 'axios'
 import storage from './storage'
 
-const baseURL = 'https://techamazon-uirapuru-api.herokuapp.com'
+//eslint-disable-next-line
+const baseURL = process.env.REACT_APP_API_URL
 
 const axios = create({
     baseURL
