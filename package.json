@@ -1,6 +1,6 @@
 {
     "name": "uirapuru-web",
-    "version": "1.4.31",
+    "version": "1.4.32",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
@@ -64,6 +64,7 @@
         "cz-conventional-changelog": "^3.3.0",
         "eslint": "^7.16.0",
         "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-testcafe": "^0.2.1",
         "husky": "^4.3.6",
         "lint-staged": "^10.5.3",
         "npm-check-updates": "^10.2.5",
