@@ -1,17 +1,17 @@
 import { Selector, ClientFunction } from 'testcafe'
+import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
 
-fixture('/users-lit').page('http://localhost:3000')
+fixture('/users-lit').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
-const goBack = ClientFunction(() => window.history.back())
-const goUsersList = ClientFunction(() =>
-    window.location.replace('http://localhost:3000/#/users-list')
+const goUsersList = ClientFunction(TEST_URL =>
+    window.location.replace(`${TEST_URL}/#/users-list`)
 )
 
 test('UserList test', async t => {
     await t
-        .typeText('#email', 'techamazon')
-        .typeText('#password', 'TechAmazon2015')
+        .typeText('#email', TEST_LOGIN)
+        .typeText('#password', TEST_PASSWORD)
         .click('#button')
         .expect(Selector('#loading').exists).ok()
         .expect(getPageUrl()).contains('/dashboard')
@@ -23,14 +23,14 @@ test('UserList test', async t => {
         .click('#buttonNewUser')
         .expect(getPageUrl()).contains('/new-user')
 
-    await goBack()
+    await goUsersList()
 
     await t
         .expect(getPageUrl()).contains('/users-list')
         .click('#item0')
         .expect(getPageUrl()).contains('/dashboard')
 
-    await goBack()
+    await goUsersList()
 
     await t
         .expect(getPageUrl()).contains('/users-list')

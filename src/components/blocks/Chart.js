@@ -84,7 +84,9 @@ const Chart = ({ collection, aspectRatio, fontSize, pointSize }) => {
         })
     })
 
-    return <styles.main>
+    return <styles.main
+        id='chart'
+    >
         {collection.map((chart, chartIndex) =>
             chart ?
                 <styles.chart key={chartIndex}>

@@ -141,6 +141,7 @@ const Plot = ({ history }) => {
                     />
 
                     <input
+                        id='datePicker'
                         type='date'
                         value={currentDate}
                         onChange={event => {

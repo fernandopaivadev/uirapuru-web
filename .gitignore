@@ -28,3 +28,5 @@ debug.*
 .prettierrc
 
 .eslintcache
+
+tests.env.json
