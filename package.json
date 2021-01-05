@@ -1,6 +1,6 @@
 {
     "name": "uirapuru-web",
-    "version": "1.4.36",
+    "version": "1.4.37",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
@@ -24,7 +24,7 @@
         "react-icons": "^4.1.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "^4.0.1",
-        "socket.io-client": "^3.0.4",
+        "socket.io-client": "^3.0.5",
         "styled-components": "^4.0.0",
         "workbox-core": "^6.0.2",
         "workbox-expiration": "^6.0.2",
@@ -62,7 +62,7 @@
         "@commitlint/config-conventional": "^11.0.0",
         "commitizen": "^4.2.2",
         "cz-conventional-changelog": "^3.3.0",
-        "eslint": "^7.16.0",
+        "eslint": "^7.17.0",
         "eslint-plugin-import": "^2.22.1",
         "husky": "^4.3.6",
         "lint-staged": "^10.5.3",
