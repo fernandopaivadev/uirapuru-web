@@ -31,6 +31,7 @@ const UsersList = ({ history }) => {
                 {!loading ?
                     <>
                         <util.classicButton
+                            id='buttonNewUser'
                             onClick={() => {
                                 history.push('/new-user')
                             }}
@@ -38,6 +39,7 @@ const UsersList = ({ history }) => {
                             Novo Usuário
                         </util.classicButton>
                         <util.classicButton
+                            id='buttonExit'
                             onClick={() => {
                                 storage.clear('all')
                                 history.push('/login')
@@ -56,8 +58,9 @@ const UsersList = ({ history }) => {
                 :
                 !loading ?
                     <ul>
-                        {storage.read('users-list')?.map(user =>
+                        {storage.read('users-list')?.map((user, userIndex) =>
                             <styles.item
+                                id={`item${userIndex}`}
                                 key={user?.username}
                                 onClick={async () => {
                                     setLoading(true)
