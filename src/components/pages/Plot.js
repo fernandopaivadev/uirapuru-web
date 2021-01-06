@@ -128,12 +128,14 @@ const Plot = ({ history }) => {
             <styles.contentContainer>
                 <styles.datePicker>
                     <ArrowBackIcon
+                        id='backIcon'
                         className='icon'
                         onClick={() => {
                             changeDate('backward', currentDate)
                         }}
                     />
                     <ArrowForwardIcon
+                        id='forwardIcon'
                         className='icon'
                         onClick={() => {
                             changeDate('forward', currentDate)
@@ -150,6 +152,7 @@ const Plot = ({ history }) => {
                     />
 
                     <select
+                        id='period'
                         onInput={event => {
                             setPeriod(event.target.value)
                         }}
@@ -162,6 +165,7 @@ const Plot = ({ history }) => {
 
                     {!(period === '24h') ?
                         <input
+                            id='hour'
                             type='time'
                             defaultValue='00:00'
                             onInput={event => {
@@ -221,7 +225,13 @@ const Plot = ({ history }) => {
                         Dashboard
                     </util.classicButton>
                     {!loading && storage.read('csv-data')?.length ?
-                        <Export data={storage.read('csv-data')}/>
+                        <util.classicButton
+                            id='export'
+                        >
+                            <Export
+                                data={storage.read('csv-data')}
+                            />
+                        </util.classicButton>
                         : null
                     }
                 </styles.buttons>

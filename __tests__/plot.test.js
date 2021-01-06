@@ -30,4 +30,27 @@ test('Plot test', async t => {
         .expect(getPageUrl()).contains('/plot')
         .typeText('#datePicker', '2020-12-12')
         .expect(Selector('#chart').exists).ok()
+        .click('#period')
+        .click(Selector('#period').find('option').withText('12'))
+        .expect(Selector('#period').value).eql('12h')
+        .typeText('#hour', '06:00')
+        .expect(Selector('#hour').value).eql('06:00')
+        .expect(Selector('#chart').exists).ok()
+
+    await t
+        .expect(getPageUrl()).contains('/plot')
+        .typeText('#datePicker', '2020-12-12')
+        .click('#backIcon')
+        .expect(Selector('#datePicker').value).eql('2020-12-11')
+        .expect(Selector('#chart').exists).ok()
+        .click('#forwardIcon')
+        .expect(Selector('#datePicker').value).eql('2020-12-12')
+        .expect(Selector('#chart').exists).ok()
+        .click('#export')
+
+
+    await t
+        .click('#subItem0')
+        .expect(getPageUrl()).contains('/plot')
+
 })
