@@ -106,6 +106,7 @@ const NewUser = ({ history }) => {
 
                 <label>Nome de usuário</label>
                 <input
+                    id='usernameInput'
                     name='username'
                     maxLength='20'
                     minLength='6'
@@ -124,6 +125,7 @@ const NewUser = ({ history }) => {
 
                 <label>Senha</label>
                 <input
+                    id='passwordInput'
                     type='password'
                     name='password'
                     maxLength='128'
@@ -139,6 +141,7 @@ const NewUser = ({ history }) => {
 
                 <label>Email</label>
                 <input
+                    id='emailInput'
                     name='email'
                     maxLength='40'
                     minLength='10'
@@ -153,6 +156,7 @@ const NewUser = ({ history }) => {
 
                 <label>Telefone</label>
                 <input
+                    id='phoneInput'
                     name='phone'
                     required
                     pattern='\(\d{2}\) \d{5}-\d{4}$'
@@ -169,7 +173,8 @@ const NewUser = ({ history }) => {
 
                 <label>Nível de Acesso</label>
                 <select
-                    name='phone'
+                    id='accessLevelSelect'
+                    name='accessLevel'
                     required
                     onChange={event => {
                         const { value } = event.target
@@ -203,6 +208,7 @@ const NewUser = ({ history }) => {
                     <>
                         <label>CNPJ</label>
                         <input
+                            id='cnpjInput'
                             name='cnpj'
                             required
                             pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
@@ -220,6 +226,7 @@ const NewUser = ({ history }) => {
 
                         <label>Nome fantasia</label>
                         <input
+                            id='nameInput'
                             name='name'
                             maxLength='128'
                             minLength='6'
@@ -236,6 +243,7 @@ const NewUser = ({ history }) => {
 
                         <label>Razão social</label>
                         <input
+                            id='tradeNameInput'
                             name='tradeName'
                             maxLength='128'
                             minLength='6'
@@ -252,6 +260,7 @@ const NewUser = ({ history }) => {
 
                         <label>Descrição</label>
                         <textarea
+                            id='descriptionInput'
                             name='description'
                             maxLength='512'
                             minLength='50'
@@ -321,6 +330,7 @@ const NewUser = ({ history }) => {
 
                 <styles.buttons>
                     <util.classicButton
+                        id='back'
                         onClick={event => {
                             event.preventDefault()
                             history.push('/users-list')
@@ -329,6 +339,7 @@ const NewUser = ({ history }) => {
                             Voltar
                     </util.classicButton>
                     <util.classicButton
+                        id='save'
                         onClick={event => {
                             event.preventDefault()
                             buttonPress(() => {
@@ -341,12 +352,17 @@ const NewUser = ({ history }) => {
                 </styles.buttons>
 
                 {loading ?
-                    <styles.loading>
+                    <styles.loading
+                        id='loading'
+                    >
                         <util.circularProgress/>
                     </styles.loading>
                     :
                     !success && error?
-                        <p className='error'>
+                        <p
+                            id='errorMessage'
+                            className='error'
+                        >
                             { errorMessage }
                         </p>
                         : null
