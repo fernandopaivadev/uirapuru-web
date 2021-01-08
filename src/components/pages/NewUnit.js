@@ -74,7 +74,7 @@ const NewUnit = ({ history }) => {
                     minLength='6'
                     maxLength='16'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .number = event.target.value
                     }}
@@ -90,7 +90,7 @@ const NewUnit = ({ history }) => {
                     maxLength='64'
                     minLength='8'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .name = event.target.value
                     }}
@@ -106,7 +106,7 @@ const NewUnit = ({ history }) => {
                     maxLength='256'
                     minLength='10'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .address = event.target.value
                     }}
@@ -121,7 +121,7 @@ const NewUnit = ({ history }) => {
                     name='zip'
                     pattern='\d{5}-\d{3}'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .zip = getOnlyNumbers(event.target.value)
                         event.target.value = formatCEP(event.target
@@ -139,7 +139,7 @@ const NewUnit = ({ history }) => {
                     maxLength='64'
                     minLength='3'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .city = event.target.value
                     }}
@@ -155,7 +155,7 @@ const NewUnit = ({ history }) => {
                     maxLength='64'
                     minLength='3'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .state = event.target.value
                     }}

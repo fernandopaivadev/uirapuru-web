@@ -120,7 +120,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             maxLength='8'
                             minLength='8'
                             required
-                            onChange={ event => {
+                            onChange={event => {
                                 user.consumerUnits[
                                     consumerUnitIndex
                                 ].devices[index].id = event.target.value

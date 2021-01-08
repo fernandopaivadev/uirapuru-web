@@ -96,23 +96,18 @@ const loading = styled.div`
 `
 
 const dialog = styled.div`
-    width: 100vw;
-    height: 100vh;
+    width: 40rem;
+    height: 30rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: var(--background-color);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    .window {
-        min-width: 40rem;
-        padding: 2rem 0 2rem 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.5rem;
-        border: 0.2rem solid var(--primary-color);
-    }
+    border-radius: 0.5rem;
 `
 
 export default {

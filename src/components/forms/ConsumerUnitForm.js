@@ -79,7 +79,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.number ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .number = event.target.value
             }}
@@ -98,7 +98,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.name ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .name = event.target.value
             }}
@@ -117,7 +117,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.address ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .address = event.target.value
             }}
@@ -134,7 +134,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
             defaultValue={formatCEP(user
                 .consumerUnits[consumerUnitIndex]?.zip) ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user
                     .consumerUnits[consumerUnitIndex]
                     .zip = getOnlyNumbers(event.target.value)
@@ -156,7 +156,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.city ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .city = event.target.value
             }}
@@ -175,7 +175,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.state ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .state = event.target.value
             }}
@@ -208,7 +208,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
             }
             {isAdmin ?
                 <util.classicButton
-                    onClick={ event => {
+                    onClick={event => {
                         event.preventDefault()
                         if (validateForm('consumerUnitForm')) {
                             submit()
