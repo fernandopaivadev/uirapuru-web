@@ -104,6 +104,7 @@ const NewUser = ({ history }) => {
             <styles.dialog>
                 <div className='window'>
                     <util.classicButton
+                        id='registerPerson'
                         onClick={() => {
                             setUserType('person')
                         }}
@@ -120,6 +121,7 @@ const NewUser = ({ history }) => {
                     </util.classicButton>
 
                     <util.classicButton
+                        id='backToUsersList'
                         onClick={event => {
                             event.preventDefault()
                             history.push('/users-list')
@@ -140,6 +142,7 @@ const NewUser = ({ history }) => {
 
                     <label>Nome de usuário</label>
                     <input
+                        id='username'
                         name='username'
                         maxLength='20'
                         minLength='6'
@@ -293,6 +296,7 @@ const NewUser = ({ history }) => {
                             Voltar
                         </util.classicButton>
                         <util.classicButton
+                            id='save'
                             onClick={event => {
                                 event.preventDefault()
                                 buttonPress(() => {
@@ -310,7 +314,9 @@ const NewUser = ({ history }) => {
                         </styles.loading>
                         :
                         !success && error?
-                            <p className='error'>
+                            <p
+                                id='errorMessage'
+                                className='error'>
                                 { errorMessage }
                             </p>
                             : null
@@ -328,6 +334,7 @@ const NewUser = ({ history }) => {
 
                     <label>Nome de usuário</label>
                     <input
+                        id='username'
                         name='username'
                         maxLength='20'
                         minLength='6'
@@ -346,6 +353,7 @@ const NewUser = ({ history }) => {
 
                     <label>Senha</label>
                     <input
+                        id='password'
                         type='password'
                         name='password'
                         maxLength='128'
@@ -361,6 +369,7 @@ const NewUser = ({ history }) => {
 
                     <label>Email</label>
                     <input
+                        id='email'
                         name='email'
                         maxLength='40'
                         minLength='10'
@@ -375,6 +384,7 @@ const NewUser = ({ history }) => {
 
                     <label>Telefone</label>
                     <input
+                        id='phone'
                         name='phone'
                         required
                         pattern='\(\d{2}\) \d{5}-\d{4}$'
@@ -391,6 +401,7 @@ const NewUser = ({ history }) => {
 
                     <label>Nível de Acesso</label>
                     <select
+                        id='accessLevel'
                         name='accessLevel'
                         required
                         onChange={event => {
@@ -409,6 +420,7 @@ const NewUser = ({ history }) => {
 
                     <label>Nome completo</label>
                     <input
+                        id='name'
                         name='name'
                         maxLength='128'
                         minLength='10'
@@ -424,6 +436,7 @@ const NewUser = ({ history }) => {
 
                     <label>CPF</label>
                     <input
+                        id='cpf'
                         name='cpf'
                         required
                         pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
@@ -441,6 +454,7 @@ const NewUser = ({ history }) => {
 
                     <label>Data de nascimento</label>
                     <input
+                        id='birth'
                         name='birth'
                         required
                         pattern='\d{2}\/\d{2}\/\d{4}'
@@ -464,6 +478,7 @@ const NewUser = ({ history }) => {
                             Voltar
                         </util.classicButton>
                         <util.classicButton
+                            id='save'
                             onClick={event => {
                                 event.preventDefault()
                                 buttonPress(() => {
@@ -471,17 +486,21 @@ const NewUser = ({ history }) => {
                                 }, 'userForm')
                             }}
                         >
-                        Salvar
+                            Salvar
                         </util.classicButton>
                     </styles.buttons>
 
                     {loading ?
-                        <styles.loading>
+                        <styles.loading
+                            id='loading'
+                        >
                             <util.circularProgress/>
                         </styles.loading>
                         :
                         !success && error?
-                            <p className='error'>
+                            <p
+                                id='errorMessage'
+                                className='error'>
                                 { errorMessage }
                             </p>
                             : null
