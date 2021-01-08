@@ -9,7 +9,9 @@ const goBack = ClientFunction(() => window.history.back())
 test('Dashboard test', async t => {
     await t
         .typeText('#email', TEST_LOGIN)
+        .expect(Selector('#email').value).eql(TEST_LOGIN)
         .typeText('#password', TEST_PASSWORD)
+        .expect(Selector('#password').value).eql(TEST_PASSWORD)
         .click('#button')
         .expect(Selector('#loading').exists).ok()
         .expect(getPageUrl()).contains('/dashboard')
