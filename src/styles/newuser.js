@@ -95,11 +95,32 @@ const loading = styled.div`
     margin: 0 auto 0 auto;
 `
 
+const dialog = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .window {
+        min-width: 40rem;
+        padding: 2rem 0 2rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5rem;
+        border: 0.2rem solid var(--primary-color);
+    }
+`
+
 export default {
     main,
     form,
     title,
     checkbox,
     buttons,
-    loading
+    loading,
+    dialog
 }

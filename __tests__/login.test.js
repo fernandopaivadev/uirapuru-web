@@ -1,7 +1,11 @@
 import { Selector, ClientFunction } from 'testcafe'
 import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
 
+<<<<<<< HEAD
 fixture('/login').page(TEST_URL)
+=======
+fixture('/login').page('http://localhost:5000/#/login')
+>>>>>>> develop
 
 const getPageUrl = ClientFunction(() => window.location.href)
 

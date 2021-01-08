@@ -80,7 +80,7 @@ const Login = ({ history }) => {
                         togglePassword(event)
                     }}
                 >
-                    Mostrar
+                    Exibir
                 </p>
             </styles.container>
 

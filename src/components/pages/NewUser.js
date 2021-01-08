@@ -28,7 +28,7 @@ const NewUser = ({ history }) => {
         consumerUnits: []
     })
 
-    const [userType, setUserType] = useState('company')
+    const [userType, setUserType] = useState()
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
@@ -98,277 +98,397 @@ const NewUser = ({ history }) => {
     return <>
         <NavBar />
 
-        <styles.main>
-            <styles.form id='userForm'>
-                <styles.title>
-                    Dados do novo usuário
-                </styles.title>
-
-                <label>Nome de usuário</label>
-                <input
-                    id='usernameInput'
-                    name='username'
-                    maxLength='20'
-                    minLength='6'
-                    required
-                    pattern='[a-zA-Z0-9]{6,20}'
-                    onChange={event => {
-                        user.username = event.target.value
-                        event.target.value = formatUsername(
-                            event.target.value
-                        )
-                    }}
-                />
-                <p className='error-message'>
-                        Digite no mínimo 6 caracteres
-                </p>
-
-                <label>Senha</label>
-                <input
-                    id='passwordInput'
-                    type='password'
-                    name='password'
-                    maxLength='128'
-                    minLength='8'
-                    required
-                    onChange={ event => {
-                        user.password = event.target.value
-                    }}
-                />
-                <p className='error-message'>
-                        Digite no mínimo 8 caracteres
-                </p>
-
-                <label>Email</label>
-                <input
-                    id='emailInput'
-                    name='email'
-                    maxLength='40'
-                    minLength='10'
-                    required
-                    onChange={ event => {
-                        user.email = event.target.value
-                    }}
-                />
-                <p className='error-message'>
-                        Digite no mínimo 10 caracteres
-                </p>
-
-                <label>Telefone</label>
-                <input
-                    id='phoneInput'
-                    name='phone'
-                    required
-                    pattern='\(\d{2}\) \d{5}-\d{4}$'
-                    onChange={ event => {
-                        user.phone = getOnlyNumbers(event.target.value)
-                        event.target.value = formatPhone(
-                            event.target.value
-                        )
-                    }}
-                />
-                <p className='error-message'>
-                    Número de telefone inválido
-                </p>
-
-                <label>Nível de Acesso</label>
-                <select
-                    id='accessLevelSelect'
-                    name='accessLevel'
-                    required
-                    onChange={event => {
-                        const { value } = event.target
-
-                        if (value === 'Administrador') {
-                            user.accessLevel = 'admin'
-                        } else if (value === 'Usuário') {
-                            user.accessLevel = 'user'
-                        }
-                    }}
-                >
-                    <option>Usuário</option>
-                    <option>Administrador</option>
-                </select>
-
-                <styles.checkbox>
-                    <input
-                        type='checkbox'
-                        onClick={() => {
-                            if (userType === 'company') {
-                                setUserType('person')
-                            } else if (userType === 'person') {
-                                setUserType('company')
-                            }
-                        }}
-                    />
-                    <label>Sou pessoa física</label>
-                </styles.checkbox>
-
-                {userType === 'company' ?
-                    <>
-                        <label>CNPJ</label>
-                        <input
-                            id='cnpjInput'
-                            name='cnpj'
-                            required
-                            pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
-                            onChange={ event => {
-                                user.company.cnpj = getOnlyNumbers(event
-                                    .target.value)
-                                event.target.value = formatCNPJ(
-                                    event.target.value
-                                )
-                            }}
-                        />
-                        <p className='error-message'>
-                            CNPJ inválido
-                        </p>
-
-                        <label>Nome fantasia</label>
-                        <input
-                            id='nameInput'
-                            name='name'
-                            maxLength='128'
-                            minLength='6'
-                            required
-                            onChange={ event => {
-                                user.company.name = event
-                                    .target
-                                    .value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 6 caracteres
-                        </p>
-
-                        <label>Razão social</label>
-                        <input
-                            id='tradeNameInput'
-                            name='tradeName'
-                            maxLength='128'
-                            minLength='6'
-                            required
-                            onChange={ event => {
-                                user.company.tradeName = event
-                                    .target
-                                    .value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 6 caracteres
-                        </p>
-
-                        <label>Descrição</label>
-                        <textarea
-                            id='descriptionInput'
-                            name='description'
-                            maxLength='512'
-                            minLength='50'
-                            required
-                            onChange={ event => {
-                                user.company.description = event
-                                    .target
-                                    .value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 50 caracteres
-                        </p>
-                    </>
-                    :
-                    <>
-                        <label>Nome completo</label>
-                        <input
-                            name='name'
-                            maxLength='128'
-                            minLength='10'
-                            required
-                            onChange={ event => {
-                                user.person.name = event
-                                    .target.value
-                            }}
-                        />
-                        <p className='error-message'>
-                            Digite no mínimo 10 caracteres
-                        </p>
-
-                        <label>CPF</label>
-                        <input
-                            name='cpf'
-                            required
-                            pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
-                            onChange={ event => {
-                                user.person.cpf = getOnlyNumbers(event
-                                    .target.value)
-                                event.target.value = formatCPF(
-                                    event.target.value
-                                )
-                            }}
-                        />
-                        <p className='error-message'>
-                            CPF inválido
-                        </p>
-
-                        <label>Data de nascimento</label>
-                        <input
-                            name='birth'
-                            required
-                            pattern='\d{2}\/\d{2}\/\d{4}'
-                            onChange={ event => {
-                                user.person.birth = () =>
-                                    event.target.value.replace('/', '-')
-                                event.target.value = formatDate(
-                                    event.target.value
-                                )
-                            }}
-                        />
-                        <p className='error-message'>
-                            Data inválida
-                        </p>
-                    </>
-                }
-
-                <styles.buttons>
+        {userType ?
+            null
+            :
+            <styles.dialog>
+                <div className='window'>
                     <util.classicButton
-                        id='back'
+                        onClick={() => {
+                            setUserType('person')
+                        }}
+                    >
+                        Cadastrar Pessoa Física
+                    </util.classicButton>
+
+                    <util.classicButton
+                        onClick={() => {
+                            setUserType('company')
+                        }}
+                    >
+                        Cadastrar Pessoa Jurídica
+                    </util.classicButton>
+
+                    <util.classicButton
                         onClick={event => {
                             event.preventDefault()
                             history.push('/users-list')
                         }}
                     >
-                            Voltar
+                        Voltar
                     </util.classicButton>
-                    <util.classicButton
-                        id='save'
-                        onClick={event => {
-                            event.preventDefault()
-                            buttonPress(() => {
-                                submit()
-                            }, 'userForm')
+                </div>
+            </styles.dialog>
+        }
+
+        {userType === 'company' ?
+            <styles.main>
+                <styles.form id='userForm'>
+                    <styles.title>
+                    Dados do novo usuário
+                    </styles.title>
+
+                    <label>Nome de usuário</label>
+                    <input
+                        name='username'
+                        maxLength='20'
+                        minLength='6'
+                        required
+                        pattern='[a-zA-Z0-9]{6,20}'
+                        onChange={event => {
+                            user.username = event.target.value
+                            event.target.value = formatUsername(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 6 caracteres
+                    </p>
+
+                    <label>Senha</label>
+                    <input
+                        type='password'
+                        name='password'
+                        maxLength='128'
+                        minLength='8'
+                        required
+                        onChange={ event => {
+                            user.password = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 8 caracteres
+                    </p>
+
+                    <label>Email</label>
+                    <input
+                        name='email'
+                        maxLength='40'
+                        minLength='10'
+                        required
+                        onChange={ event => {
+                            user.email = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 10 caracteres
+                    </p>
+
+                    <label>Telefone</label>
+                    <input
+                        name='phone'
+                        required
+                        pattern='\(\d{2}\) \d{5}-\d{4}$'
+                        onChange={ event => {
+                            user.phone = getOnlyNumbers(event.target.value)
+                            event.target.value = formatPhone(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
+                    Número de telefone inválido
+                    </p>
+
+                    <label>Nível de Acesso</label>
+                    <select
+                        name='phone'
+                        required
+                        onChange={event => {
+                            const { value } = event.target
+
+                            if (value === 'Administrador') {
+                                user.accessLevel = 'admin'
+                            } else if (value === 'Usuário') {
+                                user.accessLevel = 'user'
+                            }
                         }}
                     >
-                        Salvar
-                    </util.classicButton>
-                </styles.buttons>
+                        <option>Usuário</option>
+                        <option>Administrador</option>
+                    </select>
 
-                {loading ?
-                    <styles.loading
-                        id='loading'
-                    >
-                        <util.circularProgress/>
-                    </styles.loading>
-                    :
-                    !success && error?
-                        <p
-                            id='errorMessage'
-                            className='error'
+                    <label>CNPJ</label>
+                    <input
+                        name='cnpj'
+                        required
+                        pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
+                        onChange={ event => {
+                            user.company.cnpj = getOnlyNumbers(event
+                                .target.value)
+                            event.target.value = formatCNPJ(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
+                            CNPJ inválido
+                    </p>
+
+                    <label>Nome fantasia</label>
+                    <input
+                        name='name'
+                        maxLength='128'
+                        minLength='6'
+                        required
+                        onChange={ event => {
+                            user.company.name = event
+                                .target
+                                .value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 6 caracteres
+                    </p>
+
+                    <label>Razão social</label>
+                    <input
+                        name='tradeName'
+                        maxLength='128'
+                        minLength='6'
+                        required
+                        onChange={ event => {
+                            user.company.tradeName = event
+                                .target
+                                .value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 6 caracteres
+                    </p>
+
+                    <label>Descrição</label>
+                    <textarea
+                        name='description'
+                        maxLength='512'
+                        minLength='50'
+                        required
+                        onChange={ event => {
+                            user.company.description = event
+                                .target
+                                .value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 50 caracteres
+                    </p>
+
+                    <styles.buttons>
+                        <util.classicButton
+                            onClick={() => {
+                                setUserType(undefined)
+                            }}
                         >
-                            { errorMessage }
-                        </p>
-                        : null
-                }
-            </styles.form>
-        </styles.main>
+                            Voltar
+                        </util.classicButton>
+                        <util.classicButton
+                            onClick={event => {
+                                event.preventDefault()
+                                buttonPress(() => {
+                                    submit()
+                                }, 'userForm')
+                            }}
+                        >
+                            Salvar
+                        </util.classicButton>
+                    </styles.buttons>
+
+                    {loading ?
+                        <styles.loading>
+                            <util.circularProgress/>
+                        </styles.loading>
+                        :
+                        !success && error?
+                            <p className='error'>
+                                { errorMessage }
+                            </p>
+                            : null
+                    }
+                </styles.form>
+            </styles.main>
+
+            :
+
+            <styles.main>
+                <styles.form id='userForm'>
+                    <styles.title>
+                    Dados do novo usuário
+                    </styles.title>
+
+                    <label>Nome de usuário</label>
+                    <input
+                        name='username'
+                        maxLength='20'
+                        minLength='6'
+                        required
+                        pattern='[a-zA-Z0-9]{6,20}'
+                        onChange={event => {
+                            user.username = event.target.value
+                            event.target.value = formatUsername(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 6 caracteres
+                    </p>
+
+                    <label>Senha</label>
+                    <input
+                        type='password'
+                        name='password'
+                        maxLength='128'
+                        minLength='8'
+                        required
+                        onChange={ event => {
+                            user.password = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 8 caracteres
+                    </p>
+
+                    <label>Email</label>
+                    <input
+                        name='email'
+                        maxLength='40'
+                        minLength='10'
+                        required
+                        onChange={ event => {
+                            user.email = event.target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                        Digite no mínimo 10 caracteres
+                    </p>
+
+                    <label>Telefone</label>
+                    <input
+                        name='phone'
+                        required
+                        pattern='\(\d{2}\) \d{5}-\d{4}$'
+                        onChange={ event => {
+                            user.phone = getOnlyNumbers(event.target.value)
+                            event.target.value = formatPhone(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
+                    Número de telefone inválido
+                    </p>
+
+                    <label>Nível de Acesso</label>
+                    <select
+                        name='accessLevel'
+                        required
+                        onChange={event => {
+                            const { value } = event.target
+
+                            if (value === 'Administrador') {
+                                user.accessLevel = 'admin'
+                            } else if (value === 'Usuário') {
+                                user.accessLevel = 'user'
+                            }
+                        }}
+                    >
+                        <option>Usuário</option>
+                        <option>Administrador</option>
+                    </select>
+
+                    <label>Nome completo</label>
+                    <input
+                        name='name'
+                        maxLength='128'
+                        minLength='10'
+                        required
+                        onChange={ event => {
+                            user.person.name = event
+                                .target.value
+                        }}
+                    />
+                    <p className='error-message'>
+                            Digite no mínimo 10 caracteres
+                    </p>
+
+                    <label>CPF</label>
+                    <input
+                        name='cpf'
+                        required
+                        pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
+                        onChange={ event => {
+                            user.person.cpf = getOnlyNumbers(event
+                                .target.value)
+                            event.target.value = formatCPF(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
+                            CPF inválido
+                    </p>
+
+                    <label>Data de nascimento</label>
+                    <input
+                        name='birth'
+                        required
+                        pattern='\d{2}\/\d{2}\/\d{4}'
+                        onChange={ event => {
+                            user.person.birth = () =>
+                                event.target.value.replace('/', '-')
+                            event.target.value = formatDate(
+                                event.target.value
+                            )
+                        }}
+                    />
+                    <p className='error-message'>
+                            Data inválida
+                    </p>
+                    <styles.buttons>
+                        <util.classicButton
+                            onClick={() => {
+                                setUserType(undefined)
+                            }}
+                        >
+                            Voltar
+                        </util.classicButton>
+                        <util.classicButton
+                            onClick={event => {
+                                event.preventDefault()
+                                buttonPress(() => {
+                                    submit()
+                                }, 'userForm')
+                            }}
+                        >
+                        Salvar
+                        </util.classicButton>
+                    </styles.buttons>
+
+                    {loading ?
+                        <styles.loading>
+                            <util.circularProgress/>
+                        </styles.loading>
+                        :
+                        !success && error?
+                            <p className='error'>
+                                { errorMessage }
+                            </p>
+                            : null
+                    }
+                </styles.form>
+            </styles.main>
+        }
     </>
 }
 
