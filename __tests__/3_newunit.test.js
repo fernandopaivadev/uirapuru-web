@@ -1,5 +1,5 @@
 import { Selector, ClientFunction } from 'testcafe'
-import { TEST_URL, TEST_LOGIN_1, TEST_PASSWORD_1 } from '../tests.env.json'
+import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
 
 fixture('/new-unit').page(TEST_URL)
 
@@ -10,10 +10,10 @@ const goNewUnit = ClientFunction(TEST_URL =>
 
 test('NewUser test', async t => {
     await t
-        .typeText('#email', TEST_LOGIN_1)
-        .expect(Selector('#email').value).eql(TEST_LOGIN_1)
-        .typeText('#password',TEST_PASSWORD_1)
-        .expect(Selector('#password').value).eql(TEST_PASSWORD_1)
+        .typeText('#email', TEST_LOGIN)
+        .expect(Selector('#email').value).eql(TEST_LOGIN)
+        .typeText('#password',TEST_PASSWORD)
+        .expect(Selector('#password').value).eql(TEST_PASSWORD)
         .click('#button')
         .expect(Selector('#loading').exists).ok()
         .expect(getPageUrl()).contains('/dashboard')
