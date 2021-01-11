@@ -4,9 +4,6 @@ import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
 fixture('/new-unit').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
-const goNewUnit = ClientFunction(TEST_URL =>
-    window.location.replace(`${TEST_URL}/#/new-unit`)
-)
 
 test('NewUser test', async t => {
     await t
@@ -18,9 +15,7 @@ test('NewUser test', async t => {
         .expect(Selector('#loading').exists).ok()
         .expect(getPageUrl()).contains('/dashboard')
 
-    await goNewUnit()
-
-    await t
+        .navigateTo(`${TEST_URL}/#/new-unit`)
         .expect(getPageUrl()).contains('/new-unit')
         .click('#save')
         .expect(Selector('#errorMessage').exists).ok()
@@ -49,9 +44,7 @@ test('NewUser test', async t => {
         .click('#save')
         .expect(getPageUrl()).contains('/profile')
 
-    await goNewUnit()
-
-    await t
+        .navigateTo(`${TEST_URL}/#/new-unit`)
         .expect(getPageUrl()).contains('/new-unit')
         .click('#back')
         .expect(getPageUrl()).contains('/profile')

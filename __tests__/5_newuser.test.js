@@ -1,12 +1,13 @@
 import { Selector, ClientFunction } from 'testcafe'
 import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
 
+import storage from '../src/services/storage'
+import api from '../src/services/api'
+
 fixture('/new-user').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
-const goNewUser = ClientFunction(TEST_URL =>
-    window.location.replace(`${TEST_URL}/#/new-user`)
-)
+const storageRead = ClientFunction(storage.read)
 
 test('NewUser test', async t => {
     await t
@@ -18,19 +19,15 @@ test('NewUser test', async t => {
         .expect(Selector('#loading').exists).ok()
         .expect(getPageUrl()).contains('/dashboard')
 
-    await goNewUser()
-
-    await t
+        .navigateTo(`${TEST_URL}/#/new-user`)
         .expect(getPageUrl()).contains('/new-user')
         .click('#backToUsersList')
         .expect(getPageUrl()).contains('/users-list')
 
-    await goNewUser()
-
-    await t
+        .navigateTo(`${TEST_URL}/#/new-user`)
         .expect(getPageUrl()).contains('/new-user')
         .click('#registerPerson')
-        .expect(getPageUrl()).contains('/new-user')
+        .expect(Selector('#personUserForm').exists).ok()
         .typeText('#username', 'testing')
         .expect(Selector('#username').value).eql('testing')
         .click('#save')
@@ -39,8 +36,8 @@ test('NewUser test', async t => {
         .expect(Selector('#password').value).eql('testing')
         .click('#save')
         .expect(Selector('#errorMessage').exists).ok()
-        .typeText('#email', 'testing')
-        .expect(Selector('#email').value).eql('testing')
+        .typeText('#email', 'testing@provider.com')
+        .expect(Selector('#email').value).eql('testing@provider.com')
         .click('#save')
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#phone', '11111111111')
@@ -54,14 +51,39 @@ test('NewUser test', async t => {
         .click(Selector('#accessLevel').find('option').withText('Usuário'))
         .expect(Selector('#accessLevel').value).eql('Usuário')
         .click('#save')
+        .expect(Selector('#errorMessage').exists).ok()
         .typeText('#name', 'testing')
         .expect(Selector('#name').value).eql('testing')
+        .click('#save')
+        .expect(Selector('#errorMessage').exists).ok()
         .typeText('#cpf', '11111111111')
         .expect(Selector('#cpf').value).eql('111.111.111-11')
-        .typeText('#birth', '12121998')
-        .expect(Selector('#birth').value).eql('12/12/1998')
+        .click('#save')
+        .expect(Selector('#errorMessage').exists).ok()
+        .typeText('#birth', '15081988')
+        .expect(Selector('#birth').value).eql('15/08/1988')
         .click('#save')
         .expect(Selector('#loading').exists).ok()
-        .expect(getPageUrl()).contains('/users-list')
+        // .expect(getPageUrl()).contains('users-list'')
+
+    // .expect((() => {
+    //     const usersList = [...storageRead('users-list')]
+
+    //     const user = usersList.find(user =>
+    //         user.username === 'testinga'
+    //     )
+
+    //     if (user) {
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    // })()).ok()
+
+    //TODO
+    // .navigateTo(`${TEST_URL}/#/new-user`)
+    // .expect(getPageUrl()).contains('/new-user')
+    // .click('#registerCompany')
+    // .expect(Selector('#companyUserForm').exists).ok()
 
 })

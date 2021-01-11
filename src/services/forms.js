@@ -1,3 +1,14 @@
+const convertDate = input => {
+    const splitDate = input.split('/')
+    return `${
+        splitDate[2]
+    }-${
+        splitDate[1]
+    }-${
+        splitDate[0]
+    }`
+}
+
 const formatDeviceID = input =>
     input
         ?.replace(/[\W_]/g, '')
@@ -38,12 +49,16 @@ const formatCEP = cep =>
         .replace(/(\d{8})(\d)/, '$1')
         .replace(/(\d{5})(\d)/, '$1-$2')
 
-const formatTimeStamp = timeStamp =>
-    timeStamp
-        ?.replace(/\D/g, '')
-        .replace(/(\d{2})(\d)/, '$1/$2')
-        .replace(/(\d{2})(\d)/, '$1/$2')
-        .replace(/(\d{4})(\d)/, '$1')
+const formatTimeStamp = timeStamp => {
+    const splitTimeStamp = timeStamp.split('T')[0].split('-')
+    return `${
+        splitTimeStamp[2]
+    }/${
+        splitTimeStamp[1]
+    }/${
+        splitTimeStamp[0]
+    }`
+}
 
 const formatDate = input =>
     input
@@ -126,6 +141,7 @@ const setFormsValidation = () => {
 }
 
 export {
+    convertDate,
     formatDeviceID,
     formatUsername,
     formatPhone,

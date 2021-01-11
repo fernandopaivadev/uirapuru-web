@@ -5,6 +5,7 @@ import NavBar from '../blocks/NavBar'
 import api from '../../services/api'
 
 import {
+    convertDate,
     formatUsername,
     formatPhone,
     formatCPF,
@@ -152,7 +153,7 @@ const NewUser = ({ history }) => {
                         id='password'
                         type='password'
                         name='password'
-                        maxLength='128'
+                        maxLength='32'
                         minLength='8'
                         required
                         onChange={event => {
@@ -198,7 +199,7 @@ const NewUser = ({ history }) => {
                     <label>Nível de Acesso</label>
                     <select
                         id='accessLevel'
-                        name='phone'
+                        name='accessLevel'
                         required
                         onChange={event => {
                             const { value } = event.target
@@ -285,6 +286,7 @@ const NewUser = ({ history }) => {
 
                     <styles.buttons>
                         <util.classicButton
+                            id='back'
                             onClick={() => {
                                 setUserType(undefined)
                             }}
@@ -313,7 +315,9 @@ const NewUser = ({ history }) => {
                     </styles.buttons>
 
                     {loading ?
-                        <styles.loading>
+                        <styles.loading
+                            id='loading'
+                        >
                             <util.circularProgress/>
                         </styles.loading>
                         :
@@ -362,7 +366,7 @@ const NewUser = ({ history }) => {
                         id='password'
                         type='password'
                         name='password'
-                        maxLength='128'
+                        maxLength='32'
                         minLength='8'
                         required
                         onChange={event => {
@@ -465,11 +469,10 @@ const NewUser = ({ history }) => {
                         required
                         pattern='\d{2}\/\d{2}\/\d{4}'
                         onChange={event => {
-                            user.person.birth = () =>
-                                event.target.value.replace('/', '-')
                             event.target.value = formatDate(
                                 event.target.value
                             )
+                            user.person.birth = convertDate(event.target.value)
                         }}
                     />
                     <p className='error-message'>
@@ -477,6 +480,7 @@ const NewUser = ({ history }) => {
                     </p>
                     <styles.buttons>
                         <util.classicButton
+                            id='back'
                             onClick={() => {
                                 setUserType(undefined)
                             }}
