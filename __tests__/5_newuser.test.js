@@ -2,12 +2,22 @@ import { Selector, ClientFunction } from 'testcafe'
 import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
 
 import storage from '../src/services/storage'
-import api from '../src/services/api'
+// import api from '../src/services/api'
 
 fixture('/new-user').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
-const storageRead = ClientFunction(storage.read)
+const isUserRegistered = ClientFunction(username => {
+    const usersList = storage.read('users-list')
+
+    const user = usersList.find(user => user.username === username)
+
+    if (user) {
+        return true
+    } else {
+        return false
+    }
+})
 
 test('NewUser test', async t => {
     await t
@@ -65,25 +75,11 @@ test('NewUser test', async t => {
         .click('#save')
         .expect(Selector('#loading').exists).ok()
         // .expect(getPageUrl()).contains('users-list'')
+        .expect(isUserRegistered('testing')).ok()
 
-    // .expect((() => {
-    //     const usersList = [...storageRead('users-list')]
-
-    //     const user = usersList.find(user =>
-    //         user.username === 'testinga'
-    //     )
-
-    //     if (user) {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // })()).ok()
-
-    //TODO
+    //TODO: CADASTRO DE PESSOA JURÍDICA
     // .navigateTo(`${TEST_URL}/#/new-user`)
     // .expect(getPageUrl()).contains('/new-user')
     // .click('#registerCompany')
     // .expect(Selector('#companyUserForm').exists).ok()
-
 })
