@@ -1,11 +1,40 @@
 import { Selector, ClientFunction } from 'testcafe'
 import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
 
+import storage from '../src/services/storage'
+import api from '../src/services/api'
+
 fixture('/new-unit').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
 
-test('NewUser test', async t => {
+const isConsumerUnitRegistered = ClientFunction((storage, number) => {
+    const user = storage.read('user')
+
+    const consumerUnit = user.consumerUnits.find(consumerUnit =>
+        consumerUnit.number === number
+    )
+
+    if (consumerUnit) {
+        return true
+    } else {
+        return false
+    }
+})
+
+const cleanUp = ClientFunction(async (storage, api) => {
+    const user = storage.read('user')
+
+    user.consumerUnits.pop()
+
+    if (await api.updateUser(user) === 'OK') {
+        return true
+    } else {
+        return false
+    }
+})
+
+test('NewUnit test', async t => {
     await t
         .typeText('#email', TEST_LOGIN)
         .expect(Selector('#email').value).eql(TEST_LOGIN)
@@ -13,6 +42,7 @@ test('NewUser test', async t => {
         .expect(Selector('#password').value).eql(TEST_PASSWORD)
         .click('#button')
         .expect(Selector('#loading').exists).ok()
+        .wait(10000)
         .expect(getPageUrl()).contains('/dashboard')
 
         .navigateTo(`${TEST_URL}/#/new-unit`)
@@ -49,5 +79,6 @@ test('NewUser test', async t => {
         .click('#back')
         .expect(getPageUrl()).contains('/profile')
 
-
+        .expect(isConsumerUnitRegistered(storage, '123456')).ok()
+        .expect(cleanUp(storage, api)).ok()
 })

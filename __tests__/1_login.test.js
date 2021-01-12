@@ -13,5 +13,6 @@ test('Login test', async t => {
         .expect(Selector('#password').value).eql(TEST_PASSWORD)
         .click('#button')
         .expect(Selector('#loading').exists).ok()
+        .wait(10000)
         .expect(getPageUrl()).contains('/dashboard')
 })
