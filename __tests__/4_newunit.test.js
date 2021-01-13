@@ -22,18 +22,6 @@ const isConsumerUnitRegistered = ClientFunction((storage, number) => {
     }
 })
 
-const cleanUp = ClientFunction(async (storage, api) => {
-    const user = storage.read('user')
-
-    user.consumerUnits.pop()
-
-    if (await api.updateUser(user) === 'OK') {
-        return true
-    } else {
-        return false
-    }
-})
-
 test('NewUnit test', async t => {
     await t
         .typeText('#email', TEST_LOGIN)

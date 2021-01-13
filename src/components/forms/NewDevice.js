@@ -58,6 +58,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
 
                 <label>ID do dispositivo</label>
                 <input
+                    id='deviceId'
                     maxLength='8'
                     required
                     pattern='[A-Z0-9]{8}'
@@ -74,6 +75,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
 
                 <label>Nome do dispositivo</label>
                 <input
+                    id='deviceName'
                     maxLength='20'
                     minLength='6'
                     required
@@ -87,6 +89,7 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
 
                 <styles.buttons>
                     <util.classicButton
+                        id='saveDevice'
                         onClick={event => {
                             event.preventDefault()
                             if (validateForm('newDeviceForm')) {
@@ -109,13 +112,16 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                         Salvar
                     </util.classicButton>
                     <util.criticalButton
+                        id='exit'
                         onClick={exit}
                     >
                         Cancelar
                     </util.criticalButton>
                 </styles.buttons>
                 {error && !success ?
-                    <p className='error'>
+                    <p
+                        id='errorMessageDevice'
+                        className='error'>
                         {errorMessage}
                     </p>
                     : null

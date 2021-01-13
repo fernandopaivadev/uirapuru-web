@@ -9,11 +9,13 @@ const Modal = ({ message, taskOnYes, taskOnNo }) =>
             <p>{ message }</p>
             <div>
                 <util.classicButton
+                    id='yes'
                     onClick={taskOnYes}
                 >
                     Sim
                 </util.classicButton>
                 <util.criticalButton
+                    id='not'
                     onClick= {taskOnNo}
                 >
                     Não

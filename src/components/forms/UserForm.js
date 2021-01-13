@@ -56,6 +56,7 @@ const UserForm = () => {
 
         <label>Nome de usuário</label>
         <input
+            id='username'
             name='username'
             maxLength='20'
             minLength='6'
@@ -75,6 +76,7 @@ const UserForm = () => {
 
         <label>Email</label>
         <input
+            id='email'
             name='email'
             maxLength='40'
             minLength='10'
@@ -91,6 +93,7 @@ const UserForm = () => {
 
         <label>Telefone</label>
         <input
+            id='phone'
             name='phone'
             required
             pattern='\(\d{2}\) \d{5}-\d{4}$'
@@ -111,6 +114,7 @@ const UserForm = () => {
             <>
                 <label>Nome completo</label>
                 <input
+                    id='name'
                     name='name'
                     maxLength='128'
                     minLength='10'
@@ -127,6 +131,7 @@ const UserForm = () => {
 
                 <label>CPF</label>
                 <input
+                    id='cpf'
                     name='cpf'
                     required
                     pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
@@ -147,6 +152,7 @@ const UserForm = () => {
 
                 <label>Data de nascimento</label>
                 <input
+                    id='birth'
                     name='birth'
                     required
                     pattern='\d{2}\/\d{2}\/\d{4}'
@@ -167,6 +173,7 @@ const UserForm = () => {
             <>
                 <label>CNPJ</label>
                 <input
+                    id='cnpj'
                     name='cnpj'
                     required
                     pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
@@ -187,6 +194,7 @@ const UserForm = () => {
 
                 <label>Nome Fantasia</label>
                 <input
+                    id='name'
                     name='name'
                     maxLength='128'
                     minLength='6'
@@ -206,6 +214,7 @@ const UserForm = () => {
 
                 <label>Razão social</label>
                 <input
+                    id='tradeName'
                     name='tradeName'
                     maxLength='128'
                     minLength='6'
@@ -225,6 +234,7 @@ const UserForm = () => {
 
                 <label>Descrição</label>
                 <textarea
+                    id='description'
                     name='description'
                     maxLength='512'
                     minLength='50'
@@ -242,6 +252,7 @@ const UserForm = () => {
         }
         {isAdmin ?
             <util.classicButton
+                id='save'
                 onClick={event => {
                     event.preventDefault()
                     if (validateForm('userForm')) {
@@ -261,13 +272,17 @@ const UserForm = () => {
             : null
         }
         {success && !error?
-            <p className='success'>
+            <p
+                id='successMessage'
+                className='success'>
                 Salvo com sucesso!
             </p>
             : null
         }
         {!success && error?
-            <p className='error'>
+            <p
+                id='errorMessage'
+                className='error'>
                 { errorMessage }
             </p>
             : null

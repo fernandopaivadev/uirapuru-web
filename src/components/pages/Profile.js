@@ -107,6 +107,7 @@ const Profile = ({ history }) => {
 
         <styles.navButtons>
             <util.classicButton
+                id='dashboard'
                 onClick={() =>{
                     history.push('/dashboard')
                 }}
@@ -116,6 +117,7 @@ const Profile = ({ history }) => {
 
             {isAdmin ?
                 <util.criticalButton
+                    id='deleteUser'
                     onClick={() => {
                         setModal(true)
                     }}
