@@ -81,6 +81,7 @@ const Profile = ({ history }) => {
 
                     {isAdmin ?
                         <util.classicButton
+                            id='newUnit'
                             onClick={() => {
                                 history.push('/new-unit')
                             }}

@@ -1,5 +1,5 @@
 import { Selector, ClientFunction } from 'testcafe'
-import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
+import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../../tests.env.json'
 
 fixture('/dashboard').page(TEST_URL)
 

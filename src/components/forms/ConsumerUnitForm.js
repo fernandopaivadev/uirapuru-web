@@ -205,6 +205,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
             }
             {isAdmin ?
                 <util.classicButton
+                    id='newUnit'
                     onClick = { () => {
                         history.push('/new-unit')
                     }}

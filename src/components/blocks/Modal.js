@@ -15,7 +15,7 @@ const Modal = ({ message, taskOnYes, taskOnNo }) =>
                     Sim
                 </util.classicButton>
                 <util.criticalButton
-                    id='not'
+                    id='no'
                     onClick= {taskOnNo}
                 >
                     Não

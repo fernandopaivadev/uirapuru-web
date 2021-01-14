@@ -1,8 +1,7 @@
 import { Selector, ClientFunction } from 'testcafe'
-import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../tests.env.json'
+import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../../tests.env.json'
 
-import storage from '../src/services/storage'
-import api from '../src/services/api'
+import storage from '../../src/services/storage'
 
 fixture('/new-unit').page(TEST_URL)
 
@@ -68,5 +67,4 @@ test('NewUnit test', async t => {
         .expect(getPageUrl()).contains('/profile')
 
         .expect(isConsumerUnitRegistered(storage, '123456')).ok()
-        .expect(cleanUp(storage, api)).ok()
 })

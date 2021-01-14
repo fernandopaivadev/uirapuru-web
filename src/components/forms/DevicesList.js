@@ -116,7 +116,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             ID
                         </label>
                         <input
-                            id={`deviceIdDevicesList${index}`}
+                            id={`deviceId${index}`}
                             defaultValue={device.id}
                             readOnly={!isAdmin}
                             maxLength='8'
@@ -139,7 +139,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             Nome
                         </label>
                         <input
-                            id={`deviceNameDevicesList${index}`}
+                            id={`deviceName${index}`}
                             defaultValue={device.name}
                             readOnly={!isAdmin}
                             maxLength='20'
