@@ -54,18 +54,22 @@ test('Profile test', async t => {
         .typeText('#username', 'usercompany')
         .expect(Selector('#username').value).eql('usercompany')
         .click('#save')
+        .wait(100)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#password', 'usercompany')
         .expect(Selector('#password').value).eql('usercompany')
         .click('#save')
+        .wait(100)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#email', 'usercompany@provider.com')
         .expect(Selector('#email').value).eql('usercompany@provider.com')
         .click('#save')
+        .wait(100)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#phone', '11111111111')
         .expect(Selector('#phone').value).eql('(11) 11111-1111')
         .click('#save')
+        .wait(100)
         .expect(Selector('#errorMessage').exists).ok()
         .click('#accessLevel')
         .click(Selector('#accessLevel').find('option').withText('Administrador'))
@@ -74,18 +78,22 @@ test('Profile test', async t => {
         .click(Selector('#accessLevel').find('option').withText('Usuário'))
         .expect(Selector('#accessLevel').value).eql('Usuário')
         .click('#save')
+        .wait(100)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#cnpj', '77777777777777')
         .expect(Selector('#cnpj').value).eql('77.777.777.7777-77')
         .click('#save')
+        .wait(100)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#name', 'testing')
         .expect(Selector('#name').value).eql('testing')
         .click('#save')
+        .wait(100)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#tradeName', 'testing')
         .expect(Selector('#tradeName').value).eql('testing')
         .click('#save')
+        .wait(100)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText(
             '#description',
@@ -102,7 +110,11 @@ test('Profile test', async t => {
         .wait(100)
         .click('#item0')
         .expect(getPageUrl()).contains('/dashboard')
+        .expect(Selector('#noUnit').exists).ok()
+        .click('#newUnit')
+        .expect(getPageUrl()).contains('/new-unit')
         //-----------------------------------------------------------
+
 
         //-NAVEGA PARA A PÁGINA /PROFILE-----------------------------
         .navigateTo(`${TEST_URL}/#/profile`)
@@ -323,7 +335,15 @@ test('Profile test', async t => {
         .expect(Selector('#successMessageDevicesList').exists).ok()
         //----------------------------------------------------------
 
+        //-NAVEGA PARA DASHBOARD E TESTA
+        .click('#dashboard')
+        .expect(getPageUrl()).contains('/dashboard')
+        .click('#deviceIcon0')
+        .expect(getPageUrl()).contains('/plot')
+
         //-REALIZA TESTE DE REMOÇÃO DEVICE--------------------------
+        .navigateTo(`${TEST_URL}/#/profile`)
+        .expect(getPageUrl()).contains('/profile')
         .click('#deleteDevicesList0')
         .click('#no')
         .expect(Selector('#deviceForm0').exists).ok()

@@ -193,13 +193,16 @@ const Dashboard = ({ history }) => {
 
             </styles.main>
             :
-            <styles.noUnit>
+            <styles.noUnit
+                id='noUnit'
+            >
                 {isAdmin ?
                     <>
                         <p>
                             Cadastre uma unidade consumidora
                         </p>
                         <util.classicButton
+                            id='newUnit'
                             onClick={() => {
                                 history.push('/new-unit')
                             }}
