@@ -13,6 +13,7 @@
         "dracula-theme.theme-dracula",
         "pkief.material-icon-theme",
         "davidanson.vscode-markdownlint",
-        "ms-vsliveshare.vsliveshare"
+        "ms-vsliveshare.vsliveshare",
+        "romanresh.testcafe-test-runner"
     ]
 }

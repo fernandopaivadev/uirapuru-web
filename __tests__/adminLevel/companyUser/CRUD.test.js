@@ -1,11 +1,12 @@
 import { Selector, ClientFunction } from 'testcafe'
-import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../../tests.env.json'
+import { TEST_URL, TEST_LOGIN, TEST_PASSWORD } from '../../../tests.env.json'
 
-import storage from '../../src/services/storage'
+import storage from '../../../src/services/storage'
 
 fixture('/login').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
+
 const isUserRegistered = ClientFunction((username, storage) => {
     const usersList = storage.read('users-list')
 
@@ -17,6 +18,7 @@ const isUserRegistered = ClientFunction((username, storage) => {
         return false
     }
 })
+
 const isConsumerUnitRegistered = ClientFunction((storage, number) => {
     const user = storage.read('user')
 
@@ -31,12 +33,12 @@ const isConsumerUnitRegistered = ClientFunction((storage, number) => {
     }
 })
 
-const renderingDelay = 1000
-const loadingDelay = 15000
+const renderingDelay = 100
+const loadingDelay = 10000
 
 test('Profile test', async t => {
     await t
-        //-LOGIN-----------------------------------------------------
+        //-LOGIN----------------------------------------------------------------
         .typeText('#email', TEST_LOGIN)
         .expect(Selector('#email').value).eql(TEST_LOGIN)
         .typeText('#password', TEST_PASSWORD)
@@ -45,9 +47,9 @@ test('Profile test', async t => {
         .expect(Selector('#loading').exists).ok()
         .wait(loadingDelay)
         .expect(getPageUrl()).contains('/dashboard')
-        //-----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-CRIA USUÁRIO A SER TESTADO--------------------------------
+        //-CRIA USUÁRIO A SER TESTADO-------------------------------------------
         .navigateTo(`${TEST_URL}/#/users-list`)
         .expect(getPageUrl()).contains('/users-list')
         .click('#buttonNewUser')
@@ -109,63 +111,79 @@ test('Profile test', async t => {
         .wait(loadingDelay)
         .expect(getPageUrl()).contains('users-list')
         .expect(isUserRegistered('usercompany', storage)).ok()
-        //-----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-CLICA NO ÚLTIMO USUÁRIO CADASTRADO------------------------
+        //-ACESSA O USUÁRIO RECÉM CADASTRADO NA USERS LIST----------------------
         .wait(renderingDelay)
         .click('#item0')
+        //----------------------------------------------------------------------
+
+        //-VERIFICA O BOTÃO DE NOVA UNIDADE CONSUMIDORA NA DASHBOARD------------
         .expect(getPageUrl()).contains('/dashboard')
         .expect(Selector('#noUnit').exists).ok()
         .click('#newUnit')
         .expect(getPageUrl()).contains('/new-unit')
-        //-----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-
-        //-NAVEGA PARA A PÁGINA /PROFILE-----------------------------
+        //-NAVEGA PARA A PÁGINA PROFILE E VERIFICA O USUÁRIO--------------------
         .navigateTo(`${TEST_URL}/#/profile`)
         .expect(getPageUrl()).contains('/profile')
         .expect(Selector('#username').value).eql('usercompany')
-        //-----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-CRIA NOVA UNIDADE CONSUMIDORA-----------------------------
+        //-CRIA NOVA UNIDADE CONSUMIDORA----------------------------------------
         .click('#newUnit')
         .expect(getPageUrl()).contains('/new-unit')
         .click('#save')
+        .wait(renderingDelay)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#number', '123456')
         .expect(Selector('#number').value).eql('123456')
         .click('#save')
+        .wait(renderingDelay)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#name', 'testing')
         .expect(Selector('#name').value).eql('testing')
         .click('#save')
+        .wait(renderingDelay)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#address', 'testing')
         .expect(Selector('#address').value).eql('testing')
         .click('#save')
+        .wait(renderingDelay)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#zip', '11111111')
         .expect(Selector('#zip').value).eql('11111-111')
         .click('#save')
+        .wait(renderingDelay)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#city', 'testing')
         .expect(Selector('#city').value).eql('testing')
         .click('#save')
+        .wait(renderingDelay)
         .expect(Selector('#errorMessage').exists).ok()
         .typeText('#state', 'testing')
         .expect(Selector('#state').value).eql('testing')
         .click('#save')
-        .expect(getPageUrl()).contains('/profile')
+        //----------------------------------------------------------------------
 
+        //-VERIFICA SE OCORREU O REDIRECIONAMENTO-------------------------------
+        .wait(loadingDelay)
+        .expect(getPageUrl()).contains('/profile')
+        //----------------------------------------------------------------------
+
+        //-VERIFICA O BOTÃO DE VOLTAR NA NEW UNIT-------------------------------
         .navigateTo(`${TEST_URL}/#/new-unit`)
         .expect(getPageUrl()).contains('/new-unit')
         .click('#back')
         .expect(getPageUrl()).contains('/profile')
+        //----------------------------------------------------------------------
 
+        //-VERIFICA SE O CADASTRO FOI BEM SUCEDIDO------------------------------
         .expect(isConsumerUnitRegistered(storage, '123456')).ok()
-        //------------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-CRIA NOVO DISPOSITIVO--------------------------------------
+        //-CRIA NOVO DISPOSITIVO------------------------------------------------
         .click('#newDevice')
         .expect(Selector('#newDeviceForm').exists).ok()
         .click('#saveDevice')
@@ -187,24 +205,25 @@ test('Profile test', async t => {
         .typeText('#deviceId', '12345678')
         .expect(Selector('#deviceId').value).eql('12345678')
         .click('#saveDevice')
-        .wait(renderingDelay)
+        .wait(loadingDelay)
         .expect(Selector('#deviceForm0').exists).ok()
-        //------------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-TESTA O BOTÃO 'DASHBOARD' DA PÁGINA /PROFILE---------------
+        //-VERIFICA O BOTÃO DASHBOARD NA PROFILE--------------------------------
         .click('#dashboard')
         .expect(getPageUrl()).contains('/dashboard')
-        //-----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-NAVEGA PARA A PÁGINA /PROFILE-----------------------------
+        //-NAVEGA PARA A PROFILE USANDO O MENU DA NAVBAR------------------------
         .click('#avatar')
         .expect(
             Selector('#profileMenu').getStyleProperty('opacity')
         ).eql('1')
         .click('#profileLink')
         .expect(getPageUrl()).contains('/profile')
+        //----------------------------------------------------------------------
 
-        //-REALIZA OS TESTES DE VALIDAÇÃO DOS CAMPOS USUÁRIO---------
+        //-REALIZA OS TESTES DE VALIDAÇÃO DOS CAMPOS USUÁRIO--------------------
         .click('#username')
         .pressKey('ctrl+a delete')
         .expect(Selector('#username').value).eql('')
@@ -264,11 +283,11 @@ test('Profile test', async t => {
             'usercompanyusercompanyusercompanyusercompanyusercompanyusercompany'
         )
         .click('#save')
-        .wait(renderingDelay)
+        .wait(loadingDelay)
         .expect(Selector('#successMessage').exists).ok()
-        //------------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-REALIZA OS TESTES DE VALIDAÇÃO DOS CAMPOS UNIDADE----------
+        //-REALIZA OS TESTES DE VALIDAÇÃO DOS CAMPOS UNIDADE--------------------
         .click('#number')
         .pressKey('ctrl+a delete')
         .expect(Selector('#number').value).eql('')
@@ -318,11 +337,11 @@ test('Profile test', async t => {
         .typeText('#state', 'testing')
         .expect(Selector('#state').value).eql('testing')
         .click('#saveUnit')
-        .wait(renderingDelay)
+        .wait(loadingDelay)
         .expect(Selector('#successMessageUnit').exists).ok()
-        //-----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-REALIZA OS TESTES DE VALIDAÇÃO DOS CAMPOS DISPOSITIVOS----
+        //-REALIZA OS TESTES DE VALIDAÇÃO DOS CAMPOS DISPOSITIVOS---------------
         .click('#deviceId0')
         .pressKey('ctrl+a delete')
         .expect(Selector('#deviceId0').value).eql('')
@@ -340,19 +359,20 @@ test('Profile test', async t => {
         .typeText('#deviceName0', 'testing')
         .expect(Selector('#deviceName0').value).eql('testing')
         .click('#saveDevicesList0')
-        .wait(renderingDelay)
+        .wait(loadingDelay)
         .expect(Selector('#successMessageDevicesList').exists).ok()
-        //----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-NAVEGA PARA DASHBOARD E TESTA
+        //-NAVEGA PARA DASHBOARD E VERIFICA O MENU E ÍCONES DE PAINEL-----------
         .click('#dashboard')
         .expect(getPageUrl()).contains('/dashboard')
         .click('#deviceIcon0')
         .expect(getPageUrl()).contains('/plot')
         .click('#subItem0')
         .expect(getPageUrl()).contains('/plot')
+        //----------------------------------------------------------------------
 
-        //-REALIZA TESTE DE REMOÇÃO DEVICE--------------------------
+        //-REMOVE DISPOSITIVO---------------------------------------------------
         .navigateTo(`${TEST_URL}/#/profile`)
         .expect(getPageUrl()).contains('/profile')
         .click('#deleteDevicesList0')
@@ -361,25 +381,25 @@ test('Profile test', async t => {
         .click('#deleteDevicesList0')
         .click('#yes')
         .expect(Selector('#deviceForm0').exists).notOk()
-        //----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-REALIZA TESTE DO BOTÃO NOVA UNIDADE-----------------------
+        //-VERIFICA O BOTÃO DE NOVA UNIDADE NA PROFILE--------------------------
         .click('#newUnit')
         .expect(getPageUrl()).contains('/new-unit')
         .navigateTo(`${TEST_URL}/#/profile`)
         .expect(getPageUrl()).contains('/profile')
-        //----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-REALIZA TESTE DE REMOÇÃO UNIT----------------------------
+        //-REMOVE UNIDADE CONSUMIDORA-------------------------------------------
         .click('#deleteUnit')
         .click('#no')
         .expect(Selector('#consumerUnitForm').exists).ok()
         .click('#deleteUnit')
         .click('#yes')
         .expect(Selector('#consumerUnitForm').exists).notOk()
-        //----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-REALIZA TESTE DE REMOÇÃO DO USUÁRIO----------------------
+        //-REMOVE USUÁRIO-------------------------------------------------------
         .click('#deleteUser')
         .click('#no')
         .expect(Selector('#userForm').exists).ok()
@@ -388,11 +408,11 @@ test('Profile test', async t => {
         .wait(loadingDelay)
         .expect(getPageUrl()).contains('/users-list')
         .expect(isUserRegistered('usercompany', storage)).notOk()
-        //-----------------------------------------------------------
+        //----------------------------------------------------------------------
 
-        //-REALIZA TESTE DO BOTÃO 'SAIR'-----------------------------
+        //-VERIFICA O BOTÃO SAIR NA USERS LIST----------------------------------
         .click('#exit')
         .wait(renderingDelay)
         .expect(getPageUrl()).contains('/login')
-        //-----------------------------------------------------------
+        //----------------------------------------------------------------------
 })
