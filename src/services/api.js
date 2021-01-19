@@ -470,7 +470,7 @@ const resetPassword = async (token, password) => {
 
 const createUser = async user => {
     try {
-        const response = await axios.post('/user/add', user)
+        const response = await axios.post('/user/create', user)
 
         const { status } = response
 
@@ -551,7 +551,7 @@ const updateUser = async user => {
 const deleteUser = async _id => {
     try {
         const response = await axios.delete(
-            `/user/remove?_id=${_id}`
+            `/user/delete?_id=${_id}`
         )
 
         const { status } = response

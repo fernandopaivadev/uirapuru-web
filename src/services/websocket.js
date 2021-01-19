@@ -1,4 +1,3 @@
-
 import storage from './storage'
 import api from './api'
 import io from 'socket.io-client'
@@ -48,6 +47,24 @@ const config = (
                 })
             } catch (err) {
                 console.log(`ERRO LOCAL: ${err.message}`)
+            }
+        })
+
+        const admin = storage.read('access-level')
+
+        socket.on('notification', async ({ event }) => {
+            if (admin) {
+                if (event in ['user created', 'user updated', 'user removed']) {
+                    window.location.replace(
+                    `${window.location.href.split('#')[0]}#/users-list`
+                    )
+                }
+            } else {
+                if(await api.getUserData() === 'OK') {
+                    window.location.replace(
+                    `${window.location.href.split('#')[0]}#/profile`
+                    )
+                }
             }
         })
     } catch (err) {
