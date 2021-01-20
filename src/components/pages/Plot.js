@@ -194,6 +194,7 @@ const Plot = ({ history }) => {
                         : null
                     }
                     <SearchIcon
+                        id='search'
                         className='searchIcon'
                         onClick={() => {
                             setSearch(true)
