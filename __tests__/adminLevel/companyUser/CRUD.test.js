@@ -33,7 +33,7 @@ const isConsumerUnitRegistered = ClientFunction((storage, number) => {
     }
 })
 
-test('Admin Level Company user test', async t => {
+test('Admin Level Company User Test', async t => {
     await t
         //-LOGIN----------------------------------------------------------------
         .typeText('#email', TEST_LOGIN)

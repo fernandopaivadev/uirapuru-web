@@ -1,12 +1,12 @@
 import { Selector, ClientFunction } from 'testcafe'
-import { TEST_URL, TEST_LOGIN_1, TEST_PASSWORD_1 } from '../../../tests.env.json'
+import { TEST_URL, TEST_LOGIN_1, TEST_PASSWORD_1 } from '../../tests.env.json'
 
 fixture('/login').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
 
 
-test('Common user test', async t => {
+test('User Level Person/Company User Test', async t => {
     await t
         //-LOGIN----------------------------------------------------------------
         .typeText('#email', TEST_LOGIN_1)
