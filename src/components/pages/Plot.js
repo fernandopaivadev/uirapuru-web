@@ -81,7 +81,7 @@ const Plot = ({ history }) => {
 
             return [begin.toISOString(), end.toISOString()]
         } catch (err) {
-            console.log(err.message)
+            console.log(`ERROR LOCAL: ${err.message}`)
         }
     }
 
@@ -123,7 +123,7 @@ const Plot = ({ history }) => {
                     setSearch(false)
                 }
             } catch (err) {
-                console.log(err.message)
+                console.log(`ERROR LOCAL: ${err.message}`)
             }
         }
         )()

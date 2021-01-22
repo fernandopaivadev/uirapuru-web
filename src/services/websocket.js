@@ -50,20 +50,16 @@ const config = (
             }
         })
 
-        const admin = storage.read('access-level')
-
         socket.on('notification', async ({ event }) => {
-            if (admin) {
-                if (event in ['user created', 'user updated', 'user removed']) {
-                    window.location.replace(
-                    `${window.location.href.split('#')[0]}#/users-list`
-                    )
-                }
-            } else {
-                if(await api.getUserData() === 'OK') {
-                    window.location.replace(
-                    `${window.location.href.split('#')[0]}#/profile`
-                    )
+            if (['user created', 'user updated', 'user deleted']
+                .find(item => item === event)
+            ) {
+                const result = await api.getUserData(storage.read('user')._id)
+
+                if (result === 'OK') {
+                    window.location.reload()
+                } else {
+                    console.log('ERRO LOCAL: DADOS DE USUÁRIO DESATUALIZADOS')
                 }
             }
         })
