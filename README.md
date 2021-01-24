@@ -58,3 +58,5 @@ npm install
 ```shell
 npm run dev
 ```
+
+Copyright © 2021 TechAmazon - Soluções em Energia Elétrica LTDA

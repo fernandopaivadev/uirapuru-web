@@ -154,13 +154,17 @@ const Dashboard = ({ history }) => {
                             <p>
                                 Não há dispositivos cadastrados
                             </p>
-                            <util.classicButton
-                                onClick={() => {
-                                    history.push('/profile')
-                                }}
-                            >
+
+                            {isAdmin ?
+                                <util.classicButton
+                                    onClick={() => {
+                                        history.push('/profile')
+                                    }}
+                                >
                                 Cadastrar dispositivo
-                            </util.classicButton>
+                                </util.classicButton>
+                                : null
+                            }
                         </styles.empty>
                     }
                 </styles.container>
@@ -193,13 +197,16 @@ const Dashboard = ({ history }) => {
 
             </styles.main>
             :
-            <styles.noUnit>
+            <styles.noUnit
+                id='noUnit'
+            >
                 {isAdmin ?
                     <>
                         <p>
                             Cadastre uma unidade consumidora
                         </p>
                         <util.classicButton
+                            id='newUnit'
                             onClick={() => {
                                 history.push('/new-unit')
                             }}

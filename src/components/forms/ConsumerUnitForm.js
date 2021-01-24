@@ -71,6 +71,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
         </styles.title>
         <label>Número</label>
         <input
+            id='number'
             name='number'
             minLength='6'
             maxLength='16'
@@ -79,7 +80,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.number ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .number = event.target.value
             }}
@@ -90,6 +91,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
 
         <label>Nome da unidade consumidora</label>
         <input
+            id='unitName'
             name='name'
             maxLength='64'
             minLength='8'
@@ -98,7 +100,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.name ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .name = event.target.value
             }}
@@ -109,6 +111,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
 
         <label>Endereço</label>
         <input
+            id='address'
             name='address'
             maxLength='256'
             minLength='10'
@@ -117,7 +120,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.address ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .address = event.target.value
             }}
@@ -128,13 +131,14 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
 
         <label>CEP</label>
         <input
+            id='zip'
             name='zip'
             required
             pattern='\d{5}-\d{3}'
             defaultValue={formatCEP(user
                 .consumerUnits[consumerUnitIndex]?.zip) ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user
                     .consumerUnits[consumerUnitIndex]
                     .zip = getOnlyNumbers(event.target.value)
@@ -148,6 +152,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
 
         <label>Cidade</label>
         <input
+            id='city'
             name='city'
             maxLength='64'
             minLength='3'
@@ -156,7 +161,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.city ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .city = event.target.value
             }}
@@ -167,6 +172,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
 
         <label>Estado</label>
         <input
+            id='state'
             name='state'
             maxLength='64'
             minLength='3'
@@ -175,7 +181,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                 .consumerUnits[consumerUnitIndex]
                 ?.state ?? ''}
             readOnly= {!user}
-            onChange={ event => {
+            onChange={event => {
                 user.consumerUnits[consumerUnitIndex]
                     .state = event.target.value
             }}
@@ -187,6 +193,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
         <styles.buttons>
             {isAdmin ?
                 <util.criticalButton
+                    id='deleteUnit'
                     onClick={event => {
                         event.preventDefault()
                         setModal(true)
@@ -198,6 +205,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
             }
             {isAdmin ?
                 <util.classicButton
+                    id='newUnit'
                     onClick = { () => {
                         history.push('/new-unit')
                     }}
@@ -208,7 +216,8 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
             }
             {isAdmin ?
                 <util.classicButton
-                    onClick={ event => {
+                    id='saveUnit'
+                    onClick={event => {
                         event.preventDefault()
                         if (validateForm('consumerUnitForm')) {
                             submit()
@@ -229,13 +238,17 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
         </styles.buttons>
 
         {success && !error?
-            <p className='success'>
+            <p
+                id='successMessageUnit'
+                className='success'>
                 Salvo com sucesso!
             </p>
             : null
         }
         {!success && error?
-            <p className='error'>
+            <p
+                id='errorMessageUnit'
+                className='error'>
                 { errorMessage }
             </p>
             : null

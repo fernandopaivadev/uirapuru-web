@@ -9,8 +9,12 @@ import api from '../../services/api'
 
 import {
     BsCaretLeftFill as ArrowBackIcon,
-    BsCaretRightFill as ArrowForwardIcon
+    BsCaretRightFill as ArrowForwardIcon,
 } from 'react-icons/bs'
+
+import {
+    FaSearch as SearchIcon
+} from 'react-icons/fa'
 
 import styles from '../../styles/plot'
 import util from '../../styles/util'
@@ -47,33 +51,38 @@ const Plot = ({ history }) => {
     )
     const [time, setTime] = useState('00:00')
     const [period, setPeriod] = useState('24h')
+    const [search, setSearch] = useState(true)
 
     const getPeriod = dateString => {
-        const begin = new Date(dateString)
-        const end = new Date(dateString)
-        let increment = 1
+        try {
+            const begin = new Date(dateString)
+            const end = new Date(dateString)
+            let increment = 1
 
-        switch (period) {
-        case '24h':
-            increment = 24
-            break
-        case '12h':
-            increment = 12
-            break
-        case '6h':
-            increment = 6
-            break
-        case '1h':
-            increment = 1
-            break
-        default:
-            increment = 24
+            switch (period) {
+            case '24h':
+                increment = 24
+                break
+            case '12h':
+                increment = 12
+                break
+            case '6h':
+                increment = 6
+                break
+            case '1h':
+                increment = 1
+                break
+            default:
+                increment = 24
+            }
+
+            begin.setHours(time.split(':')[0])
+            end.setHours(time.split(':')[0] + increment)
+
+            return [begin.toISOString(), end.toISOString()]
+        } catch (err) {
+            console.log(`ERROR LOCAL: ${err.message}`)
         }
-
-        begin.setHours(time.split(':')[0])
-        end.setHours(time.split(':')[0] + increment)
-
-        return [begin.toISOString(), end.toISOString()]
     }
 
     const changeDate = (change, dateString) => {
@@ -91,24 +100,34 @@ const Plot = ({ history }) => {
 
     useEffect(() => {
         (async () => {
-            setLoading(true)
+            try {
+                if (search) {
+                    setLoading(true)
 
-            const [begin, end] = getPeriod(currentDate)
+                    const [begin, end] = getPeriod(currentDate)
 
-            if (await api.getChart(
-                consumerUnitIndex,
-                deviceIndex,
-                begin,
-                end
-            ) === 'OK') {
-                setSuccess(true)
-                setLoading(false)
-            } else {
-                setSuccess(false)
-                setLoading(false)
+                    if (await api.getChart(
+                        consumerUnitIndex,
+                        deviceIndex,
+                        begin,
+                        end
+                    ) === 'OK') {
+                        setSuccess(true)
+                        setLoading(false)
+                    } else {
+                        setSuccess(false)
+                        setLoading(false)
+
+                    }
+
+                    setSearch(false)
+                }
+            } catch (err) {
+                console.log(`ERROR LOCAL: ${err.message}`)
             }
-        })()
-    }, [consumerUnitIndex, deviceIndex, currentDate, time, period])
+        }
+        )()
+    }, [consumerUnitIndex, deviceIndex, search])
 
     return <>
         <NavBar />
@@ -128,12 +147,14 @@ const Plot = ({ history }) => {
             <styles.contentContainer>
                 <styles.datePicker>
                     <ArrowBackIcon
+                        id='backIcon'
                         className='icon'
                         onClick={() => {
                             changeDate('backward', currentDate)
                         }}
                     />
                     <ArrowForwardIcon
+                        id='forwardIcon'
                         className='icon'
                         onClick={() => {
                             changeDate('forward', currentDate)
@@ -141,6 +162,7 @@ const Plot = ({ history }) => {
                     />
 
                     <input
+                        id='datePicker'
                         type='date'
                         value={currentDate}
                         onChange={event => {
@@ -149,6 +171,7 @@ const Plot = ({ history }) => {
                     />
 
                     <select
+                        id='period'
                         onInput={event => {
                             setPeriod(event.target.value)
                         }}
@@ -161,6 +184,7 @@ const Plot = ({ history }) => {
 
                     {!(period === '24h') ?
                         <input
+                            id='hour'
                             type='time'
                             defaultValue='00:00'
                             onInput={event => {
@@ -169,6 +193,13 @@ const Plot = ({ history }) => {
                         />
                         : null
                     }
+                    <SearchIcon
+                        id='search'
+                        className='searchIcon'
+                        onClick={() => {
+                            setSearch(true)
+                        }}
+                    />
                 </styles.datePicker>
 
                 {!loading ?
@@ -212,6 +243,7 @@ const Plot = ({ history }) => {
                 }
                 <styles.buttons>
                     <util.classicButton
+                        id='dashboard'
                         onClick={() => {
                             history.push('/dashboard')
                         }}
@@ -219,7 +251,13 @@ const Plot = ({ history }) => {
                         Dashboard
                     </util.classicButton>
                     {!loading && storage.read('csv-data')?.length ?
-                        <Export data={storage.read('csv-data')}/>
+                        <util.classicButton
+                            id='export'
+                        >
+                            <Export
+                                data={storage.read('csv-data')}
+                            />
+                        </util.classicButton>
                         : null
                     }
                 </styles.buttons>

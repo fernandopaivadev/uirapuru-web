@@ -1,4 +1,3 @@
-
 import storage from './storage'
 import api from './api'
 import io from 'socket.io-client'
@@ -48,6 +47,20 @@ const config = (
                 })
             } catch (err) {
                 console.log(`ERRO LOCAL: ${err.message}`)
+            }
+        })
+
+        socket.on('notification', async ({ event }) => {
+            if (['user created', 'user updated', 'user deleted']
+                .find(item => item === event)
+            ) {
+                const result = await api.getUserData(storage.read('user')._id)
+
+                if (result === 'OK') {
+                    window.location.reload()
+                } else {
+                    console.log('ERRO LOCAL: DADOS DE USUÁRIO DESATUALIZADOS')
+                }
             }
         })
     } catch (err) {

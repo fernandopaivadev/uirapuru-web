@@ -56,13 +56,14 @@ const UserForm = () => {
 
         <label>Nome de usuário</label>
         <input
+            id='username'
             name='username'
             maxLength='20'
             minLength='6'
             required
             defaultValue={user.username ?? ''}
             readOnly={!isAdmin}
-            onChange={ event => {
+            onChange={event => {
                 user.username = event.target.value
                 event.target.value = formatUsername(
                     event.target.value
@@ -75,13 +76,14 @@ const UserForm = () => {
 
         <label>Email</label>
         <input
+            id='email'
             name='email'
             maxLength='40'
             minLength='10'
             required
             defaultValue={user?.email ?? ''}
             readOnly={!isAdmin}
-            onChange={ event => {
+            onChange={event => {
                 user.email = event.target.value
             }}
         />
@@ -91,12 +93,13 @@ const UserForm = () => {
 
         <label>Telefone</label>
         <input
+            id='phone'
             name='phone'
             required
             pattern='\(\d{2}\) \d{5}-\d{4}$'
             defaultValue={formatPhone(user?.phone) ?? ''}
             readOnly={!isAdmin}
-            onChange={ event => {
+            onChange={event => {
                 user.phone = getOnlyNumbers(event.target.value)
                 event.target.value =  formatPhone(
                     event.target.value
@@ -111,13 +114,14 @@ const UserForm = () => {
             <>
                 <label>Nome completo</label>
                 <input
+                    id='name'
                     name='name'
                     maxLength='128'
                     minLength='10'
                     required
                     defaultValue={user?.person?.name ?? ''}
                     readOnly= {!isAdmin}
-                    onChange={ event => {
+                    onChange={event => {
                         user.person.name = event.target.value
                     }}
                 />
@@ -127,12 +131,13 @@ const UserForm = () => {
 
                 <label>CPF</label>
                 <input
+                    id='cpf'
                     name='cpf'
                     required
                     pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
                     defaultValue={formatCPF(user?.person?.cpf) ?? ''}
                     readOnly={!isAdmin}
-                    onChange={ event => {
+                    onChange={event => {
                         user.person.cpf = getOnlyNumbers(
                             event.target.value
                         )
@@ -147,12 +152,13 @@ const UserForm = () => {
 
                 <label>Data de nascimento</label>
                 <input
+                    id='birth'
                     name='birth'
                     required
                     pattern='\d{2}\/\d{2}\/\d{4}'
                     defaultValue={formatTimeStamp(user?.person?.birth) ?? ''}
                     readOnly={!isAdmin}
-                    onChange={ event => {
+                    onChange={event => {
                         user.person.birth = event.target.value
                         event.target.value = formatDate(
                             event.target.value
@@ -167,12 +173,13 @@ const UserForm = () => {
             <>
                 <label>CNPJ</label>
                 <input
+                    id='cnpj'
                     name='cnpj'
                     required
                     pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                     defaultValue={formatCNPJ(user?.company?.cnpj) ?? '--'}
                     readOnly={!isAdmin}
-                    onChange={ event => {
+                    onChange={event => {
                         user.company.cnpj = getOnlyNumbers(
                             event.target.value
                         )
@@ -187,6 +194,7 @@ const UserForm = () => {
 
                 <label>Nome Fantasia</label>
                 <input
+                    id='name'
                     name='name'
                     maxLength='128'
                     minLength='6'
@@ -194,7 +202,7 @@ const UserForm = () => {
                     defaultValue={user?.company
                         ?.name ?? ''}
                     readOnly={!isAdmin}
-                    onChange={ event => {
+                    onChange={event => {
                         user.company.name = event
                             .target
                             .value
@@ -206,6 +214,7 @@ const UserForm = () => {
 
                 <label>Razão social</label>
                 <input
+                    id='tradeName'
                     name='tradeName'
                     maxLength='128'
                     minLength='6'
@@ -213,7 +222,7 @@ const UserForm = () => {
                     defaultValue={user?.company
                         ?.tradeName ?? ''}
                     readOnly={!isAdmin}
-                    onChange={ event => {
+                    onChange={event => {
                         user.company.tradeName = event
                             .target
                             .value
@@ -225,13 +234,14 @@ const UserForm = () => {
 
                 <label>Descrição</label>
                 <textarea
+                    id='description'
                     name='description'
                     maxLength='512'
                     minLength='50'
                     required
                     defaultValue={user?.company?.description ?? ''}
                     readOnly={!isAdmin}
-                    onChange={ event => {
+                    onChange={event => {
                         user.company.description = event.target.value
                     }}
                 />
@@ -242,6 +252,7 @@ const UserForm = () => {
         }
         {isAdmin ?
             <util.classicButton
+                id='save'
                 onClick={event => {
                     event.preventDefault()
                     if (validateForm('userForm')) {
@@ -261,13 +272,17 @@ const UserForm = () => {
             : null
         }
         {success && !error?
-            <p className='success'>
+            <p
+                id='successMessage'
+                className='success'>
                 Salvo com sucesso!
             </p>
             : null
         }
         {!success && error?
-            <p className='error'>
+            <p
+                id='errorMessage'
+                className='error'>
                 { errorMessage }
             </p>
             : null

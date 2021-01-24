@@ -42,6 +42,7 @@ const NavBar = ({ history }) => {
 
     return <styles.main>
         <styles.logo
+            id='logo'
             key='logo'
             aria-label={version}
             onClick={() => {
@@ -91,13 +92,18 @@ const NavBar = ({ history }) => {
             </styles.username>
 
             {storage.read('user') ?
-                <styles.avatar aria-label='Menu'>
+                <styles.avatar
+                    id='avatar'
+                    aria-label='Menu'
+                >
                     { storage.read('user')?.username?.split('')[0].toUpperCase()}
                 </styles.avatar>
                 : null
             }
 
-            <styles.profileMenu>
+            <styles.profileMenu
+                id='profileMenu'
+            >
                 <styles.userInfo>
                     <styles.profileAvatar>
                         { storage.read('user')?.username?.split('')[0].toUpperCase()}
@@ -114,6 +120,7 @@ const NavBar = ({ history }) => {
                 {storage.read('access-level') === 'admin' ?
                     <>
                         <styles.item
+                            id='usersListLink'
                             onClick={() => {
                                 history.push('/users-list')
                             }}>
@@ -126,6 +133,7 @@ const NavBar = ({ history }) => {
 
                 {storage.read('user') ?
                     <styles.item
+                        id='dashboardLink'
                         onClick={() => {
                             history.push('/dashboard')
                         }}>
@@ -137,6 +145,7 @@ const NavBar = ({ history }) => {
 
                 {storage.read('user') ?
                     <styles.item
+                        id='profileLink'
                         onClick={() => {
                             history.push('/profile')
                         }}>
@@ -147,6 +156,7 @@ const NavBar = ({ history }) => {
                 }
 
                 <styles.item
+                    id='exitLink'
                     onClick={() => {
                         storage.clear('all')
                         history.push('/login')

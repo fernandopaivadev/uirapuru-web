@@ -96,6 +96,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
 
             {isAdmin ?
                 <util.classicButton
+                    id='newDevice'
                     onClick={event => {
                         event.preventDefault()
                         setNewDevicePopup(true)
@@ -115,12 +116,13 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             ID
                         </label>
                         <input
+                            id={`deviceId${index}`}
                             defaultValue={device.id}
                             readOnly={!isAdmin}
                             maxLength='8'
                             minLength='8'
                             required
-                            onChange={ event => {
+                            onChange={event => {
                                 user.consumerUnits[
                                     consumerUnitIndex
                                 ].devices[index].id = event.target.value
@@ -137,6 +139,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             Nome
                         </label>
                         <input
+                            id={`deviceName${index}`}
                             defaultValue={device.name}
                             readOnly={!isAdmin}
                             maxLength='20'
@@ -157,6 +160,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                         {isAdmin ?
                             <styles.buttons>
                                 <util.classicButton
+                                    id={`saveDevicesList${index}`}
                                     onClick={event => {
                                         event.preventDefault()
                                         if (validateForm(`deviceForm${index}`)) {
@@ -178,6 +182,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                     Salvar
                                 </util.classicButton>
                                 <util.criticalButton
+                                    id={`deleteDevicesList${index}`}
                                     onClick={event => {
                                         event.preventDefault()
                                         setDeviceIndex(index)
@@ -191,14 +196,18 @@ const DevicesList = ({ consumerUnitIndex }) => {
                         }
 
                         {success[index] && !error[index]?
-                            <p className='success'>
+                            <p
+                                id='successMessageDevicesList'
+                                className='success'>
                                 Salvo com sucesso!
                             </p>
                             : null
                         }
 
                         {!success[index] && error[index]?
-                            <p className='error'>
+                            <p
+                                id='errorMessageDevicesList'
+                                className='error'>
                                 {errorMessage}
                             </p>
                             : null

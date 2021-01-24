@@ -25,6 +25,7 @@ const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
                         {item[subItemKey]?.map((subItem, subItemIndex) =>
                             <li key={subItemIndex}>
                                 <styles.subItemName
+                                    id={`subItem${subItemIndex}`}
                                     aria-label='Dispositivo'
                                     onClick={() => {
                                         if (setSubItemIndex) {

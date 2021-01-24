@@ -69,11 +69,12 @@ const NewUnit = ({ history }) => {
                 </styles.title>
                 <label>Número</label>
                 <input
+                    id='number'
                     name='number'
                     minLength='6'
                     maxLength='16'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .number = event.target.value
                     }}
@@ -84,11 +85,12 @@ const NewUnit = ({ history }) => {
 
                 <label>Nome da unidade consumidora</label>
                 <input
+                    id='name'
                     name='name'
                     maxLength='64'
                     minLength='8'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .name = event.target.value
                     }}
@@ -99,11 +101,12 @@ const NewUnit = ({ history }) => {
 
                 <label>Endereço</label>
                 <input
+                    id='address'
                     name='address'
                     maxLength='256'
                     minLength='10'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .address = event.target.value
                     }}
@@ -114,10 +117,11 @@ const NewUnit = ({ history }) => {
 
                 <label>CEP</label>
                 <input
+                    id='zip'
                     name='zip'
                     pattern='\d{5}-\d{3}'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .zip = getOnlyNumbers(event.target.value)
                         event.target.value = formatCEP(event.target
@@ -130,11 +134,12 @@ const NewUnit = ({ history }) => {
 
                 <label>Cidade</label>
                 <input
+                    id='city'
                     name='city'
                     maxLength='64'
                     minLength='3'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .city = event.target.value
                     }}
@@ -145,11 +150,12 @@ const NewUnit = ({ history }) => {
 
                 <label>Estado</label>
                 <input
+                    id='state'
                     name='state'
                     maxLength='64'
                     minLength='3'
                     required
-                    onChange={ event => {
+                    onChange={event => {
                         consumerUnit
                             .state = event.target.value
                     }}
@@ -165,6 +171,7 @@ const NewUnit = ({ history }) => {
                     :
                     <styles.buttons>
                         <util.classicButton
+                            id='back'
                             onClick={event => {
                                 event.preventDefault()
                                 history.push('/profile')
@@ -174,6 +181,7 @@ const NewUnit = ({ history }) => {
                         </util.classicButton>
 
                         <util.classicButton
+                            id='save'
                             onClick={event => {
                                 event.preventDefault()
                                 if (validateForm('consumerUnitForm')) {
@@ -201,7 +209,9 @@ const NewUnit = ({ history }) => {
                 }
 
                 {!success && error?
-                    <p className='error'>
+                    <p
+                        id='errorMessage'
+                        className='error'>
                         {errorMessage}
                     </p>
                     : null
