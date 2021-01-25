@@ -18,7 +18,8 @@ const config = (
         const socket = io(api.baseURL)
 
         socket.emit('auth', {
-            token: storage.read('JWT')
+            token: storage.read('JWT'),
+            userId: storage.read('user')._id
         })
 
         socket.on('auth', ({ ok }) => {
@@ -51,6 +52,7 @@ const config = (
         })
 
         socket.on('notification', async ({ event }) => {
+            console.log(`NOTIFICATION: ${event}`)
             if (['user created', 'user updated', 'user deleted']
                 .find(item => item === event)
             ) {
