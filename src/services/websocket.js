@@ -17,6 +17,10 @@ const config = (
 
         const socket = io(api.baseURL)
 
+        socket.on('disconnect', () => {
+            console.log(`WEBSOCKET DESCONECTADO: ${socket.id}`)
+        })
+
         socket.emit('auth', {
             token: storage.read('JWT'),
             userId: storage.read('user')._id
@@ -27,6 +31,8 @@ const config = (
                 socket.emit('listen', {
                     devicesList
                 })
+
+                console.log(`WEBSOCKET CONECTADO: ${socket.id}`)
             }
         })
 
@@ -52,7 +58,6 @@ const config = (
         })
 
         socket.on('notification', async ({ event }) => {
-            console.log(`NOTIFICATION: ${event}`)
             if (['user created', 'user updated', 'user deleted']
                 .find(item => item === event)
             ) {
