@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react'
 import storage from '../../services/storage'
 
 import api from '../../services/api'
+import websocket from '../../services/websocket'
 
 import styles from '../../styles/userslist'
 import util from '../../styles/util'
 
 const UsersList = ({ history }) => {
+    websocket.disconnect()
+
     const [loading, setLoading] = useState(true)
     const usersList = storage.read('users-list')?.reverse()
 

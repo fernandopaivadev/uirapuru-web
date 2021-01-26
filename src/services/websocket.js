@@ -2,6 +2,8 @@ import storage from './storage'
 import api from './api'
 import io from 'socket.io-client'
 
+let socket = {}
+
 const config = (
     consumerUnitIndex,
     realTimeBuffer,
@@ -15,10 +17,10 @@ const config = (
 
         setRealTimeBuffer(new Array(devicesList.length).fill({}))
 
-        const socket = io(api.baseURL)
+        socket = io(api.baseURL)
 
         socket.on('disconnect', () => {
-            console.log(`WEBSOCKET DESCONECTADO: ${socket.id}`)
+            console.log('WEBSOCKET DESCONECTADO')
         })
 
         socket.emit('auth', {
@@ -75,6 +77,13 @@ const config = (
     }
 }
 
+const disconnect = () => {
+    if (socket.connected) {
+        socket.disconnect()
+    }
+}
+
 export default {
-    config
+    config,
+    disconnect
 }
