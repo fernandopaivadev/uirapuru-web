@@ -21,6 +21,7 @@ const config = (
 
         socket.on('disconnect', () => {
             console.log('WEBSOCKET DESCONECTADO')
+            socket = io(api.baseURL)
         })
 
         socket.emit('auth', {
