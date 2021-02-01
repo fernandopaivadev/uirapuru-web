@@ -13,8 +13,8 @@ import {
 } from 'react-icons/bs'
 
 import {
-    FaSearch as SearchIcon
-} from 'react-icons/fa'
+    BiSearchAlt as SearchIcon
+} from 'react-icons/bi'
 
 import styles from '../../styles/plot'
 import util from '../../styles/util'
@@ -52,6 +52,18 @@ const Plot = ({ history }) => {
     const [time, setTime] = useState('00:00')
     const [period, setPeriod] = useState('24h')
     const [search, setSearch] = useState(true)
+
+    const [user, setUser] = useState({})
+    const [csvData, setCsvData] = useState({})
+    const [collection, setCollection] = useState()
+
+    useEffect(() => {
+        (async () => {
+            setUser(await storage.read('user'))
+            setCsvData(await storage.read('csv-data'))
+            setCollection(await storage.read('collection'))
+        })()
+    }, [])
 
     const getPeriod = dateString => {
         try {
@@ -113,14 +125,15 @@ const Plot = ({ history }) => {
                         end
                     ) === 'OK') {
                         setSuccess(true)
-                        setLoading(false)
                     } else {
                         setSuccess(false)
-                        setLoading(false)
-
                     }
 
+                    setCollection(await storage.read('collection'))
+                    setCsvData(await storage.read('csv-data'))
+
                     setSearch(false)
+                    setLoading(false)
                 }
             } catch (err) {
                 console.log(`ERROR LOCAL: ${err.message}`)
@@ -132,137 +145,148 @@ const Plot = ({ history }) => {
     return <>
         <NavBar />
 
-        <styles.main>
-            <Menu
-                className='menu'
-                title='Unidades'
-                items={
-                    storage.read('user').consumerUnits
-                }
-                subItemKey='devices'
-                setItemIndex={setConsumerUnitIndex}
-                setSubItemIndex={setDeviceIndex}
-            />
-
-            <styles.contentContainer>
-                <styles.datePicker>
-                    <ArrowBackIcon
-                        id='backIcon'
-                        className='icon'
-                        onClick={() => {
-                            changeDate('backward', currentDate)
-                        }}
-                    />
-                    <ArrowForwardIcon
-                        id='forwardIcon'
-                        className='icon'
-                        onClick={() => {
-                            changeDate('forward', currentDate)
-                        }}
+        {user?.consumerUnits && collection ?
+            <>
+                <styles.main>
+                    <Menu
+                        className='menu'
+                        title='Unidades'
+                        items={
+                            user.consumerUnits
+                        }
+                        subItemKey='devices'
+                        setItemIndex={setConsumerUnitIndex}
+                        setSubItemIndex={setDeviceIndex}
                     />
 
-                    <input
-                        id='datePicker'
-                        type='date'
-                        value={currentDate}
-                        onChange={event => {
-                            setCurrentDate(event.target.value)
-                        }}
-                    />
-
-                    <select
-                        id='period'
-                        onInput={event => {
-                            setPeriod(event.target.value)
-                        }}
-                    >
-                        <option value='24h'>24 horas</option>
-                        <option value='12h'>12 horas</option>
-                        <option value='6h'>6 horas</option>
-                        <option value='1h'>1 hora</option>
-                    </select>
-
-                    {!(period === '24h') ?
-                        <input
-                            id='hour'
-                            type='time'
-                            defaultValue='00:00'
-                            onInput={event => {
-                                setTime(event.target.value)
-                            }}
-                        />
-                        : null
-                    }
-                    <SearchIcon
-                        id='search'
-                        className='searchIcon'
-                        onClick={() => {
-                            setSearch(true)
-                        }}
-                    />
-                </styles.datePicker>
-
-                {!loading ?
-                    success ?
-                        storage.read('collection')?.length ?
-                            <styles.chartContainer>
-                                <Chart
-                                    collection={storage.read('collection')}
-                                />
-                            </styles.chartContainer>
-                            :
-                            <styles.empty>
-                                <p>Não há dados do dispositivo</p>
-                                <p>
-                                    &quot;
-                                    {storage.read('user')
-                                        .consumerUnits[consumerUnitIndex]
-                                        .devices[deviceIndex]
-                                        .name
-                                    }
-                                    &quot;
-                                </p>
-                            </styles.empty>
-                        :
-                        <styles.error>
-                            <p>Não foi possível obter os dados de</p>
-                            <p>
-                                &quot;
-                                {storage.read('user')
-                                    .consumerUnits[consumerUnitIndex]
-                                    .devices[deviceIndex]
-                                    .name
-                                }
-                                &quot;
-                            </p>
-                        </styles.error>
-                    :
-                    <styles.loading>
-                        <util.circularProgress/>
-                    </styles.loading>
-                }
-                <styles.buttons>
-                    <util.classicButton
-                        id='dashboard'
-                        onClick={() => {
-                            history.push('/dashboard')
-                        }}
-                    >
-                        Dashboard
-                    </util.classicButton>
-                    {!loading && storage.read('csv-data')?.length ?
-                        <util.classicButton
-                            id='export'
-                        >
-                            <Export
-                                data={storage.read('csv-data')}
+                    <styles.contentContainer>
+                        <styles.datePicker>
+                            <ArrowBackIcon
+                                id='backIcon'
+                                className='icon'
+                                onClick={() => {
+                                    changeDate('backward', currentDate)
+                                }}
                             />
-                        </util.classicButton>
-                        : null
-                    }
-                </styles.buttons>
-            </styles.contentContainer>
-        </styles.main>
+                            <ArrowForwardIcon
+                                id='forwardIcon'
+                                className='icon'
+                                onClick={() => {
+                                    changeDate('forward', currentDate)
+                                }}
+                            />
+
+                            <input
+                                id='datePicker'
+                                type='date'
+                                value={currentDate}
+                                onChange={event => {
+                                    setCurrentDate(event.target.value)
+                                }}
+                            />
+
+                            <select
+                                id='period'
+                                onInput={event => {
+                                    setPeriod(event.target.value)
+                                }}
+                            >
+                                <option value='24h'>24 horas</option>
+                                <option value='12h'>12 horas</option>
+                                <option value='6h'>6 horas</option>
+                                <option value='1h'>1 hora</option>
+                            </select>
+
+                            {!(period === '24h') ?
+                                <input
+                                    id='hour'
+                                    type='time'
+                                    defaultValue='00:00'
+                                    onInput={event => {
+                                        setTime(event.target.value)
+                                    }}
+                                />
+                                : null
+                            }
+
+                            <SearchIcon
+                                id='search'
+                                className='icon'
+                                onClick={() => {
+                                    setSearch(true)
+                                }}
+                            />
+                        </styles.datePicker>
+
+                        {!loading ?
+                            success ?
+                                collection?.length ?
+                                    <styles.chartContainer>
+                                        <Chart
+                                            collection={collection}
+                                        />
+                                    </styles.chartContainer>
+                                    :
+                                    <styles.empty>
+                                        <p>Não há dados do dispositivo</p>
+                                        <p>
+                                            &quot;
+                                            {user
+                                                .consumerUnits[consumerUnitIndex]
+                                                .devices[deviceIndex]
+                                                .name
+                                            }
+                                            &quot;
+                                        </p>
+                                    </styles.empty>
+                                :
+                                <styles.error>
+                                    <p> Não foi possível obter os dados de </p>
+                                    <p>
+                                        &quot;
+                                        {user
+                                            .consumerUnits[consumerUnitIndex]
+                                            .devices[deviceIndex]
+                                            .name
+                                        }
+                                        &quot;
+                                    </p>
+                                </styles.error>
+                            :
+                            <styles.loading>
+                                <util.circularProgress/>
+                            </styles.loading>
+                        }
+
+                        <styles.buttons>
+                            <util.classicButton
+                                id='dashboard'
+                                onClick={() => {
+                                    history.push('/dashboard')
+                                }}
+                            >
+                                Dashboard
+                            </util.classicButton>
+
+                            {!loading && csvData?.length ?
+                                <util.classicButton
+                                    id='export'
+                                >
+                                    <Export
+                                        data={csvData}
+                                    />
+                                </util.classicButton>
+                                : null
+                            }
+                        </styles.buttons>
+                    </styles.contentContainer>
+                </styles.main>
+            </>
+            :
+            <styles.loading>
+                <util.circularProgress />
+            </styles.loading>
+        }
     </>
 }
 

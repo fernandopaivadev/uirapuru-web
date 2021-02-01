@@ -9,8 +9,9 @@ const axios = create({
 })
 
 axios.interceptors.request.use(async config => {
-    if (storage.read('JWT')) {
-        config.headers.authorization = `Bearer ${storage.read('JWT')}`
+    const token = await storage.read('JWT')
+    if (token) {
+        config.headers.authorization = `Bearer ${token}`
     }
     return config
 })
@@ -32,8 +33,8 @@ const fetchDeviceData = async (
         end = end.toISOString()
     }
 
-    const device = storage.read('user')
-        .consumerUnits[consumerUnitIndex]
+    const user = await storage.read('user')
+    const device = user.consumerUnits[consumerUnitIndex]
         .devices[deviceIndex]
 
     const response = await axios.get(
@@ -88,7 +89,7 @@ const fetchDeviceData = async (
             })
 
             const csvData = dataObjects.filter(dataObject => dataObject)
-            storage.write('csv-data', csvData)
+            await storage.write('csv-data', csvData)
         }
 
         messages.forEach(({ payload }) => {
@@ -147,8 +148,8 @@ const fetchDeviceData = async (
 
 const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
     try {
-        storage.clear('collection')
-        storage.clear('csv-data')
+        await storage.clear('collection')
+        await storage.clear('csv-data')
 
         if (deviceIndex >= 0) {
             const chart = await fetchDeviceData(
@@ -160,9 +161,9 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
             )
 
             if (chart) {
-                storage.write('collection', [chart])
+                await storage.write('collection', [chart])
             } else {
-                storage.write('collection', [])
+                await storage.write('collection', [])
             }
 
             return 'OK'
@@ -193,11 +194,13 @@ const getChart = async (consumerUnitIndex, deviceIndex, begin, end) => {
 
 const getCollection = async (consumerUnitIndex, begin, end) => {
     try {
-        storage.clear('collection')
-        storage.clear('csv-data')
+        await storage.clear('collection')
+        await storage.clear('csv-data')
+
+        const user = await storage.read('user')
 
         if (consumerUnitIndex >= 0) {
-            let collection = await Promise.all(storage.read('user')
+            let collection = await Promise.all(user
                 .consumerUnits[consumerUnitIndex]
                 .devices.map(async (device, deviceIndex) =>
                     await fetchDeviceData(
@@ -211,7 +214,7 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
 
             collection = collection.filter(chart => chart)
 
-            storage.write('collection', collection)
+            await storage.write('collection', collection)
             return 'OK'
         } else {
             return 'Índice inválido'
@@ -240,16 +243,16 @@ const getCollection = async (consumerUnitIndex, begin, end) => {
 
 const getUsersList = async () => {
     try {
-        if (storage.read('access-level') === 'admin') {
+        if (await storage.read('access-level') === 'admin') {
             const response = await axios.get('/users')
 
             const { status, data: { usersList } } = response
 
             if (status === 200) {
-                storage.clear('collection')
-                storage.clear('csv-data')
+                await storage.clear('collection')
+                await storage.clear('csv-data')
 
-                storage.write('users-list', usersList)
+                await storage.write('users-list', usersList)
                 return 'OK'
             } else {
                 return 'Ocorreu um erro'
@@ -281,25 +284,25 @@ const getUsersList = async () => {
 
 const getUserData = async (_id) => {
     try {
-        if (storage.read('access-level') === 'admin' && _id) {
+        if (await storage.read('access-level') === 'admin' && _id) {
             const { status, data: { user } } = await axios.get(
                 `/user/data?_id=${_id}`
             )
 
             if (status === 200) {
-                storage.clear('collection')
-                storage.clear('csv-data')
+                await storage.clear('collection')
+                await storage.clear('csv-data')
 
-                storage.write('user', user)
+                await storage.write('user', user)
                 return 'OK'
             } else {
                 return 'Ocorreu um erro'
             }
-        } else if (storage.read('JWT')) {
+        } else if (await storage.read('JWT')) {
             const { status, data } = await axios.get('/user/data')
 
             if (status === 200) {
-                storage.write('user', data.user)
+                await storage.write('user', data.user)
                 return 'OK'
             }
         }
@@ -334,15 +337,16 @@ const login = async (username, password) => {
         const { status, data: { token } } = response
 
         if (status === 200) {
-            storage.clear('all')
-            storage.write('JWT', token)
+            await storage.clear('all')
+            await storage.write('JWT', token)
 
             if (await getUserData() === 'OK') {
-                storage.write('access-level', storage.read('user').accessLevel)
-                storage.write('username', storage.read('user').username)
+                const { accessLevel, username } = await storage.read('user')
+                await storage.write('access-level', accessLevel)
+                await storage.write('username', username)
                 return 'OK'
             } else {
-                storage.clear('all')
+                await storage.clear('all')
                 return 'Ocorreu um erro'
             }
         } else {
@@ -478,7 +482,7 @@ const createUser = async user => {
             if (await getUsersList() === 'OK') {
                 return 'OK'
             } else {
-                storage.clear('all')
+                await storage.clear('all')
                 return 'Saia e faça login novamente'
             }
         } else {
@@ -515,7 +519,7 @@ const createUser = async user => {
 
 const updateUser = async user => {
     try {
-        storage.write('user', user)
+        await storage.write('user', user)
 
         const response = await axios.put('/user/update', user)
 
@@ -557,7 +561,7 @@ const deleteUser = async _id => {
         const { status } = response
 
         if (status === 200) {
-            storage.clear('user')
+            await storage.clear('user')
 
             if (await getUsersList() === 'OK') {
                 return 'OK'

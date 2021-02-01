@@ -13,7 +13,18 @@ import NewUnit from './components/pages/NewUnit'
 
 import storage from './services/storage'
 
-const authenticated = storage.read('JWT') ?? false
+let authenticated = false
+
+;(async () => {
+    const token = await storage.read('JWT')
+
+    if (token) {
+        authenticated = true
+    } else {
+        authenticated = false
+    }
+})()
+
 const isMobile = [
     /Android/i,
     /webOS/i,

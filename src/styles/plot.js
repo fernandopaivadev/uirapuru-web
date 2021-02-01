@@ -39,21 +39,6 @@ const datePicker = styled.div`
         }
     }
 
-    .searchIcon{
-        font-size: 3.5rem;
-        color: var(--secondary-font-color);
-        border-radius: 50%;
-        padding: 0.8rem;
-        margin: 0.5rem;
-        background: var(--primary-color);
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        &:hover {
-            background: var(--primary-light-color);
-        }
-    }
-
     input, select {
         width: 20rem;
         padding: 0.3rem;
@@ -125,6 +110,7 @@ const loading = styled.div`
     align-items: center;
     justify-content: center;
     grid-row: 2/3;
+    background: var(--background-color);
 `
 
 const buttons = styled.div`

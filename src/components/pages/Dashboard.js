@@ -18,13 +18,12 @@ const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
     const [realTimeBuffer, setRealTimeBuffer] = useState([])
     const [newMessage, setNewMessage] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
-
-    const isAdmin = storage.read('access-level') === 'admin'
-
-    const theme = themes[storage.read('theme') ?? 'default']
-    const { traceColors } = theme
+    const [user, setUser] = useState({})
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [collection, setCollection] = useState([])
+    const [traceColors, setTraceColors] = useState({})
 
     useEffect(() => {
         (async () => {
@@ -32,19 +31,25 @@ const Dashboard = ({ history }) => {
 
             if (await api.getCollection(consumerUnitIndex) === 'OK') {
                 setSuccess(true)
-                setLoading(false)
             } else {
                 setSuccess(false)
-                setLoading(false)
             }
-        })()
 
-        websocket.config(
-            consumerUnitIndex,
-            realTimeBuffer,
-            setRealTimeBuffer,
-            setNewMessage
-        )
+            await websocket.config({
+                consumerUnitIndex,
+                realTimeBuffer,
+                setRealTimeBuffer,
+                setNewMessage
+            })
+
+            setUser(await storage.read('user'))
+            setIsAdmin(await storage.read('access-level') === 'admin')
+            setCollection(await storage.read('collection'))
+            const theme = themes[await storage.read('theme') ?? 'default']
+            setTraceColors(theme.traceColors)
+
+            setLoading(false)
+        })()
     }, [consumerUnitIndex])
 
     useEffect(
@@ -81,145 +86,146 @@ const Dashboard = ({ history }) => {
     return <>
         <NavBar />
 
-        {storage.read('user').consumerUnits.length > 0 ?
+        {!loading ?
             <styles.main>
-                <Menu
-                    title='Unidades'
-                    items={
-                        storage.read('user').consumerUnits
-                    }
-                    subItemKey='devices'
-                    setItemIndex={setConsumerUnitIndex}
-                    setSubItemIndex={(deviceIndex) => {
-                        history.push(
+                {user?.consumerUnits?.length > 0 ?
+                    <styles.main>
+                        <Menu
+                            title='Unidades'
+                            items={
+                                user?.consumerUnits
+                            }
+                            subItemKey='devices'
+                            setItemIndex={setConsumerUnitIndex}
+                            setSubItemIndex={(deviceIndex) => {
+                                history.push(
                         `/plot?consumerUnitIndex=${
                             consumerUnitIndex
                         }&deviceIndex=${
                             deviceIndex
                         }`)
-                    }}
-                />
+                            }}
+                        />
 
-                <styles.container>
-                    {storage.read('user')?.consumerUnits[
-                        consumerUnitIndex
-                    ].devices.length > 0 ?
-                        <styles.devices>
-                            {storage.read('user')
-                                ?.consumerUnits[consumerUnitIndex]
-                                ?.devices.map((device, deviceIndex) =>
-                                    <styles.deviceIcon
-                                        id={`deviceIcon${deviceIndex}`}
-                                        aria-label={`ID: ${device.id}`}
-                                        key={deviceIndex}
-                                        onClick={() => {
-                                            history.push(
+                        <styles.container>
+                            {user?.consumerUnits[
+                                consumerUnitIndex
+                            ].devices.length > 0 ?
+                                <styles.devices>
+                                    {user
+                                        ?.consumerUnits[consumerUnitIndex]
+                                        ?.devices.map((device, deviceIndex) =>
+                                            <styles.deviceIcon
+                                                id={`deviceIcon${deviceIndex}`}
+                                                aria-label={`ID: ${device.id}`}
+                                                key={deviceIndex}
+                                                onClick={() => {
+                                                    history.push(
                                         `/plot?consumerUnitIndex=${
                                             consumerUnitIndex
                                         }&deviceIndex=${
                                             deviceIndex
                                         }`)
-                                        }}
-                                    >
-                                        <FaSolarPanel
-                                            className='panel-icon'
-                                        />
-                                        <p className='device-name'>
-                                            {device.name}
-                                        </p>
+                                                }}
+                                            >
+                                                <FaSolarPanel
+                                                    className='panel-icon'
+                                                />
+                                                <p className='device-name'>
+                                                    {device.name}
+                                                </p>
 
-                                        <ul className='real-time'>
-                                            {Object.keys(
-                                                realTimeBuffer[deviceIndex] ?? {}
-                                            ).map((key, keyIndex) =>
-                                                <li key={keyIndex}>
-                                                    <p style={{
-                                                        color: traceColors[keyIndex]
-                                                    }}>
-                                                        {key}:
-                                                        {realTimeBuffer[
-                                                            deviceIndex
-                                                        ][key] ?? null}
-                                                        {keyToUnity(key)}
-                                                    </p>
-                                                </li>
-                                            )}
-                                        </ul>
-                                    </styles.deviceIcon>
-                                )
+                                                <ul className='real-time'>
+                                                    {Object.keys(
+                                                        realTimeBuffer[deviceIndex] ?? {}
+                                                    ).map((key, keyIndex) =>
+                                                        <li key={keyIndex}>
+                                                            <p style={{
+                                                                color: traceColors[keyIndex]
+                                                            }}>
+                                                                {key}:
+                                                                {realTimeBuffer[
+                                                                    deviceIndex
+                                                                ][key] ?? null}
+                                                                {keyToUnity(key)}
+                                                            </p>
+                                                        </li>
+                                                    )}
+                                                </ul>
+                                            </styles.deviceIcon>
+                                        )
+                                    }
+                                </styles.devices>
+                                :
+                                <styles.empty>
+                                    <p>
+                                        Não há dispositivos cadastrados
+                                    </p>
+
+                                    {isAdmin ?
+                                        <util.classicButton
+                                            onClick={() => {
+                                                history.push('/profile')
+                                            }}
+                                        >
+                                            Cadastrar dispositivo
+                                        </util.classicButton>
+                                        : null
+                                    }
+                                </styles.empty>
                             }
-                        </styles.devices>
-                        :
-                        <styles.empty>
-                            <p>
-                                Não há dispositivos cadastrados
-                            </p>
+                        </styles.container>
 
-                            {isAdmin ?
+                        {success ?
+                            collection?.length ?
+                                <styles.charts>
+                                    <Chart
+                                        collection={collection}
+                                        aspectRatio={2}
+                                    />
+                                </styles.charts>
+                                :
+                                <styles.empty>
+                                    <p>
+                                        Não há dados registrados
+                                        nas últimas 24 horas
+                                    </p>
+                                </styles.empty>
+                            :
+                            <styles.error>
+                                <p> Não foi possível obter os dados </p>
+                            </styles.error>
+                        }
+
+                    </styles.main>
+                    :
+                    <styles.noUnit id='noUnit'>
+                        {isAdmin ?
+                            <>
+                                <p>
+                                    Cadastre uma unidade consumidora
+                                </p>
                                 <util.classicButton
+                                    id='newUnit'
                                     onClick={() => {
-                                        history.push('/profile')
+                                        history.push('/new-unit')
                                     }}
                                 >
-                                Cadastrar dispositivo
+                                    Nova Unidade
                                 </util.classicButton>
-                                : null
-                            }
-                        </styles.empty>
-                    }
-                </styles.container>
-
-                {!loading ?
-                    success ?
-                        storage.read('collection')?.length ?
-                            <styles.charts>
-                                <Chart
-                                    collection={storage.read('collection')}
-                                    aspectRatio={2}
-                                />
-                            </styles.charts>
+                            </>
                             :
-                            <styles.empty>
-                                <p>
-                                    Não há dados registrados
-                                    nas últimas 24 horas
-                                </p>
-                            </styles.empty>
-                        :
-                        <styles.error>
-                            <p>Não foi possível obter os dados</p>
-                        </styles.error>
-                    :
-                    <styles.loading>
-                        <util.circularProgress/>
-                    </styles.loading>
+                            <p>
+                                Não há unidade consumidora cadastrada
+                            </p>
+                        }
+                    </styles.noUnit>
                 }
-
             </styles.main>
             :
-            <styles.noUnit
-                id='noUnit'
-            >
-                {isAdmin ?
-                    <>
-                        <p>
-                            Cadastre uma unidade consumidora
-                        </p>
-                        <util.classicButton
-                            id='newUnit'
-                            onClick={() => {
-                                history.push('/new-unit')
-                            }}
-                        >
-                            Nova Unidade
-                        </util.classicButton>
-                    </>
-                    :
-                    <p>
-                        Não há unidade consumidora cadastrada
-                    </p>
-                }
-            </styles.noUnit>
+            <styles.loading>
+                <util.circularProgress />
+            </styles.loading>
         }
     </>
 }

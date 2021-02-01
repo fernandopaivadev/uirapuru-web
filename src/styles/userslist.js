@@ -16,7 +16,7 @@ const main = styled.div`
 const container = styled.div`
     background: var(--background-color);
     min-width: 40rem;
-    min-height: 18rem;
+    min-height: 20rem;
     border-radius: 0.5rem;
     padding-bottom: 1rem;
 `
@@ -35,7 +35,7 @@ const header = styled.div`
 
 const empty = styled.div`
     width: 100%;
-    height: 100%;
+    height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;

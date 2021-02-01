@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import storage from '../../services/storage'
 
@@ -18,15 +18,19 @@ import styles from '../../styles/consumerunitform'
 import util from '../../styles/util'
 
 const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
+    const [user, setUser] = useState({})
+    const [isAdmin, setIsAdmin] = useState(false)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [modal, setModal] = useState(false)
-    const [errorMessage, setErrorMessage] = useState(
-        'Ocorreu um erro'
-    )
+    const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
 
-    const user = storage.read('user')
-    const isAdmin = storage.read('access-level') === 'admin'
+    useEffect(() => {
+        (async () => {
+            setUser(await storage.read('user'))
+            setIsAdmin(await storage.read('access-level') === 'admin')
+        })()
+    }, [])
 
     const submit = async () => {
         const result = await api.updateUser(user)
@@ -49,211 +53,214 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
         }
     }
 
-    return <styles.form id='consumerUnitForm'>
-        {modal ?
-            <Modal
-                message={'Você tem certeza?'}
-                taskOnYes={() => {
-                    user.consumerUnits.pop(consumerUnitIndex)
-                    submit()
-                    setModal(false)
-                    window.location.reload()
-                }}
-                taskOnNo={() => {
-                    setModal(false)
+    return user?.consumerUnits ?
+        <styles.form id='consumerUnitForm'>
+            {modal ?
+                <Modal
+                    message={'Você tem certeza?'}
+                    taskOnYes={() => {
+                        user?.consumerUnits.pop(consumerUnitIndex)
+                        submit()
+                        setModal(false)
+                        window.location.reload()
+                    }}
+                    taskOnNo={() => {
+                        setModal(false)
+                    }}
+                />
+                : null
+            }
+
+            <styles.title>
+            Dados da Unidade Consumidora
+            </styles.title>
+
+            <label>Número</label>
+            <input
+                id='number'
+                name='number'
+                minLength='6'
+                maxLength='16'
+                required
+                defaultValue={user
+                    ?.consumerUnits[consumerUnitIndex]
+                    ?.number ?? ''}
+                readOnly= {!user}
+                onChange={event => {
+                    user.consumerUnits[consumerUnitIndex]
+                        .number = event.target.value
                 }}
             />
-            : null
-        }
-
-        <styles.title>
-            Dados da Unidade Consumidora
-        </styles.title>
-        <label>Número</label>
-        <input
-            id='number'
-            name='number'
-            minLength='6'
-            maxLength='16'
-            required
-            defaultValue={user
-                .consumerUnits[consumerUnitIndex]
-                ?.number ?? ''}
-            readOnly= {!user}
-            onChange={event => {
-                user.consumerUnits[consumerUnitIndex]
-                    .number = event.target.value
-            }}
-        />
-        <p className='error-message'>
+            <p className='error-message'>
             Digite no mínimo 6 caracteres
-        </p>
+            </p>
 
-        <label>Nome da unidade consumidora</label>
-        <input
-            id='unitName'
-            name='name'
-            maxLength='64'
-            minLength='8'
-            required
-            defaultValue={user
-                .consumerUnits[consumerUnitIndex]
-                ?.name ?? ''}
-            readOnly= {!user}
-            onChange={event => {
-                user.consumerUnits[consumerUnitIndex]
-                    .name = event.target.value
-            }}
-        />
-        <p className='error-message'>
+            <label>Nome da unidade consumidora</label>
+            <input
+                id='unitName'
+                name='name'
+                maxLength='64'
+                minLength='8'
+                required
+                defaultValue={user
+                    ?.consumerUnits[consumerUnitIndex]
+                    ?.name ?? ''}
+                readOnly= {!user}
+                onChange={event => {
+                    user.consumerUnits[consumerUnitIndex]
+                        .name = event.target.value
+                }}
+            />
+            <p className='error-message'>
             Digite no mínimo 8 caracteres
-        </p>
+            </p>
 
-        <label>Endereço</label>
-        <input
-            id='address'
-            name='address'
-            maxLength='256'
-            minLength='10'
-            required
-            defaultValue={user
-                .consumerUnits[consumerUnitIndex]
-                ?.address ?? ''}
-            readOnly= {!user}
-            onChange={event => {
-                user.consumerUnits[consumerUnitIndex]
-                    .address = event.target.value
-            }}
-        />
-        <p className='error-message'>
+            <label>Endereço</label>
+            <input
+                id='address'
+                name='address'
+                maxLength='256'
+                minLength='10'
+                required
+                defaultValue={user
+                    ?.consumerUnits[consumerUnitIndex]
+                    ?.address ?? ''}
+                readOnly= {!user}
+                onChange={event => {
+                    user.consumerUnits[consumerUnitIndex]
+                        .address = event.target.value
+                }}
+            />
+            <p className='error-message'>
             Digite no mínimo 10 caracteres
-        </p>
+            </p>
 
-        <label>CEP</label>
-        <input
-            id='zip'
-            name='zip'
-            required
-            pattern='\d{5}-\d{3}'
-            defaultValue={formatCEP(user
-                .consumerUnits[consumerUnitIndex]?.zip) ?? ''}
-            readOnly= {!user}
-            onChange={event => {
-                user
-                    .consumerUnits[consumerUnitIndex]
-                    .zip = getOnlyNumbers(event.target.value)
-                event.target.value =  formatCEP(event.target
-                    .value)
-            }}
-        />
-        <p className='error-message'>
+            <label>CEP</label>
+            <input
+                id='zip'
+                name='zip'
+                required
+                pattern='\d{5}-\d{3}'
+                defaultValue={formatCEP(user
+                    ?.consumerUnits[consumerUnitIndex]?.zip) ?? ''}
+                readOnly= {!user}
+                onChange={event => {
+                    user
+                        .consumerUnits[consumerUnitIndex]
+                        .zip = getOnlyNumbers(event.target.value)
+                    event.target.value =  formatCEP(event.target
+                        .value)
+                }}
+            />
+            <p className='error-message'>
             CEP inválido
-        </p>
+            </p>
 
-        <label>Cidade</label>
-        <input
-            id='city'
-            name='city'
-            maxLength='64'
-            minLength='3'
-            required
-            defaultValue={user
-                .consumerUnits[consumerUnitIndex]
-                ?.city ?? ''}
-            readOnly= {!user}
-            onChange={event => {
-                user.consumerUnits[consumerUnitIndex]
-                    .city = event.target.value
-            }}
-        />
-        <p className='error-message'>
+            <label>Cidade</label>
+            <input
+                id='city'
+                name='city'
+                maxLength='64'
+                minLength='3'
+                required
+                defaultValue={user
+                    ?.consumerUnits[consumerUnitIndex]
+                    ?.city ?? ''}
+                readOnly= {!user}
+                onChange={event => {
+                    user.consumerUnits[consumerUnitIndex]
+                        .city = event.target.value
+                }}
+            />
+            <p className='error-message'>
             Digite no mínimo 3 caracteres
-        </p>
+            </p>
 
-        <label>Estado</label>
-        <input
-            id='state'
-            name='state'
-            maxLength='64'
-            minLength='3'
-            required
-            defaultValue={user
-                .consumerUnits[consumerUnitIndex]
-                ?.state ?? ''}
-            readOnly= {!user}
-            onChange={event => {
-                user.consumerUnits[consumerUnitIndex]
-                    .state = event.target.value
-            }}
-        />
-        <p className='error-message'>
+            <label>Estado</label>
+            <input
+                id='state'
+                name='state'
+                maxLength='64'
+                minLength='3'
+                required
+                defaultValue={user
+                    ?.consumerUnits[consumerUnitIndex]
+                    ?.state ?? ''}
+                readOnly= {!user}
+                onChange={event => {
+                    user.consumerUnits[consumerUnitIndex]
+                        .state = event.target.value
+                }}
+            />
+            <p className='error-message'>
             Digite no mínimo 3 caracteres
-        </p>
+            </p>
 
-        <styles.buttons>
-            {isAdmin ?
-                <util.criticalButton
-                    id='deleteUnit'
-                    onClick={event => {
-                        event.preventDefault()
-                        setModal(true)
-                    }}
-                >
+            <styles.buttons>
+                {isAdmin ?
+                    <util.criticalButton
+                        id='deleteUnit'
+                        onClick={event => {
+                            event.preventDefault()
+                            setModal(true)
+                        }}
+                    >
                     Excluir Unidade
-                </util.criticalButton>
-                : null
-            }
-            {isAdmin ?
-                <util.classicButton
-                    id='newUnit'
-                    onClick = { () => {
-                        history.push('/new-unit')
-                    }}
-                >
+                    </util.criticalButton>
+                    : null
+                }
+                {isAdmin ?
+                    <util.classicButton
+                        id='newUnit'
+                        onClick = { () => {
+                            history.push('/new-unit')
+                        }}
+                    >
                     Nova Unidade
-                </util.classicButton>
-                : null
-            }
-            {isAdmin ?
-                <util.classicButton
-                    id='saveUnit'
-                    onClick={event => {
-                        event.preventDefault()
-                        if (validateForm('consumerUnitForm')) {
-                            submit()
-                        } else {
-                            setErrorMessage('Preencha todos os campos')
-                            setError(true)
+                    </util.classicButton>
+                    : null
+                }
+                {isAdmin ?
+                    <util.classicButton
+                        id='saveUnit'
+                        onClick={event => {
+                            event.preventDefault()
+                            if (validateForm('consumerUnitForm')) {
+                                submit()
+                            } else {
+                                setErrorMessage('Preencha todos os campos')
+                                setError(true)
 
-                            setTimeout(() => {
-                                setError(false)
-                            }, 3000)
-                        }
-                    }}
-                >
+                                setTimeout(() => {
+                                    setError(false)
+                                }, 3000)
+                            }
+                        }}
+                    >
                     Salvar
-                </util.classicButton>
+                    </util.classicButton>
+                    : null
+                }
+            </styles.buttons>
+
+            {success && !error?
+                <p
+                    id='successMessageUnit'
+                    className='success'>
+                Salvo com sucesso!
+                </p>
                 : null
             }
-        </styles.buttons>
-
-        {success && !error?
-            <p
-                id='successMessageUnit'
-                className='success'>
-                Salvo com sucesso!
-            </p>
-            : null
-        }
-        {!success && error?
-            <p
-                id='errorMessageUnit'
-                className='error'>
-                { errorMessage }
-            </p>
-            : null
-        }
-    </styles.form>
+            {!success && error?
+                <p
+                    id='errorMessageUnit'
+                    className='error'>
+                    { errorMessage }
+                </p>
+                : null
+            }
+        </styles.form>
+        : null
 }
 
 export default withRouter(ConsumerUnitForm)

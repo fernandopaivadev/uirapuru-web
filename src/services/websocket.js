@@ -4,14 +4,16 @@ import io from 'socket.io-client'
 
 let socket = {}
 
-const config = (
+const config = async ({
     consumerUnitIndex,
     realTimeBuffer,
     setRealTimeBuffer,
     setNewMessage
-) => {
+}) => {
     try {
-        const devicesList = storage.read('user')
+        const user = await storage.read('user')
+        const token = await storage.read('JWT')
+        const devicesList = user
             .consumerUnits[consumerUnitIndex]
             .devices.map(device => device.id)
 
@@ -25,8 +27,8 @@ const config = (
         })
 
         socket.emit('auth', {
-            token: storage.read('JWT'),
-            userId: storage.read('user')._id
+            token: token,
+            userId: user._id
         })
 
         socket.on('auth', ({ ok }) => {
@@ -64,7 +66,7 @@ const config = (
             if (['user created', 'user updated', 'user deleted']
                 .find(item => item === event)
             ) {
-                const result = await api.getUserData(storage.read('user')._id)
+                const result = await api.getUserData(user._id)
 
                 if (result === 'OK') {
                     window.location.reload()

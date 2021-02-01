@@ -17,7 +17,13 @@ import styles from '../../styles/newunit'
 import util from '../../styles/util'
 
 const NewUnit = ({ history }) => {
-    const user = storage.read('user')
+    let user = {}
+
+    useEffect(() => {
+        (async () => {
+            user = await storage.read('user')
+        })()
+    }, [])
 
     const [consumerUnit] = useState({
         number: '',

@@ -47,22 +47,26 @@ const themes = {
     }
 }
 
-const applyTheme = themeName => {
-    const html = document.querySelector('html')
-    const theme = themes[themeName]
+const applyTheme = async themeName => {
+    try {
+        const html = document.querySelector('html')
+        const theme = themes[themeName]
 
-    html.style.setProperty('--primary-color',        theme.primaryColor)
-    html.style.setProperty('--primary-light-color',  theme.primaryLightColor)
-    html.style.setProperty('--secondary-color',      theme.secondaryColor)
-    html.style.setProperty('--primary-font-color',   theme.primaryFontColor)
-    html.style.setProperty('--secondary-font-color', theme.secondaryFontColor)
-    html.style.setProperty('--background-color',     theme.backgroundColor)
-    html.style.setProperty('--error-color',          theme.errorColor)
-    html.style.setProperty('--error-light-color',    theme.errorLightColor)
-    html.style.setProperty('--neutral-color',        theme.neutralColor)
-    html.style.setProperty('--hovered-color',        theme.hoveredColor)
+        html.style.setProperty('--primary-color',        theme.primaryColor)
+        html.style.setProperty('--primary-light-color',  theme.primaryLightColor)
+        html.style.setProperty('--secondary-color',      theme.secondaryColor)
+        html.style.setProperty('--primary-font-color',   theme.primaryFontColor)
+        html.style.setProperty('--secondary-font-color', theme.secondaryFontColor)
+        html.style.setProperty('--background-color',     theme.backgroundColor)
+        html.style.setProperty('--error-color',          theme.errorColor)
+        html.style.setProperty('--error-light-color',    theme.errorLightColor)
+        html.style.setProperty('--neutral-color',        theme.neutralColor)
+        html.style.setProperty('--hovered-color',        theme.hoveredColor)
 
-    storage.write('theme', themeName)
+        await storage.write('theme', themeName)
+    } catch (err) {
+        console.log(`ERROR LOCAL: TEMA > ${err.message}`)
+    }
 }
 
 export {

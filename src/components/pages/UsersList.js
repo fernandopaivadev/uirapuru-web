@@ -9,20 +9,25 @@ import styles from '../../styles/userslist'
 import util from '../../styles/util'
 
 const UsersList = ({ history }) => {
-    websocket.disconnect()
-
     const [loading, setLoading] = useState(true)
-    const usersList = storage.read('users-list')?.reverse()
+    const [usersList, setUsersList] = useState([])
 
     useEffect(() => {
         (async () => {
             if (await api.getUsersList() === 'OK') {
-                setLoading(false)
+                const _usersList = await storage
+                    .read('users-list')
+
+                if (_usersList?.length) {
+                    _usersList.reverse()
+                    setUsersList(_usersList)
+                    setLoading(false)
+                }
             } else {
                 history.push('/dashboard')
             }
         })()
-    })
+    }, [])
 
     return <styles.main>
         <styles.container>
@@ -31,6 +36,7 @@ const UsersList = ({ history }) => {
                 :
                 <styles.title>Buscando dados</styles.title>
             }
+
             <styles.header>
                 {!loading ?
                     <>
@@ -44,8 +50,8 @@ const UsersList = ({ history }) => {
                         </util.classicButton>
                         <util.classicButton
                             id='exit'
-                            onClick={() => {
-                                storage.clear('all')
+                            onClick={async () => {
+                                await storage.clear('all')
                                 history.push('/login')
                             }}
                         >
@@ -55,12 +61,13 @@ const UsersList = ({ history }) => {
                     : null
                 }
             </styles.header>
-            {usersList?.length <= 0 ?
-                <styles.empty>
-                    Não há usuários cadastrados
-                </styles.empty>
+
+            {loading ?
+                <styles.loading>
+                    <util.circularProgress/>
+                </styles.loading>
                 :
-                !loading ?
+                usersList?.length > 0 ?
                     <ul>
                         {usersList?.map((user, userIndex) =>
                             <styles.item
@@ -69,6 +76,7 @@ const UsersList = ({ history }) => {
                                 onClick={async () => {
                                     setLoading(true)
                                     if (await api.getUserData(user._id) === 'OK') {
+                                        websocket.disconnect()
                                         history.push('/dashboard')
                                     } else {
                                         if (usersList?._id === user._id) {
@@ -96,9 +104,9 @@ const UsersList = ({ history }) => {
                         )}
                     </ul>
                     :
-                    <styles.loading>
-                        <util.circularProgress/>
-                    </styles.loading>
+                    <styles.empty>
+                        <p> Não há usuários cadastrados </p>
+                    </styles.empty>
             }
         </styles.container>
     </styles.main>

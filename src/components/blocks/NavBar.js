@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
@@ -26,16 +26,26 @@ import logo from '../../assets/logo.svg'
 import { version } from '../../../package.json'
 
 const NavBar = ({ history }) => {
-    const [darkMode, setDarkMode] = useState(
-        storage.read('theme') === 'dark'
-    )
+    const [user, setUser] = useState({})
+    const [username, setUserName] = useState('')
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [darkMode, setDarkMode] = useState(false)
 
-    const toggleDarkMode = () => {
-        if (storage.read('theme') === 'dark') {
-            applyTheme('default')
+    useEffect(() => {
+        (async () => {
+            setUser(await storage.read('user'))
+            setUserName(await storage.read('username'))
+            setIsAdmin(await storage.read('access-level') === 'admin')
+            setDarkMode(await storage.read('theme') === 'dark')
+        })()
+    }, [])
+
+    const toggleDarkMode = async () => {
+        if (darkMode) {
+            await applyTheme('default')
             setDarkMode(false)
         } else {
-            applyTheme('dark')
+            await applyTheme('dark')
             setDarkMode(true)
         }
     }
@@ -46,7 +56,7 @@ const NavBar = ({ history }) => {
             key='logo'
             aria-label={version}
             onClick={() => {
-                if (storage.read('access-level') === 'admin') {
+                if (isAdmin) {
                     history.push('/users-list')
                 } else {
                     history.push('/dashboard')
@@ -64,7 +74,9 @@ const NavBar = ({ history }) => {
             key='navigation'
         >
             <styles.toggle
-                onClick={toggleDarkMode}
+                onClick={async () => {
+                    await toggleDarkMode()
+                }}
             >
                 <DarkModeIcon
                     className='icon'
@@ -81,22 +93,22 @@ const NavBar = ({ history }) => {
                 }
             </styles.toggle>
             <styles.username>
-                {storage.read('access-level') === 'admin'
+                {isAdmin
                 &&
-                !(storage.read('username') === storage.read('user').username)
+                !(username === user.username)
                     ?
-                        `${storage.read('username')} | `
+                        `${username} | `
                     : null
                 }
-                {storage.read('user')?.username ?? ''}
+                {user?.username ?? ''}
             </styles.username>
 
-            {storage.read('user') ?
+            {user ?
                 <styles.avatar
                     id='avatar'
                     aria-label='Menu'
                 >
-                    { storage.read('user')?.username?.split('')[0].toUpperCase()}
+                    {user?.username?.split('')[0].toUpperCase()}
                 </styles.avatar>
                 : null
             }
@@ -106,18 +118,18 @@ const NavBar = ({ history }) => {
             >
                 <styles.userInfo>
                     <styles.profileAvatar>
-                        { storage.read('user')?.username?.split('')[0].toUpperCase()}
+                        { user?.username?.split('')[0].toUpperCase()}
                     </styles.profileAvatar>
 
                     <styles.textInfo>
                         <p className='username'>
-                            {storage.read('user')?.username || 'Administrador'}
+                            {user?.username || 'Administrador'}
                         </p>
-                        <p className='email'>{storage.read('user')?.email}</p>
+                        <p className='email'>{user?.email}</p>
                     </styles.textInfo>
                 </styles.userInfo>
 
-                {storage.read('access-level') === 'admin' ?
+                {isAdmin ?
                     <>
                         <styles.item
                             id='usersListLink'
@@ -131,7 +143,7 @@ const NavBar = ({ history }) => {
                     : null
                 }
 
-                {storage.read('user') ?
+                {user ?
                     <styles.item
                         id='dashboardLink'
                         onClick={() => {
@@ -143,7 +155,7 @@ const NavBar = ({ history }) => {
                     : null
                 }
 
-                {storage.read('user') ?
+                {user ?
                     <styles.item
                         id='profileLink'
                         onClick={() => {
@@ -157,8 +169,8 @@ const NavBar = ({ history }) => {
 
                 <styles.item
                     id='exitLink'
-                    onClick={() => {
-                        storage.clear('all')
+                    onClick={async () => {
+                        await storage.clear('all')
                         history.push('/login')
                         window.location.reload()
                     }}>

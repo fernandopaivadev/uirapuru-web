@@ -14,21 +14,27 @@ import styles from '../../styles/newdevice'
 import util from '../../styles/util'
 
 const NewDevice = ({ consumerUnitIndex, exit }) => {
+    const [user, setUser] = useState({})
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(
         'Erro no processamento do formulário'
     )
 
-    const user = storage.read('user')
     const device = {
         id: '',
         name: ''
     }
 
     useEffect(() => {
+        (async () => {
+            setUser(await storage.read('user'))
+        })()
+    }, [])
+
+    useEffect(() => {
         setFormsValidation()
-    })
+    }, [])
 
     const submit = async () => {
         const result = await api.updateUser(user)

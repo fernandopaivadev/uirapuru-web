@@ -17,72 +17,75 @@ const Chart = ({ collection, aspectRatio, fontSize, pointSize }) => {
         pointSize = 6
     }
 
-    const theme = themes[storage.read('theme') ?? 'default']
-    const { traceColors } = theme
-
     useEffect(() => {
-        collection.forEach(({ datasets, labels }, index) => {
-            datasets.forEach((dataset, index) => {
-                dataset.borderColor = traceColors[index]
-                dataset.backgroundColor = `${traceColors[index]}1f`
-                dataset.pointBorderColor = traceColors[index]
-                dataset.pointBackgroundColor = traceColors[index]
-                dataset.borderWidth = 1.5
-                dataset.pointHoverRadius = pointSize
-                dataset.pointRadius = pointSize
-                dataset.fill = true
-                dataset.cubicInterpolationMode = 'linear'
-            })
+        (async () => {
+            const themeName = await storage.read('theme')
+            const theme = themes[themeName ?? 'default']
 
-            const context = document.querySelector(
+            const { traceColors } = theme
+
+            collection.forEach(({ datasets, labels }, index) => {
+                datasets.forEach((dataset, index) => {
+                    dataset.borderColor = traceColors[index]
+                    dataset.backgroundColor = `${traceColors[index]}1f`
+                    dataset.pointBorderColor = traceColors[index]
+                    dataset.pointBackgroundColor = traceColors[index]
+                    dataset.borderWidth = 1.5
+                    dataset.pointHoverRadius = pointSize
+                    dataset.pointRadius = pointSize
+                    dataset.fill = true
+                    dataset.cubicInterpolationMode = 'linear'
+                })
+
+                const context = document.querySelector(
                 `#chart-${index}`
-            ).getContext('2d')
+                ).getContext('2d')
 
-            new ChartJS(context, {
-                type: 'line',
-                data: {
-                    labels,
-                    datasets
-                },
-                options: {
-                    animation: false,
-                    devicePixelRatio: 2,
-                    responsive: true,
-                    aspectRatio: aspectRatio ?? 2.4,
-                    maintainAspectRatio: true,
-                    legend: {
-                        labels: {
-                            boxWidth: 10,
-                            fontColor: theme.primaryFontColor,
-                            fontSize
+                new ChartJS(context, {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets
+                    },
+                    options: {
+                        animation: false,
+                        devicePixelRatio: 2,
+                        responsive: true,
+                        aspectRatio: aspectRatio ?? 2.4,
+                        maintainAspectRatio: true,
+                        legend: {
+                            labels: {
+                                boxWidth: 10,
+                                fontColor: theme.primaryFontColor,
+                                fontSize
+                            }
+                        },
+                        tooltips: {
+                            mode: 'index',
+                            axis: 'y',
+                            backgroundColor: '#333',
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    min: -500,
+                                    max: 1500,
+                                    fontSize,
+                                    fontColor: theme.primaryFontColor
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    fontSize,
+                                    fontColor: theme.primaryFontColor
+                                }
+                            }]
                         }
-                    },
-                    tooltips: {
-                        mode: 'index',
-                        axis: 'y',
-                        backgroundColor: '#333',
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                min: -500,
-                                max: 1500,
-                                fontSize,
-                                fontColor: theme.primaryFontColor
-                            }
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                fontSize,
-                                fontColor: theme.primaryFontColor
-                            }
-                        }]
                     }
-                }
-            })
-        })
-    })
+                })
+            })        })()
+    }, [])
 
     return <styles.main
         id='chart'
