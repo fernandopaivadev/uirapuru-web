@@ -7,8 +7,8 @@ fixture('/login').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
 
-const isUserRegistered = ClientFunction((username, storage) => {
-    const usersList = storage.read('users-list')
+const isUserRegistered = ClientFunction(async (username, storage) => {
+    const usersList = await storage.read('users-list')
 
     const user = usersList.find(user => user.username === username)
 
@@ -19,8 +19,8 @@ const isUserRegistered = ClientFunction((username, storage) => {
     }
 })
 
-const isConsumerUnitRegistered = ClientFunction((storage, number) => {
-    const user = storage.read('user')
+const isConsumerUnitRegistered = ClientFunction(async (storage, number) => {
+    const user = await storage.read('user')
 
     const consumerUnit = user.consumerUnits.find(consumerUnit =>
         consumerUnit.number === number
@@ -108,7 +108,7 @@ test('Admin Level Company User Test', async t => {
         .click('#save')
         .wait(10000)
         .expect(getPageUrl()).contains('users-list')
-        .expect(isUserRegistered('usercompany', storage)).ok()
+        .expect(await isUserRegistered('usercompany', storage)).ok()
         //----------------------------------------------------------------------
 
         //-ACESSA O USUÁRIO RECÉM CADASTRADO NA USERS LIST----------------------
@@ -176,7 +176,7 @@ test('Admin Level Company User Test', async t => {
         //----------------------------------------------------------------------
 
         //-VERIFICA SE O CADASTRO FOI BEM SUCEDIDO------------------------------
-        .expect(isConsumerUnitRegistered(storage, '123456')).ok()
+        .expect(await isConsumerUnitRegistered(storage, '123456')).ok()
         //----------------------------------------------------------------------
 
         //-CRIA NOVO DISPOSITIVO------------------------------------------------
@@ -427,7 +427,7 @@ test('Admin Level Company User Test', async t => {
         .click('#yes')
 
         .expect(getPageUrl()).contains('/users-list')
-        .expect(isUserRegistered('usercompany', storage)).notOk()
+        .expect(await isUserRegistered('usercompany', storage)).notOk()
         //----------------------------------------------------------------------
 
         //-VERIFICA O BOTÃO SAIR NA USERS LIST----------------------------------

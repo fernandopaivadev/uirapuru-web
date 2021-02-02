@@ -5,7 +5,6 @@ fixture('/login').page(TEST_URL)
 
 const getPageUrl = ClientFunction(() => window.location.href)
 
-
 test('User Level Person/Company User Test', async t => {
     await t
         //-LOGIN----------------------------------------------------------------
