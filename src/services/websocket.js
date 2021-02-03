@@ -63,7 +63,7 @@ const config = async ({
         })
 
         socket.on('notification', async ({ event }) => {
-            if (['user created', 'user updated', 'user deleted']
+            if (['user created', 'user updated']
                 .find(item => item === event)
             ) {
                 const result = await api.getUserData(user._id)
@@ -72,6 +72,19 @@ const config = async ({
                     window.location.reload()
                 } else {
                     console.log('ERRO LOCAL: DADOS DE USUÁRIO DESATUALIZADOS')
+                }
+            } else if (event === 'user deleted') {
+                const isAdmin = user.accessLevel === 'admin'
+
+                if(isAdmin) {
+                    window.location.replace(
+                    `${window.location.href.split('#')[0]}#/users-list`
+                    )
+                } else {
+                    await storage.clear('all')
+                    window.location.replace(
+                    `${window.location.href.split('#')[0]}#/users-list`
+                    )
                 }
             }
         })
