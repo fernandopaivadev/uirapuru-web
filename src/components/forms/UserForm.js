@@ -183,7 +183,7 @@ const UserForm = () => {
                     name='cnpj'
                     required
                     pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
-                    defaultValue={formatCNPJ(user?.company?.cnpj) ?? '--'}
+                    defaultValue={formatCNPJ(user?.company?.cnpj)}
                     readOnly={!isAdmin}
                     onChange={event => {
                         user.company.cnpj = getOnlyNumbers(
