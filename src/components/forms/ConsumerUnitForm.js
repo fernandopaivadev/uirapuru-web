@@ -41,6 +41,7 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
 
             setTimeout(() => {
                 setSuccess(false)
+                window.location.reload()
             }, 2000)
         } else {
             setErrorMessage(result)
@@ -62,7 +63,6 @@ const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
                         user?.consumerUnits.pop(consumerUnitIndex)
                         submit()
                         setModal(false)
-                        window.location.reload()
                     }}
                     taskOnNo={() => {
                         setModal(false)
