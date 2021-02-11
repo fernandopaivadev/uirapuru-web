@@ -20,11 +20,10 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
     const [errorMessage, setErrorMessage] = useState(
         'Erro no processamento do formulário'
     )
-
-    const device = {
+    const [device, setDevice] = useState({
         id: '',
         name: ''
-    }
+    })
 
     useEffect(() => {
         (async () => {
@@ -69,7 +68,10 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                     required
                     pattern='[A-Z0-9]{8}'
                     onChange={event => {
-                        device.id = event.target.value
+                        setDevice({
+                            id: event.target.value,
+                            name: device.name
+                        })
                         event.target.value = formatDeviceID(
                             event.target.value
                         )
@@ -86,7 +88,10 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
                     minLength='6'
                     required
                     onChange={event => {
-                        device.name = event.target.value
+                        setDevice({
+                            id: device.id,
+                            name: event.target.value
+                        })
                     }}
                 />
                 <p className='error-message'>

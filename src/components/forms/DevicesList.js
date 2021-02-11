@@ -99,7 +99,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
 
             <styles.header>
                 <styles.title>
-                Dispositivos
+                    Dispositivos
                 </styles.title>
 
                 {isAdmin ?
@@ -110,19 +110,18 @@ const DevicesList = ({ consumerUnitIndex }) => {
                             setNewDevicePopup(true)
                         }}
                     >
-                    Novo dispositivo
+                        Novo dispositivo
                     </util.classicButton>
                     : null
                 }
             </styles.header>
 
-            <ul>{user
-                ?.consumerUnits[consumerUnitIndex]
+            <ul>{user?.consumerUnits[consumerUnitIndex]
                 .devices.map((device, index) =>
                     <li key={index}>
                         <styles.deviceForm id={`deviceForm${index}`}>
                             <label>
-                            ID
+                                ID
                             </label>
                             <input
                                 id={`deviceId${index}`}
@@ -141,11 +140,11 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                 }}
                             />
                             <p className='error-message'>
-                            ID inválido
+                                ID inválido
                             </p>
 
                             <label>
-                            Nome
+                                Nome
                             </label>
                             <input
                                 id={`deviceName${index}`}
@@ -163,7 +162,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                 }}
                             />
                             <p className='error-message'>
-                            Digite no mínimo 6 caracteres
+                                Digite no mínimo 6 caracteres
                             </p>
 
                             {isAdmin ?
@@ -188,7 +187,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                             }
                                         }}
                                     >
-                                    Salvar
+                                        Salvar
                                     </util.classicButton>
                                     <util.criticalButton
                                         id={`deleteDevicesList${index}`}
@@ -198,7 +197,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                             setModal(true)
                                         }}
                                     >
-                                    Excluir
+                                        Excluir
                                     </util.criticalButton>
                                 </styles.buttons>
                                 : null
@@ -208,7 +207,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
                                 <p
                                     id='successMessageDevicesList'
                                     className='success'>
-                                Salvo com sucesso!
+                                    Salvo com sucesso!
                                 </p>
                                 : null
                             }

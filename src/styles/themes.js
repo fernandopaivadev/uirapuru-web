@@ -65,7 +65,7 @@ const applyTheme = async themeName => {
 
         await storage.write('theme', themeName)
     } catch (err) {
-        console.log(`ERROR LOCAL: TEMA > ${err.message}`)
+        console.log(`ERRO LOCAL: TEMA > ${err.message}`)
     }
 }
 

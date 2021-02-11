@@ -93,7 +93,7 @@ const Plot = ({ history }) => {
 
             return [begin.toISOString(), end.toISOString()]
         } catch (err) {
-            console.log(`ERROR LOCAL: ${err.message}`)
+            console.log(`ERRO LOCAL: ${err.message}`)
         }
     }
 
@@ -136,7 +136,7 @@ const Plot = ({ history }) => {
                     setLoading(false)
                 }
             } catch (err) {
-                console.log(`ERROR LOCAL: ${err.message}`)
+                console.log(`ERRO LOCAL: ${err.message}`)
             }
         }
         )()
