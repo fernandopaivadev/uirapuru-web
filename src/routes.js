@@ -11,20 +11,6 @@ import UsersList from './components/pages/UsersList'
 import NewUser from './components/pages/NewUser'
 import NewUnit from './components/pages/NewUnit'
 
-import storage from './services/storage'
-
-let authenticated = false
-
-;(async () => {
-    const token = await storage.read('JWT')
-
-    if (token) {
-        authenticated = true
-    } else {
-        authenticated = false
-    }
-})()
-
 const isMobile = [
     /Android/i,
     /webOS/i,
@@ -39,7 +25,7 @@ if (isMobile) {
     window.location.replace('https://m.techamazon.tech')
 }
 
-const Routes = () => <Router>
+const Routes = async () => <Router>
     <Switch>
         <Route path='/login' exact component={Login} />
         <Route path='/forgot-password' exact component={ForgotPassword} />
@@ -50,7 +36,7 @@ const Routes = () => <Router>
         <Route path='/users-list' exact component={UsersList} />
         <Route path='/new-user' exact component={NewUser} />
         <Route path='/new-unit' exact component={NewUnit} />
-        <Redirect to={authenticated ? '/dashboard' : '/login'} />
+        <Redirect to='/login' />
     </Switch>
 </Router>
 
