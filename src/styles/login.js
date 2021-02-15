@@ -64,6 +64,27 @@ const input = styled.input`
     }
 `
 
+const password = styled.div`
+    position: relative;
+    height: 4rem;
+    margin: 0.5rem 0 1.5rem 0;
+
+    input {
+        margin: 0;
+    }
+
+    .showPasswordIcon {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        z-index: 1;
+        width: 5rem;
+        cursor: pointer;
+    }
+`
+
 const container = styled.div`
     width: 28rem;
     display: flex;
@@ -118,6 +139,7 @@ export default {
     logo,
     label,
     input,
+    password,
     container,
     loading,
     link,

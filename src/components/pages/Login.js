@@ -2,14 +2,21 @@ import React, { useState } from 'react'
 
 import api from '../../services/api'
 
+import {
+    FaEye as ShowPasswordIcon,
+    FaEyeSlash as HidePasswordIcon
+} from 'react-icons/fa'
+
 import logo from '../../assets/logo.svg'
 
 import styles from '../../styles/login'
 import util from '../../styles/util'
 
+
 const Login = ({ history }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
@@ -37,14 +44,13 @@ const Login = ({ history }) => {
     const togglePassword = event => {
         event.preventDefault()
         const passwordInput = document.querySelector('#password')
-        const togglePasswordButton = document.querySelector('#toggle-password')
 
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text'
-            togglePasswordButton.innerHTML='Ocultar'
+            setShowPassword(true)
         } else {
             passwordInput.type = 'password'
-            togglePasswordButton.innerHTML='Exibir'
+            setShowPassword(false)
         }
     }
 
@@ -70,36 +76,36 @@ const Login = ({ history }) => {
                 }}
             />
 
-            <styles.container>
-                <styles.label htmlFor='password'>
-                    Senha
-                </styles.label>
-                <p
-                    id='toggle-password'
-                    onClick={event => {
-                        togglePassword(event)
+            <styles.password>
+                {showPassword ?
+                    <HidePasswordIcon
+                        className='showPasswordIcon'
+                        onClick={event => {
+                            togglePassword(event)
+                        }}
+                    />
+                    :
+                    <ShowPasswordIcon
+                        className='showPasswordIcon'
+                        onClick={event => {
+                            togglePassword(event)
+                        }}
+                    />
+                }
+                <styles.input
+                    id='password'
+                    type='password'
+                    required
+                    onChange={event => {
+                        setPassword(event.target.value)
                     }}
-                >
-                    Exibir
-                </p>
-            </styles.container>
-
-            <styles.input
-                id='password'
-                type='password'
-                required
-                onChange={event => {
-                    setPassword(event.target.value)
-                }}
-            />
+                />
+            </styles.password>
 
             {loading ?
                 <styles.loading>
-                    <util.circularProgress
-                        id='loading'
-                    />
+                    <util.circularProgress/>
                 </styles.loading>
-
                 :
                 <util.classicButton
                     id='button'
@@ -119,8 +125,10 @@ const Login = ({ history }) => {
             }
 
             {error ?
-                <styles.error>
-                    {errorMessage}
+                <styles.error
+                    id='error'
+                >
+                    <label>{errorMessage}</label>
                 </styles.error>
                 :null
             }
