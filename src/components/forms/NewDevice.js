@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-import storage from '../../services/storage'
-
 import api from '../../services/api'
 
 import {
@@ -13,8 +11,7 @@ import {
 import styles from '../../styles/newdevice'
 import util from '../../styles/util'
 
-const NewDevice = ({ consumerUnitIndex, exit }) => {
-    const [user, setUser] = useState({})
+const NewDevice = ({ user, consumerUnitIndex, exit }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(
@@ -24,12 +21,6 @@ const NewDevice = ({ consumerUnitIndex, exit }) => {
         id: '',
         name: ''
     })
-
-    useEffect(() => {
-        (async () => {
-            setUser(await storage.read('user'))
-        })()
-    }, [])
 
     useEffect(() => {
         setFormsValidation()

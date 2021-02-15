@@ -1,37 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import NewDevice from '../forms/NewDevice'
 import Modal from '../blocks/Modal'
 
 import api from '../../services/api'
-import storage from '../../services/storage'
 
 import styles from '../../styles/deviceslist'
 import util from '../../styles/util'
 
 import { validateForm, formatDeviceID } from '../../services/forms'
 
-const DevicesList = ({ consumerUnitIndex }) => {
-    const [user, setUser] = useState({})
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [numberOfDevices, setNumberOfDevices] = useState(0)
+const DevicesList = ({ user, consumerUnitIndex }) => {
+    const [isAdmin] = useState(user.accessLevel === 'admin')
+    const [numberOfDevices] = useState(user.consumerUnits[consumerUnitIndex]
+        .devices.length)
     const [newDevicePopup, setNewDevicePopup] = useState(false)
     const [deviceIndex, setDeviceIndex] = useState()
     const [modal, setModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
     const [success, setSuccess] = useState(new Array(numberOfDevices).fill(false))
     const [error, setError] = useState(new Array(numberOfDevices).fill(false))
-
-    useEffect(() => {
-        (async () => {
-            const _user = await storage.read('user')
-            setUser(_user)
-            setIsAdmin(await storage.read('access-level') === 'admin')
-            setNumberOfDevices(
-                _user.consumerUnits[consumerUnitIndex]
-                    .devices.length)
-        })()
-    }, [])
 
     const toggleSuccess = (index, value) => {
         const _success = success
@@ -70,6 +58,7 @@ const DevicesList = ({ consumerUnitIndex }) => {
         <styles.devicesList>
             {newDevicePopup ?
                 <NewDevice
+                    user={user}
                     consumerUnitIndex={
                         consumerUnitIndex
                     }

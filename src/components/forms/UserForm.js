@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react'
-
-import storage from '../../services/storage'
+import React, { useState } from 'react'
 
 import api from '../../services/api'
 
@@ -18,21 +16,13 @@ import {
 import styles from '../../styles/userform'
 import util from '../../styles/util'
 
-const UserForm = () => {
-    const [user, setUser] = useState({})
-    const [isAdmin, setIsAdmin] = useState(false)
+const UserForm = ({ user }) => {
+    const [isAdmin] = useState(user.accessLevel === 'admin')
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(
         'Ocorreu um erro'
     )
-
-    useEffect(() => {
-        (async () => {
-            setUser(await storage.read('user'))
-            setIsAdmin(await storage.read('access-level') === 'admin')
-        })()
-    }, [])
 
     const submit = async () => {
         const result = await api.updateUser(user)

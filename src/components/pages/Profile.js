@@ -15,7 +15,7 @@ import styles from '../../styles/profile'
 import util from '../../styles/util'
 
 const Profile = ({ history }) => {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState()
     const [isAdmin, setIsAdmin] = useState(false)
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [modal, setModal] = useState(false)
@@ -76,10 +76,13 @@ const Profile = ({ history }) => {
                     setItemIndex={setConsumerUnitIndex}
                 />
 
-                <UserForm />
+                <UserForm
+                    user={user}
+                />
 
                 {consumerUnitIndex >= 0 ?
                     <ConsumerUnitForm
+                        user={user}
                         consumerUnitIndex={consumerUnitIndex}
                     />
                     :
@@ -104,6 +107,7 @@ const Profile = ({ history }) => {
 
                 {consumerUnitIndex >= 0 ?
                     <DevicesList
+                        user={user}
                         consumerUnitIndex={consumerUnitIndex}
                     />
                     :
