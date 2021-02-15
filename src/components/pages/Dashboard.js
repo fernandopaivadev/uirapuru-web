@@ -87,7 +87,7 @@ const Dashboard = ({ history }) => {
         <NavBar />
 
         {!loading ?
-            <styles.main>
+            <>
                 {user?.consumerUnits?.length > 0 ?
                     <styles.main>
                         <Menu
@@ -221,7 +221,7 @@ const Dashboard = ({ history }) => {
                         }
                     </styles.noUnit>
                 }
-            </styles.main>
+            </>
             :
             <styles.loading>
                 <util.circularProgress />

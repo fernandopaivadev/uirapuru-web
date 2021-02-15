@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { themes } from '../../styles/themes'
+import { themes } from '../../../styles/themes'
 
 import {
     FaThermometerThreeQuarters,
@@ -9,12 +9,13 @@ import {
     FaEllipsisH
 } from 'react-icons/fa'
 
-import styles from '../../styles/overview'
+import styles from '../../../styles/overview'
 
 const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
     <styles.main>
         {t1 !== undefined ?
             <styles.value
+                data-testid='t1'
                 style={{
                     borderColor: themes.default.traceColors[0]
                 }}
@@ -29,13 +30,14 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     T:
                 </p>
                 <p className='payload'>
-                    {t1} °C
+                    {t1} <p>°C</p>
                 </p>
             </styles.value>
             : null
         }
         {h1 !== undefined ?
             <styles.value
+                data-testid='h1'
                 style={{
                     borderColor: themes.default.traceColors[1]
                 }}
@@ -50,13 +52,14 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                      HRA:
                 </p>
                 <p className='payload'>
-                    {h1} %
+                    {h1} <p>%</p>
                 </p>
             </styles.value>
             : null
         }
         {v1 !== undefined ?
             <styles.value
+                data-testid='v1'
                 style={{
                     borderColor: themes.default.traceColors[2]
                 }}
@@ -71,13 +74,14 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     Vca:
                 </p>
                 <p className='payload'>
-                    {v1} V
+                    {v1} <p>V</p>
                 </p>
             </styles.value>
             : null
         }
         {i1 !== undefined ?
             <styles.value
+                data-testid='i1'
                 style={{
                     borderColor: themes.default.traceColors[3]
                 }}
@@ -92,13 +96,14 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     Ica:
                 </h1>
                 <h1 className='payload'>
-                    {i1} A
+                    {i1} <p>A</p>
                 </h1>
             </styles.value>
             : null
         }
         {v2 !== undefined ?
             <styles.value
+                data-testid='v2'
                 style={{
                     borderColor: themes.default.traceColors[4]
                 }}
@@ -113,13 +118,14 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                             Vcc:
                 </p>
                 <p className='payload'>
-                    {v2} V
+                    {v2} <p>V</p>
                 </p>
             </styles.value>
             :null
         }
         {i2 !== undefined?
             <styles.value
+                data-testid='i2'
                 style={{
                     borderColor: themes.default.traceColors[5]
                 }}
@@ -134,7 +140,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     Icc:
                 </h1>
                 <h1 className='payload'>
-                    {i2} A
+                    {i2} <p>A</p>
                 </h1>
             </styles.value>
             : null
