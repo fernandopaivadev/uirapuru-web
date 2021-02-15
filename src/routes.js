@@ -25,7 +25,7 @@ if (isMobile) {
     window.location.replace('https://m.techamazon.tech')
 }
 
-const Routes = async () => <Router>
+const Routes = () => <Router>
     <Switch>
         <Route path='/login' exact component={Login} />
         <Route path='/forgot-password' exact component={ForgotPassword} />
