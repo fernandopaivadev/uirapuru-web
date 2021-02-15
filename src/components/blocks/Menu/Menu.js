@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from '../../styles/menu'
+import styles from '../../../styles/menu'
 
 const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
     <styles.main>

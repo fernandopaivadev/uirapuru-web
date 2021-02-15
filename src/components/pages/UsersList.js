@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import storage from '../../services/storage'
 
 import api from '../../services/api'
@@ -32,16 +31,24 @@ const UsersList = ({ history }) => {
     return <styles.main>
         <styles.container>
             {!loading ?
-                <styles.title>Usuários</styles.title>
+                <styles.title
+                    data-testid='users'
+                >
+                    Usuários
+                </styles.title>
                 :
-                <styles.title>Buscando dados</styles.title>
+                <styles.title
+                    data-testid='searching'
+                >
+                    Buscando dados
+                </styles.title>
             }
 
             <styles.header>
                 {!loading ?
                     <>
                         <util.classicButton
-                            id='buttonNewUser'
+                            data-testid='buttonNewUser'
                             onClick={() => {
                                 history.push('/new-user')
                             }}
@@ -55,7 +62,7 @@ const UsersList = ({ history }) => {
                                 history.push('/login')
                             }}
                         >
-                            Sair
+                            <p>Sair</p>
                         </util.classicButton>
                     </>
                     : null

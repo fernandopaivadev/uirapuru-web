@@ -4,7 +4,7 @@ import storage from '../../services/storage'
 
 import api from '../../services/api'
 
-import Modal from '../blocks/Modal'
+import Modal from '../blocks/Modal/Modal'
 
 import { withRouter } from 'react-router-dom'
 

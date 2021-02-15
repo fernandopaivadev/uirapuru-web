@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 
 import { Chart as ChartJS } from 'chart.js'
 
-import storage from '../../services/storage'
+import storage from '../../../services/storage'
 
-import { themes } from '../../styles/themes'
+import { themes } from '../../../styles/themes'
 
-import styles from '../../styles/chart'
+import styles from '../../../styles/chart'
 
 const Chart = ({ collection, aspectRatio, fontSize, pointSize }) => {
     if (!fontSize) {
@@ -89,15 +89,31 @@ const Chart = ({ collection, aspectRatio, fontSize, pointSize }) => {
 
     return <styles.main
         id='chart'
+        data-testid='main'
     >
         {collection.map((chart, chartIndex) =>
             chart ?
-                <styles.chart key={chartIndex}>
-                    <styles.title>{chart.title} </styles.title>
-                    <canvas id={`chart-${chartIndex}`}/>
+                <styles.chart
+                    data-testid='chart'
+                    key={chartIndex}
+                >
+                    <styles.title
+                        data-testid='title'
+                    >
+                        {chart.title}
+                    </styles.title>
+                    <canvas
+                        id={`chart-${chartIndex}`}
+                        data-testid={`chart-${chartIndex}`}
+                    />
                 </styles.chart>
                 :
-                <styles.error>
+                <styles.error
+                    id='error'
+                    alt='error'
+                    role='error'
+                    data-testid='error'
+                >
                     <p>Não foi possível obter os dados</p>
                 </styles.error>
         )}

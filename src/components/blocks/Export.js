@@ -31,6 +31,7 @@ const styles = {
 const Export = ({ data }) =>
     <styles.container>
         <CSVLink
+            data-testid='csv'
             className='export'
             data={data}
             filename={'uirapuru-chart.csv'}

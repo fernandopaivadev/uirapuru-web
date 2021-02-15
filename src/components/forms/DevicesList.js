@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import NewDevice from '../forms/NewDevice'
-import Modal from '../blocks/Modal'
+import Modal from '../blocks/Modal/Modal'
 
 import api from '../../services/api'
 import storage from '../../services/storage'

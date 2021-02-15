@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import NavBar from '../blocks/NavBar'
-import Menu from '../blocks/Menu'
-import Chart from '../blocks/Chart'
+import Menu from '../blocks/Menu/Menu'
+import Chart from '../blocks/Chart/Chart'
 import Export from '../blocks/Export'
 
 import storage from '../../services/storage'

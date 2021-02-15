@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
 import NavBar from '../blocks/NavBar'
-import Menu from '../blocks/Menu'
-import Modal from '../blocks/Modal'
+import Menu from '../blocks/Menu/Menu'
+import Modal from '../blocks/Modal/Modal'
 import UserForm from '../forms/UserForm'
 import ConsumerUnitForm from '../forms/ConsumerUnitForm'
 import DevicesList from '../forms/DevicesList'

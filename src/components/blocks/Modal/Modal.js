@@ -1,21 +1,27 @@
 import React from 'react'
 
-import styles from '../../styles/modal'
-import util from '../../styles/util'
+import styles from '../../../styles/modal'
+import util from '../../../styles/util'
 
 const Modal = ({ message, taskOnYes, taskOnNo }) =>
     <styles.main>
-        <styles.window>
-            <p>{ message }</p>
+        <styles.window
+            data-testid='window'
+        >
+            <p data-testid='message'>
+                { message }
+            </p>
             <div>
                 <util.classicButton
                     id='yes'
+                    data-testid='yes'
                     onClick={taskOnYes}
                 >
                     Sim
                 </util.classicButton>
                 <util.criticalButton
                     id='no'
+                    data-testid='no'
                     onClick= {taskOnNo}
                 >
                     Não

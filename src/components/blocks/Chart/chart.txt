@@ -1,0 +1,39 @@
+import React from 'react'
+import Chart from './Chart'
+import { render, screen } from '@testing-library/react'
+import 'jest-canvas-mock'
+
+const collection = [
+    {
+        title: '',
+        datasets: [],
+        labels: []
+    },
+    {
+        title: '',
+        datasets: [],
+        labels: []
+    }
+]
+
+describe('Chart', () => {
+    // test('Menssagem de erro', () => {
+    //     render(<Chart collection={[]} />)
+    //     const error = screen.findByTestId('error')
+    //     expect(error).toBeTruthy()
+    // })
+
+    test('Renderiza Chart', async () => {
+        render(<Chart collection={collection} />)
+        const chart0 = await screen.findByTestId('chart-0')
+        const chart1 = await screen.findByTestId('chart-1')
+        const title = await screen.findAllByTestId('title')
+        const chart = await screen.findAllByTestId('chart')
+        expect(chart0).toBeTruthy()
+        expect(chart1).toBeTruthy()
+        expect(title).toBeTruthy()
+        expect(chart).toBeTruthy()
+
+    })
+
+})

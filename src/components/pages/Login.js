@@ -7,6 +7,7 @@ import logo from '../../assets/logo.svg'
 import styles from '../../styles/login'
 import util from '../../styles/util'
 
+
 const Login = ({ history }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -95,11 +96,8 @@ const Login = ({ history }) => {
 
             {loading ?
                 <styles.loading>
-                    <util.circularProgress
-                        id='loading'
-                    />
+                    <util.circularProgress/>
                 </styles.loading>
-
                 :
                 <util.classicButton
                     id='button'
@@ -119,8 +117,10 @@ const Login = ({ history }) => {
             }
 
             {error ?
-                <styles.error>
-                    {errorMessage}
+                <styles.error
+                    id='error'
+                >
+                    <label>{errorMessage}</label>
                 </styles.error>
                 :null
             }
