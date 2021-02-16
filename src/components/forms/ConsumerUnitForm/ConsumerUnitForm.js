@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 
-import storage from '../../services/storage'
+import storage from '../../../services/storage'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
-import Modal from '../blocks/Modal/Modal'
+import Modal from '../../blocks/Modal/Modal'
 
 import { withRouter } from 'react-router-dom'
 
@@ -12,10 +12,10 @@ import {
     formatCEP,
     getOnlyNumbers,
     validateForm
-} from '../../services/forms'
+} from '../../../services/forms'
 
-import styles from '../../styles/consumerunitform'
-import util from '../../styles/util'
+import styles from './consumerunitform.style'
+import util from '../../../util/util.style'
 
 const ConsumerUnitForm = ({ history, consumerUnitIndex }) => {
     const [user, setUser] = useState({})

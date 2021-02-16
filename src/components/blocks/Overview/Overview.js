@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { themes } from '../../../styles/themes'
+import { themes } from '../../../util/themes.style'
 
 import {
     FaThermometerThreeQuarters,
@@ -9,7 +9,7 @@ import {
     FaEllipsisH
 } from 'react-icons/fa'
 
-import styles from '../../../styles/overview'
+import styles from './overview.style'
 
 const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
     <styles.main>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import NavBar from '../blocks/NavBar'
-import Menu from '../blocks/Menu/Menu'
-import Chart from '../blocks/Chart/Chart'
-import Export from '../blocks/Export'
+import NavBar from '../../blocks/NavBar/NavBar'
+import Menu from '../../blocks/Menu/Menu'
+import Chart from '../../blocks/Chart/Chart'
+import Export from '../../blocks/Export/Export'
 
-import storage from '../../services/storage'
-import api from '../../services/api'
+import storage from '../../../services/storage'
+import api from '../../../services/api'
 
 import {
     BsCaretLeftFill as ArrowBackIcon,
@@ -16,8 +16,8 @@ import {
     BiSearchAlt as SearchIcon
 } from 'react-icons/bi'
 
-import styles from '../../styles/plot'
-import util from '../../styles/util'
+import styles from './plot.style'
+import util from '../../../util/util.style'
 
 const Plot = ({ history }) => {
     const params = history

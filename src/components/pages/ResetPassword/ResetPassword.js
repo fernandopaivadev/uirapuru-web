@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
-import api from '../../services/api'
-import logo from '../../assets/logo.svg'
+import api from '../../../services/api'
+import logo from '../../../assets/logo.svg'
 
-import styles from '../../styles/login'
-import util from '../../styles/util'
+import styles from './resetpassword.style'
+import util from '../../../util/util.style'
 
 const ResetPassword = ({ history }) => {
     const [error, setError] = useState(false)

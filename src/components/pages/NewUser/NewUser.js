@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import NavBar from '../blocks/NavBar'
+import NavBar from '../../blocks/NavBar/NavBar'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
 import {
     convertDate,
@@ -14,10 +14,10 @@ import {
     getOnlyNumbers,
     validateForm,
     setFormsValidation
-} from '../../services/forms'
+} from '../../../services/forms'
 
-import styles from '../../styles/newuser'
-import util from '../../styles/util'
+import styles from './newuser.style'
+import util from '../../../util/util.style'
 
 const NewUser = ({ history }) => {
     const [user, setUser] = useState()

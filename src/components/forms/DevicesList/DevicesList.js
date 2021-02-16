@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 
-import NewDevice from '../forms/NewDevice'
-import Modal from '../blocks/Modal/Modal'
+import NewDevice from '../NewDevice/NewDevice'
+import Modal from '../../blocks/Modal/Modal'
 
-import api from '../../services/api'
-import storage from '../../services/storage'
+import api from '../../../services/api'
+import storage from '../../../services/storage'
 
-import styles from '../../styles/deviceslist'
-import util from '../../styles/util'
+import styles from './deviceslist.style'
+import util from '../../../util/util.style'
 
-import { validateForm, formatDeviceID } from '../../services/forms'
+import { validateForm, formatDeviceID } from '../../../services/forms'
 
 const DevicesList = ({ consumerUnitIndex }) => {
     const [user, setUser] = useState({})

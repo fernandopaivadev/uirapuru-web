@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
-import NavBar from '../blocks/NavBar'
-import Menu from '../blocks/Menu/Menu'
-import Modal from '../blocks/Modal/Modal'
-import UserForm from '../forms/UserForm'
-import ConsumerUnitForm from '../forms/ConsumerUnitForm'
-import DevicesList from '../forms/DevicesList'
+import NavBar from '../../blocks/NavBar/NavBar'
+import Menu from '../../blocks/Menu/Menu'
+import Modal from '../../blocks/Modal/Modal'
+import UserForm from '../../forms/UserForm/UserForm'
+import ConsumerUnitForm from '../../forms/ConsumerUnitForm/ConsumerUnitForm'
+import DevicesList from '../../forms/DevicesList/DevicesList'
 
-import storage from '../../services/storage'
-import api from '../../services/api'
-import { setFormsValidation } from '../../services/forms'
+import storage from '../../../services/storage'
+import api from '../../../services/api'
+import { setFormsValidation } from '../../../services/forms'
 
-import styles from '../../styles/profile'
-import util from '../../styles/util'
+import styles from './profile.style'
+import util from '../../../util/util.style'
 
 const Profile = ({ history }) => {
     const [user, setUser] = useState({})

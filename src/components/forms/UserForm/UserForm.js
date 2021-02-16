@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
-import storage from '../../services/storage'
+import storage from '../../../services/storage'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
 import {
     formatUsername,
@@ -13,10 +13,10 @@ import {
     formatDate,
     getOnlyNumbers,
     validateForm,
-} from '../../services/forms'
+} from '../../../services/forms'
 
-import styles from '../../styles/userform'
-import util from '../../styles/util'
+import styles from './userform.style'
+import util from '../../../util/util.style'
 
 const UserForm = () => {
     const [user, setUser] = useState({})

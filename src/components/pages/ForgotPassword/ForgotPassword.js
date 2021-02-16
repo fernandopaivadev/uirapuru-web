@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
-import api from '../../services/api'
-import logo from '../../assets/logo.svg'
+import api from '../../../services/api'
+import logo from '../../../assets/logo.svg'
 
-import styles from '../../styles/login'
-import util from '../../styles/util'
+import styles from './forgotpassword.style'
+import util from '../../../util/util.style'
 
 const ForgotPassword = ({ history }) => {
     const [username, setUsername] = useState('')
@@ -62,13 +62,13 @@ const ForgotPassword = ({ history }) => {
                     <progress className='circular-progress'/>
                 </styles.loading>
                 : emailSent ?
-                    <styles.classicButton
+                    <util.classicButton
                         onClick={() => {
                             history.push('/login')
                         }}
                     >
                         FAZER LOGIN
-                    </styles.classicButton>
+                    </util.classicButton>
                     :
                     <util.classicButton
                         type='submit'

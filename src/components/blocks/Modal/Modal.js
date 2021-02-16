@@ -1,7 +1,7 @@
 import React from 'react'
 
-import styles from '../../../styles/modal'
-import util from '../../../styles/util'
+import styles from './modal.style'
+import util from '../../../util/util.style'
 
 const Modal = ({ message, taskOnYes, taskOnNo }) =>
     <styles.main>

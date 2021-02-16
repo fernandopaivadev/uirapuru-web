@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import NavBar from '../blocks/NavBar'
-import Menu from '../blocks/Menu/Menu'
-import Chart from '../blocks/Chart/Chart'
+import NavBar from '../../blocks/NavBar/NavBar'
+import Menu from '../../blocks/Menu/Menu'
+import Chart from '../../blocks/Chart/Chart'
 
-import storage from '../../services/storage'
-import websocket from '../../services/websocket'
-import api from '../../services/api'
+import storage from '../../../services/storage'
+import websocket from '../../../services/websocket'
+import api from '../../../services/api'
 
 import { FaSolarPanel } from 'react-icons/fa'
 
-import styles from '../../styles/dashboard'
-import util from '../../styles/util'
-import { themes } from '../../styles/themes'
+import styles from './dashboard.style'
+import util from '../../../util/util.style'
+import { themes } from '../../../util/themes.style'
 
 const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)

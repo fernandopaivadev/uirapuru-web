@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react'
 
-import NavBar from '../blocks/NavBar'
+import NavBar from '../../blocks/NavBar/NavBar'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
-import storage from '../../services/storage'
+import storage from '../../../services/storage'
 
 import {
     formatCEP,
     getOnlyNumbers,
     validateForm,
     setFormsValidation
-} from '../../services/forms'
+} from '../../../services/forms'
 
-import styles from '../../styles/newunit'
-import util from '../../styles/util'
+import styles from './newunit.style'
+import util from '../../../util/util.style'
 
 const NewUnit = ({ history }) => {
     let user = {}

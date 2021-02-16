@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
-import logo from '../../assets/logo.svg'
+import logo from '../../../assets/logo.svg'
 
-import styles from '../../styles/login'
-import util from '../../styles/util'
+import styles from './login.style'
+import util from '../../../util/util.style'
 
 
 const Login = ({ history }) => {

@@ -17,13 +17,13 @@ import {
     BsToggleOff as ToggleOffIcon
 } from 'react-icons/bs'
 
-import storage from '../../services/storage'
+import storage from '../../../services/storage'
 
-import { applyTheme } from '../../styles/themes'
-import styles from '../../styles/navbar'
+import { applyTheme } from '../../../util/themes.style'
+import styles from './navbar.style'
 
-import logo from '../../assets/logo.svg'
-import { version } from '../../../package.json'
+import logo from '../../../assets/logo.svg'
+import { version } from '../../../../package.json'
 
 const NavBar = ({ history }) => {
     const [user, setUser] = useState({})

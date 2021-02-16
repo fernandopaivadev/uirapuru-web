@@ -4,9 +4,9 @@ import { Chart as ChartJS } from 'chart.js'
 
 import storage from '../../../services/storage'
 
-import { themes } from '../../../styles/themes'
+import { themes } from '../../../util/themes.style'
 
-import styles from '../../../styles/chart'
+import styles from './chart.style'
 
 const Chart = ({ collection, aspectRatio, fontSize, pointSize }) => {
     if (!fontSize) {
