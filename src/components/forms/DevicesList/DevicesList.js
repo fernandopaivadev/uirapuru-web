@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import NewDevice from '../NewDevice/NewDevice'
 import Modal from '../../blocks/Modal/Modal'
 
-import api from '../../services/api'
+import api from '../../../services/api'
 
 import styles from './deviceslist.style'
 import util from '../../../util/util.style'

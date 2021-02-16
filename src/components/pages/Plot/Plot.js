@@ -18,6 +18,7 @@ import {
 
 import styles from './plot.style'
 import util from '../../../util/util.style'
+import { themes } from '../../../util/themes.style'
 
 const Plot = ({ history }) => {
     const params = history
@@ -53,15 +54,18 @@ const Plot = ({ history }) => {
     const [period, setPeriod] = useState('24h')
     const [search, setSearch] = useState(true)
 
-    const [user, setUser] = useState({})
-    const [csvData, setCsvData] = useState({})
+    const [user, setUser] = useState()
+    const [csvData, setCsvData] = useState()
     const [collection, setCollection] = useState()
+    const [theme, setTheme] = useState()
+
 
     useEffect(() => {
         (async () => {
             setUser(await storage.read('user'))
             setCsvData(await storage.read('csv-data'))
             setCollection(await storage.read('collection'))
+            setTheme(themes[await storage.read('theme') ?? 'default'])
         })()
     }, [])
 
@@ -224,6 +228,7 @@ const Plot = ({ history }) => {
                                     <styles.chartContainer>
                                         <Chart
                                             collection={collection}
+                                            theme={theme}
                                         />
                                     </styles.chartContainer>
                                     :

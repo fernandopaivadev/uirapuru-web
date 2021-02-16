@@ -16,14 +16,14 @@ import { themes } from '../../../util/themes.style'
 
 const Dashboard = ({ history }) => {
     const [consumerUnitIndex, setConsumerUnitIndex] = useState(0)
-    const [realTimeBuffer, setRealTimeBuffer] = useState([])
+    const [realTimeBuffer, setRealTimeBuffer] = useState()
     const [newMessage, setNewMessage] = useState(false)
     const [loading, setLoading] = useState(true)
     const [success, setSuccess] = useState(false)
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState()
     const [isAdmin, setIsAdmin] = useState(false)
-    const [collection, setCollection] = useState([])
-    const [traceColors, setTraceColors] = useState({})
+    const [collection, setCollection] = useState()
+    const [theme, setTheme] = useState()
 
     useEffect(() => {
         (async () => {
@@ -45,8 +45,7 @@ const Dashboard = ({ history }) => {
             setUser(await storage.read('user'))
             setIsAdmin(await storage.read('access-level') === 'admin')
             setCollection(await storage.read('collection'))
-            const theme = themes[await storage.read('theme') ?? 'default']
-            setTraceColors(theme.traceColors)
+            setTheme(themes[await storage.read('theme') ?? 'default'])
 
             setLoading(false)
         })()
@@ -141,7 +140,7 @@ const Dashboard = ({ history }) => {
                                                     ).map((key, keyIndex) =>
                                                         <li key={keyIndex}>
                                                             <p style={{
-                                                                color: traceColors[keyIndex]
+                                                                color: theme.traceColors[keyIndex]
                                                             }}>
                                                                 {key}:
                                                                 {realTimeBuffer[
@@ -182,6 +181,7 @@ const Dashboard = ({ history }) => {
                                     <Chart
                                         collection={collection}
                                         aspectRatio={2}
+                                        theme={theme}
                                     />
                                 </styles.charts>
                                 :
