@@ -16,7 +16,7 @@ import util from '../../styles/util'
 
 const Profile = ({ history }) => {
     const [user, setUser] = useState()
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [isAdmin, setIsAdmin] = useState()
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [modal, setModal] = useState(false)
 
@@ -52,7 +52,7 @@ const Profile = ({ history }) => {
         }
     }
 
-    return user?.consumerUnits ?
+    return user && isAdmin ?
         <>
             <NavBar />
 
@@ -78,17 +78,19 @@ const Profile = ({ history }) => {
 
                 <UserForm
                     user={user}
+                    isAdmin={isAdmin}
                 />
 
                 {consumerUnitIndex >= 0 ?
                     <ConsumerUnitForm
                         user={user}
+                        isAdmin={isAdmin}
                         consumerUnitIndex={consumerUnitIndex}
                     />
                     :
                     <styles.empty>
                         <p>
-                                Escolha uma unidade Consumidora
+                            Escolha uma unidade Consumidora
                         </p>
 
                         {isAdmin ?
@@ -98,7 +100,7 @@ const Profile = ({ history }) => {
                                     history.push('/new-unit')
                                 }}
                             >
-                                    Nova Unidade
+                                Nova Unidade
                             </util.classicButton>
                             : null
                         }
@@ -108,12 +110,13 @@ const Profile = ({ history }) => {
                 {consumerUnitIndex >= 0 ?
                     <DevicesList
                         user={user}
+                        isAdmin={isAdmin}
                         consumerUnitIndex={consumerUnitIndex}
                     />
                     :
                     <styles.empty>
                         <p>
-                                Sem dispositivos
+                            Sem dispositivos
                         </p>
                     </styles.empty>
                 }
@@ -126,7 +129,7 @@ const Profile = ({ history }) => {
                         history.push('/dashboard')
                     }}
                 >
-                        Dashboard
+                    Dashboard
                 </util.classicButton>
 
                 {isAdmin ?
@@ -136,7 +139,7 @@ const Profile = ({ history }) => {
                             setModal(true)
                         }}
                     >
-                            Excluir Usuário
+                        Excluir Usuário
                     </util.criticalButton>
                     : null
                 }

@@ -15,8 +15,7 @@ import {
 import styles from '../../styles/consumerunitform'
 import util from '../../styles/util'
 
-const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
-    const [isAdmin] = useState(user.accessLevel === 'admin')
+const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [modal, setModal] = useState(false)
@@ -62,7 +61,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
             }
 
             <styles.title>
-            Dados da Unidade Consumidora
+                Dados da Unidade Consumidora
             </styles.title>
 
             <label>Número</label>
@@ -82,7 +81,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                 }}
             />
             <p className='error-message'>
-            Digite no mínimo 6 caracteres
+                Digite no mínimo 6 caracteres
             </p>
 
             <label>Nome da unidade consumidora</label>
@@ -102,7 +101,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                 }}
             />
             <p className='error-message'>
-            Digite no mínimo 8 caracteres
+                Digite no mínimo 8 caracteres
             </p>
 
             <label>Endereço</label>
@@ -122,7 +121,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                 }}
             />
             <p className='error-message'>
-            Digite no mínimo 10 caracteres
+                Digite no mínimo 10 caracteres
             </p>
 
             <label>CEP</label>
@@ -143,7 +142,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                 }}
             />
             <p className='error-message'>
-            CEP inválido
+                CEP inválido
             </p>
 
             <label>Cidade</label>
@@ -163,7 +162,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                 }}
             />
             <p className='error-message'>
-            Digite no mínimo 3 caracteres
+                Digite no mínimo 3 caracteres
             </p>
 
             <label>Estado</label>
@@ -183,7 +182,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                 }}
             />
             <p className='error-message'>
-            Digite no mínimo 3 caracteres
+                Digite no mínimo 3 caracteres
             </p>
 
             <styles.buttons>
@@ -195,7 +194,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                             setModal(true)
                         }}
                     >
-                    Excluir Unidade
+                        Excluir Unidade
                     </util.criticalButton>
                     : null
                 }
@@ -206,7 +205,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                             history.push('/new-unit')
                         }}
                     >
-                    Nova Unidade
+                        Nova Unidade
                     </util.classicButton>
                     : null
                 }
@@ -227,7 +226,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                             }
                         }}
                     >
-                    Salvar
+                        Salvar
                     </util.classicButton>
                     : null
                 }
@@ -237,7 +236,7 @@ const ConsumerUnitForm = ({ history, user, consumerUnitIndex }) => {
                 <p
                     id='successMessageUnit'
                     className='success'>
-                Salvo com sucesso!
+                    Salvo com sucesso!
                 </p>
                 : null
             }

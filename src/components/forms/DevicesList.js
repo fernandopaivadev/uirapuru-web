@@ -10,8 +10,7 @@ import util from '../../styles/util'
 
 import { validateForm, formatDeviceID } from '../../services/forms'
 
-const DevicesList = ({ user, consumerUnitIndex }) => {
-    const [isAdmin] = useState(user.accessLevel === 'admin')
+const DevicesList = ({ user, isAdmin, consumerUnitIndex }) => {
     const [numberOfDevices] = useState(user.consumerUnits[consumerUnitIndex]
         .devices.length)
     const [newDevicePopup, setNewDevicePopup] = useState(false)
@@ -54,7 +53,7 @@ const DevicesList = ({ user, consumerUnitIndex }) => {
         }
     }
 
-    return user?.consumerUnits ?
+    return user?.consumerUnits[consumerUnitIndex]?.devices ?
         <styles.devicesList>
             {newDevicePopup ?
                 <NewDevice

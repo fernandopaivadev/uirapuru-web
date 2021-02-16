@@ -16,8 +16,7 @@ import {
 import styles from '../../styles/userform'
 import util from '../../styles/util'
 
-const UserForm = ({ user }) => {
-    const [isAdmin] = useState(user.accessLevel === 'admin')
+const UserForm = ({ user, isAdmin }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(
