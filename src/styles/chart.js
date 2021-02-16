@@ -14,7 +14,7 @@ const chart = styled.div`
     border: 0.2rem solid var(--primary-color);
     border-radius: 0.5rem;
     margin: 1rem;
-    
+
     canvas {
         padding: 0 2rem 1rem 2rem;
     }

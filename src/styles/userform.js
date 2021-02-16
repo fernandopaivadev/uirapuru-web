@@ -23,7 +23,7 @@ const form = styled.form`
         &:hover {
             background: var(--hovered-color);
         }
-        
+
         &:focus {
             background: var(--hovered-color);
         }

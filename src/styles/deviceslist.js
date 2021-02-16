@@ -48,11 +48,11 @@ const deviceForm = styled.form`
         width: 90%;
         background: var(--background-color);
         transition: all 0.2s ease;
-        
+
         &:hover {
             background: var(--hovered-color);
         }
-        
+
         &:focus {
             background: var(--hovered-color);
         }
@@ -67,7 +67,7 @@ const deviceForm = styled.form`
         margin: 1rem 1rem 0 1rem;
         transition: all 0.2s ease;
     }
-    
+
     .error-message {
         color: var(--error-color);
         font-size: 1.4rem;

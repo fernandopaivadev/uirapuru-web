@@ -54,7 +54,7 @@ const subItemName = styled.p`
     font-weight: 600;
     padding: 1rem 3rem 1rem 5rem;
     border-radius: 0.5rem;
-    
+
     &:hover {
         background: var(--hovered-color);
         cursor: pointer;

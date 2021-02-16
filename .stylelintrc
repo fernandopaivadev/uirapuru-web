@@ -8,6 +8,7 @@
   ],
   "rules": {
       "no-descending-specificity": null,
-      "selector-type-no-unknown": null
+      "selector-type-no-unknown": null,
+      "no-eol-whitespace": true
   }
 }

@@ -70,7 +70,7 @@ const checkbox = styled.div`
     justify-content: center;
     width: 40rem;
     height: 1.8rem;
-    
+
     input {
         margin: 1rem;
         width: 1.8rem;

@@ -56,9 +56,11 @@ const input = styled.input`
     padding: 1rem;
     background: var(--background-color);
     color: var(--primary-font-color);
+
     &:hover {
         border-color: var(--primary-light-color);
     }
+
     &:focus {
          border-color: var(--primary-light-color);
     }
@@ -78,6 +80,7 @@ const password = styled.div`
         top: 50%;
         right: 0;
         transform: translateY(-50%);
+        color: var(--primary-color);
         font-size: 2rem;
         z-index: 1;
         width: 5rem;
@@ -89,7 +92,7 @@ const container = styled.div`
     width: 28rem;
     display: flex;
     justify-content: stretch;
-    
+
     p {
         cursor: pointer;
         background: none;
@@ -99,7 +102,7 @@ const container = styled.div`
         font-size: 1.6rem;
         padding: 0.2rem;
         text-decoration: none;
-        color: var(--primary-font-color);       
+        color: var(--primary-font-color);
     }
 `
 
@@ -114,6 +117,7 @@ const link = styled.p`
     font-weight: 600;
     color: var(--neutral-color);
     cursor: pointer;
+
     &:hover {
         color: var(--primary-light-color);
     }
