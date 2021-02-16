@@ -4,6 +4,9 @@ import NavBar from '../../blocks/NavBar/NavBar'
 
 import api from '../../../services/api'
 
+import storage from '../../../services/storage'
+
+
 import {
     convertDate,
     formatUsername,
@@ -18,6 +21,7 @@ import {
 
 import styles from './newuser.style'
 import util from '../../../util/util.style'
+import { themes } from '../../../util/themes.style'
 
 const NewUser = ({ history }) => {
     const [user, setUser] = useState()
@@ -26,6 +30,20 @@ const NewUser = ({ history }) => {
     const [error, setError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
     const [loading, setLoading] = useState(false)
+    const [username, setUsername] = useState()
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [theme, setTheme] = useState()
+    const [isDarkMode, setIsDarkMode] = useState()
+
+    useEffect(() => {
+        (async () => {
+            setUser(await storage.read('user'))
+            setUsername(await storage.read('username'))
+            setIsAdmin(await storage.read('access-level') === 'admin')
+            setTheme(themes[await storage.read('theme') ?? 'default'])
+            setIsDarkMode(await storage.read('theme') === 'dark')
+        })()
+    }, [])
 
     useEffect(() => {
         setFormsValidation()
@@ -86,7 +104,13 @@ const NewUser = ({ history }) => {
     }
 
     return <>
-        <NavBar />
+        <NavBar
+            user={user}
+            username={username}
+            isAdmin={isAdmin}
+            theme={theme}
+            isDarkMode={isDarkMode}
+        />
 
         {userType ?
             null

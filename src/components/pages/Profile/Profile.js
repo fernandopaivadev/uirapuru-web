@@ -13,18 +13,25 @@ import { setFormsValidation } from '../../../services/forms'
 
 import styles from './profile.style'
 import util from '../../../util/util.style'
+import { themes } from '../../../util/themes.style'
 
 const Profile = ({ history }) => {
     const [user, setUser] = useState()
     const [isAdmin, setIsAdmin] = useState()
     const [consumerUnitIndex, setConsumerUnitIndex] = useState()
     const [modal, setModal] = useState(false)
+    const [username, setUsername] = useState()
+    const [theme, setTheme] = useState()
+    const [isDarkMode, setIsDarkMode] = useState()
 
     useEffect(() => {
         (async () => {
             const _user = await storage.read('user')
             setUser(_user)
             setIsAdmin(await storage.read('access-level') === 'admin')
+            setUsername(await storage.read('username'))
+            setTheme(themes[await storage.read('theme') ?? 'default'])
+            setIsDarkMode(await storage.read('theme') === 'dark')
             setConsumerUnitIndex(
                 _user.consumerUnits.length === 1 ? 0 : undefined
             )
@@ -54,7 +61,13 @@ const Profile = ({ history }) => {
 
     return user && isAdmin ?
         <>
-            <NavBar />
+            <NavBar
+                user={user}
+                username={username}
+                isAdmin={isAdmin}
+                theme={theme}
+                isDarkMode={isDarkMode}
+            />
 
             {modal ?
                 <Modal

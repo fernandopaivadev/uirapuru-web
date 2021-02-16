@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import {
@@ -22,23 +22,12 @@ import storage from '../../../services/storage'
 import { applyTheme } from '../../../util/themes.style'
 import styles from './navbar.style'
 
+
 import logo from '../../../assets/logo.svg'
 import { version } from '../../../../package.json'
 
-const NavBar = ({ history }) => {
-    const [user, setUser] = useState({})
-    const [username, setUserName] = useState('')
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [darkMode, setDarkMode] = useState(false)
-
-    useEffect(() => {
-        (async () => {
-            setUser(await storage.read('user'))
-            setUserName(await storage.read('username'))
-            setIsAdmin(await storage.read('access-level') === 'admin')
-            setDarkMode(await storage.read('theme') === 'dark')
-        })()
-    }, [])
+const NavBar = ({ history, user, username, isAdmin, isDarkMode }) => {
+    const [darkMode, setDarkMode] = useState(isDarkMode)
 
     const toggleDarkMode = async () => {
         if (darkMode) {

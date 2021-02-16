@@ -58,6 +58,9 @@ const Plot = ({ history }) => {
     const [csvData, setCsvData] = useState()
     const [collection, setCollection] = useState()
     const [theme, setTheme] = useState()
+    const [username, setUsername] = useState()
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [isDarkMode, setIsDarkMode] = useState()
 
 
     useEffect(() => {
@@ -66,6 +69,9 @@ const Plot = ({ history }) => {
             setCsvData(await storage.read('csv-data'))
             setCollection(await storage.read('collection'))
             setTheme(themes[await storage.read('theme') ?? 'default'])
+            setUsername(await storage.read('username'))
+            setIsAdmin(await storage.read('access-level') === 'admin')
+            setIsDarkMode(await storage.read('theme') === 'dark')
         })()
     }, [])
 
@@ -147,7 +153,13 @@ const Plot = ({ history }) => {
     }, [consumerUnitIndex, deviceIndex, search])
 
     return <>
-        <NavBar />
+        <NavBar
+            user={user}
+            username={username}
+            isAdmin={isAdmin}
+            theme={theme}
+            isDarkMode={isDarkMode}
+        />
 
         {user?.consumerUnits && collection ?
             <>

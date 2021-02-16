@@ -9,7 +9,7 @@ import util from '../../../util/util.style'
 
 const UsersList = ({ history }) => {
     const [loading, setLoading] = useState(true)
-    const [usersList, setUsersList] = useState([])
+    const [usersList, setUsersList] = useState()
 
     useEffect(() => {
         (async () => {

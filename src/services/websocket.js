@@ -17,7 +17,7 @@ const config = async ({
             .consumerUnits[consumerUnitIndex]
             .devices.map(device => device.id)
 
-        setRealTimeBuffer(new Array(devicesList.length).fill({}))
+        setRealTimeBuffer(new Array(devicesList.length).fill())
 
         socket = io(api.baseURL)
 
