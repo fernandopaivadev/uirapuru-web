@@ -66,6 +66,7 @@ const NavBar = ({ history, user, username, isAdmin, isDarkMode }) => {
                 onClick={async () => {
                     await toggleDarkMode()
                 }}
+                data-testid='toggle'
             >
                 <DarkModeIcon
                     className='icon'
@@ -81,12 +82,14 @@ const NavBar = ({ history, user, username, isAdmin, isDarkMode }) => {
                     />
                 }
             </styles.toggle>
-            <styles.username>
+            <styles.username
+                data-testid='username'
+            >
                 {isAdmin
                 &&
                 !(username === user.username)
                     ?
-                        `${username} | `
+                    `${username} | `
                     : null
                 }
                 {user?.username ?? ''}
@@ -95,6 +98,7 @@ const NavBar = ({ history, user, username, isAdmin, isDarkMode }) => {
             {user ?
                 <styles.avatar
                     id='avatar'
+                    data-testid='avatar'
                     aria-label='Menu'
                 >
                     {user?.username?.split('')[0].toUpperCase()}
@@ -104,14 +108,21 @@ const NavBar = ({ history, user, username, isAdmin, isDarkMode }) => {
 
             <styles.profileMenu
                 id='profileMenu'
+                data-testid='profileMenu'
             >
                 <styles.userInfo>
-                    <styles.profileAvatar>
-                        { user?.username?.split('')[0].toUpperCase()}
+                    <styles.profileAvatar
+                        data-testid='profileAvatar'
+                    >
+                        {user?.username?.split('')[0].toUpperCase()}
                     </styles.profileAvatar>
 
-                    <styles.textInfo>
-                        <p className='username'>
+                    <styles.textInfo
+                        data-testid='textInfo'
+                    >
+                        <p
+                            className='username'
+                        >
                             {user?.username || 'Administrador'}
                         </p>
                         <p className='email'>{user?.email}</p>
