@@ -75,6 +75,9 @@ const Login = ({ history }) => {
                 }}
             />
 
+            <styles.label htmlFor='password'>
+                Senha
+            </styles.label>
             <styles.password>
                 {showPassword ?
                     <HidePasswordIcon
