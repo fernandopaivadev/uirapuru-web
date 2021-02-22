@@ -25,6 +25,7 @@ import { themes } from '../../../util/themes.style'
 
 const NewUser = ({ history }) => {
     const [user, setUser] = useState()
+    const [newUser, setNewUser] = useState()
     const [userType, setUserType] = useState()
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
@@ -51,7 +52,7 @@ const NewUser = ({ history }) => {
 
     useEffect(() => {
         if (userType === 'company') {
-            const _user = {
+            const _newUser = {
                 username: '',
                 password: '',
                 email: '',
@@ -64,9 +65,9 @@ const NewUser = ({ history }) => {
                 consumerUnits: []
             }
 
-            setUser(_user)
+            setNewUser(_newUser)
         } else if (userType === 'person') {
-            const _user = {
+            const _newUser = {
                 username: '',
                 password: '',
                 email: '',
@@ -79,14 +80,14 @@ const NewUser = ({ history }) => {
                 consumerUnits: []
             }
 
-            setUser(_user)
+            setNewUser(_newUser)
         }
     }, [userType])
 
     const submit = async () => {
         setLoading(true)
 
-        const result = await api.createUser(user)
+        const result = await api.createUser(newUser)
 
         if (result === 'OK') {
             setSuccess(true)
@@ -162,7 +163,7 @@ const NewUser = ({ history }) => {
                         required
                         pattern='[a-zA-Z0-9]{6,20}'
                         onChange={event => {
-                            user.username = event.target.value
+                            newUser.username = event.target.value
                             event.target.value = formatUsername(
                                 event.target.value
                             )
@@ -181,7 +182,7 @@ const NewUser = ({ history }) => {
                         minLength='8'
                         required
                         onChange={event => {
-                            user.password = event.target.value
+                            newUser.password = event.target.value
                         }}
                     />
                     <p className='error-message'>
@@ -196,7 +197,7 @@ const NewUser = ({ history }) => {
                         minLength='10'
                         required
                         onChange={event => {
-                            user.email = event.target.value
+                            newUser.email = event.target.value
                         }}
                     />
                     <p className='error-message'>
@@ -210,7 +211,7 @@ const NewUser = ({ history }) => {
                         required
                         pattern='\(\d{2}\) \d{5}-\d{4}$'
                         onChange={event => {
-                            user.phone = getOnlyNumbers(event.target.value)
+                            newUser.phone = getOnlyNumbers(event.target.value)
                             event.target.value = formatPhone(
                                 event.target.value
                             )
@@ -229,9 +230,9 @@ const NewUser = ({ history }) => {
                             const { value } = event.target
 
                             if (value === 'Administrador') {
-                                user.accessLevel = 'admin'
+                                newUser.accessLevel = 'admin'
                             } else if (value === 'Usuário') {
-                                user.accessLevel = 'user'
+                                newUser.accessLevel = 'user'
                             }
                         }}
                     >
@@ -246,7 +247,7 @@ const NewUser = ({ history }) => {
                         required
                         pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
                         onChange={event => {
-                            user.company.cnpj = getOnlyNumbers(event
+                            newUser.company.cnpj = getOnlyNumbers(event
                                 .target.value)
                             event.target.value = formatCNPJ(
                                 event.target.value
@@ -265,7 +266,7 @@ const NewUser = ({ history }) => {
                         minLength='6'
                         required
                         onChange={event => {
-                            user.company.name = event
+                            newUser.company.name = event
                                 .target
                                 .value
                         }}
@@ -282,7 +283,7 @@ const NewUser = ({ history }) => {
                         minLength='6'
                         required
                         onChange={event => {
-                            user.company.tradeName = event
+                            newUser.company.tradeName = event
                                 .target
                                 .value
                         }}
@@ -299,7 +300,7 @@ const NewUser = ({ history }) => {
                         minLength='50'
                         required
                         onChange={event => {
-                            user.company.description = event
+                            newUser.company.description = event
                                 .target
                                 .value
                         }}
@@ -375,7 +376,7 @@ const NewUser = ({ history }) => {
                         required
                         pattern='[a-zA-Z0-9]{6,20}'
                         onChange={event => {
-                            user.username = event.target.value
+                            newUser.username = event.target.value
                             event.target.value = formatUsername(
                                 event.target.value
                             )
@@ -394,7 +395,7 @@ const NewUser = ({ history }) => {
                         minLength='8'
                         required
                         onChange={event => {
-                            user.password = event.target.value
+                            newUser.password = event.target.value
                         }}
                     />
                     <p className='error-message'>
@@ -409,7 +410,7 @@ const NewUser = ({ history }) => {
                         minLength='10'
                         required
                         onChange={event => {
-                            user.email = event.target.value
+                            newUser.email = event.target.value
                         }}
                     />
                     <p className='error-message'>
@@ -423,7 +424,7 @@ const NewUser = ({ history }) => {
                         required
                         pattern='\(\d{2}\) \d{5}-\d{4}$'
                         onChange={event => {
-                            user.phone = getOnlyNumbers(event.target.value)
+                            newUser.phone = getOnlyNumbers(event.target.value)
                             event.target.value = formatPhone(
                                 event.target.value
                             )
@@ -442,9 +443,9 @@ const NewUser = ({ history }) => {
                             const { value } = event.target
 
                             if (value === 'Administrador') {
-                                user.accessLevel = 'admin'
+                                newUser.accessLevel = 'admin'
                             } else if (value === 'Usuário') {
-                                user.accessLevel = 'user'
+                                newUser.accessLevel = 'user'
                             }
                         }}
                     >
@@ -460,7 +461,7 @@ const NewUser = ({ history }) => {
                         minLength='10'
                         required
                         onChange={event => {
-                            user.person.name = event
+                            newUser.person.name = event
                                 .target.value
                         }}
                     />
@@ -475,7 +476,7 @@ const NewUser = ({ history }) => {
                         required
                         pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
                         onChange={event => {
-                            user.person.cpf = getOnlyNumbers(event
+                            newUser.person.cpf = getOnlyNumbers(event
                                 .target.value)
                             event.target.value = formatCPF(
                                 event.target.value
@@ -496,7 +497,7 @@ const NewUser = ({ history }) => {
                             event.target.value = formatDate(
                                 event.target.value
                             )
-                            user.person.birth = convertDate(event.target.value)
+                            newUser.person.birth = convertDate(event.target.value)
                         }}
                     />
                     <p className='error-message'>
