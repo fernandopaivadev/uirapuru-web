@@ -30,7 +30,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     T:
                 </p>
                 <p className='payload'>
-                    {t1} <p>°C</p>
+                    {t1} °C
                 </p>
             </styles.value>
             : null
@@ -52,7 +52,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                      HRA:
                 </p>
                 <p className='payload'>
-                    {h1} <p>%</p>
+                    {h1} %
                 </p>
             </styles.value>
             : null
@@ -74,7 +74,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     Vca:
                 </p>
                 <p className='payload'>
-                    {v1} <p>V</p>
+                    {v1} V
                 </p>
             </styles.value>
             : null
@@ -96,7 +96,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     Ica:
                 </h1>
                 <h1 className='payload'>
-                    {i1} <p>A</p>
+                    {i1} A
                 </h1>
             </styles.value>
             : null
@@ -118,7 +118,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                             Vcc:
                 </p>
                 <p className='payload'>
-                    {v2} <p>V</p>
+                    {v2} V
                 </p>
             </styles.value>
             :null
@@ -140,7 +140,7 @@ const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
                     Icc:
                 </h1>
                 <h1 className='payload'>
-                    {i2} <p>A</p>
+                    {i2} A
                 </h1>
             </styles.value>
             : null
