@@ -45,13 +45,20 @@ const UserForm = ({ user, isAdmin }) => {
     }
 
     return <styles.form id='userForm'>
-        <styles.title>
+        <styles.title
+            data-testid='title'
+        >
             Dados do Usuário
         </styles.title>
 
-        <label>Nome de usuário</label>
+        <label
+            data-testid='usernameLabel'
+        >
+            Nome de usuário
+        </label>
         <input
             id='username'
+            data-testid='username'
             name='username'
             maxLength='20'
             minLength='6'
@@ -69,9 +76,14 @@ const UserForm = ({ user, isAdmin }) => {
             Digite no mínimo 6 caracteres
         </p>
 
-        <label>Email</label>
+        <label
+            data-testid='emailLabel'
+        >
+            Email
+        </label>
         <input
             id='email'
+            data-testid='email'
             name='email'
             maxLength='40'
             minLength='10'
@@ -86,9 +98,14 @@ const UserForm = ({ user, isAdmin }) => {
             Digite no mínimo 10 caracteres
         </p>
 
-        <label>Telefone</label>
+        <label
+            data-testid='phoneLabel'
+        >
+            Telefone
+        </label>
         <input
             id='phone'
+            data-testid='phone'
             name='phone'
             required
             pattern='\(\d{2}\) \d{5}-\d{4}$'
@@ -107,9 +124,14 @@ const UserForm = ({ user, isAdmin }) => {
 
         {user?.person ?
             <>
-                <label>Nome completo</label>
+                <label
+                    data-testid='nameLabel'
+                >
+                    Nome completo
+                </label>
                 <input
                     id='name'
+                    data-testid='name'
                     name='name'
                     maxLength='128'
                     minLength='10'
@@ -124,9 +146,12 @@ const UserForm = ({ user, isAdmin }) => {
                     Digite no mínimo 10 caracteres
                 </p>
 
-                <label>CPF</label>
+                <label
+                    data-testid='cpfLabel'
+                >CPF</label>
                 <input
                     id='cpf'
+                    data-testid='cpf'
                     name='cpf'
                     required
                     pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
@@ -145,9 +170,12 @@ const UserForm = ({ user, isAdmin }) => {
                     CPF inválido
                 </p>
 
-                <label>Data de nascimento</label>
+                <label
+                    data-testid='birthLabel'
+                >Data de nascimento</label>
                 <input
                     id='birth'
+                    data-testid='birth'
                     name='birth'
                     required
                     pattern='\d{2}\/\d{2}\/\d{4}'
@@ -166,9 +194,14 @@ const UserForm = ({ user, isAdmin }) => {
             </>
             :
             <>
-                <label>CNPJ</label>
+                <label
+                    data-testid='cnpjLabel'
+                >
+                    CNPJ
+                </label>
                 <input
                     id='cnpj'
+                    data-testid='cnpj'
                     name='cnpj'
                     required
                     pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
@@ -187,9 +220,14 @@ const UserForm = ({ user, isAdmin }) => {
                     CNPJ inválido
                 </p>
 
-                <label>Nome Fantasia</label>
+                <label
+                    data-testid='nameLabel'
+                >
+                    Nome Fantasia
+                </label>
                 <input
                     id='name'
+                    data-testid='name'
                     name='name'
                     maxLength='128'
                     minLength='6'
@@ -207,9 +245,14 @@ const UserForm = ({ user, isAdmin }) => {
                     Digite no mínimo 6 caracteres
                 </p>
 
-                <label>Razão social</label>
+                <label
+                    data-testid='tradeNameLabel'
+                >
+                    Razão social
+                </label>
                 <input
                     id='tradeName'
+                    data-testid='tradeName'
                     name='tradeName'
                     maxLength='128'
                     minLength='6'
@@ -227,9 +270,14 @@ const UserForm = ({ user, isAdmin }) => {
                     Digite no mínimo 6 caracteres
                 </p>
 
-                <label>Descrição</label>
+                <label
+                    data-testid='descriptionLabel'
+                >
+                    Descrição
+                </label>
                 <textarea
                     id='description'
+                    data-testid='description'
                     name='description'
                     maxLength='512'
                     minLength='50'
@@ -248,6 +296,7 @@ const UserForm = ({ user, isAdmin }) => {
         {isAdmin ?
             <util.classicButton
                 id='save'
+                data-testid='save'
                 onClick={event => {
                     event.preventDefault()
                     if (validateForm('userForm')) {
