@@ -17,13 +17,10 @@ describe('Overview', () => {
         render(<Overview {...data} />)
 
         const keys = Object.keys(data)
-        console.log(keys)
-        expect(screen.getByText('10')).toBeInTheDocument()
-        expect(screen.getByText('20')).toBeInTheDocument()
-        expect(screen.getByText('30')).toBeInTheDocument()
-        expect(screen.getByText('40')).toBeInTheDocument()
-        expect(screen.getByText('50')).toBeInTheDocument()
-        expect(screen.getByText('60')).toBeInTheDocument()
-
+        keys.forEach((key) => {
+            expect(
+                screen.getByTestId(key).innerHTML.includes(data[key])
+            ).toBeTruthy()
+        })
     })
 })

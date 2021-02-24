@@ -8,7 +8,7 @@ import {
     setFormsValidation
 } from '../../../services/forms'
 
-import styles from './newdevice.styles'
+import styles from './newdevice.style'
 import util from '../../../util/util.style'
 
 const NewDevice = ({ user, consumerUnitIndex, exit }) => {
@@ -47,14 +47,21 @@ const NewDevice = ({ user, consumerUnitIndex, exit }) => {
 
     return <styles.main>
         <styles.window>
-            <styles.form id='newDeviceForm'>
-                <styles.title>
+            <styles.form
+                id='newDeviceForm'
+            >
+                <styles.title
+                    data-testid='title'
+                >
                     Novo dispositivo
                 </styles.title>
 
-                <label>ID do dispositivo</label>
+                <label
+                    data-testid='idLabel'
+                >ID do dispositivo</label>
                 <input
                     id='deviceId'
+                    data-testid='deviceId'
                     maxLength='8'
                     required
                     pattern='[A-Z0-9]{8}'
@@ -72,9 +79,14 @@ const NewDevice = ({ user, consumerUnitIndex, exit }) => {
                     Digite no mínimo 8 caracteres
                 </p>
 
-                <label>Nome do dispositivo</label>
+                <label
+                    data-testid='deviceNameLabel'
+                >
+                    Nome do dispositivo
+                </label>
                 <input
                     id='deviceName'
+                    data-testid='deviceName'
                     maxLength='20'
                     minLength='6'
                     required
@@ -92,6 +104,7 @@ const NewDevice = ({ user, consumerUnitIndex, exit }) => {
                 <styles.buttons>
                     <util.classicButton
                         id='saveDevice'
+                        data-testid='saveDevice'
                         onClick={event => {
                             event.preventDefault()
                             if (validateForm('newDeviceForm')) {
@@ -115,6 +128,7 @@ const NewDevice = ({ user, consumerUnitIndex, exit }) => {
                     </util.classicButton>
                     <util.criticalButton
                         id='exit'
+                        data-testid='exit'
                         onClick={exit}
                     >
                         Cancelar

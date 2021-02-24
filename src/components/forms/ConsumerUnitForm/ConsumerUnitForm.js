@@ -60,13 +60,20 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 : null
             }
 
-            <styles.title>
+            <styles.title
+                data-testid='title'
+            >
                 Dados da Unidade Consumidora
             </styles.title>
 
-            <label>Número</label>
+            <label
+                data-testid='numberLabel'
+            >
+                Número
+            </label>
             <input
                 id='number'
+                data-testid='number'
                 name='number'
                 minLength='6'
                 maxLength='16'
@@ -74,7 +81,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 defaultValue={user
                     ?.consumerUnits[consumerUnitIndex]
                     ?.number ?? ''}
-                readOnly= {!user}
+                readOnly={!isAdmin}
                 onChange={event => {
                     user.consumerUnits[consumerUnitIndex]
                         .number = event.target.value
@@ -84,9 +91,14 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 Digite no mínimo 6 caracteres
             </p>
 
-            <label>Nome da unidade consumidora</label>
+            <label
+                data-testid='unitNameLabel'
+            >
+                Nome da unidade consumidora
+            </label>
             <input
                 id='unitName'
+                data-testid='unitName'
                 name='name'
                 maxLength='64'
                 minLength='8'
@@ -94,7 +106,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 defaultValue={user
                     ?.consumerUnits[consumerUnitIndex]
                     ?.name ?? ''}
-                readOnly= {!user}
+                readOnly={!isAdmin}
                 onChange={event => {
                     user.consumerUnits[consumerUnitIndex]
                         .name = event.target.value
@@ -104,9 +116,14 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 Digite no mínimo 8 caracteres
             </p>
 
-            <label>Endereço</label>
+            <label
+                data-testid='addressLabel'
+            >
+                Endereço
+            </label>
             <input
                 id='address'
+                data-testid='address'
                 name='address'
                 maxLength='256'
                 minLength='10'
@@ -114,7 +131,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 defaultValue={user
                     ?.consumerUnits[consumerUnitIndex]
                     ?.address ?? ''}
-                readOnly= {!user}
+                readOnly={!isAdmin}
                 onChange={event => {
                     user.consumerUnits[consumerUnitIndex]
                         .address = event.target.value
@@ -124,15 +141,20 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 Digite no mínimo 10 caracteres
             </p>
 
-            <label>CEP</label>
+            <label
+                data-testid='zipLabel'
+            >
+                CEP
+            </label>
             <input
                 id='zip'
+                data-testid='zip'
                 name='zip'
                 required
                 pattern='\d{5}-\d{3}'
                 defaultValue={formatCEP(user
                     ?.consumerUnits[consumerUnitIndex]?.zip) ?? ''}
-                readOnly= {!user}
+                readOnly={!isAdmin}
                 onChange={event => {
                     user
                         .consumerUnits[consumerUnitIndex]
@@ -145,9 +167,14 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 CEP inválido
             </p>
 
-            <label>Cidade</label>
+            <label
+                data-testid='cityLabel'
+            >
+                Cidade
+            </label>
             <input
                 id='city'
+                data-testid='city'
                 name='city'
                 maxLength='64'
                 minLength='3'
@@ -155,7 +182,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 defaultValue={user
                     ?.consumerUnits[consumerUnitIndex]
                     ?.city ?? ''}
-                readOnly= {!user}
+                readOnly={!isAdmin}
                 onChange={event => {
                     user.consumerUnits[consumerUnitIndex]
                         .city = event.target.value
@@ -165,9 +192,14 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 Digite no mínimo 3 caracteres
             </p>
 
-            <label>Estado</label>
+            <label
+                data-testid='stateLabel'
+            >
+                Estado
+            </label>
             <input
                 id='state'
+                data-testid='state'
                 name='state'
                 maxLength='64'
                 minLength='3'
@@ -175,7 +207,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 defaultValue={user
                     ?.consumerUnits[consumerUnitIndex]
                     ?.state ?? ''}
-                readOnly= {!user}
+                readOnly={!isAdmin}
                 onChange={event => {
                     user.consumerUnits[consumerUnitIndex]
                         .state = event.target.value
@@ -189,6 +221,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 {isAdmin ?
                     <util.criticalButton
                         id='deleteUnit'
+                        data-testid='deleteUnit'
                         onClick={event => {
                             event.preventDefault()
                             setModal(true)
@@ -201,6 +234,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 {isAdmin ?
                     <util.classicButton
                         id='newUnit'
+                        data-testid='newUnit'
                         onClick = { () => {
                             history.push('/new-unit')
                         }}
@@ -212,6 +246,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 {isAdmin ?
                     <util.classicButton
                         id='saveUnit'
+                        data-testid='saveUnit'
                         onClick={event => {
                             event.preventDefault()
                             if (validateForm('consumerUnitForm')) {

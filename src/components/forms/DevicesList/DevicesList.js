@@ -86,13 +86,16 @@ const DevicesList = ({ user, isAdmin, consumerUnitIndex }) => {
             }
 
             <styles.header>
-                <styles.title>
+                <styles.title
+                    data-testid='title'
+                >
                     Dispositivos
                 </styles.title>
 
                 {isAdmin ?
                     <util.classicButton
                         id='newDevice'
+                        data-testid='newDevice'
                         onClick={event => {
                             event.preventDefault()
                             setNewDevicePopup(true)
@@ -108,11 +111,14 @@ const DevicesList = ({ user, isAdmin, consumerUnitIndex }) => {
                 .devices.map((device, index) =>
                     <li key={index}>
                         <styles.deviceForm id={`deviceForm${index}`}>
-                            <label>
+                            <label
+                                data-testid={`idLabel${index}`}
+                            >
                                 ID
                             </label>
                             <input
                                 id={`deviceId${index}`}
+                                data-testid={`deviceId${index}`}
                                 defaultValue={device.id}
                                 readOnly={!isAdmin}
                                 maxLength='8'
@@ -131,11 +137,14 @@ const DevicesList = ({ user, isAdmin, consumerUnitIndex }) => {
                                 ID inválido
                             </p>
 
-                            <label>
+                            <label
+                                data-testid={`idName${index}`}
+                            >
                                 Nome
                             </label>
                             <input
                                 id={`deviceName${index}`}
+                                data-testid={`deviceName${index}`}
                                 defaultValue={device.name}
                                 readOnly={!isAdmin}
                                 maxLength='20'
@@ -157,6 +166,7 @@ const DevicesList = ({ user, isAdmin, consumerUnitIndex }) => {
                                 <styles.buttons>
                                     <util.classicButton
                                         id={`saveDevicesList${index}`}
+                                        data-testid={`saveDevicesList${index}`}
                                         onClick={event => {
                                             event.preventDefault()
                                             if (validateForm(`deviceForm${index}`)) {
@@ -179,6 +189,7 @@ const DevicesList = ({ user, isAdmin, consumerUnitIndex }) => {
                                     </util.classicButton>
                                     <util.criticalButton
                                         id={`deleteDevicesList${index}`}
+                                        data-testid={`deleteDevicesList${index}`}
                                         onClick={event => {
                                             event.preventDefault()
                                             setDeviceIndex(index)
