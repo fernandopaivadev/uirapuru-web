@@ -59,7 +59,7 @@ const Profile = ({ history }) => {
         }
     }
 
-    return user && isAdmin ?
+    return user ?
         <>
             <NavBar
                 user={user}
