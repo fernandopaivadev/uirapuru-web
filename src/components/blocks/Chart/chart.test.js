@@ -5,7 +5,53 @@ import 'jest-canvas-mock'
 
 const collection = [
     {
-        title: 'Device',
+        title: 'Device 1',
+        labels: [
+            '03/01 01:04',
+            '23/02 13:05'
+        ],
+        datasets: [
+            {
+                label: 'T',
+                data: [
+                    1000,
+                    2000
+                ]
+            },
+            {
+                label: 'V',
+                data: [
+                    2000,
+                    3000
+                ]
+            }
+        ]
+    },
+    {
+        title: 'Device 2',
+        labels: [
+            '03/01 01:04',
+            '23/02 13:05'
+        ],
+        datasets: [
+            {
+                label: 'T',
+                data: [
+                    1000,
+                    2000
+                ]
+            },
+            {
+                label: 'V',
+                data: [
+                    2000,
+                    3000
+                ]
+            }
+        ]
+    },
+    {
+        title: 'Device 3',
         labels: [
             '03/01 01:04',
             '23/02 13:05'
@@ -52,22 +98,21 @@ const theme = {
     ]
 }
 
-
-
 describe('Chart', () => {
-    // test('Verifica se renderiza a main', () => {
-    //     render(<Chart collection={[]} theme={{}} />)
+    test('Verifica se renderiza a main', () => {
+        render(<Chart collection={[]} theme={{}} />)
 
-    //     expect(screen.getByTestId('main')).toBeInTheDocument()
-    //     expect(screen.queryByTestId('chart')).toBeNull()
-    // })
-
-    test('Renderiza Chart', async () => {
-        render(<Chart collection={collection} theme={theme} />)
         expect(screen.getByTestId('main')).toBeInTheDocument()
-        expect(screen.getByTestId('chart')).toBeInTheDocument()
-        expect(screen.getByTestId('title')).toBeInTheDocument()
-        expect(screen.getByTestId('chart-0')).toBeInTheDocument()
+        expect(screen.queryByTestId('chart')).toBeNull()
     })
 
+    test('Renderiza Chart', () => {
+        render(<Chart collection={collection} theme={theme} />)
+        expect(screen.getByTestId('main')).toBeInTheDocument()
+        collection.forEach((chart, index) => {
+            expect(screen.getByTestId(`chart${index}`)).toBeInTheDocument()
+            expect(screen.getByTestId(`title${index}`)).toBeInTheDocument()
+            expect(screen.getByTestId(`canvas${index}`)).toBeInTheDocument()
+        })
+    })
 })

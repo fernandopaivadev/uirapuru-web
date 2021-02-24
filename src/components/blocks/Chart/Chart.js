@@ -31,7 +31,7 @@ const Chart = ({ collection, theme, aspectRatio, fontSize, pointSize }) => {
                 })
 
                 const context = document.querySelector(
-                `#chart-${index}`
+                `#canvas${index}`
                 ).getContext('2d')
 
                 new ChartJS(context, {
@@ -79,7 +79,7 @@ const Chart = ({ collection, theme, aspectRatio, fontSize, pointSize }) => {
                 })
             })
         } catch (err) {
-            console.log(err.message)
+            console.log(`ERRO LOCAL: ${err.message}`)
         }
     })
 
@@ -90,17 +90,17 @@ const Chart = ({ collection, theme, aspectRatio, fontSize, pointSize }) => {
         {collection.map((chart, chartIndex) =>
             chart ?
                 <styles.chart
-                    data-testid='chart'
+                    data-testid={`chart${chartIndex}`}
                     key={chartIndex}
                 >
                     <styles.title
-                        data-testid='title'
+                        data-testid={`title${chartIndex}`}
                     >
                         {chart.title}
                     </styles.title>
                     <canvas
-                        id={`chart-${chartIndex}`}
-                        data-testid={`chart-${chartIndex}`}
+                        id={`canvas${chartIndex}`}
+                        data-testid={`canvas${chartIndex}`}
                     />
                 </styles.chart>
                 : null

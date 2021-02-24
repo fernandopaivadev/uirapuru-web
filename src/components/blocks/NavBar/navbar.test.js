@@ -71,8 +71,6 @@ describe('NavBar', () => {
             </Router>
         )
 
-        console.log(screen.getByTestId('textInfo').innerHTML)
-
         expect(
             screen.getByTestId('username').innerHTML
             ===
