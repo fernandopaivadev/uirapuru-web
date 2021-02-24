@@ -1,11 +1,11 @@
 {
     "name": "uirapuru-web",
-    "version": "1.5.31",
+    "version": "1.5.32",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
         "hooks": {
-            "pre-commit": "npm version patch -no-git-tag-version && git add . && npm run lint:css && lint-staged",
+            "pre-commit": "npm test && npm version patch -no-git-tag-version && git add . && npm run lint:css && lint-staged",
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
             "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
         }
