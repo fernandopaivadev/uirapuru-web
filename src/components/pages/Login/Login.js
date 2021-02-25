@@ -56,10 +56,9 @@ const Login = ({ history }) => {
     return <styles.main>
         <styles.form onSubmit={submit}>
             <styles.logo
-                e2eTestId='logo'
+                data-testid='logo'
             >
                 <img
-                    id='img'
                     src={logo}
                     alt='Tech Amazon Logo'
                 />
@@ -131,7 +130,7 @@ const Login = ({ history }) => {
 
             {loading ? null :
                 <styles.link
-                    id='link'
+                    data-testid='link'
                     onClick={() => {
                         history.push('/forgot-password')
                     }}
@@ -145,7 +144,7 @@ const Login = ({ history }) => {
                     id='error'
                     data-testid='error'
                 >
-                    <label>{errorMessage}</label>
+                    {errorMessage}
                 </styles.error>
                 :null
             }
