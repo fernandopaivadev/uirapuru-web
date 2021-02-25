@@ -8,7 +8,7 @@ import {
     setFormsValidation
 } from '../../../services/forms'
 
-import styles from './newdevice.style'
+import styles from './NewDevice.style'
 import util from '../../../util/util.style'
 
 const NewDevice = ({ user, consumerUnitIndex, exit }) => {

@@ -4,7 +4,7 @@ import storage from '../../../services/storage'
 import api from '../../../services/api'
 import websocket from '../../../services/websocket'
 
-import styles from './userslist.style'
+import styles from './UsersList.style'
 import util from '../../../util/util.style'
 
 const UsersList = ({ history }) => {

@@ -10,7 +10,7 @@ import api from '../../../services/api'
 
 import { FaSolarPanel } from 'react-icons/fa'
 
-import styles from './dashboard.style'
+import styles from './Dashboard.style'
 import util from '../../../util/util.style'
 import { themes } from '../../../util/themes.style'
 

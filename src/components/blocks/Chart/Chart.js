@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { Chart as ChartJS } from 'chart.js'
 
-import styles from './chart.style'
+import styles from './Chart.style'
 
 const Chart = ({ collection, theme, aspectRatio, fontSize, pointSize }) => {
     if (!fontSize) {

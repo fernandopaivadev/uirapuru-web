@@ -20,7 +20,7 @@ import {
 import storage from '../../../services/storage'
 
 import { applyTheme } from '../../../util/themes.style'
-import styles from './navbar.style'
+import styles from './NavBar.style'
 
 
 import logo from '../../../assets/logo.svg'

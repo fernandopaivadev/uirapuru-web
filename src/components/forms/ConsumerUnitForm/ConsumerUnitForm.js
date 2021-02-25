@@ -12,7 +12,7 @@ import {
     validateForm
 } from '../../../services/forms'
 
-import styles from './consumerunitform.style'
+import styles from './ConsumerUnitForm.style'
 import util from '../../../util/util.style'
 
 const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {

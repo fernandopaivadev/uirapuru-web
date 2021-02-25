@@ -16,7 +16,7 @@ import {
     BiSearchAlt as SearchIcon
 } from 'react-icons/bi'
 
-import styles from './plot.style'
+import styles from './Plot.style'
 import util from '../../../util/util.style'
 import { themes } from '../../../util/themes.style'
 

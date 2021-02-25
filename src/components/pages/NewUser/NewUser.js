@@ -19,7 +19,7 @@ import {
     setFormsValidation
 } from '../../../services/forms'
 
-import styles from './newuser.style'
+import styles from './NewUser.style'
 import util from '../../../util/util.style'
 import { themes } from '../../../util/themes.style'
 

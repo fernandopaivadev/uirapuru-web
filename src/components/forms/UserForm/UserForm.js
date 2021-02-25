@@ -13,7 +13,7 @@ import {
     validateForm,
 } from '../../../services/forms'
 
-import styles from './userform.style'
+import styles from './UserForm.style'
 import util from '../../../util/util.style'
 
 const UserForm = ({ user, isAdmin }) => {

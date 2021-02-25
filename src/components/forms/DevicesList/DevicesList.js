@@ -5,7 +5,7 @@ import Modal from '../../blocks/Modal/Modal'
 
 import api from '../../../services/api'
 
-import styles from './deviceslist.style'
+import styles from './DevicesList.style'
 import util from '../../../util/util.style'
 
 import { validateForm, formatDeviceID } from '../../../services/forms'

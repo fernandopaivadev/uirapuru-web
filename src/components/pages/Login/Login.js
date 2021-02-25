@@ -9,7 +9,7 @@ import {
 
 import logo from '../../../assets/logo.svg'
 
-import styles from './login.style'
+import styles from './Login.style'
 import util from '../../../util/util.style'
 
 const Login = ({ history }) => {
@@ -55,32 +55,41 @@ const Login = ({ history }) => {
 
     return <styles.main>
         <styles.form onSubmit={submit}>
-            <styles.logo>
+            <styles.logo
+                e2eTestId='logo'
+            >
                 <img
+                    id='img'
                     src={logo}
                     alt='Tech Amazon Logo'
                 />
                 <p>Uirapuru</p>
             </styles.logo>
 
-            <styles.label htmlFor='email'>
+            <styles.label
+                testid='emailLabel'
+                htmlFor='email'
+            >
                 E-mail ou nome de usuário
             </styles.label>
             <styles.input
                 autoFocus
-                id='email'
+                data-testid='email'
                 required
                 onChange={event => {
                     setUsername(event.target.value)
                 }}
             />
 
-            <styles.label htmlFor='password'>
+            <styles.label
+                id='passwordLabel'
+                htmlFor='password'>
                 Senha
             </styles.label>
             <styles.password>
                 {showPassword ?
                     <HidePasswordIcon
+                        id='hidePasswordIcon'
                         className='showPasswordIcon'
                         onClick={event => {
                             togglePassword(event)
@@ -88,6 +97,7 @@ const Login = ({ history }) => {
                     />
                     :
                     <ShowPasswordIcon
+                        id='ShowPasswordIcon'
                         className='showPasswordIcon'
                         onClick={event => {
                             togglePassword(event)
@@ -95,7 +105,7 @@ const Login = ({ history }) => {
                     />
                 }
                 <styles.input
-                    id='password'
+                    data-testid='password'
                     type='password'
                     required
                     onChange={event => {
@@ -105,12 +115,14 @@ const Login = ({ history }) => {
             </styles.password>
 
             {loading ?
-                <styles.loading>
+                <styles.loading
+                    data-testid='loading'
+                >
                     <util.circularProgress/>
                 </styles.loading>
                 :
                 <util.classicButton
-                    id='button'
+                    data-testid='button'
                     type='submit'
                 >
                     ENTRAR
@@ -119,9 +131,11 @@ const Login = ({ history }) => {
 
             {loading ? null :
                 <styles.link
+                    id='link'
                     onClick={() => {
                         history.push('/forgot-password')
-                    }}>
+                    }}
+                >
                     Esqueci minha senha
                 </styles.link>
             }
@@ -129,6 +143,7 @@ const Login = ({ history }) => {
             {error ?
                 <styles.error
                     id='error'
+                    data-testid='error'
                 >
                     <label>{errorMessage}</label>
                 </styles.error>

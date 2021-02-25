@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import api from '../../../services/api'
 import logo from '../../../assets/logo.svg'
 
-import styles from './resetpassword.style'
+import styles from './ResetPassword.style'
 import util from '../../../util/util.style'
 
 const ResetPassword = ({ history }) => {

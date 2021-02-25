@@ -9,7 +9,7 @@
         "plugin:react/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "plugin:testcafe/recommended"
+        "plugin:cypress/recommended"
     ],
     "settings": {
         "react": {
@@ -30,7 +30,7 @@
     "plugins": [
         "react",
         "import",
-        "testcafe"
+        "cypress"
     ],
     "rules": {
         "no-trailing-spaces": "error",
