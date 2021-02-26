@@ -32,13 +32,13 @@ const UsersList = ({ history }) => {
         <styles.container>
             {!loading ?
                 <styles.title
-                    data-testid='users'
+                    data-testid='title'
                 >
                     Usuários
                 </styles.title>
                 :
                 <styles.title
-                    data-testid='searching'
+                    data-testid='title'
                 >
                     Buscando dados
                 </styles.title>
@@ -56,7 +56,7 @@ const UsersList = ({ history }) => {
                             Novo Usuário
                         </util.classicButton>
                         <util.classicButton
-                            id='exit'
+                            data-testid='exit'
                             onClick={async () => {
                                 await storage.clear('all')
                                 history.push('/login')
@@ -70,7 +70,9 @@ const UsersList = ({ history }) => {
             </styles.header>
 
             {loading ?
-                <styles.loading>
+                <styles.loading
+                    data-testid='loading'
+                >
                     <util.circularProgress/>
                 </styles.loading>
                 :
@@ -79,6 +81,7 @@ const UsersList = ({ history }) => {
                         {usersList?.map((user, userIndex) =>
                             <styles.item
                                 id={`item${userIndex}`}
+                                data-testid={`item${userIndex}`}
                                 key={user?.username}
                                 onClick={async () => {
                                     setLoading(true)
