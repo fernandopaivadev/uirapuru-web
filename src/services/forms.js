@@ -77,12 +77,10 @@ const validateForm = id => {
         return false
     }
 
-    const formChildren = [...form.children]
-
     let sum = 0
     let expected = 0
 
-    const inputs = formChildren.filter(child =>
+    const inputs = Array.from(form.children).filter(child =>
         (child.tagName === 'INPUT'
         ||
         child.tagName === 'TEXTAREA')
@@ -101,7 +99,7 @@ const validateForm = id => {
 }
 
 const setFormsValidation = () => {
-    const forms = [...document.querySelectorAll('form')]
+    const forms = Array.from(document.querySelectorAll('form'))
 
     if (!forms) {
         return false

@@ -22,7 +22,6 @@ const Profile = ({ history }) => {
     const [modal, setModal] = useState(false)
     const [username, setUsername] = useState()
     const [theme, setTheme] = useState()
-    const [isDarkMode, setIsDarkMode] = useState()
 
     useEffect(() => {
         (async () => {
@@ -31,7 +30,6 @@ const Profile = ({ history }) => {
             setIsAdmin(await storage.read('access-level') === 'admin')
             setUsername(await storage.read('username'))
             setTheme(themes[await storage.read('theme') ?? 'default'])
-            setIsDarkMode(await storage.read('theme') === 'dark')
             setConsumerUnitIndex(
                 _user.consumerUnits.length === 1 ? 0 : undefined
             )
@@ -66,7 +64,6 @@ const Profile = ({ history }) => {
                 username={username}
                 isAdmin={isAdmin}
                 theme={theme}
-                isDarkMode={isDarkMode}
             />
 
             {modal ?

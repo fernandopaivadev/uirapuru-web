@@ -60,8 +60,6 @@ const Plot = ({ history }) => {
     const [theme, setTheme] = useState()
     const [username, setUsername] = useState()
     const [isAdmin, setIsAdmin] = useState(false)
-    const [isDarkMode, setIsDarkMode] = useState()
-
 
     useEffect(() => {
         (async () => {
@@ -71,7 +69,6 @@ const Plot = ({ history }) => {
             setTheme(themes[await storage.read('theme') ?? 'default'])
             setUsername(await storage.read('username'))
             setIsAdmin(await storage.read('access-level') === 'admin')
-            setIsDarkMode(await storage.read('theme') === 'dark')
         })()
     }, [])
 
@@ -158,7 +155,6 @@ const Plot = ({ history }) => {
             username={username}
             isAdmin={isAdmin}
             theme={theme}
-            isDarkMode={isDarkMode}
         />
 
         {user?.consumerUnits && collection ?

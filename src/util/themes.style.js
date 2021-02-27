@@ -2,6 +2,7 @@ import storage from '../services/storage'
 
 const themes = {
     default: {
+        name: 'default',
         primaryColor: '#309d20',
         primaryLightColor: '#3fc82a',
         secondaryColor: '#712b74',
@@ -24,6 +25,7 @@ const themes = {
         ]
     },
     dark: {
+        name: 'dark',
         primaryColor: '#309d20',
         primaryLightColor: '#3fc82a',
         secondaryColor: '#712b74',
@@ -49,6 +51,7 @@ const themes = {
 
 const applyTheme = async themeName => {
     try {
+        const currentThemeName = await storage.read('theme')
         const html = document.querySelector('html')
         const theme = themes[themeName]
 
@@ -64,6 +67,10 @@ const applyTheme = async themeName => {
         html.style.setProperty('--hovered-color',        theme.hoveredColor)
 
         await storage.write('theme', themeName)
+
+        if (themeName != currentThemeName) {
+            window.location.reload()
+        }
     } catch (err) {
         console.log(`ERRO LOCAL: TEMA > ${err.message}`)
     }

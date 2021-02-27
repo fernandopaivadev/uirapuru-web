@@ -25,7 +25,6 @@ const Dashboard = ({ history }) => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [collection, setCollection] = useState()
     const [theme, setTheme] = useState()
-    const [isDarkMode, setIsDarkMode] = useState()
 
     useEffect(() => {
         (async () => {
@@ -49,7 +48,6 @@ const Dashboard = ({ history }) => {
             setIsAdmin(await storage.read('access-level') === 'admin')
             setCollection(await storage.read('collection'))
             setTheme(themes[await storage.read('theme') ?? 'default'])
-            setIsDarkMode(await storage.read('theme') === 'dark')
 
             setLoading(false)
         })()
@@ -92,7 +90,6 @@ const Dashboard = ({ history }) => {
             username={username}
             isAdmin={isAdmin}
             theme={theme}
-            isDarkMode={isDarkMode}
         />
 
         {!loading ? <>

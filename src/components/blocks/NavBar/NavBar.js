@@ -26,8 +26,8 @@ import styles from './navbar.style'
 import logo from '../../../assets/logo.svg'
 import { version } from '../../../../package.json'
 
-const NavBar = ({ history, user, username, isAdmin, isDarkMode }) => {
-    const [darkMode, setDarkMode] = useState(isDarkMode)
+const NavBar = ({ history, user, username, isAdmin, theme }) => {
+    const [darkMode, setDarkMode] = useState(theme?.name === 'dark')
 
     const toggleDarkMode = async () => {
         if (darkMode) {

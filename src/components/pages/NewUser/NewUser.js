@@ -34,7 +34,6 @@ const NewUser = ({ history }) => {
     const [username, setUsername] = useState()
     const [isAdmin, setIsAdmin] = useState(false)
     const [theme, setTheme] = useState()
-    const [isDarkMode, setIsDarkMode] = useState()
 
     useEffect(() => {
         (async () => {
@@ -42,7 +41,6 @@ const NewUser = ({ history }) => {
             setUsername(await storage.read('username'))
             setIsAdmin(await storage.read('access-level') === 'admin')
             setTheme(themes[await storage.read('theme') ?? 'default'])
-            setIsDarkMode(await storage.read('theme') === 'dark')
         })()
     }, [])
 
@@ -110,7 +108,6 @@ const NewUser = ({ history }) => {
             username={username}
             isAdmin={isAdmin}
             theme={theme}
-            isDarkMode={isDarkMode}
         />
 
         {userType ?
