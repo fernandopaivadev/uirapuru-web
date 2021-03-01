@@ -99,6 +99,7 @@ const Dashboard = ({ history }) => {
             {user?.consumerUnits?.length > 0 ?
                 <styles.main>
                     <Menu
+                        id='menu'
                         title='Unidades'
                         items={
                             user?.consumerUnits
@@ -114,17 +115,19 @@ const Dashboard = ({ history }) => {
                         }`)
                         }}
                     />
-
                     <styles.container>
                         {user?.consumerUnits[
                             consumerUnitIndex
                         ].devices.length > 0 ?
-                            <styles.devices>
+                            <styles.devices
+                                data-testid='devices'
+                            >
                                 {user
                                     ?.consumerUnits[consumerUnitIndex]
                                     ?.devices.map((device, deviceIndex) =>
                                         <styles.deviceIcon
                                             id={`deviceIcon${deviceIndex}`}
+                                            data-testid={`deviceIcon${deviceIndex}`}
                                             aria-label={`ID: ${device.id}`}
                                             key={deviceIndex}
                                             onClick={() => {
@@ -143,7 +146,9 @@ const Dashboard = ({ history }) => {
                                                 {device.name}
                                             </p>
 
-                                            <ul className='real-time'>
+                                            <ul className='real-time'
+                                                data-testid={`real-time${deviceIndex}`}
+                                            >
                                                 {Object.keys(
                                                     realTimeBuffer[deviceIndex] ?? {}
                                                 ).map((key, keyIndex) =>
@@ -166,13 +171,16 @@ const Dashboard = ({ history }) => {
                                 }
                             </styles.devices>
                             :
-                            <styles.empty>
+                            <styles.empty
+                                data-testid='empty'
+                            >
                                 <p>
                                         Não há dispositivos cadastrados
                                 </p>
 
                                 {isAdmin ?
                                     <util.classicButton
+                                        data-testid='buttonRegister'
                                         onClick={() => {
                                             history.push('/profile')
                                         }}
@@ -187,7 +195,9 @@ const Dashboard = ({ history }) => {
 
                     {success ?
                         collection?.length ?
-                            <styles.charts>
+                            <styles.charts
+                                data-testid='charts'
+                            >
                                 <Chart
                                     collection={collection}
                                     aspectRatio={2}
@@ -195,7 +205,9 @@ const Dashboard = ({ history }) => {
                                 />
                             </styles.charts>
                             :
-                            <styles.empty>
+                            <styles.empty
+                                data-testid='noData'
+                            >
                                 <p>
                                         Não há dados registrados
                                         nas últimas 24 horas
@@ -209,14 +221,16 @@ const Dashboard = ({ history }) => {
 
                 </styles.main>
                 :
-                <styles.noUnit id='noUnit'>
+                <styles.noUnit
+                    data-testid='noUnit'
+                >
                     {isAdmin ?
                         <>
                             <p>
                                     Cadastre uma unidade consumidora
                             </p>
                             <util.classicButton
-                                id='newUnit'
+                                data-testid='newUnit'
                                 onClick={() => {
                                     history.push('/new-unit')
                                 }}

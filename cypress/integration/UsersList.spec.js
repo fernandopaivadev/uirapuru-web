@@ -1,12 +1,12 @@
-const { TEST_URL, TEST_USER, TEST_PASSWORD } = Cypress.env()
+const { TEST_URL, TEST_USER_1, TEST_PASSWORD_1 } = Cypress.env()
 
 context('UsersList', () => {
     before(() => {
         cy.visit(`${TEST_URL}/#/login`)
-        cy.get('[data-testid="email"]').type(TEST_USER)
-            .should('have.value', TEST_USER)
-        cy.get('[data-testid="password"]').type(TEST_PASSWORD)
-            .should('have.value', TEST_PASSWORD)
+        cy.get('[data-testid="email"]').type(TEST_USER_1)
+            .should('have.value', TEST_USER_1)
+        cy.get('[data-testid="password"]').type(TEST_PASSWORD_1)
+            .should('have.value', TEST_PASSWORD_1)
         cy.get('[data-testid="button"]').click()
         cy.get('[data-testid="loading"]').should('exist')
         cy.get('[data-testid="error"]').should('not.exist')

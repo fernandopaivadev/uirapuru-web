@@ -1,4 +1,4 @@
-const { TEST_URL, TEST_USER, TEST_PASSWORD } = Cypress.env()
+const { TEST_URL, TEST_USER_1, TEST_PASSWORD_1 } = Cypress.env()
 
 context('Login', () => {
     beforeEach(() => {
@@ -44,8 +44,8 @@ context('Login', () => {
     })
 
     it('Senha incorreta', () => {
-        cy.get('[data-testid="email"]').type(TEST_USER)
-            .should('have.value', TEST_USER)
+        cy.get('[data-testid="email"]').type(TEST_USER_1)
+            .should('have.value', TEST_USER_1)
         cy.get('[data-testid="password"]').type('123456')
             .should('have.value', '123456')
         cy.get('[data-testid="button"]').click()
@@ -54,10 +54,10 @@ context('Login', () => {
     })
 
     it('Autenticação com sucesso', () => {
-        cy.get('[data-testid="email"]').type(TEST_USER)
-            .should('have.value', TEST_USER)
-        cy.get('[data-testid="password"]').type(TEST_PASSWORD)
-            .should('have.value', TEST_PASSWORD)
+        cy.get('[data-testid="email"]').type(TEST_USER_1)
+            .should('have.value', TEST_USER_1)
+        cy.get('[data-testid="password"]').type(TEST_PASSWORD_1)
+            .should('have.value', TEST_PASSWORD_1)
         cy.get('[data-testid="button"]').click()
         cy.get('[data-testid="loading"]').should('exist')
         cy.get('[data-testid="error"]').should('not.exist')
