@@ -20,18 +20,44 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
     const [error, setError] = useState(false)
     const [modal, setModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
+    const [newUnit] = useState(isNaN(consumerUnitIndex))
+    const [consumerUnit] = useState(newUnit ?
+        {
+            number: '',
+            zip: '',
+            city: '',
+            state: '',
+            country: 'Brasil',
+            address: '',
+            name: '',
+            devices: []
+        }
+        :
+        user?.consumerUnits[consumerUnitIndex]
+    )
 
     const submit = async () => {
+        if (newUnit) {
+            user.consumerUnits.push(consumerUnit)
+        } else {
+            user.consumerUnits[consumerUnitIndex] = consumerUnit
+        }
+
         const result = await api.updateUser(user)
 
         if (result === 'OK') {
-            setSuccess(true)
-            setError(false)
+            if (newUnit) {
+                setSuccess(true)
+                history.push('/profile')
+            } else {
+                setSuccess(true)
+                setError(false)
 
-            setTimeout(() => {
-                setSuccess(false)
-                window.location.reload()
-            }, 2000)
+                setTimeout(() => {
+                    setSuccess(false)
+                    window.location.reload()
+                }, 2000)
+            }
         } else {
             setErrorMessage(result)
             setSuccess(false)
@@ -78,13 +104,10 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 minLength='6'
                 maxLength='16'
                 required
-                defaultValue={user
-                    ?.consumerUnits[consumerUnitIndex]
-                    ?.number ?? ''}
+                defaultValue={consumerUnit?.number ?? ''}
                 readOnly={!isAdmin}
                 onChange={event => {
-                    user.consumerUnits[consumerUnitIndex]
-                        .number = event.target.value
+                    consumerUnit.number = event.target.value
                 }}
             />
             <p className='error-message'>
@@ -103,13 +126,10 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 maxLength='64'
                 minLength='8'
                 required
-                defaultValue={user
-                    ?.consumerUnits[consumerUnitIndex]
-                    ?.name ?? ''}
+                defaultValue={consumerUnit?.name ?? ''}
                 readOnly={!isAdmin}
                 onChange={event => {
-                    user.consumerUnits[consumerUnitIndex]
-                        .name = event.target.value
+                    consumerUnit.name = event.target.value
                 }}
             />
             <p className='error-message'>
@@ -128,13 +148,10 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 maxLength='256'
                 minLength='10'
                 required
-                defaultValue={user
-                    ?.consumerUnits[consumerUnitIndex]
-                    ?.address ?? ''}
+                defaultValue={consumerUnit?.address ?? ''}
                 readOnly={!isAdmin}
                 onChange={event => {
-                    user.consumerUnits[consumerUnitIndex]
-                        .address = event.target.value
+                    consumerUnit.address = event.target.value
                 }}
             />
             <p className='error-message'>
@@ -152,15 +169,11 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 name='zip'
                 required
                 pattern='\d{5}-\d{3}'
-                defaultValue={formatCEP(user
-                    ?.consumerUnits[consumerUnitIndex]?.zip) ?? ''}
+                defaultValue={formatCEP(consumerUnit?.zip) ?? ''}
                 readOnly={!isAdmin}
                 onChange={event => {
-                    user
-                        .consumerUnits[consumerUnitIndex]
-                        .zip = getOnlyNumbers(event.target.value)
-                    event.target.value =  formatCEP(event.target
-                        .value)
+                    consumerUnit.zip = getOnlyNumbers(event.target.value)
+                    event.target.value =  formatCEP(event.target.value)
                 }}
             />
             <p className='error-message'>
@@ -179,13 +192,10 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 maxLength='64'
                 minLength='3'
                 required
-                defaultValue={user
-                    ?.consumerUnits[consumerUnitIndex]
-                    ?.city ?? ''}
+                defaultValue={consumerUnit?.city ?? ''}
                 readOnly={!isAdmin}
                 onChange={event => {
-                    user.consumerUnits[consumerUnitIndex]
-                        .city = event.target.value
+                    consumerUnit.city = event.target.value
                 }}
             />
             <p className='error-message'>
@@ -204,13 +214,10 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 maxLength='64'
                 minLength='3'
                 required
-                defaultValue={user
-                    ?.consumerUnits[consumerUnitIndex]
-                    ?.state ?? ''}
+                defaultValue={consumerUnit?.state ?? ''}
                 readOnly={!isAdmin}
                 onChange={event => {
-                    user.consumerUnits[consumerUnitIndex]
-                        .state = event.target.value
+                    consumerUnit.state = event.target.value
                 }}
             />
             <p className='error-message'>
@@ -218,7 +225,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
             </p>
 
             <styles.buttons>
-                {isAdmin ?
+                {isAdmin && !newUnit ?
                     <util.criticalButton
                         id='deleteUnit'
                         data-testid='deleteUnit'
@@ -231,7 +238,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                     </util.criticalButton>
                     : null
                 }
-                {isAdmin ?
+                {isAdmin && !newUnit ?
                     <util.classicButton
                         id='newUnit'
                         data-testid='newUnit'
@@ -240,6 +247,18 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                         }}
                     >
                         Nova Unidade
+                    </util.classicButton>
+                    : null
+                }
+                {isAdmin && newUnit ?
+                    <util.classicButton
+                        id='newUnit'
+                        data-testid='newUnit'
+                        onClick = {() => {
+                            history.push('/profile')
+                        }}
+                    >
+                        Voltar
                     </util.classicButton>
                     : null
                 }
