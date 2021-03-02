@@ -193,7 +193,7 @@ const Plot = ({ history }) => {
                             />
 
                             <input
-                                id='datePicker'
+                                data-testid='datePicker'
                                 type='date'
                                 value={currentDate}
                                 onChange={event => {
@@ -202,7 +202,7 @@ const Plot = ({ history }) => {
                             />
 
                             <select
-                                id='period'
+                                data-testid='period'
                                 onInput={event => {
                                     setPeriod(event.target.value)
                                 }}
@@ -215,7 +215,7 @@ const Plot = ({ history }) => {
 
                             {!(period === '24h') ?
                                 <input
-                                    id='hour'
+                                    data-testid='hour'
                                     type='time'
                                     defaultValue='00:00'
                                     onInput={event => {
@@ -226,7 +226,7 @@ const Plot = ({ history }) => {
                             }
 
                             <SearchIcon
-                                id='search'
+                                data-testid='search'
                                 className='icon'
                                 onClick={() => {
                                     setSearch(true)
@@ -237,14 +237,18 @@ const Plot = ({ history }) => {
                         {!loading ?
                             success ?
                                 collection?.length ?
-                                    <styles.chartContainer>
+                                    <styles.chartContainer
+                                        data-testid='chartContainer'
+                                    >
                                         <Chart
                                             collection={collection}
                                             theme={theme}
                                         />
                                     </styles.chartContainer>
                                     :
-                                    <styles.empty>
+                                    <styles.empty
+                                        data-testid='empty'
+                                    >
                                         <p>Não há dados do dispositivo</p>
                                         <p>
                                             &quot;
@@ -277,7 +281,7 @@ const Plot = ({ history }) => {
 
                         <styles.buttons>
                             <util.classicButton
-                                id='dashboard'
+                                data-testid='dashboard'
                                 onClick={() => {
                                     history.push('/dashboard')
                                 }}
