@@ -30,11 +30,8 @@ context('Dashboard', () => {
     })
 
     it('Verifica layout de dispositivos cadastrados', () => {
-        Array.from(cy.get('[data-testid=devices]').should('exist'))
-            .map((device, index) => {
-                cy.get(`[data-testid=deviceIcon${index}]`).should('exist')
-                cy.get(`[data-testid=real-time${index}]`).should('exist')
-            })
+        cy.get('[data-testid=deviceIcon0').should('exist')
+        cy.get('[data-testid=real-time0').should('exist')
     })
 
     it('Verifica layout da chart', () => {

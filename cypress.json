@@ -1,4 +1,4 @@
 {
     "testFiles": "*.spec.js",
-    "defaultCommandTimeout": 12000
+    "defaultCommandTimeout": 20000
 }

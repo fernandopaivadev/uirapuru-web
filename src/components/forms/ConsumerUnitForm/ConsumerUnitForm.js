@@ -252,8 +252,8 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 }
                 {isAdmin && newUnit ?
                     <util.classicButton
-                        id='newUnit'
-                        data-testid='newUnit'
+                        id='back'
+                        data-testid='back'
                         onClick = {() => {
                             history.push('/profile')
                         }}
@@ -288,7 +288,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
 
             {success && !error?
                 <p
-                    id='successMessageUnit'
+                    data-testid='successMessageUnit'
                     className='success'>
                     Salvo com sucesso!
                 </p>
@@ -296,7 +296,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
             }
             {!success && error?
                 <p
-                    id='errorMessageUnit'
+                    data-testid='errorMessageUnit'
                     className='error'>
                     { errorMessage }
                 </p>
