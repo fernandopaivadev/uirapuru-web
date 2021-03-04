@@ -17,17 +17,17 @@ import {
 import styles from './UserForm.style'
 import util from '../../../util/util.style'
 
-const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
-    const [user, setUser] = useState(_user)
+const UserForm = ({ history, user, isAdmin, userType, exit }) => {
+    const [userData, setUserData] = useState(user)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
 
     useEffect(() => {
-        if(!user && userType && isAdmin) {
+        if(!userData && userType && isAdmin) {
             if (userType === 'company') {
-                setUser({
+                setUserData({
                     username: '',
                     password: '',
                     email: '',
@@ -40,7 +40,7 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                     consumerUnits: []
                 })
             } else if (userType === 'person') {
-                setUser({
+                setUserData({
                     username: '',
                     password: '',
                     email: '',
@@ -61,7 +61,7 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
             setLoading(true)
 
             if (userType) {
-                const result = await api.createUser(user)
+                const result = await api.createUser(userData)
 
                 if (result === 'OK') {
                     setSuccess(true)
@@ -78,7 +78,7 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                 }
 
             } else {
-                const result = await api.updateUser(user)
+                const result = await api.updateUser(userData)
 
                 if (result === 'OK') {
                     setLoading(false)
@@ -121,10 +121,10 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
             maxLength='20'
             minLength='6'
             required
-            defaultValue={user?.username ?? ''}
+            defaultValue={userData?.username ?? ''}
             readOnly={!isAdmin}
             onChange={event => {
-                user.username = event.target.value
+                userData.username = event.target.value
                 event.target.value = formatUsername(
                     event.target.value
                 )
@@ -146,10 +146,10 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
             maxLength='40'
             minLength='10'
             required
-            defaultValue={user?.email ?? ''}
+            defaultValue={userData?.email ?? ''}
             readOnly={!isAdmin}
             onChange={event => {
-                user.email = event.target.value
+                userData.email = event.target.value
             }}
         />
         <p className='error-message'>
@@ -167,10 +167,10 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
             name='phone'
             required
             pattern='\(\d{2}\) \d{5}-\d{4}$'
-            defaultValue={formatPhone(user?.phone) ?? ''}
+            defaultValue={formatPhone(userData?.phone) ?? ''}
             readOnly={!isAdmin}
             onChange={event => {
-                user.phone = getOnlyNumbers(event.target.value)
+                userData.phone = getOnlyNumbers(event.target.value)
                 event.target.value =  formatPhone(
                     event.target.value
                 )
@@ -180,7 +180,7 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
             Número de telefone inválido
         </p>
 
-        {user?.person ?
+        {userData?.person ?
             <>
                 <label
                     data-testid='nameLabel'
@@ -194,10 +194,10 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                     maxLength='128'
                     minLength='10'
                     required
-                    defaultValue={user?.person?.name ?? ''}
+                    defaultValue={userData?.person?.name ?? ''}
                     readOnly= {!isAdmin}
                     onChange={event => {
-                        user.person.name = event.target.value
+                        userData.person.name = event.target.value
                     }}
                 />
                 <p className='error-message'>
@@ -213,10 +213,10 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                     name='cpf'
                     required
                     pattern='\d{3}\.\d{3}\.\d{3}-\d{2}'
-                    defaultValue={formatCPF(user?.person?.cpf) ?? ''}
+                    defaultValue={formatCPF(userData?.person?.cpf) ?? ''}
                     readOnly={!isAdmin}
                     onChange={event => {
-                        user.person.cpf = getOnlyNumbers(
+                        userData.person.cpf = getOnlyNumbers(
                             event.target.value
                         )
                         event.target.value =  formatCPF(
@@ -237,10 +237,10 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                     name='birth'
                     required
                     pattern='\d{2}\/\d{2}\/\d{4}'
-                    defaultValue={formatTimeStamp(user?.person?.birth) ?? ''}
+                    defaultValue={formatTimeStamp(userData?.person?.birth) ?? ''}
                     readOnly={!isAdmin}
                     onChange={event => {
-                        user.person.birth = event.target.value
+                        userData.person.birth = event.target.value
                         event.target.value = formatDate(
                             event.target.value
                         )
@@ -252,7 +252,7 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
             </>
             : null
         }
-        {user?.company ?
+        {userData?.company ?
             <>
                 <label
                     data-testid='cnpjLabel'
@@ -265,10 +265,10 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                     name='cnpj'
                     required
                     pattern='\d{2}\.\d{3}\.\d{3}.\d{4}-\d{2}'
-                    defaultValue={formatCNPJ(user?.company?.cnpj)}
+                    defaultValue={formatCNPJ(userData?.company?.cnpj)}
                     readOnly={!isAdmin}
                     onChange={event => {
-                        user.company.cnpj = getOnlyNumbers(
+                        userData.company.cnpj = getOnlyNumbers(
                             event.target.value
                         )
                         event.target.value =  formatCNPJ(
@@ -292,11 +292,11 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                     maxLength='128'
                     minLength='6'
                     required
-                    defaultValue={user?.company
+                    defaultValue={userData?.company
                         ?.name ?? ''}
                     readOnly={!isAdmin}
                     onChange={event => {
-                        user.company.name = event
+                        userData.company.name = event
                             .target
                             .value
                     }}
@@ -317,11 +317,11 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                     maxLength='128'
                     minLength='6'
                     required
-                    defaultValue={user?.company
+                    defaultValue={userData?.company
                         ?.tradeName ?? ''}
                     readOnly={!isAdmin}
                     onChange={event => {
-                        user.company.tradeName = event
+                        userData.company.tradeName = event
                             .target
                             .value
                     }}
@@ -342,10 +342,10 @@ const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
                     maxLength='512'
                     minLength='50'
                     required
-                    defaultValue={user?.company?.description ?? ''}
+                    defaultValue={userData?.company?.description ?? ''}
                     readOnly={!isAdmin}
                     onChange={event => {
-                        user.company.description = event.target.value
+                        userData.company.description = event.target.value
                     }}
                 />
                 <p className='error-message'>
