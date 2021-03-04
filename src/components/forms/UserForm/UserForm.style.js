@@ -63,6 +63,10 @@ const form = styled.form`
     }
 `
 
+const buttons = styled.div`
+  display: flex;
+`
+
 const title = styled.p`
     font-size: 2.4rem;
     font-weight: 600;
@@ -72,5 +76,6 @@ const title = styled.p`
 
 export default {
     form,
-    title
+    title,
+    buttons
 }

@@ -110,6 +110,13 @@ const dialog = styled.div`
     border-radius: 0.5rem;
 `
 
+const div = styled.div`
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+`
+
 export default {
     main,
     form,
@@ -117,5 +124,6 @@ export default {
     checkbox,
     buttons,
     loading,
-    dialog
+    dialog,
+    div
 }

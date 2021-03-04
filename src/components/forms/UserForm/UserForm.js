@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import api from '../../../services/api'
 
@@ -16,31 +17,88 @@ import {
 import styles from './UserForm.style'
 import util from '../../../util/util.style'
 
-const UserForm = ({ user, isAdmin }) => {
+const UserForm = ({ history, user: _user, isAdmin, userType, exit }) => {
+    const [user, setUser] = useState(_user)
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
-    const [errorMessage, setErrorMessage] = useState(
-        'Ocorreu um erro'
-    )
+    const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
+
+    useEffect(() => {
+        if(!user && userType && isAdmin) {
+            if (userType === 'company') {
+                setUser({
+                    username: '',
+                    password: '',
+                    email: '',
+                    phone: '',
+                    company: {
+                        name: '',
+                        tradeName: '',
+                        description: ''
+                    },
+                    consumerUnits: []
+                })
+            } else if (userType === 'person') {
+                setUser({
+                    username: '',
+                    password: '',
+                    email: '',
+                    phone: '',
+                    person: {
+                        name: '',
+                        cpf: '',
+                        birth: ''
+                    },
+                    consumerUnits: []
+                })
+            }
+        }
+    })
 
     const submit = async () => {
-        const result = await api.updateUser(user)
+        if (isAdmin) {
+            setLoading(true)
 
-        if (result === 'OK') {
-            setSuccess(true)
-            setError(false)
+            if (userType) {
+                const result = await api.createUser(user)
 
-            setTimeout(() => {
-                setSuccess(false)
-            }, 2000)
-        } else {
-            setErrorMessage(result)
-            setSuccess(false)
-            setError(true)
+                if (result === 'OK') {
+                    setSuccess(true)
+                    history.push('/users-list')
+                } else {
+                    setLoading(false)
+                    setErrorMessage(result)
+                    setSuccess(false)
+                    setError(true)
 
-            setTimeout(() => {
-                setError(false)
-            }, 2000)
+                    setTimeout(() => {
+                        setError(false)
+                    }, 2000)
+                }
+
+            } else {
+                const result = await api.updateUser(user)
+
+                if (result === 'OK') {
+                    setLoading(false)
+                    setSuccess(true)
+                    setError(false)
+
+                    setTimeout(() => {
+                        setSuccess(false)
+                    }, 2000)
+                } else {
+                    setLoading(false)
+                    setErrorMessage(result)
+                    setSuccess(false)
+                    setError(true)
+
+                    setTimeout(() => {
+                        setError(false)
+                    }, 2000)
+                }
+            }
         }
     }
 
@@ -63,7 +121,7 @@ const UserForm = ({ user, isAdmin }) => {
             maxLength='20'
             minLength='6'
             required
-            defaultValue={user.username ?? ''}
+            defaultValue={user?.username ?? ''}
             readOnly={!isAdmin}
             onChange={event => {
                 user.username = event.target.value
@@ -192,7 +250,9 @@ const UserForm = ({ user, isAdmin }) => {
                     Data inválida
                 </p>
             </>
-            :
+            : null
+        }
+        {user?.company ?
             <>
                 <label
                     data-testid='cnpjLabel'
@@ -292,27 +352,43 @@ const UserForm = ({ user, isAdmin }) => {
                     Digite no mínimo 50 caracteres
                 </p>
             </>
+            : null
         }
-        {isAdmin ?
-            <util.classicButton
-                id='save'
-                data-testid='save'
-                onClick={event => {
-                    event.preventDefault()
-                    if (validateForm('userForm')) {
-                        submit()
-                    } else {
-                        setErrorMessage('Preencha todos os campos')
-                        setError(true)
 
-                        setTimeout(() => {
-                            setError(false)
-                        }, 3000)
-                    }
-                }}
-            >
-                Salvar
-            </util.classicButton>
+        {isAdmin ?
+            !loading ?
+                <styles.buttons>
+                    <util.classicButton
+                        id='save'
+                        data-testid='save'
+                        onClick={event => {
+                            event.preventDefault()
+                            if (validateForm('userForm')) {
+                                submit()
+                            } else {
+                                setErrorMessage('Preencha todos os campos')
+                                setError(true)
+
+                                setTimeout(() => {
+                                    setError(false)
+                                }, 3000)
+                            }
+                        }}
+                    >
+                        Salvar
+                    </util.classicButton>
+                    <util.classicButton
+                        id='backToUsersList'
+                        onClick={event => {
+                            event.preventDefault()
+                            exit()
+                        }}
+                    >
+                        Voltar
+                    </util.classicButton>
+                </styles.buttons>
+                :
+                <util.circularProgress/>
             : null
         }
         {success && !error?
@@ -334,4 +410,4 @@ const UserForm = ({ user, isAdmin }) => {
     </styles.form>
 }
 
-export default UserForm
+export default withRouter(UserForm)
