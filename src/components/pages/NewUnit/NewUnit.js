@@ -5,10 +5,6 @@ import ConsumerUnitForm from '../../forms/ConsumerUnitForm/ConsumerUnitForm'
 
 import storage from '../../../services/storage'
 
-import {
-    setFormsValidation
-} from '../../../services/forms'
-
 import styles from './NewUnit.style'
 import { themes } from '../../../util/themes.style'
 
@@ -28,10 +24,6 @@ const NewUnit = () => {
             setIsDarkMode(await storage.read('theme') === 'dark')
         })()
     }, [])
-
-    useEffect(() => {
-        setFormsValidation()
-    })
 
     return <>
         <NavBar

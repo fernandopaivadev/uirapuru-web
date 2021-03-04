@@ -28,7 +28,9 @@ const UsersList = ({ history }) => {
         })()
     }, [])
 
-    return <styles.main>
+    return <styles.main
+        data-testid = 'usersList'
+    >
         <styles.container>
             {!loading ?
                 <styles.title

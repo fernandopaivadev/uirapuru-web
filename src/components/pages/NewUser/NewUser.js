@@ -6,11 +6,6 @@ import UserForm from '../../forms/UserForm/UserForm'
 
 import storage from '../../../services/storage'
 
-
-import {
-    setFormsValidation
-} from '../../../services/forms'
-
 import styles from './NewUser.style'
 import util from '../../../util/util.style'
 import { themes } from '../../../util/themes.style'
@@ -32,10 +27,6 @@ const NewUser = ({ history }) => {
             setIsDarkMode(await storage.read('theme') === 'dark')
         })()
     }, [])
-
-    useEffect(() => {
-        setFormsValidation()
-    })
 
     return <>
         <NavBar
@@ -61,7 +52,7 @@ const NewUser = ({ history }) => {
             :
             <styles.dialog>
                 <util.classicButton
-                    id='registerPerson'
+                    data-testid='registerPerson'
                     onClick={() => {
                         setUserType('person')
                     }}
@@ -70,7 +61,7 @@ const NewUser = ({ history }) => {
                 </util.classicButton>
 
                 <util.classicButton
-                    id='registerCompany'
+                    data-testid='registerCompany'
                     onClick={() => {
                         setUserType('company')
                     }}
@@ -79,7 +70,7 @@ const NewUser = ({ history }) => {
                 </util.classicButton>
 
                 <util.classicButton
-                    id='backToUsersList'
+                    data-testid='backToUsersList'
                     onClick={event => {
                         event.preventDefault()
                         history.push('/users-list')

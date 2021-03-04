@@ -27,22 +27,6 @@ const form = styled.form`
         background: var(--background-color);
     }
 
-    input, textarea, select {
-        padding: 0.5rem;
-        border: 0.2rem solid var(--primary-color);
-        border-radius: 0.3rem;
-        font-size: 1.8rem;
-        margin: 0.2rem 0 2.5rem 0;
-        color: var(--primary-font-color);
-        background: var(--background-color);
-        width: 40%;
-        resize: vertical;
-    }
-
-    textarea {
-        height: 12rem;
-    }
-
     .error-message {
         color: var(--error-color);
         font-size: 1.4rem;

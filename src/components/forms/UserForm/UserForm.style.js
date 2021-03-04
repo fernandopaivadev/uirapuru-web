@@ -7,8 +7,9 @@ const form = styled.form`
     height: fit-content;
     margin: 1rem 2rem 0 2rem;
     width: 100%;
+    overflow: hidden;
 
-    input, textarea {
+    input, textarea, select {
         padding: 0.5rem;
         border: 0.2rem solid var(--primary-color);
         border-radius: 0.3rem;
@@ -31,6 +32,7 @@ const form = styled.form`
 
     textarea {
         height: 10rem;
+        resize: none;
     }
 
     label {

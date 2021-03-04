@@ -147,7 +147,7 @@ const Profile = ({ history }) => {
 
                 {isAdmin ?
                     <util.criticalButton
-                        id='deleteUser'
+                        data-testid='deleteUser'
                         onClick={() => {
                             setModal(true)
                         }}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import api from '../../../services/api'
 
@@ -7,10 +7,13 @@ import Modal from '../../blocks/Modal/Modal'
 import { withRouter } from 'react-router-dom'
 
 import {
+    setFormsValidation,
     formatCEP,
     getOnlyNumbers,
     validateForm
 } from '../../../services/forms'
+
+
 
 import styles from './ConsumerUnitForm.style'
 import util from '../../../util/util.style'
@@ -35,6 +38,10 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
         :
         user?.consumerUnits[consumerUnitIndex]
     )
+
+    useEffect(() => {
+        setFormsValidation()
+    })
 
     const submit = async () => {
         if (newUnit) {

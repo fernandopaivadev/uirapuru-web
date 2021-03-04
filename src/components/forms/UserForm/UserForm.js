@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import api from '../../../services/api'
-
-import {
+import { setFormsValidation ,
     formatUsername,
     formatPhone,
     formatCPF,
@@ -14,6 +12,8 @@ import {
     validateForm,
 } from '../../../services/forms'
 
+import api from '../../../services/api'
+
 import styles from './UserForm.style'
 import util from '../../../util/util.style'
 
@@ -23,6 +23,10 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
+
+    useEffect(() => {
+        setFormsValidation()
+    })
 
     useEffect(() => {
         if(!userData && userType && isAdmin) {
@@ -115,8 +119,7 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
             Nome de usuário
         </label>
         <input
-            id='username'
-            data-testid='username'
+            data-testid='testUsername'
             name='username'
             maxLength='20'
             minLength='6'
@@ -134,13 +137,65 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
             Digite no mínimo 6 caracteres
         </p>
 
+        {isAdmin && typeof userData?.password === 'string' ?
+            <>
+                <label
+                    data-testid='passwordLabel'
+                >
+                    Senha
+                </label>
+                <input
+                    data-testid='password'
+                    type='password'
+                    name='password'
+                    maxLength='32'
+                    minLength='8'
+                    required
+                    onChange={event => {
+                        userData.password = event.target.value
+                    }}
+                />
+                <p className='error-message'>
+                        Digite no mínimo 8 caracteres
+                </p>
+            </>
+            : null
+        }
+
+        {isAdmin ?
+            <>
+                <label
+                    data-testid='accessLevelLabel'
+                >
+                    Nível de Acesso
+                </label>
+                <select
+                    data-testid='accessLevel'
+                    name='accessLevel'
+                    required
+                    onChange={event => {
+                        const { value } = event.target
+
+                        if (value === 'Administrador') {
+                            userData.accessLevel = 'admin'
+                        } else if (value === 'Usuário') {
+                            userData.accessLevel = 'user'
+                        }
+                    }}
+                >
+                    <option>Usuário</option>
+                    <option>Administrador</option>
+                </select>
+            </>
+            : null
+        }
+
         <label
             data-testid='emailLabel'
         >
             Email
         </label>
         <input
-            id='email'
             data-testid='email'
             name='email'
             maxLength='40'
@@ -162,7 +217,6 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
             Telefone
         </label>
         <input
-            id='phone'
             data-testid='phone'
             name='phone'
             required
@@ -188,7 +242,6 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
                     Nome completo
                 </label>
                 <input
-                    id='name'
                     data-testid='name'
                     name='name'
                     maxLength='128'
@@ -206,9 +259,10 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
 
                 <label
                     data-testid='cpfLabel'
-                >CPF</label>
+                >
+                    CPF
+                </label>
                 <input
-                    id='cpf'
                     data-testid='cpf'
                     name='cpf'
                     required
@@ -230,14 +284,15 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
 
                 <label
                     data-testid='birthLabel'
-                >Data de nascimento</label>
+                >
+                    Data de nascimento
+                </label>
                 <input
-                    id='birth'
                     data-testid='birth'
                     name='birth'
                     required
                     pattern='\d{2}\/\d{2}\/\d{4}'
-                    defaultValue={formatTimeStamp(userData?.person?.birth) ?? ''}
+                    defaultValue={formatTimeStamp(userData?.person?.birth)}
                     readOnly={!isAdmin}
                     onChange={event => {
                         userData.person.birth = event.target.value
@@ -260,7 +315,6 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
                     CNPJ
                 </label>
                 <input
-                    id='cnpj'
                     data-testid='cnpj'
                     name='cnpj'
                     required
@@ -286,7 +340,6 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
                     Nome Fantasia
                 </label>
                 <input
-                    id='name'
                     data-testid='name'
                     name='name'
                     maxLength='128'
@@ -311,7 +364,6 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
                     Razão social
                 </label>
                 <input
-                    id='tradeName'
                     data-testid='tradeName'
                     name='tradeName'
                     maxLength='128'
@@ -336,7 +388,6 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
                     Descrição
                 </label>
                 <textarea
-                    id='description'
                     data-testid='description'
                     name='description'
                     maxLength='512'
@@ -359,7 +410,6 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
             !loading ?
                 <styles.buttons>
                     <util.classicButton
-                        id='save'
                         data-testid='save'
                         onClick={event => {
                             event.preventDefault()
@@ -393,7 +443,7 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
         }
         {success && !error?
             <p
-                id='successMessage'
+                data-testid='successMessage'
                 className='success'>
                 Salvo com sucesso!
             </p>
@@ -401,7 +451,7 @@ const UserForm = ({ history, user, isAdmin, userType, exit }) => {
         }
         {!success && error?
             <p
-                id='errorMessage'
+                data-testid='errorMessage'
                 className='error'>
                 { errorMessage }
             </p>

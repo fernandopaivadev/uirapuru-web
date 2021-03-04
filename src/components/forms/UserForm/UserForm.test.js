@@ -82,11 +82,11 @@ describe('UserForm', () => {
         expect(screen.getByTestId('title')).toBeInTheDocument()
         expect(screen.getByTestId('usernameLabel')).toBeInTheDocument()
         expect(
-            screen.getByTestId('username').value
+            screen.getByTestId('testUsername').value
             ===
             primaryProps.user.username
             &&
-            !screen.getByTestId('username').readOnly
+            !screen.getByTestId('testUsername').readOnly
         ).toBeTruthy()
         expect(screen.getByTestId('emailLabel')).toBeInTheDocument()
         expect(
@@ -149,11 +149,11 @@ describe('UserForm', () => {
         expect(screen.getByTestId('title')).toBeInTheDocument()
         expect(screen.getByTestId('usernameLabel')).toBeInTheDocument()
         expect(
-            screen.getByTestId('username').value
+            screen.getByTestId('testUsername').value
             ===
             secondaryProps.user.username
             &&
-            screen.getByTestId('username').readOnly
+            screen.getByTestId('testUsername').readOnly
         ).toBeTruthy()
         expect(screen.getByTestId('emailLabel')).toBeInTheDocument()
         expect(
