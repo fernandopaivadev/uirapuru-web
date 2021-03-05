@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './modal.style'
+import styles from './Modal.style'
 import util from '../../../util/util.style'
 
 const Modal = ({ message, taskOnYes, taskOnNo }) =>
@@ -13,14 +13,12 @@ const Modal = ({ message, taskOnYes, taskOnNo }) =>
             </p>
             <div>
                 <util.classicButton
-                    id='yes'
                     data-testid='yes'
                     onClick={taskOnYes}
                 >
                     Sim
                 </util.classicButton>
                 <util.criticalButton
-                    id='no'
                     data-testid='no'
                     onClick= {taskOnNo}
                 >

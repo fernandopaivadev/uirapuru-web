@@ -1,6 +1,6 @@
 {
     "name": "uirapuru-web",
-    "version": "1.5.35",
+    "version": "1.5.55",
     "private": true,
     "homepage": "https://uirapuru.techamazon.tech",
     "husky": {
@@ -37,13 +37,13 @@
         "dev": "code . && react-scripts start",
         "build": "rimraf ./build && react-scripts build && rimraf ./build/**/*.map",
         "test": "react-scripts test --watchAll=false",
+        "cypress:open": "./node_modules/.bin/cypress open",
         "eject": "react-scripts eject",
         "update": "npm prune && ncu -u -x styled-components && npm install",
         "lint": "eslint --fix src/",
         "lint:css": "stylelint './src/**/*.js'",
         "start": "npm run build && npx serve -s build &",
         "deploy": "git checkout main && git merge develop && git push && git checkout develop",
-        "push": "git add . && git commit && git push",
         "reinstall": "rm -rf node_modules && rm -f package-lock.json && rm -f yarn.lock && npm install"
     },
     "browserslist": {
@@ -65,10 +65,11 @@
         "@testing-library/react": "^11.2.5",
         "@testing-library/user-event": "^12.1.10",
         "commitizen": "^4.2.3",
+        "cypress": "^6.5.0",
         "cz-conventional-changelog": "^3.3.0",
         "eslint": "^7.19.0",
+        "eslint-plugin-cypress": "^2.11.2",
         "eslint-plugin-import": "^2.22.1",
-        "eslint-plugin-testcafe": "^0.2.1",
         "husky": "^4.3.8",
         "jest-canvas-mock": "^2.3.1",
         "lint-staged": "^10.5.3",
@@ -76,8 +77,7 @@
         "stylelint": "^13.9.0",
         "stylelint-config-recommended": "^3.0.0",
         "stylelint-config-styled-components": "^0.1.1",
-        "stylelint-processor-styled-components": "^1.10.0",
-        "testcafe": "^1.10.1"
+        "stylelint-processor-styled-components": "^1.10.0"
     },
     "config": {
         "commitizen": {

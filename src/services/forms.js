@@ -50,14 +50,18 @@ const formatCEP = cep =>
         .replace(/(\d{5})(\d)/, '$1-$2')
 
 const formatTimeStamp = timeStamp => {
-    const splitTimeStamp = timeStamp.split('T')[0].split('-')
-    return `${
-        splitTimeStamp[2]
-    }/${
-        splitTimeStamp[1]
-    }/${
-        splitTimeStamp[0]
-    }`
+    if (timeStamp) {
+        const splitTimeStamp = timeStamp.split('T')[0].split('-')
+        return `${
+            splitTimeStamp[2]
+        }/${
+            splitTimeStamp[1]
+        }/${
+            splitTimeStamp[0]
+        }`
+    } else {
+        return ''
+    }
 }
 
 const formatDate = input =>

@@ -11,7 +11,7 @@ import storage from '../../../services/storage'
 import api from '../../../services/api'
 import { setFormsValidation } from '../../../services/forms'
 
-import styles from './profile.style'
+import styles from './Profile.style'
 import util from '../../../util/util.style'
 import { themes } from '../../../util/themes.style'
 
@@ -134,7 +134,7 @@ const Profile = ({ history }) => {
 
             <styles.navButtons>
                 <util.classicButton
-                    id='dashboard'
+                    data-testid='dashboardButton'
                     onClick={() =>{
                         history.push('/dashboard')
                     }}
@@ -144,7 +144,7 @@ const Profile = ({ history }) => {
 
                 {isAdmin ?
                     <util.criticalButton
-                        id='deleteUser'
+                        data-testid='deleteUser'
                         onClick={() => {
                             setModal(true)
                         }}

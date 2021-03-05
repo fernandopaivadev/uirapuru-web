@@ -4,7 +4,7 @@ import storage from '../../../services/storage'
 import api from '../../../services/api'
 import websocket from '../../../services/websocket'
 
-import styles from './userslist.style'
+import styles from './UsersList.style'
 import util from '../../../util/util.style'
 
 const UsersList = ({ history }) => {
@@ -28,17 +28,19 @@ const UsersList = ({ history }) => {
         })()
     }, [])
 
-    return <styles.main>
+    return <styles.main
+        data-testid = 'usersList'
+    >
         <styles.container>
             {!loading ?
                 <styles.title
-                    data-testid='users'
+                    data-testid='title'
                 >
                     Usuários
                 </styles.title>
                 :
                 <styles.title
-                    data-testid='searching'
+                    data-testid='title'
                 >
                     Buscando dados
                 </styles.title>
@@ -56,7 +58,7 @@ const UsersList = ({ history }) => {
                             Novo Usuário
                         </util.classicButton>
                         <util.classicButton
-                            id='exit'
+                            data-testid='exit'
                             onClick={async () => {
                                 await storage.clear('all')
                                 history.push('/login')
@@ -70,7 +72,9 @@ const UsersList = ({ history }) => {
             </styles.header>
 
             {loading ?
-                <styles.loading>
+                <styles.loading
+                    data-testid='loading'
+                >
                     <util.circularProgress/>
                 </styles.loading>
                 :
@@ -79,6 +83,7 @@ const UsersList = ({ history }) => {
                         {usersList?.map((user, userIndex) =>
                             <styles.item
                                 id={`item${userIndex}`}
+                                data-testid={`item${userIndex}`}
                                 key={user?.username}
                                 onClick={async () => {
                                     setLoading(true)

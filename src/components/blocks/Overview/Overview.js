@@ -9,7 +9,7 @@ import {
     FaEllipsisH
 } from 'react-icons/fa'
 
-import styles from './overview.style'
+import styles from './Overview.style'
 
 const Overview = ({ t1, h1, v1, i1, v2, i2 }) =>
     <styles.main>

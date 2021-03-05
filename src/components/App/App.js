@@ -3,7 +3,7 @@ import Routes from '../../routes'
 import storage from '../../services/storage'
 
 import { applyTheme } from '../../util/themes.style'
-import GlobalStyle from './app.style'
+import GlobalStyle from './App.style'
 
 window.onload = async () => {
     const themeName = await storage.read('theme')

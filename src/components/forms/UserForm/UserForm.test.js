@@ -1,4 +1,6 @@
 import React from 'react'
+import { HashRouter as Router } from 'react-router-dom'
+
 import UserForm from './UserForm'
 import { render, screen } from '@testing-library/react'
 import {
@@ -72,15 +74,19 @@ const secondaryProps ={
 
 describe('UserForm', () => {
     test('Pessoa jurídica e administrador', () => {
-        render(<UserForm {...primaryProps} />)
+        render(
+            <Router>
+                <UserForm {...primaryProps} />
+            </Router>
+        )
         expect(screen.getByTestId('title')).toBeInTheDocument()
         expect(screen.getByTestId('usernameLabel')).toBeInTheDocument()
         expect(
-            screen.getByTestId('username').value
+            screen.getByTestId('testUsername').value
             ===
             primaryProps.user.username
             &&
-            !screen.getByTestId('username').readOnly
+            !screen.getByTestId('testUsername').readOnly
         ).toBeTruthy()
         expect(screen.getByTestId('emailLabel')).toBeInTheDocument()
         expect(
@@ -135,15 +141,19 @@ describe('UserForm', () => {
     })
 
     test('Pessoa física e não administrador', () => {
-        render(<UserForm {...secondaryProps} />)
+        render(
+            <Router>
+                <UserForm {...secondaryProps} />
+            </Router>
+        )
         expect(screen.getByTestId('title')).toBeInTheDocument()
         expect(screen.getByTestId('usernameLabel')).toBeInTheDocument()
         expect(
-            screen.getByTestId('username').value
+            screen.getByTestId('testUsername').value
             ===
             secondaryProps.user.username
             &&
-            screen.getByTestId('username').readOnly
+            screen.getByTestId('testUsername').readOnly
         ).toBeTruthy()
         expect(screen.getByTestId('emailLabel')).toBeInTheDocument()
         expect(

@@ -7,8 +7,9 @@ const form = styled.form`
     height: fit-content;
     margin: 1rem 2rem 0 2rem;
     width: 100%;
+    overflow: hidden;
 
-    input, textarea {
+    input, textarea, select {
         padding: 0.5rem;
         border: 0.2rem solid var(--primary-color);
         border-radius: 0.3rem;
@@ -31,6 +32,7 @@ const form = styled.form`
 
     textarea {
         height: 10rem;
+        resize: none;
     }
 
     label {
@@ -63,6 +65,10 @@ const form = styled.form`
     }
 `
 
+const buttons = styled.div`
+  display: flex;
+`
+
 const title = styled.p`
     font-size: 2.4rem;
     font-weight: 600;
@@ -72,5 +78,6 @@ const title = styled.p`
 
 export default {
     form,
-    title
+    title,
+    buttons
 }

@@ -1,9 +1,11 @@
 import React from 'react'
 
-import styles from './menu.style'
+import styles from './Menu.style'
 
 const Menu = ({ title, items, subItemKey, setItemIndex, setSubItemIndex }) =>
-    <styles.main>
+    <styles.main
+        data-testid='units'
+    >
         <styles.title>
             {title}
         </styles.title>
