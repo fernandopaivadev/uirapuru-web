@@ -94,7 +94,6 @@ const DevicesList = ({ user, isAdmin, consumerUnitIndex }) => {
 
                 {isAdmin ?
                     <util.classicButton
-                        id='newDevice'
                         data-testid='newDevice'
                         onClick={event => {
                             event.preventDefault()
@@ -107,122 +106,120 @@ const DevicesList = ({ user, isAdmin, consumerUnitIndex }) => {
                 }
             </styles.header>
 
-            <ul>{user?.consumerUnits[consumerUnitIndex]
-                .devices.map((device, index) =>
-                    <li key={index}>
-                        <styles.deviceForm id={`deviceForm${index}`}>
-                            <label
-                                data-testid={`idLabel${index}`}
-                            >
+            <ul
+                data-testid='devicesList'
+            >{user?.consumerUnits[consumerUnitIndex]
+                    .devices.map((device, index) =>
+                        <li key={index}>
+                            <styles.deviceForm id={`deviceForm${index}`}>
+                                <label
+                                    data-testid={`idLabel${index}`}
+                                >
                                 ID
-                            </label>
-                            <input
-                                id={`deviceId${index}`}
-                                data-testid={`deviceId${index}`}
-                                defaultValue={device.id}
-                                readOnly={!isAdmin}
-                                maxLength='8'
-                                minLength='8'
-                                required
-                                onChange={event => {
-                                    user.consumerUnits[
-                                        consumerUnitIndex
-                                    ].devices[index].id = event.target.value
-                                    event.target.value = formatDeviceID(
-                                        event.target.value
-                                    )
-                                }}
-                            />
-                            <p className='error-message'>
+                                </label>
+                                <input
+                                    data-testid={`deviceId${index}`}
+                                    defaultValue={device.id}
+                                    readOnly={!isAdmin}
+                                    maxLength='8'
+                                    minLength='8'
+                                    required
+                                    onChange={event => {
+                                        user.consumerUnits[
+                                            consumerUnitIndex
+                                        ].devices[index].id = event.target.value
+                                        event.target.value = formatDeviceID(
+                                            event.target.value
+                                        )
+                                    }}
+                                />
+                                <p className='error-message'>
                                 ID inválido
-                            </p>
+                                </p>
 
-                            <label
-                                data-testid={`idName${index}`}
-                            >
+                                <label
+                                    data-testid={`idName${index}`}
+                                >
                                 Nome
-                            </label>
-                            <input
-                                id={`deviceName${index}`}
-                                data-testid={`deviceName${index}`}
-                                defaultValue={device.name}
-                                readOnly={!isAdmin}
-                                maxLength='20'
-                                minLength='6'
-                                required
-                                onChange={event => {
-                                    user.consumerUnits[
-                                        consumerUnitIndex
-                                    ].devices[index].name
+                                </label>
+                                <input
+                                    data-testid={`deviceName${index}`}
+                                    defaultValue={device.name}
+                                    readOnly={!isAdmin}
+                                    maxLength='20'
+                                    minLength='6'
+                                    required
+                                    onChange={event => {
+                                        user.consumerUnits[
+                                            consumerUnitIndex
+                                        ].devices[index].name
                                     =
                                     event.target.value
-                                }}
-                            />
-                            <p className='error-message'>
+                                    }}
+                                />
+                                <p className='error-message'>
                                 Digite no mínimo 6 caracteres
-                            </p>
+                                </p>
 
-                            {isAdmin ?
-                                <styles.buttons>
-                                    <util.classicButton
-                                        id={`saveDevicesList${index}`}
-                                        data-testid={`saveDevicesList${index}`}
-                                        onClick={event => {
-                                            event.preventDefault()
-                                            if (validateForm(`deviceForm${index}`)) {
-                                                setDeviceIndex(index)
-                                                submit(index)
-                                            } else {
-                                                setErrorMessage(
-                                                    'Preencha todos os campos'
-                                                )
+                                {isAdmin ?
+                                    <styles.buttons>
+                                        <util.classicButton
+                                            data-testid={`saveDevicesList${index}`}
+                                            onClick={event => {
+                                                event.preventDefault()
+                                                if (validateForm(`deviceForm${index}`)) {
+                                                    setDeviceIndex(index)
+                                                    submit(index)
+                                                } else {
+                                                    setErrorMessage(
+                                                        'Preencha todos os campos'
+                                                    )
 
-                                                toggleError(index, true)
+                                                    toggleError(index, true)
 
-                                                setTimeout(() => {
-                                                    toggleError(index, false)
-                                                }, 3000)
-                                            }
-                                        }}
-                                    >
+                                                    setTimeout(() => {
+                                                        toggleError(index, false)
+                                                    }, 3000)
+                                                }
+                                            }}
+                                        >
                                         Salvar
-                                    </util.classicButton>
-                                    <util.criticalButton
-                                        id={`deleteDevicesList${index}`}
-                                        data-testid={`deleteDevicesList${index}`}
-                                        onClick={event => {
-                                            event.preventDefault()
-                                            setDeviceIndex(index)
-                                            setModal(true)
-                                        }}
-                                    >
+                                        </util.classicButton>
+                                        <util.criticalButton
+                                            data-testid={`deleteDevicesList${index}`}
+                                            onClick={event => {
+                                                event.preventDefault()
+                                                setDeviceIndex(index)
+                                                setModal(true)
+                                            }}
+                                        >
                                         Excluir
-                                    </util.criticalButton>
-                                </styles.buttons>
-                                : null
-                            }
+                                        </util.criticalButton>
+                                    </styles.buttons>
+                                    : null
+                                }
 
-                            {success[index] && !error[index]?
-                                <p
-                                    id='successMessageDevicesList'
-                                    className='success'>
+                                {success[index] && !error[index]?
+                                    <p
+                                        data-testid='successMessageDevicesList'
+                                        className='success'>
                                     Salvo com sucesso!
-                                </p>
-                                : null
-                            }
+                                    </p>
+                                    : null
+                                }
 
-                            {!success[index] && error[index]?
-                                <p
-                                    id='errorMessageDevicesList'
-                                    className='error'>
-                                    {errorMessage}
-                                </p>
-                                : null
-                            }
-                        </styles.deviceForm>
-                    </li>
-                )
-            }</ul>
+                                {!success[index] && error[index]?
+                                    <p
+                                        data-testid='errorMessageDevicesList'
+                                        className='error'>
+                                        {errorMessage}
+                                    </p>
+                                    : null
+                                }
+                            </styles.deviceForm>
+                        </li>
+                    )
+                }</ul>
         </styles.devicesList>
         : null
 }

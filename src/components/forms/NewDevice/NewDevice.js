@@ -58,7 +58,9 @@ const NewDevice = ({ user, consumerUnitIndex, exit }) => {
 
                 <label
                     data-testid='idLabel'
-                >ID do dispositivo</label>
+                >
+                    ID do dispositivo
+                </label>
                 <input
                     id='deviceId'
                     data-testid='deviceId'
@@ -85,7 +87,6 @@ const NewDevice = ({ user, consumerUnitIndex, exit }) => {
                     Nome do dispositivo
                 </label>
                 <input
-                    id='deviceName'
                     data-testid='deviceName'
                     maxLength='20'
                     minLength='6'

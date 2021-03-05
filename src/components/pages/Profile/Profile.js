@@ -137,7 +137,7 @@ const Profile = ({ history }) => {
 
             <styles.navButtons>
                 <util.classicButton
-                    id='dashboard'
+                    data-testid='dashboardButton'
                     onClick={() =>{
                         history.push('/dashboard')
                     }}

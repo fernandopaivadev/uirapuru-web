@@ -22,7 +22,7 @@ context('New User', () => {
     })
 
     it('Clica no botão de voltar', () => {
-        cy.get('[data-testid=backToUsersList]').click()
+        cy.get('[data-testid="backToUsersList"]').click()
         cy.url().should('eq', `${TEST_URL}/#/users-list`)
     })
 

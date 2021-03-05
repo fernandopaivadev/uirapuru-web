@@ -30,12 +30,12 @@ context('Dashboard', () => {
     })
 
     it('Verifica layout de dispositivos cadastrados', () => {
-        cy.get('[data-testid=deviceIcon0').should('exist')
-        cy.get('[data-testid=real-time0').should('exist')
+        cy.get('[data-testid=deviceIcon0"]').should('exist')
+        cy.get('[data-testid=real-time0"]').should('exist')
     })
 
     it('Verifica layout da chart', () => {
-        cy.get('[data-testid=charts]').should('exist')
+        cy.get('[data-testid="charts"]').should('exist')
     })
 
     it('Não há unidade consumidora cadastrada', () => {
