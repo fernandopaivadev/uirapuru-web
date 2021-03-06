@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import api from '../../../services/api'
+import storage from '../../../services/storage'
 
 import {
     FaEye as ShowPasswordIcon,
@@ -19,6 +20,15 @@ const Login = ({ history }) => {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+
+    useEffect(() => {
+        (async () => {
+            if (await storage.read('JWT')) {
+                history.push('/dashboard')
+            }
+        })()
+    })
+
 
     const submit = async event => {
         event.preventDefault()
