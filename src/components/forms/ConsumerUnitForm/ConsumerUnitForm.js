@@ -129,6 +129,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 defaultValue={consumerUnit?.number ?? ''}
                 readOnly={!isAdmin}
                 onChange={event => {
+                    event.target.value = getOnlyNumbers(event.target.value)
                     consumerUnit.number = event.target.value
                 }}
             />
