@@ -7,6 +7,7 @@ const form = styled.form`
     height: fit-content;
     margin: 1rem 2rem 0rem 2rem;
     width: 100%;
+    overflow: hidden;
 
     input {
         padding: 0.5rem;

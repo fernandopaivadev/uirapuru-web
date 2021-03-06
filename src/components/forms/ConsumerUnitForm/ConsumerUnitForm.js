@@ -13,14 +13,13 @@ import {
     validateForm
 } from '../../../services/forms'
 
-
-
 import styles from './ConsumerUnitForm.style'
 import util from '../../../util/util.style'
 
 const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
     const [success, setSuccess] = useState(false)
     const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [modal, setModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('Ocorreu um erro')
     const [newUnit] = useState(isNaN(consumerUnitIndex))
@@ -44,6 +43,8 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
     })
 
     const submit = async () => {
+        setLoading(true)
+
         if (newUnit) {
             user.consumerUnits.push(consumerUnit)
         } else {
@@ -54,18 +55,33 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
 
         if (result === 'OK') {
             if (newUnit) {
-                setSuccess(true)
                 history.push('/profile')
             } else {
-                setSuccess(true)
-                setError(false)
-
-                setTimeout(() => {
-                    setSuccess(false)
-                    window.location.reload()
-                }, 2000)
+                window.location.reload()
             }
         } else {
+            setLoading(false)
+            setErrorMessage(result)
+            setSuccess(false)
+            setError(true)
+
+            setTimeout(() => {
+                setError(false)
+            }, 2000)
+        }
+    }
+
+    const deleteUnit = async () => {
+        setLoading(true)
+
+        user?.consumerUnits.pop(consumerUnitIndex)
+
+        const result = await api.updateUser(user)
+
+        if (result === 'OK') {
+            window.location.reload()
+        } else {
+            setLoading(false)
             setErrorMessage(result)
             setSuccess(false)
             setError(true)
@@ -82,8 +98,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 <Modal
                     message={'Você tem certeza?'}
                     taskOnYes={() => {
-                        user?.consumerUnits.pop(consumerUnitIndex)
-                        submit()
+                        deleteUnit()
                         setModal(false)
                     }}
                     taskOnNo={() => {
@@ -231,69 +246,72 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 Digite no mínimo 3 caracteres
             </p>
 
-            <styles.buttons>
-                {isAdmin && !newUnit ?
-                    <util.criticalButton
-                        id='deleteUnit'
-                        data-testid='deleteUnit'
-                        onClick={event => {
-                            event.preventDefault()
-                            setModal(true)
-                        }}
-                    >
+            {!loading ?
+                <styles.buttons>
+                    {isAdmin && !newUnit ?
+                        <util.criticalButton
+                            id='deleteUnit'
+                            data-testid='deleteUnit'
+                            onClick={event => {
+                                event.preventDefault()
+                                setModal(true)
+                            }}
+                        >
                         Excluir Unidade
-                    </util.criticalButton>
-                    : null
-                }
-                {isAdmin && !newUnit ?
-                    <util.classicButton
-                        id='newUnit'
-                        data-testid='newUnit'
-                        onClick = { () => {
-                            history.push('/new-unit')
-                        }}
-                    >
+                        </util.criticalButton>
+                        : null
+                    }
+                    {isAdmin && !newUnit ?
+                        <util.classicButton
+                            id='newUnit'
+                            data-testid='newUnit'
+                            onClick = { () => {
+                                history.push('/new-unit')
+                            }}
+                        >
                         Nova Unidade
-                    </util.classicButton>
-                    : null
-                }
-                {isAdmin && newUnit ?
-                    <util.classicButton
-                        id='back'
-                        data-testid='back'
-                        onClick = {() => {
-                            history.push('/profile')
-                        }}
-                    >
+                        </util.classicButton>
+                        : null
+                    }
+                    {isAdmin && newUnit ?
+                        <util.classicButton
+                            id='back'
+                            data-testid='back'
+                            onClick = {() => {
+                                history.push('/profile')
+                            }}
+                        >
                         Voltar
-                    </util.classicButton>
-                    : null
-                }
-                {isAdmin ?
-                    <util.classicButton
-                        id='saveUnit'
-                        data-testid='saveUnit'
-                        onClick={event => {
-                            event.preventDefault()
-                            if (validateForm('consumerUnitForm')) {
-                                submit()
-                            } else {
-                                setErrorMessage('Preencha todos os campos')
-                                setError(true)
+                        </util.classicButton>
+                        : null
+                    }
+                    {isAdmin ?
+                        <util.classicButton
+                            id='saveUnit'
+                            data-testid='saveUnit'
+                            onClick={event => {
+                                event.preventDefault()
+                                if (validateForm('consumerUnitForm')) {
+                                    submit()
+                                } else {
+                                    setErrorMessage('Preencha todos os campos')
+                                    setError(true)
 
-                                setTimeout(() => {
-                                    setError(false)
-                                }, 3000)
-                            }
-                        }}
-                    >
+                                    setTimeout(() => {
+                                        setError(false)
+                                    }, 3000)
+                                }
+                            }}
+                        >
                         Salvar
-                    </util.classicButton>
-                    : null
-                }
-            </styles.buttons>
-
-            {success && !error?
+                        </util.classicButton>
+                        : null
+                    }
+                </styles.buttons>
+                :
+                <util.circularProgress/>
+            }
+            {success && !error ?
                 <p
                     data-testid='successMessageUnit'
                     className='success'>
@@ -301,7 +319,7 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                 </p>
                 : null
             }
-            {!success && error?
+            {!success && error ?
                 <p
                     data-testid='errorMessageUnit'
                     className='error'>
