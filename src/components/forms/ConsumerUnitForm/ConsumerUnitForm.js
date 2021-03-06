@@ -248,6 +248,28 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
 
             {!loading ?
                 <styles.buttons>
+                    {isAdmin ?
+                        <util.classicButton
+                            id='saveUnit'
+                            data-testid='saveUnit'
+                            onClick={event => {
+                                event.preventDefault()
+                                if (validateForm('consumerUnitForm')) {
+                                    submit()
+                                } else {
+                                    setErrorMessage('Preencha todos os campos')
+                                    setError(true)
+
+                                    setTimeout(() => {
+                                        setError(false)
+                                    }, 3000)
+                                }
+                            }}
+                        >
+                        Salvar
+                        </util.classicButton>
+                        : null
+                    }
                     {isAdmin && !newUnit ?
                         <util.criticalButton
                             id='deleteUnit'
@@ -282,28 +304,6 @@ const ConsumerUnitForm = ({ history, user, isAdmin, consumerUnitIndex }) => {
                             }}
                         >
                         Voltar
-                        </util.classicButton>
-                        : null
-                    }
-                    {isAdmin ?
-                        <util.classicButton
-                            id='saveUnit'
-                            data-testid='saveUnit'
-                            onClick={event => {
-                                event.preventDefault()
-                                if (validateForm('consumerUnitForm')) {
-                                    submit()
-                                } else {
-                                    setErrorMessage('Preencha todos os campos')
-                                    setError(true)
-
-                                    setTimeout(() => {
-                                        setError(false)
-                                    }, 3000)
-                                }
-                            }}
-                        >
-                        Salvar
                         </util.classicButton>
                         : null
                     }
