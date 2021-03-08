@@ -97,7 +97,6 @@ const NavBar = ({ history, user, username, isAdmin, theme }) => {
 
             {user ?
                 <styles.avatar
-                    id='avatar'
                     data-testid='avatar'
                     aria-label='Menu'
                 >
@@ -168,7 +167,7 @@ const NavBar = ({ history, user, username, isAdmin, theme }) => {
                 }
 
                 <styles.item
-                    id='exitLink'
+                    data-testid='exitLink'
                     onClick={async () => {
                         await storage.clear('all')
                         history.push('/login')

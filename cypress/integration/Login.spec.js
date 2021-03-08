@@ -12,6 +12,11 @@ context('Login', () => {
         })
     })
 
+    it('Esqueci minha senha', ()=> {
+        cy.get('[data-testid="link"]').click()
+        cy.url().should('eq', `${TEST_URL}/#/forgot-password`)
+    })
+
     it('Inputs vazias', () => {
         cy.get('[data-testid="button"]').click()
         cy.get('[data-testid="loading"]').should('not.exist')
@@ -62,10 +67,5 @@ context('Login', () => {
         cy.get('[data-testid="loading"]').should('exist')
         cy.get('[data-testid="error"]').should('not.exist')
         cy.url().should('eq', `${TEST_URL}/#/dashboard`)
-    })
-
-    it('Esqueci minha senha', ()=> {
-        cy.get('[data-testid="link"]').click()
-        cy.url().should('eq', `${TEST_URL}/#/forgot-password`)
     })
 })
