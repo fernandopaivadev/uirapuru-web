@@ -62,8 +62,8 @@ const Chart = ({ collection, theme, aspectRatio, fontSize, pointSize }) => {
                             yAxes: [{
                                 ticks: {
                                     beginAtZero: true,
-                                    min: -500,
-                                    max: 1500,
+                                    min: 0,
+                                    max: 100,
                                     fontSize,
                                     fontColor: theme.primaryFontColor
                                 }

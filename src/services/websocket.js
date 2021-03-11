@@ -48,11 +48,14 @@ const config = async ({
                         const _buffer = realTimeBuffer
                         const parsedPayload = JSON.parse(payload)
 
-                        delete parsedPayload.rtc
-                        delete parsedPayload.store
-                        delete parsedPayload.id
+                        // delete parsedPayload.rtc
+                        // delete parsedPayload.store
+                        // delete parsedPayload.id
 
-                        _buffer[index] = parsedPayload
+                        _buffer[index] = {
+                            'T': parsedPayload['T'],
+                            'U.R.': parsedPayload['U.R.']
+                        }
                         setRealTimeBuffer(_buffer)
                         setNewMessage(true)
                     }

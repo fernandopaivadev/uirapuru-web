@@ -129,9 +129,11 @@ const fetchDeviceData = async (
         const keys = Object.keys(params[0])
         const datasets = keys.map(key => ({
             label: key,
-            data: params.map(param =>
-                param[key]
-            )
+            data: params.map(param => {
+                if (key === 'T' || key === 'U.R.') {
+                    return param[key]
+                }
+            })
         }))
 
         const title = device.name
