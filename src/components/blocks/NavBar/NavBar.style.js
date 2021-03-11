@@ -98,7 +98,7 @@ const username = styled.p`
 const avatar = styled.button`
     background: var(--primary-color);
     border-radius: 50%;
-    border: none;
+    border: 1px solid var(--secondary-font-color);
     font-size: 2rem;
     font-weight: 600;
     color: var(--secondary-font-color);
@@ -112,7 +112,8 @@ const avatar = styled.button`
     transition: all 0.2s ease;
 
     &:hover {
-        background-color: var(--primary-light-color);
+        color: var(--primary-color);
+        background-color: var(--secondary-font-color);
     }
 `
 

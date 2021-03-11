@@ -3,9 +3,9 @@ import storage from '../services/storage'
 const themes = {
     default: {
         name: 'default',
-        primaryColor: '#309d20',
-        primaryLightColor: '#3fc82a',
+        primaryColor: '#712b74',
         secondaryColor: '#712b74',
+        primaryLightColor: '#9900ff',
         primaryFontColor: '#333',
         secondaryFontColor: '#eee',
         backgroundColor: '#eee',
@@ -27,8 +27,8 @@ const themes = {
     dark: {
         name: 'dark',
         primaryColor: '#309d20',
-        primaryLightColor: '#3fc82a',
         secondaryColor: '#712b74',
+        primaryLightColor: '#3fc82a',
         primaryFontColor: '#ccc',
         secondaryFontColor: '#ccc',
         backgroundColor: '#222426',
